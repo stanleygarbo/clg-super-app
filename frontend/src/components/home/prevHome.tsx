@@ -36,7 +36,7 @@ const PrevHome = () => {
   return (
     <div className="">
       <section className="w-full h-screen border-b flex">
-        <div className="w-full pl-[170px] z-20 mt-[181px] ">
+        <div className="w-full pl-[170px] z-20 mt-[241px] ">
           <h1 className="text-[100px] font-bold leading-[100px]">
             ACLC College <br /> of{" "}
             <span className="relative">
@@ -59,14 +59,26 @@ const PrevHome = () => {
           <div className="absolute w-full h-full bg-white opacity-30"></div>
         </div>
       </section>
-      <div className="relative w-[1200px] m-auto flex justify-end ">
-        <div className="pl-20 pt-20 border-l w-[500px]">
-          <div className="text-3xl pt-5 pb-5">
-            <h1 className="font-bold">ACLC Offered Courses</h1>
-            <h1 className="font-bold pb-2 pt-4 text-xl text-start mt-20">
-              College
-            </h1>
+      <div className="relative w-full m-auto grid grid-cols-2">
+        <div className="pb-5 pt-20 relative">
+          <h1 className="text-3xl  font-bold flex items-center">
+            <div className="w-32 h-1 bg-black mr-4"></div>
+            <strong className="text-blue-600 mr-5">01</strong>
+            ACLC Offered Courses
+          </h1>
+          <div className="relative -left-[130px] mt-[200px] animate-spin-slow  w-[650px] h-[650px] bg-blue-500/30  grid place-items-center shadow-xl">
+            <div className="w-[400px] h-[400px] bg-blue-500/30  grid place-items-center shadow-xl">
+              <div className="w-[250px] h-[250px] bg-blue-500/30 grid place-items-center shadow-xl">
+                <div className="w-[100px] h-[100px] bg-blue-500/50 grid place-items-center shadow-xl"></div>
+              </div>
+            </div>
           </div>
+        </div>
+        <div className=" pr-20">
+          <h1 className="font-bold pb-2 pt-[90px] text-xl text-start">
+            College
+            <img src="/line-thin.svg" className="w-36 -ml-5" alt="" />
+          </h1>
           {courses.map((courses, index) => (
             <div
               className="flex group my-5 px-4 py-4 relative hover:bg-blue-50 transition-all duration-[.30s] rounded-tr-xl rounded-br-xl"

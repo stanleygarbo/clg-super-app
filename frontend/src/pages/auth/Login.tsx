@@ -5,7 +5,7 @@ const Login = () => {
   const [userPassword, setUserPassword] = useState("");
 
   return (
-    <div id="loginPopUp" className="">
+    <div id="loginPopUp" className="pt-20">
       <form className="flex flex-col m-auto gap-2 py-12 px-12 w-[450px] rounded-xl bg-white border mt-[100px]">
         <h1 className="text-2xl text-black font-bold mb-6 flex items-center justify-center">
           <img

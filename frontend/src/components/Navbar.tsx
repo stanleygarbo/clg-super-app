@@ -15,7 +15,7 @@ const Navbar = () => {
             <span className="text-2xl ml-2">🌿</span>
           </Link>
         </div>
-        <section className="flex">
+        <section className="flex gap-5 ">
           <div className="pr-2 pl-2 hover:text-red-500 transition-all hover:scale-110">
             <Link className="text-base font-bold  " to="/">
               Home
