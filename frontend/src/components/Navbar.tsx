@@ -9,7 +9,7 @@ const Navbar = () => {
             <img
               src="./src/Pictures/images.png"
               alt="ACLC"
-              className="size-[2rem] rounded-full"
+              className="size-[2rem] rounded-full border-2 border-red-500"
             />
             <p className="ml-3 text-sm font-black">ACLC COLLEGE</p>
           </Link>
