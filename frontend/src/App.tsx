@@ -10,7 +10,7 @@ import Layout from "./components/Layout";
 import About from "./pages/auth/About";
 import Home from "./pages/auth/Home";
 import AdmissionLayout from "./components/admission/Layout";
-import EForm from "./AdmissionComponents/eFormSchoolYear";
+import EForm from "./AdmissionComponents/eFormSeniorHigh";
 
 const router = createBrowserRouter([
   {
