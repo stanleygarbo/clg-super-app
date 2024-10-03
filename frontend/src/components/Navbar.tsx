@@ -15,7 +15,7 @@ const Navbar = () => {
           </Link>
         </div>
         <section className="flex">
-          <div className="pr-2 pl-2 hover:text-red-100 transition-all">
+          <div className="pr-2 pl-2 hover:text-red-500 transition-all">
             <Link className="text-xs font-bold" to="/">
               Home
             </Link>
