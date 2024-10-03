@@ -5,7 +5,7 @@ const Login = () => {
   const [userPassword, setUserPassword] = useState("");
 
   return (
-    <div id="loginPopUp" className="pt-[10rem] bg-white h-screen">
+    <div id="loginPopUp" className="pt-[10rem] bg-white h-screen ">
       <form className="flex flex-col m-auto pt-12 pb-12 w-[360px] rounded-xl bg-white shadow-2xl">
         <div className="pl-10 pb-5">
           <h1 className="text-xl text-black font-bold pt-2 pr-2 pl-2 rounded-xl">
@@ -15,7 +15,7 @@ const Login = () => {
 
         <div className="flex flex-col m-auto p-auto pb-1 w-[270px]">
           <input
-            className="pl-10 pr-10 border-2 border-black"
+            className="pl-5 border border-black rounded"
             required
             type="text"
             placeholder="USN"
@@ -28,7 +28,7 @@ const Login = () => {
 
         <div className="flex flex-col m-auto p-auto pb-1 w-[270px]">
           <input
-            className="pl-10 pr-10 border-2 border-black"
+            className="pl-5 border rounded border-black w-[270px]"
             required
             type="password"
             placeholder="Password"
