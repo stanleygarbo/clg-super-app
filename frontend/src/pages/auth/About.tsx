@@ -2,7 +2,11 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="p-10 flex flex-col justify-evenly pt-[5rem]">
+    <div className="p-10 pt-28 flex flex-col justify-evenly">
+      <h1 className="px-[10rem] my-10 text-4xl font-bold">
+        About
+        <img src="/line-thin.svg" className="w-[100px]" alt="" />
+      </h1>
       <div className="px-[10rem]">
         <p className="text-warp ">
           ACLC College is a member of the AMA Education System and is one of the
