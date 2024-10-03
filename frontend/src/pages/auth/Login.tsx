@@ -39,7 +39,7 @@ const Login = () => {
         <button className="mt-4 pr-3 pl-3 bg-blue-500 shadow-lg shadow-blue-500/50 hover:shadow-red-500/50 rounded-md text-white hover:bg-red-500 hover:text-white transition-all duration-300 py-2">
           Log In
         </button>
-        <p className="text-xs mt-8 text-center px-10 durat">
+        <p className="text-xs mt-8 text-center px-10">
           If you forgot your password please go to the admin to have it changed
           or retrieved.
         </p>
