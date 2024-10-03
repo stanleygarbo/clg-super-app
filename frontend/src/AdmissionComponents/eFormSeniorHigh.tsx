@@ -9,7 +9,7 @@ const EForm = () => {
 
   return (
     //Top
-    <div className="m-auto p-10 border w-[700px]">
+    <div className="m-auto p-10">
       {/* SchoolYear */}
 
       <form>
