@@ -9,3 +9,8 @@
       margin: 0;
     }
   }
+
+  input {
+    border-color: black;
+    border: 1px solid;
+  }

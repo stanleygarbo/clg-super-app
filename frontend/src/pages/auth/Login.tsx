@@ -5,17 +5,17 @@ const Login = () => {
   const [userPassword, setUserPassword] = useState("");
 
   return (
-    <div id="loginPopUp" className="oppUp pt-[20%]">
-      <form className="flex flex-col m-auto pt-10 pb-10 w-[360px] bg-red-300 rounded-xl">
-        <div className="m-auto pb-5">
-          <h1 className="text-xl text-black font-bold bg-blue-200 pb-2 pt-2 pr-2 pl-2 rounded-xl">
+    <div id="loginPopUp" className="pt-[10rem] bg-white h-screen">
+      <form className="flex flex-col m-auto pt-12 pb-12 w-[360px] rounded-xl bg-white shadow-2xl">
+        <div className="pl-10 pb-5">
+          <h1 className="text-xl text-black font-bold pt-2 pr-2 pl-2 rounded-xl">
             Login
           </h1>
         </div>
 
-        <div className="flex flex-col m-auto p-auto pb-1">
+        <div className="flex flex-col m-auto p-auto pb-1 w-[270px]">
           <input
-            className="pl-10 pr-10 border-2 border-black rounded-xl"
+            className="pl-10 pr-10 border-2 border-black"
             required
             type="text"
             placeholder="USN"
@@ -26,9 +26,9 @@ const Login = () => {
           ></input>
         </div>
 
-        <div className="flex flex-col m-auto p-auto pb-1">
+        <div className="flex flex-col m-auto p-auto pb-1 w-[270px]">
           <input
-            className="pl-10 pr-10 border-2 border-black rounded-xl"
+            className="pl-10 pr-10 border-2 border-black"
             required
             type="password"
             placeholder="Password"
@@ -40,7 +40,7 @@ const Login = () => {
         </div>
 
         <div className="m-auto pt-4">
-          <button className="bg-grey pr-3 pl-3 bg-red-500 rounded-xl text-white">
+          <button className="pr-3 pl-3 bg-blue-500 shadow-lg shadow-blue-500/50 rounded-xl text-white hover:text-black hover:bg-white transition-all w-[270px] py-2">
             LogIn
           </button>
         </div>

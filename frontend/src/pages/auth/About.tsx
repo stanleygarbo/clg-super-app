@@ -2,22 +2,28 @@ import React from "react";
 
 const About = () => {
   return (
-    <div>
-      <p>
-        About Us Who We Are Welcome to [Your Organization/Website Name]! We are
-        a passionate team dedicated to [your mission or purpose]. Founded in
-        [year], our goal is to [describe your main objectives and values]. Our
-        Mission At [Your Organization/Website Name], we believe in [insert core
-        beliefs or values]. We strive to [describe what you aim to achieve for
-        your audience or community]. What We Do We offer [briefly describe your
-        products, services, or content]. Whether you’re looking for [specific
-        offerings] or simply want to learn more about [related topics], we’re
-        here to help! Our Story [Include a brief story about how you started,
-        any challenges you faced, and key milestones]. This journey has shaped
-        who we are today and continues to drive us forward. Join Us We invite
-        you to [call to action, such as subscribing to a newsletter, following
-        on social media, etc.]. Let’s connect and make a difference together!
-      </p>
+    <div className="flex flex-row justify-evenly pt-[5rem]">
+      <div className="bg-red-200 w-[500px]">
+        <p className="text-warp">
+          ACLC College is a member of the AMA Education System and is one of the
+          leading computer schools in the country. With a curriculum that is
+          based on the requirements of the actual industry, ACLC College aims to
+          produce highly competent graduates, especially in the field of IT and
+          other fields that require knowledge in today's technology.
+        </p>
+      </div>
+      <div className="bg-red-200 w-[500px]">
+        <p className="text-warp">
+          AMA Computer Learning Center (ACLC) is a leading computer training
+          institution in the country offering full 2-year programs and
+          short-term courses. It is focused on producing highly competent and
+          skilled graduates to address the growing needs of the local and
+          international markets. ACLC offers the most complete and up-to-date
+          curriculum to equip students with the necessary skills to pursue an IT
+          career. It also has international affiliations that allow ACLC
+          graduates to get high paying jobs and continuous promotions.
+        </p>
+      </div>
     </div>
   );
 };
