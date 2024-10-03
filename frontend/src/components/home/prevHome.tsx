@@ -42,8 +42,8 @@ const PrevHome = () => {
         <h1 className="font-bold pb-2 pt-4 text-xl text-start">College</h1>
       </div>
       {courses.map((courses) => (
-        <div className="flex flex-row group py-5">
-          <div className="w-1 rounded group-hover:bg-blue-500 transition-all duration-[.30s]"></div>
+        <div className="flex flex-row group py-5 hover:bg-blue-200 transition-all duration-[.30s]">
+          <div className="bg-black rounded group-hover:bg-blue-500 transition-all duration-[.30s]"></div>
           <p className="pr-5 pl-2 font-bold">{courses.cName}</p>
           <article>{courses.cDescription}</article>
         </div>

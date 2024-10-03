@@ -9,7 +9,7 @@ const EForm = () => {
 
   return (
     //Top
-    <div className="m-auto p-10">
+    <div className="m-auto p-10 border w-[700px]">
       {/* SchoolYear */}
 
       <form>
@@ -18,14 +18,15 @@ const EForm = () => {
           <div className="flex flex-row pt-3 pb-3">
             <label className="pr-2 pl-2">SCHOOL YEAR : </label>
             <input
-              className="pr-2 pl-2 w-[3rem]"
+              className="pr-2 pl-2 w-[4rem]"
               required
               type="number"
               placeholder="xxxx"
+              maxLength={4}
             ></input>
             <p className="pl-2 pr-2">-</p>
             <input
-              className="pr-2 pl-2 w-[3rem]"
+              className="pr-2 pl-2 w-[4rem]"
               required
               type="number"
               placeholder="xxxx"
@@ -78,24 +79,28 @@ const EForm = () => {
             <label className="pr-2">Date : </label>
             <input
               required
-              type="date"
-              className=" w-[9rem] h-[32px] pr-3"
+              type="text"
+              className=" w-[9rem] h-[32px] pl-3 text-center"
+              readOnly
+              value="2012-3-23"
             ></input>
           </div>
           <div className="flex flex-col pb-0">
             <label className="pl-2">O.R Number : </label>
             <input
               required
-              className=" w-[9rem] h-[32px] pr-3"
+              className=" w-[9rem] h-[32px] pl-3"
               type="number"
+              readOnly
             ></input>
           </div>
           <div className="flex flex-col pb-0">
             <label>Amount : </label>
             <input
-              className=" w-[9rem] h-[32px] pr-3"
+              className=" w-[9rem] h-[32px] pl-3"
               required
               type="number"
+              readOnly
             ></input>
           </div>
         </form>
