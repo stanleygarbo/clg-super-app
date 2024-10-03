@@ -14,7 +14,7 @@ const Navbar = () => {
             <p className="ml-3 text-sm font-black">ACLC COLLEGE</p>
           </Link>
         </div>
-        <section className="flex">
+        <section className="flex gap-5 ">
           <div className="pr-2 pl-2 hover:text-red-500 transition-all hover:scale-110">
             <Link className="text-xs font-bold  " to="/">
               Home
