@@ -1,6 +1,7 @@
 import { proxy, useSnapshot } from "valtio";
 import EFormParents from "./EFormParents";
 import EformSiblings from "./EformSiblings";
+import EFormStudent from "./eFormStudent";
 
 const state = proxy({ count: 0, text: "hello", sem: 0, course: " " });
 
@@ -170,6 +171,7 @@ const EForm = () => {
           </div>
         </form>
       </div>
+      <EFormStudent />
       <EFormParents />
       <EformSiblings />
     </div>
