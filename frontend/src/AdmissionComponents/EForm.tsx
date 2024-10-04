@@ -1,7 +1,7 @@
 import { proxy, useSnapshot } from "valtio";
 import EFormParents from "./EFormParents";
 import EformSiblings from "./EformSiblings";
-import EFormStudent from "./eFormStudent";
+import EFormStudent from "./EFormStudent";
 
 const state = proxy({ count: 0, text: "hello", sem: 0, course: " " });
 
@@ -10,170 +10,191 @@ const EForm = () => {
 
   return (
     //Top
-    <div className="m-auto p-10">
+    <div className="p-10">
       {/* SchoolYear */}
+      <div className="grid grid-cols-2 px-10">
+        <div className="border grid grid-rows-2 p-10 h-[400px]">
+          <div className="grid grid-cols-2">
+            <img src="./public/aclc-logo.png" alt="" className="p-5" />
+            <h1 className="text-center pt-[30%] text-[25px]">
+              <b>
+                ACLC COLLEGE OF ORMOC{" "}
+                <img src="/line-thin.svg" className="w-36 ml-16" alt="" />
+              </b>
+            </h1>
+          </div>
+          {/* <div className="pt-5 h-[100px]">
+            <strong className="text-[25px] pl-20"> ENROLLMENT FORM</strong>
+          </div> */}
+        </div>
+        <div className="border py-10">
+          <form className="flex flex-col items-center">
+            <div className="">
+              {/* SchoolYear */}
+              <div className="flex flex-row items-center pt-3 pb-3">
+                <label className="pr-2 pl-2">SCHOOL YEAR : </label>
+                <input
+                  className="pr-2 pl-2 w-[4rem]"
+                  required
+                  type="number"
+                  placeholder="xxxx"
+                  maxLength={4}
+                ></input>
+                <p className="pl-2 pr-2">-</p>
+                <input
+                  className="pr-2 pl-2 w-[4rem]"
+                  required
+                  type="number"
+                  placeholder="xxxx"
+                ></input>
+              </div>
+              {/* SchoolYearEnd */}
+            </div>
+            <div className="flex flex-col items-center pb-5">
+              <div className="flex flex-row">
+                <input
+                  className="radio1 pl-2 pr-2"
+                  type="checkbox"
+                  required
+                  checked={state.sem === 1}
+                  onChange={() => {
+                    if (state.sem === 1) {
+                      state.sem = 0;
+                    } else {
+                      state.sem = 1;
+                    }
+                  }}
+                ></input>
+                <label className="pl-2 pr-2" htmlFor="radio1">
+                  1<sup>st</sup> Semester
+                </label>
+                <input
+                  className="radio2 pl-2 pr-2"
+                  type="checkbox"
+                  required
+                  checked={state.sem === 2}
+                  onChange={() => {
+                    if (state.sem === 2) {
+                      state.sem = 0;
+                    } else {
+                      state.sem = 2;
+                    }
+                  }}
+                ></input>
+                <label htmlFor="radio2">
+                  2<sup>nd</sup> Semester
+                </label>
+              </div>
+            </div>
+          </form>
+          {/* Payment */}
+          <div className="flex flex-col items-center m-auto pt-10">
+            <h1 className="pb-0 text-start">INITIAL PAYMENT</h1>
+            <form className="flex flex-row gap-3">
+              <div className="flex flex-col pb-0">
+                <label className="pr-2">Date : </label>
+                <input
+                  required
+                  type="text"
+                  className=" w-[9rem] h-[32px] pl-3 text-center"
+                  readOnly
+                  value="2012-3-23"
+                ></input>
+              </div>
+              <div className="flex flex-col pb-0">
+                <label className="pl-2">O.R Number : </label>
+                <input
+                  required
+                  className=" w-[9rem] h-[32px] pl-3"
+                  type="number"
+                  readOnly
+                ></input>
+              </div>
+              <div className="flex flex-col pb-0">
+                <label>Amount : </label>
+                <input
+                  className=" w-[9rem] h-[32px] pl-3"
+                  required
+                  type="number"
+                  readOnly
+                ></input>
+              </div>
+            </form>
+          </div>
+          {/* Courses */}
+          <div className="flex flex-col items-center Courses py-5 ">
+            <form className="flex flex-row gap-5 justify-center w-[500px]">
+              <div>
+                <input
+                  required
+                  type="checkbox"
+                  checked={state.course === "BSIT"}
+                  onChange={() => {
+                    if (state.course === "BSIT") {
+                      state.course = " ";
+                    } else {
+                      state.course = "BSIT";
+                    }
+                  }}
+                ></input>
+                <label>BSIT</label>
+              </div>
+              <div>
+                <input
+                  required
+                  type="checkbox"
+                  checked={state.course === "BSCS"}
+                  onChange={() => {
+                    if (state.course === "BSCS") {
+                      state.course = " ";
+                    } else {
+                      state.course = "BSCS";
+                    }
+                  }}
+                ></input>
+                <label>BSCS</label>
+              </div>
+              <div>
+                <input
+                  required
+                  type="checkbox"
+                  checked={state.course === "BSBA"}
+                  onChange={() => {
+                    if (state.course === "BSBA") {
+                      state.course = " ";
+                    } else {
+                      state.course = "BSBA";
+                    }
+                  }}
+                ></input>
+                <label>BSBA</label>
+              </div>
+              <div>
+                <input
+                  required
+                  type="checkbox"
+                  checked={state.course === "BSHM"}
+                  onChange={() => {
+                    if (state.course === "BSHM") {
+                      state.course = " ";
+                    } else {
+                      state.course = "BSHM";
+                    }
+                  }}
+                ></input>
+                <label>BSHM</label>
+              </div>
+            </form>
+          </div>
+        </div>{" "}
+      </div>
 
-      <form>
-        <div className="flex flex-col items-center">
-          {/* SchoolYear */}
-          <div className="flex flex-row pt-3 pb-3">
-            <label className="pr-2 pl-2">SCHOOL YEAR : </label>
-            <input
-              className="pr-2 pl-2 w-[4rem]"
-              required
-              type="number"
-              placeholder="xxxx"
-              maxLength={4}
-            ></input>
-            <p className="pl-2 pr-2">-</p>
-            <input
-              className="pr-2 pl-2 w-[4rem]"
-              required
-              type="number"
-              placeholder="xxxx"
-            ></input>
-          </div>
-          {/* SchoolYearEnd */}
-        </div>
-        <div className="flex flex-col items-center pb-5">
-          <div className="flex flex-row">
-            <input
-              className="radio1 pl-2 pr-2"
-              type="checkbox"
-              required
-              checked={state.sem === 1}
-              onChange={() => {
-                if (state.sem === 1) {
-                  state.sem = 0;
-                } else {
-                  state.sem = 1;
-                }
-              }}
-            ></input>
-            <label className="pl-2 pr-2" htmlFor="radio1">
-              1<sup>st</sup> Semester
-            </label>
-            <input
-              className="radio2 pl-2 pr-2"
-              type="checkbox"
-              required
-              checked={state.sem === 2}
-              onChange={() => {
-                if (state.sem === 2) {
-                  state.sem = 0;
-                } else {
-                  state.sem = 2;
-                }
-              }}
-            ></input>
-            <label htmlFor="radio2">
-              2<sup>nd</sup> Semester
-            </label>
-          </div>
-        </div>
-      </form>
-      {/* Payment */}
-      <div className="flex flex-col items-center m-auto pt-10">
-        <h1 className="pb-0">INITIAL PAYMENT</h1>
-        <form className="flex flex-row gap-3">
-          <div className="flex flex-col pb-0">
-            <label className="pr-2">Date : </label>
-            <input
-              required
-              type="text"
-              className=" w-[9rem] h-[32px] pl-3 text-center"
-              readOnly
-              value="2012-3-23"
-            ></input>
-          </div>
-          <div className="flex flex-col pb-0">
-            <label className="pl-2">O.R Number : </label>
-            <input
-              required
-              className=" w-[9rem] h-[32px] pl-3"
-              type="number"
-              readOnly
-            ></input>
-          </div>
-          <div className="flex flex-col pb-0">
-            <label>Amount : </label>
-            <input
-              className=" w-[9rem] h-[32px] pl-3"
-              required
-              type="number"
-              readOnly
-            ></input>
-          </div>
-        </form>
-      </div>
-      {/* Courses */}
-      <div className="flex flex-col items-center Courses py-5 ">
-        <form className="flex flex-row gap-5 justify-center w-[500px]">
-          <div>
-            <input
-              required
-              type="checkbox"
-              checked={state.course === "BSIT"}
-              onChange={() => {
-                if (state.course === "BSIT") {
-                  state.course = " ";
-                } else {
-                  state.course = "BSIT";
-                }
-              }}
-            ></input>
-            <label>BSIT</label>
-          </div>
-          <div>
-            <input
-              required
-              type="checkbox"
-              checked={state.course === "BSCS"}
-              onChange={() => {
-                if (state.course === "BSCS") {
-                  state.course = " ";
-                } else {
-                  state.course = "BSCS";
-                }
-              }}
-            ></input>
-            <label>BSCS</label>
-          </div>
-          <div>
-            <input
-              required
-              type="checkbox"
-              checked={state.course === "BSBA"}
-              onChange={() => {
-                if (state.course === "BSBA") {
-                  state.course = " ";
-                } else {
-                  state.course = "BSBA";
-                }
-              }}
-            ></input>
-            <label>BSBA</label>
-          </div>
-          <div>
-            <input
-              required
-              type="checkbox"
-              checked={state.course === "BSHM"}
-              onChange={() => {
-                if (state.course === "BSHM") {
-                  state.course = " ";
-                } else {
-                  state.course = "BSHM";
-                }
-              }}
-            ></input>
-            <label>BSHM</label>
-          </div>
-        </form>
-      </div>
       <EFormStudent />
       <EFormParents />
       <EformSiblings />
+      <div className="flex flex-row-reverse bg-red-500">
+        <button className="bg-blue-400 px-20">Save</button>
+      </div>
     </div>
   );
 };

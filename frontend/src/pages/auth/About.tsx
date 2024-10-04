@@ -103,7 +103,7 @@ const About = () => {
         </article>
       </div>
 
-      <div className="flex flex-row justify-between px-[10rem] pt-10 w-[100%] h-[400px] ">
+      <div className="flex flex-row justify-evenly px-[5rem] pt-10 w-[100%] h-[400px] ">
         <div className="hover:w-[520px] hover:h-[320px] hover:text-[17px] shadow-xl rounded-xl p-5 w-[500px] h-[300px]">
           <h1 className="font-bold text-center pb-3">MISSION</h1>
           <article>

@@ -11,8 +11,8 @@ const EformSiblings = () => {
           <div className="bg-slate-900 text-white text-center pb-5 pt-5 border-b-4 border-black w-[100%]">
             <p>SIBLING'S INFORMATION</p>
           </div>
-          <div className="flex flex-row gap-[10px] py-3 px-[5rem] ">
-            <div className="flex flex-col p-5 gap-3 w-[700px]  ">
+          <div className="grid grid-cols-3 ">
+            <div className="grid grid-rows-5 p-5 gap-3 ">
               <label htmlFor="" className="text-center">
                 BROTHERS/SISTERS' NAME
               </label>
@@ -22,17 +22,17 @@ const EformSiblings = () => {
               <input type="text" />
               <input type="text" />
             </div>
-            <div className="flex flex-col p-5 gap-3 w-[150px]">
+            <div className="grid grid-rows-6 gap-3 p-5 w-[]">
               <label htmlFor="" className="text-center">
                 AGE
               </label>
-              <input type="text" />
-              <input type="text" />
-              <input type="text" />
-              <input type="text" />
-              <input type="text" />
+              <input type="text" className="" />
+              <input type="text" className="" />
+              <input type="text" className="" />
+              <input type="text" className="" />
+              <input type="text" className="" />
             </div>
-            <div className="flex flex-col p-5 gap-3 w-[700px]">
+            <div className="grid grid-rows-6 p-5 gap-3">
               <label htmlFor="" className="text-center">
                 SCHOOL/OCCUPATION
               </label>
