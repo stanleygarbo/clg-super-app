@@ -13,21 +13,18 @@ const EForm = () => {
     <div className="p-10">
       {/* SchoolYear */}
       <div className="grid grid-cols-2 px-10">
-        <div className="border grid grid-rows-2 p-10 h-[400px]">
+        <div className="grid grid-rows-2 p-10 h-[400px]">
           <div className="grid grid-cols-2">
             <img src="./public/aclc-logo.png" alt="" className="p-5" />
             <h1 className="text-center pt-[30%] text-[25px]">
-              <b>
-                ACLC COLLEGE OF ORMOC{" "}
-                <img src="/line-thin.svg" className="w-36 ml-16" alt="" />
-              </b>
+              <b>ACLC COLLEGE OF ORMOC </b>
             </h1>
           </div>
           {/* <div className="pt-5 h-[100px]">
             <strong className="text-[25px] pl-20"> ENROLLMENT FORM</strong>
           </div> */}
         </div>
-        <div className="border py-10">
+        <div className="border border-black rounded-xl py-10">
           <form className="flex flex-col items-center">
             <div className="">
               {/* SchoolYear */}
@@ -192,8 +189,13 @@ const EForm = () => {
       <EFormStudent />
       <EFormParents />
       <EformSiblings />
-      <div className="flex flex-row-reverse bg-red-500">
-        <button className="bg-blue-400 px-20">Save</button>
+      <div className="flex flex-row-reverse px-20">
+        <button
+          className="font-bold bg-blue-400 text-white px-20 border border-red-600 
+        hover:text-black hover:border-blue-600 hover:bg-white rounded-xl transition-all"
+        >
+          Submit
+        </button>
       </div>
     </div>
   );
