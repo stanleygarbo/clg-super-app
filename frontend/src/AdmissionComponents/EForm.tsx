@@ -2,8 +2,14 @@ import { proxy, useSnapshot } from "valtio";
 import EFormParents from "./EFormParents";
 import EformSiblings from "./EformSiblings";
 import EFormStudent from "./EFormStudent";
+import { useState } from "react";
 
 const state = proxy({ count: 0, text: "hello", sem: 0, course: " " });
+
+// const [student, setUserName] = useState("");
+// const [userName, setUserName] = useState("");
+// const [userName, setUserName] = useState("");
+// const [userName, setUserName] = useState("");
 
 const EForm = () => {
   const snap = useSnapshot(state);
@@ -31,18 +37,11 @@ const EForm = () => {
               <div className="flex flex-row items-center pt-3 pb-3">
                 <label className="pr-2 pl-2">SCHOOL YEAR : </label>
                 <input
-                  className="pr-2 pl-2 w-[4rem]"
+                  className="pr-2 pl-2 w-[4rem] w-[120px] text-center"
                   required
-                  type="number"
-                  placeholder="xxxx"
-                  maxLength={4}
-                ></input>
-                <p className="pl-2 pr-2">-</p>
-                <input
-                  className="pr-2 pl-2 w-[4rem]"
-                  required
-                  type="number"
-                  placeholder="xxxx"
+                  type="text"
+                  placeholder="xxxx-xxxx"
+                  maxLength={9}
                 ></input>
               </div>
               {/* SchoolYearEnd */}
