@@ -64,13 +64,13 @@ const PrevHomeTESDA = () => {
         </div>
       </div>
       <div className=" pr-20">
-        <h1 className="font-bold pb-2 pt-[90px] text-xl text-start">
+        {/* <h1 className="font-bold pb-2 pt-[90px] text-xl text-start">
           College
           <img src="/line-thin.svg" className="w-36 -ml-5" alt="" />
-        </h1>
+        </h1> */}
         <h1 className="font-bold pb-2 pt-[90px] text-xl text-start">
           TESDA
-          <img src="/line-thin.svg" className="w-36 -ml-5" alt="" />
+          <img src="/line-thin.svg" className="w-28 -ml-5" alt="" />
         </h1>
         {TESDAcourses.map((TESDAcourses, index) => (
           <div

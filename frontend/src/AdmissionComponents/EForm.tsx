@@ -2,7 +2,6 @@ import { proxy, useSnapshot } from "valtio";
 import EFormParents from "./EFormParents";
 import EformSiblings from "./EformSiblings";
 import EFormStudent from "./EFormStudent";
-import { useState } from "react";
 
 const state = proxy({ count: 0, text: "hello", sem: 0, course: " " });
 
@@ -20,8 +19,8 @@ const EForm = () => {
       {/* SchoolYear */}
       <div className="grid grid-cols-2 px-10">
         <div className="grid grid-rows-2 p-10 h-[400px]">
-          <div className="grid grid-cols-2">
-            <img src="./public/aclc-logo.png" alt="" className="p-5" />
+          <div className="grid grid-cols-2 items-center">
+            <img src="./aclc-logo.png" alt="" className="p-50" />
             <h1 className="text-center pt-[30%] text-[25px]">
               <b>ACLC COLLEGE OF ORMOC </b>
             </h1>
@@ -34,10 +33,10 @@ const EForm = () => {
           <form className="flex flex-col items-center">
             <div className="">
               {/* SchoolYear */}
-              <div className="flex flex-row items-center pt-3 pb-3">
+              <div className="grid grid-cols-2 items-center pt-3 pb-3">
                 <label className="pr-2 pl-2">SCHOOL YEAR : </label>
                 <input
-                  className="pr-2 pl-2 w-[4rem] w-[120px] text-center"
+                  className="pr-2 pl-2 w-[4rem] w-[6rem] text-center"
                   required
                   type="text"
                   placeholder="xxxx-xxxx"
@@ -46,40 +45,44 @@ const EForm = () => {
               </div>
               {/* SchoolYearEnd */}
             </div>
-            <div className="flex flex-col items-center pb-5">
-              <div className="flex flex-row">
-                <input
-                  className="radio1 pl-2 pr-2"
-                  type="checkbox"
-                  required
-                  checked={state.sem === 1}
-                  onChange={() => {
-                    if (state.sem === 1) {
-                      state.sem = 0;
-                    } else {
-                      state.sem = 1;
-                    }
-                  }}
-                ></input>
-                <label className="pl-2 pr-2" htmlFor="radio1">
-                  1<sup>st</sup> Semester
-                </label>
-                <input
-                  className="radio2 pl-2 pr-2"
-                  type="checkbox"
-                  required
-                  checked={state.sem === 2}
-                  onChange={() => {
-                    if (state.sem === 2) {
-                      state.sem = 0;
-                    } else {
-                      state.sem = 2;
-                    }
-                  }}
-                ></input>
-                <label htmlFor="radio2">
-                  2<sup>nd</sup> Semester
-                </label>
+            <div className="grid grid-cols items-center pb-5">
+              <div className="grid grid-cols-2 justify-center">
+                <div>
+                  <input
+                    className="radio1 pl-2 pr-2"
+                    type="checkbox"
+                    required
+                    checked={state.sem === 1}
+                    onChange={() => {
+                      if (state.sem === 1) {
+                        state.sem = 0;
+                      } else {
+                        state.sem = 1;
+                      }
+                    }}
+                  ></input>
+                  <label className="pl-2 pr-2" htmlFor="radio1">
+                    1<sup>st</sup> Semester
+                  </label>
+                </div>
+                <div>
+                  <input
+                    className="radio2 pl-2 pr-2"
+                    type="checkbox"
+                    required
+                    checked={state.sem === 2}
+                    onChange={() => {
+                      if (state.sem === 2) {
+                        state.sem = 0;
+                      } else {
+                        state.sem = 2;
+                      }
+                    }}
+                  ></input>
+                  <label htmlFor="radio2" className="px-2">
+                    2<sup>nd</sup> Semester
+                  </label>
+                </div>
               </div>
             </div>
           </form>

@@ -235,9 +235,8 @@ const EFormStudent = () => {
                 }}
               />
             </div>
-
-            <div className="grid grid-cols-4 gap-5 ">
-              <label htmlFor="">CITY ADRESS (IF BOARDING)</label>
+            <label htmlFor="">CITY ADRESS (IF BOARDING)</label>
+            <div className="grid grid-cols-3 gap-5 ">
               <input
                 type="text"
                 className="pl-5"
