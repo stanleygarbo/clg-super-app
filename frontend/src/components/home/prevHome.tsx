@@ -1,3 +1,5 @@
+import PrevHomeTESDA from "./prevHomeTESDA";
+
 const PrevHome = () => {
   const courses = [
     {
@@ -79,6 +81,10 @@ const PrevHome = () => {
             College
             <img src="/line-thin.svg" className="w-36 -ml-5" alt="" />
           </h1>
+          <h1 className="font-bold pb-2 pt-[90px] text-xl text-start">
+            Bachelor's
+            <img src="/line-thin.svg" className="w-36 -ml-5" alt="" />
+          </h1>
           {courses.map((courses, index) => (
             <div
               className="flex group my-5 px-4 py-4 relative hover:bg-blue-50 transition-all duration-[.30s] rounded-tr-xl rounded-br-xl"
@@ -93,6 +99,7 @@ const PrevHome = () => {
           ))}
         </div>
       </div>
+      <PrevHomeTESDA />
     </div>
   );
 };
