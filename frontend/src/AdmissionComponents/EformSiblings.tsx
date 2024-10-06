@@ -4,10 +4,7 @@ const EformSiblings = () => {
   return (
     <div>
       <div className="p-10 pt-3">
-        <form
-          action=""
-          className="flex-row pb-4 border-4 flex flex-col border-black "
-        >
+        <form action="" className="pb-4 border-4 flex flex-col border-black ">
           <div className="bg-slate-900 text-white text-center pb-5 pt-5 border-b-4 border-black w-[100%]">
             <p>SIBLING'S INFORMATION</p>
           </div>
