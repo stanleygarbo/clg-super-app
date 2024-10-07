@@ -1,10 +1,9 @@
-import { proxy, useSnapshot } from "valtio";
-import { useForm, useFormContext } from "react-hook-form";
+import { proxy } from "valtio";
+import { useFormContext } from "react-hook-form";
 
 const state = proxy({ count: 0, text: "hello", sem: 0, course: " " });
 
 const EFormSchoolYear = () => {
-  const snap = useSnapshot(state);
   const methods = useFormContext();
 
   return (
@@ -27,7 +26,7 @@ const EFormSchoolYear = () => {
             className="pr-2 pl-2 w-[3rem]"
             required
             type="number"
-            {...methods.register("schoolYear" + 1)}
+            {...methods.register("schoolYear2")}
             placeholder="xxxx"
           ></input>
         </section>
