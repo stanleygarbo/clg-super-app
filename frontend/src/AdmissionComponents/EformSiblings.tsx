@@ -1,4 +1,8 @@
+import { useFormContext } from "react-hook-form";
+
 const EformSiblings = () => {
+  const methods = useFormContext();
+
   return (
     <div className="p-3">
       <p className="font-bold">SIBLING'S INFORMATION</p>
@@ -15,21 +19,77 @@ const EformSiblings = () => {
         <label htmlFor="" className="text-center">
           SCHOOL/OCCUPATION
         </label>
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingName")}
+        />
+        <input type="text" placeholder="" {...methods.register("siblingAge")} />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingSchool")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingName2")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingAge2")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingSchool2")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingName3")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingAge3")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingSchool3")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingName4")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingAge4")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingSchool4")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingName5")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingAge5")}
+        />
+        <input
+          type="text"
+          placeholder=""
+          {...methods.register("siblingSchool5")}
+        />
       </div>
     </div>
   );

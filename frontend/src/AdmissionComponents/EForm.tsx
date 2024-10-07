@@ -11,12 +11,7 @@ function EForm() {
 
   return (
     <FormProvider {...methods}>
-      <form
-        className="p-10"
-        onSubmit={methods.handleSubmit((data) => {
-          console.log(data);
-        })}
-      >
+      <form className="p-10" onSubmit={methods.handleSubmit((data) => {})}>
         <div className="bg-black p-2 text-white ">
           <h1 className="text-2xl text-center font-bold justify-items-stretch">
             EForm
