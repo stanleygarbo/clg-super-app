@@ -31,6 +31,11 @@ const Navbar = () => {
               Login
             </Link>
           </div>
+          <div className="pr-2 pl-2 hover:text-red-500 transition-all hover:scale-110">
+            <Link className="text-base font-bold" to="/admission">
+              Admmission
+            </Link>
+          </div>
         </section>
       </div>
     </div>

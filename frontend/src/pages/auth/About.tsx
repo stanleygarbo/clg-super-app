@@ -31,7 +31,7 @@ const About = () => {
         <img
           src="./public/chair_03.png"
           alt=""
-          className=" rounded-full border-2 border-red-500 shadow-xl"
+          className=" rounded-full border-2 border-red-500 shadow-xl hover:scale-[1.05] transition-all "
         />
         <p className="pb-10 pt-6 opacity-50">
           Dr. Amable R. Aguiluz V, Chairman
@@ -66,7 +66,7 @@ const About = () => {
         <img
           src="./public/pres_03.png"
           alt=""
-          className=" rounded-full border-2 border-red-500 shadow-xl"
+          className=" rounded-full border-2 border-red-500 shadow-xl hover:scale-[1.05] transition-all "
         />
         <p className="pb-10 pt-6 opacity-50">
           Dr. Amable C. Aguiluz IX, Vice Chairman
@@ -102,7 +102,7 @@ const About = () => {
       </div>
 
       <div className="flex flex-row justify-evenly px-[5rem] pt-10 w-[100%] h-[400px] ">
-        <div className="hover:w-[520px] hover:h-[320px] hover:text-[17px] shadow-xl rounded-xl p-5 w-[500px] h-[300px]">
+        <div className="shadow-xl rounded-xl p-5 w-[500px] h-[300px] hover:scale-[1.05] transition-all">
           <h1 className="font-bold text-center pb-3">MISSION</h1>
           <article>
             To provide a holistic, relevant, quality and globally recognized
@@ -115,7 +115,7 @@ const About = () => {
           </article>
         </div>
 
-        <div className="hover:w-[520px] hover:h-[320px] hover:text-[17px] shadow-xl rounded-xl p-5 w-[500px] h-[300px]">
+        <div className=" shadow-xl rounded-xl p-5 w-[500px] h-[300px] hover:scale-[1.05] transition-all">
           <h1 className="font-bold text-center pb-3">VISION</h1>
           <article>
             To be the leader and dominant provider of relevant globally

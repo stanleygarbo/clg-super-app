@@ -9,8 +9,7 @@ import Login from "./pages/auth/Login";
 import Layout from "./components/Layout";
 import About from "./pages/auth/About";
 import Home from "./pages/auth/Home";
-import AdmissionLayout from "./components/admission/Layout";
-import EForm from "./AdmissionComponents/EForm";
+import EForm from "./AdmissionComponents/Eform";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +32,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admission",
-    element: <AdmissionLayout />,
+    element: <Layout />,
     children: [
       {
         path: "/admission",
