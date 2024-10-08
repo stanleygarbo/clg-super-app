@@ -29,7 +29,7 @@ const About = () => {
 
       <div className=" flex flex-col m-auto items-center py-10">
         <img
-          src="./public/chair_03.png"
+          src="./chair_03.png"
           alt=""
           className=" rounded-full border-2 border-red-500 shadow-xl hover:scale-[1.05] transition-all "
         />
@@ -64,7 +64,7 @@ const About = () => {
       </div>
       <div className=" flex flex-col m-auto items-center py-10">
         <img
-          src="./public/pres_03.png"
+          src="./pres_03.png"
           alt=""
           className=" rounded-full border-2 border-red-500 shadow-xl hover:scale-[1.05] transition-all "
         />

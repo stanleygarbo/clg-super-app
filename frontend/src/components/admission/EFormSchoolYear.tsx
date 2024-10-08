@@ -1,9 +1,10 @@
-import { proxy } from "valtio";
+import { proxy, useSnapshot } from "valtio";
 import { useFormContext } from "react-hook-form";
 
 const state = proxy({ count: 0, text: "hello", sem: 0, course: " " });
 
 const EFormSchoolYear = () => {
+  const snap = useSnapshot(state);
   const methods = useFormContext();
 
   return (
@@ -13,7 +14,7 @@ const EFormSchoolYear = () => {
       </div>
       <div className="m-auto border-2 py-10 px-5 flex flex-col items-center border-black">
         <section className="flex">
-          <label className="pr-2 pl-2">SCHOOL YEAR : </label>
+          <h1 className="pr-2 pl-2">SCHOOL YEAR : </h1>
           <input
             className="pr-2 pl-2 w-[3rem]"
             required
@@ -34,39 +35,44 @@ const EFormSchoolYear = () => {
           <input
             className="radio1 pl-2 pr-2"
             type="checkbox"
-            checked={state.sem === 1}
+            id="1st"
+            checked={snap.sem === 1}
             onChange={() => {
-              if (state.sem === 1) {
+              if (snap.sem === 1) {
                 state.sem = 0;
               } else {
                 state.sem = 1;
               }
             }}
           ></input>
-          <label className="pl-2 pr-2" htmlFor="radio1">
+          <label className="pl-2 pr-2" htmlFor="1st">
             1<sup>st</sup> Semester
           </label>
           <input
             className="radio2 pl-2 pr-2"
             type="checkbox"
-            checked={state.sem === 2}
+            id="2nd"
+            checked={snap.sem === 2}
             onChange={() => {
-              if (state.sem === 2) {
+              if (snap.sem === 2) {
                 state.sem = 0;
               } else {
                 state.sem = 2;
               }
             }}
           ></input>
-          <label htmlFor="radio2">
+          <label htmlFor="2nd">
             2<sup>nd</sup> Semester
           </label>
         </section>
         <h1 className="pb-0">INITIAL PAYMENT</h1>
         <section className="flex gap-2">
           <div className="grid grid-rows-2">
-            <label className="pr-2">Date : </label>
+            <label htmlFor="date" className="pr-2">
+              Date :{" "}
+            </label>
             <input
+              id="date"
               required
               type="date"
               className=" w-[9rem] h-[32px] pr-3"
@@ -74,8 +80,11 @@ const EFormSchoolYear = () => {
             ></input>
           </div>
           <div className="grid grid-rows-2">
-            <label className="pl-2">O.R Number : </label>
+            <label htmlFor="orNum" className="pl-2">
+              O.R Number :{" "}
+            </label>
             <input
+              id="orNum"
               required
               className=" w-[9rem] h-[32px] pr-3"
               type="number"
@@ -83,8 +92,9 @@ const EFormSchoolYear = () => {
             ></input>
           </div>
           <div className="grid grid-rows-2">
-            <label>Amount : </label>
+            <label htmlFor="amount">Amount : </label>
             <input
+              id="amount"
               className=" w-[9rem] h-[32px] pr-3"
               required
               type="number"
@@ -119,8 +129,9 @@ const EFormSchoolYear = () => {
                 state.course = "BSCS";
               }
             }}
+            id="BSCS"
           ></input>
-          <label>BSCS</label>
+          <label htmlFor="BSCS">BSCS</label>
           <input
             type="checkbox"
             checked={state.course === "BSBA"}
@@ -131,8 +142,9 @@ const EFormSchoolYear = () => {
                 state.course = "BSBA";
               }
             }}
+            id="BSBA"
           ></input>
-          <label>BSBA</label>
+          <label htmlFor="BSBA">BSBA</label>
           <input
             type="checkbox"
             checked={state.course === "BSHM"}
@@ -143,8 +155,9 @@ const EFormSchoolYear = () => {
                 state.course = "BSHM";
               }
             }}
+            id="BSHM"
           ></input>
-          <label>BSHM</label>
+          <label htmlFor="BSHM">BSHM</label>
         </section>
       </div>
     </div>

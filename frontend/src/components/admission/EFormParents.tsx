@@ -54,6 +54,7 @@ const EFormParents = () => {
             type="number"
             className="pl-5"
             placeholder="TEL NO."
+            maxLength={11}
             {...methods.register("fatherTelNum")}
           />
           <input
@@ -125,6 +126,7 @@ const EFormParents = () => {
             type="number"
             className="pl-5"
             placeholder="TEL NO."
+            maxLength={11}
             {...methods.register("motherTelNum")}
           />
           <input
@@ -223,6 +225,7 @@ const EFormParents = () => {
             type="number"
             className="pl-5"
             placeholder="CELLPHONE NO."
+            maxLength={11}
             {...methods.register("guardianPhoneNum")}
           />
           <input

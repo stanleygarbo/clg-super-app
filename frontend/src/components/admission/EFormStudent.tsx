@@ -38,7 +38,7 @@ const EFormStudent = () => {
             type="number"
             className="pl-5"
             placeholder="CELLPHONE NO."
-            max={11}
+            maxLength={11}
             {...methods.register("phoneNum")}
           />
           <input
@@ -48,7 +48,7 @@ const EFormStudent = () => {
             {...methods.register("email")}
           />
         </div>
-        <label>BIRTH'S INFORMATION</label>
+        <h1>BIRTH'S INFORMATION</h1>
         <div className="grid grid-cols-5 gap-5 ">
           <input
             type="date"
@@ -83,9 +83,7 @@ const EFormStudent = () => {
       </div>
 
       <div className="px-6 flex flex-col gap-3">
-        <label htmlFor="" className="text-start pt-10">
-          SPOUSE'S INFORMATION (IF MARRIED)
-        </label>
+        <h1 className="text-start pt-10">SPOUSE'S INFORMATION (IF MARRIED)</h1>
 
         <div className="grid grid-cols-4 gap-5">
           <input
@@ -113,7 +111,7 @@ const EFormStudent = () => {
             {...methods.register("spouseNumChild")}
           />
         </div>
-        <label htmlFor="">HOME ADDRESS</label>
+        <h1>HOME ADDRESS</h1>
         <div className="grid grid-cols-5 gap-5 ">
           <input
             type="text"
@@ -146,7 +144,7 @@ const EFormStudent = () => {
             {...methods.register("district")}
           />
         </div>
-        <label htmlFor="">CITY ADRESS (IF BOARDING)</label>
+        <h1>CITY ADRESS (IF BOARDING)</h1>
         <div className="grid grid-cols-3 gap-5 ">
           <input
             type="text"

@@ -1,15 +1,10 @@
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  Route,
-  Router,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Layout from "./components/Layout";
 import About from "./pages/auth/About";
 import Home from "./pages/auth/Home";
-import EForm from "./AdmissionComponents/Eform";
+import EForm from "./components/admission/EForm";
+import AdmissionLayout from "./admissionLayout/AdmissionLayout";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admission",
-    element: <Layout />,
+    element: <AdmissionLayout />,
     children: [
       {
         path: "/admission",

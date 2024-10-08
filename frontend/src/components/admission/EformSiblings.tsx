@@ -10,15 +10,9 @@ const EformSiblings = () => {
         className="grid gap-[10px] px-6 py-3"
         style={{ gridTemplateColumns: "1fr 100px 1fr" }}
       >
-        <label htmlFor="" className="text-center">
-          BROTHERS/SISTERS' NAME
-        </label>
-        <label htmlFor="" className="text-center">
-          AGE
-        </label>
-        <label htmlFor="" className="text-center">
-          SCHOOL/OCCUPATION
-        </label>
+        <h1 className="text-center">BROTHERS/SISTERS' NAME</h1>
+        <h1 className="text-center">AGE</h1>
+        <h1 className="text-center">SCHOOL/OCCUPATION</h1>
         <input
           type="text"
           placeholder=""
