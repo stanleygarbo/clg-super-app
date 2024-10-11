@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "../sidebar/Sidebar";
+import Sidebar from "../components/sidebar/Sidebar";
 
-const Layout = () => {
+const AdminLayout = () => {
   return (
     <div className="flex">
       <Sidebar />
@@ -12,4 +12,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default AdminLayout;
