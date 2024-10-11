@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import About from "./pages/About";
 import EForm from "./components/admission/EForm";
-import AdmissionLayout from "./layouts/admission_layout/AdmissionLayout";
 import AboutLayout from "./layouts/about_layout/AboutLayout";
 import Mission from "./components/about/Mission";
 import PrevHome from "./components/home/PrevHome";
@@ -12,6 +11,7 @@ import AMAHymn from "./components/about/AMAHymn";
 import OfficeChairmanVice from "./components/about/OfficeChairmanVice";
 import Footer from "./components/Footer";
 import Layout from "./layouts/home_layout/Layout";
+import AdminLayout from "./layouts/AdminLayout";
 
 const router = createBrowserRouter([
   {
@@ -33,11 +33,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/admission",
-    element: <AdmissionLayout />,
+    path: "/admin",
+    element: <AdminLayout />,
     children: [
       {
-        path: "/admission",
+        path: "admission/students",
         element: <EForm />,
       },
     ],
