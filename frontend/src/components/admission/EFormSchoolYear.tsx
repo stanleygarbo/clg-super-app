@@ -1,18 +1,14 @@
-import { proxy, useSnapshot } from "valtio";
 import { useFormContext } from "react-hook-form";
 
-const state = proxy({ count: 0, text: "hello", sem: 0, course: " " });
-
 const EFormSchoolYear = () => {
-  const snap = useSnapshot(state);
   const methods = useFormContext();
 
   return (
-    <div className="m-auto p-10 grid grid-cols-2 items-end">
+    <div className="m-auto p-10 flex flex-wrap justify-between w-full">
       <div>
         <img src="./aclc-logo.png" alt="" />
       </div>
-      <div className="m-auto border-2 py-10 px-5 flex flex-col items-center border-black">
+      <div className="border-2 py-10 px-5 flex flex-col items-center border-black">
         <section className="flex">
           <h1 className="pr-2 pl-2">SCHOOL YEAR : </h1>
           <input
@@ -20,6 +16,7 @@ const EFormSchoolYear = () => {
             required
             type="number"
             placeholder="xxxx"
+            maxLength={4}
             {...methods.register("schoolYear")}
           ></input>
           <p className="pl-2 pr-2">-</p>
@@ -27,39 +24,26 @@ const EFormSchoolYear = () => {
             className="pr-2 pl-2 w-[3rem]"
             required
             type="number"
+            maxLength={4}
             {...methods.register("schoolYear2")}
             placeholder="xxxx"
           ></input>
         </section>
-        <section className="flex gap-2">
+        <section className="flex gap-2 flex-wrap">
           <input
-            className="radio1 pl-2 pr-2"
-            type="checkbox"
+            className="pl-2 pr-2 "
+            type="radio"
             id="1st"
-            checked={snap.sem === 1}
-            onChange={() => {
-              if (snap.sem === 1) {
-                state.sem = 0;
-              } else {
-                state.sem = 1;
-              }
-            }}
+            name="sem"
           ></input>
           <label className="pl-2 pr-2" htmlFor="1st">
             1<sup>st</sup> Semester
           </label>
           <input
             className="radio2 pl-2 pr-2"
-            type="checkbox"
+            type="radio"
             id="2nd"
-            checked={snap.sem === 2}
-            onChange={() => {
-              if (snap.sem === 2) {
-                state.sem = 0;
-              } else {
-                state.sem = 2;
-              }
-            }}
+            name="sem"
           ></input>
           <label htmlFor="2nd">
             2<sup>nd</sup> Semester
@@ -103,60 +87,15 @@ const EFormSchoolYear = () => {
           </div>
         </section>
         <section className="flex gap-2 items-center">
-          <input
-            type="checkbox"
-            checked={state.course === "BSIT"}
-            onChange={() => {
-              if (state.course === "BSIT") {
-                state.course = " ";
-              } else {
-                state.course = "BSIT";
-              }
-            }}
-            className="g"
-            id="BSIT"
-          ></input>
+          <input type="radio" className="g" id="BSIT" name="course"></input>
           <label htmlFor="BSIT" className="">
             BSIT
           </label>
-          <input
-            type="checkbox"
-            checked={state.course === "BSCS"}
-            onChange={() => {
-              if (state.course === "BSCS") {
-                state.course = " ";
-              } else {
-                state.course = "BSCS";
-              }
-            }}
-            id="BSCS"
-          ></input>
+          <input type="radio" id="BSCS" name="course"></input>
           <label htmlFor="BSCS">BSCS</label>
-          <input
-            type="checkbox"
-            checked={state.course === "BSBA"}
-            onChange={() => {
-              if (state.course === "BSBA") {
-                state.course = " ";
-              } else {
-                state.course = "BSBA";
-              }
-            }}
-            id="BSBA"
-          ></input>
+          <input type="radio" id="BSBA" name="course"></input>
           <label htmlFor="BSBA">BSBA</label>
-          <input
-            type="checkbox"
-            checked={state.course === "BSHM"}
-            onChange={() => {
-              if (state.course === "BSHM") {
-                state.course = " ";
-              } else {
-                state.course = "BSHM";
-              }
-            }}
-            id="BSHM"
-          ></input>
+          <input type="radio" id="BSHM" name="course"></input>
           <label htmlFor="BSHM">BSHM</label>
         </section>
       </div>

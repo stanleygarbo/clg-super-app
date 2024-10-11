@@ -8,7 +8,9 @@ const EformSiblings = () => {
       <p className="font-bold">SIBLING'S INFORMATION</p>
       <div
         className="grid gap-[10px] px-6 py-3"
-        style={{ gridTemplateColumns: "1fr 100px 1fr" }}
+        style={{
+          gridTemplateColumns: "minmax(10px, 1fr) 100px minmax(10px, 1fr)",
+        }}
       >
         <h1 className="text-center">BROTHERS/SISTERS' NAME</h1>
         <h1 className="text-center">AGE</h1>
@@ -17,6 +19,7 @@ const EformSiblings = () => {
           type="text"
           placeholder=""
           {...methods.register("siblingName")}
+          className="min-w-1"
         />
         <input type="text" placeholder="" {...methods.register("siblingAge")} />
         <input

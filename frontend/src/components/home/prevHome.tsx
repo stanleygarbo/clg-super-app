@@ -1,5 +1,3 @@
-import PrevHomeTESDA from "./prevHomeTESDA";
-
 const PrevHome = () => {
   const courses = [
     {
@@ -49,7 +47,7 @@ const PrevHome = () => {
         </div>
       </section>
       <div className="relative max-w-[1600px] m-auto grid grid-cols-2">
-        <div className="pb-5 pt-20 relative">
+        {/* <div className="pb-5 pt-20 relative">
           <h1 className="text-3xl  font-bold flex items-center">
             <div className="w-32 h-1 bg-black mr-4"></div>
             <strong className="text-blue-600 mr-5">01</strong>
@@ -62,8 +60,8 @@ const PrevHome = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className=" pr-20">
+        </div> */}
+        {/* <div className=" pr-20">
           <h1 className="font-bold pb-2 pt-[90px] text-xl text-start">
             College
             <img src="/line-thin.svg" className="w-36 -ml-5" alt="" />
@@ -84,7 +82,7 @@ const PrevHome = () => {
             </div>
           ))}
           <PrevHomeTESDA />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,11 +1,18 @@
+import { Link } from "react-router-dom";
+
 const About = () => {
   return (
-    <div className="p-10 pt-28 flex flex-col justify-evenly">
-      <h1 className="px-[10rem] my-10 text-4xl font-bold">
+    <div className="px-10 pt-20 flex flex-col justify-evenly">
+      <img
+        src="./students.png"
+        alt="Image"
+        className="border rounded-md opacity-80 hover:opacity-100  transition-all"
+      />
+      {/* <h1 className="px-10 my-10 text-4xl font-bold">
         About
         <img src="/line-thin.svg" className="w-[100px]" alt="" />
-      </h1>
-      <div className="px-[10rem]">
+      </h1> */}
+      <div className="px-10 py-10">
         <p className="text-warp ">
           ACLC College is a member of the AMA Education System and is one of the
           leading computer schools in the country. With a curriculum that is
@@ -27,7 +34,7 @@ const About = () => {
         </p>
       </div>
 
-      <div className=" flex flex-col m-auto items-center py-10">
+      {/* <div className=" flex flex-col m-auto items-center py-10">
         <img
           src="./chair_03.png"
           alt=""
@@ -61,8 +68,8 @@ const About = () => {
           Aguiluz V, First President of AMA Computer University, 5 February
           2002, 6:30 pm, PICC Reception Hall)
         </article>
-      </div>
-      <div className=" flex flex-col m-auto items-center py-10">
+      </div> */}
+      {/* <div className=" flex flex-col m-auto items-center py-10">
         <img
           src="./pres_03.png"
           alt=""
@@ -99,12 +106,16 @@ const About = () => {
           System and we shall stay strong in doing what we do best --- providing
           quality education to all.
         </article>
-      </div>
+      </div> */}
 
-      <div className="flex flex-row justify-evenly px-[5rem] pt-10 w-[100%] h-[400px] ">
-        <div className="shadow-xl rounded-xl p-5 w-[500px] h-[300px] hover:scale-[1.05] transition-all">
-          <h1 className="font-bold text-center pb-3">MISSION</h1>
-          <article>
+      <div className="flex flex-col p-10 ">
+        <Link to="/about/mission">
+          {/* <div className="shadow-xl rounded-xl p-5 w-[500px] h-[300px] hover:scale-[1.05] transition-all"> */}
+          <h1 className="font-bold pb-3 hover:text-red-500 hover:scale-105 transition-all">
+            MISSION
+          </h1>
+        </Link>
+        {/* <article>
             To provide a holistic, relevant, quality and globally recognized
             IT-based education in all levels and disciplines with the objective
             of producing professionals and leaders responsive to the needs of
@@ -112,17 +123,36 @@ const About = () => {
             benefits of its men and women thereby realizing their potential as
             productive members of the society for the honor and glory of God
             Almighty.
-          </article>
-        </div>
+          </article> */}
+        {/* </div> */}
 
-        <div className=" shadow-xl rounded-xl p-5 w-[500px] h-[300px] hover:scale-[1.05] transition-all">
-          <h1 className="font-bold text-center pb-3">VISION</h1>
-          <article>
+        {/* <div className=" shadow-xl rounded-xl p-5 w-[500px] h-[300px] hover:scale-[1.05] transition-all"> */}
+        <Link to="/about/vision">
+          <h1 className="font-bold pb-3 hover:text-red-500 hover:scale-105 transition-all">
+            VISION
+          </h1>
+        </Link>
+        {/* <article>
             To be the leader and dominant provider of relevant globally
             recognized information technology-based education and related
             services in the global market.
-          </article>
-        </div>
+          </article> */}
+        {/* </div> */}
+        <Link to="/about/ama-hymn">
+          <h1 className="font-bold pb-3 hover:text-red-500 hover:scale-105 transition-all">
+            AMA HYMN
+          </h1>
+        </Link>
+        <Link to="office-chairman-vice">
+          <h1 className="font-bold pb-3 hover:text-red-500 hover:scale-105 transition-all">
+            OFFICE OF THE CHAIRMAN AND VICE CHAIRMAN
+          </h1>
+        </Link>
+        <Link to="/about/course-offered">
+          <h1 className="font-bold pb-3 hover:text-red-500 hover:scale-105 transition-all">
+            COURSES OFFERED
+          </h1>
+        </Link>
       </div>
     </div>
   );
