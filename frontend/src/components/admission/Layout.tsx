@@ -4,7 +4,7 @@ import Sidebar from "../sidebar/Sidebar";
 const Layout = () => {
   return (
     <div className="flex">
-      <Sidebar />
+      <Sidebar sidebarItems={[]} />
       <div className="max-w-[1000px]">
         <Outlet />
       </div>

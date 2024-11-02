@@ -1,22 +1,22 @@
 const PrevHome = () => {
-  const courses = [
-    {
-      cName: "Bachelor's of Science in Computer Science (BSCS)",
-    },
-    {
-      cName: "Bachelor's of Science in Information Technology (BSIT)",
-    },
-    {
-      cName: "Bachelor's of Science in Business Administration (BSBA)",
-    },
-    {
-      cName: "Bachelor's of Science in Hospitality Management (BSHM)",
-    },
-  ];
+  // const courses = [
+  //   {
+  //     cName: "Bachelor's of Science in Computer Science (BSCS)",
+  //   },
+  //   {
+  //     cName: "Bachelor's of Science in Information Technology (BSIT)",
+  //   },
+  //   {
+  //     cName: "Bachelor's of Science in Business Administration (BSBA)",
+  //   },
+  //   {
+  //     cName: "Bachelor's of Science in Hospitality Management (BSHM)",
+  //   },
+  // ];
 
   return (
     <div className="">
-      <section className="w-full h-screen border-b flex items-center">
+      <section className="relative w-full h-screen border-b flex items-center">
         <div className="w-full pl-[170px] z-20 ">
           <div className="max-w-[1800px] mx-auto">
             <h1 className="text-[100px] font-bold leading-[100px]">
@@ -25,7 +25,7 @@ const PrevHome = () => {
                 Ormoc
                 <img
                   src="/line.svg"
-                  className=" absolute left-0 w-full"
+                  className="absolute top-0 left-0 w-full"
                   alt=""
                 />
               </span>
