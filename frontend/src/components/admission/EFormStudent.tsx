@@ -10,19 +10,19 @@ const EFormStudent = () => {
         <div className="gap-5 grid grid-cols-3">
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-md"
             placeholder="LASTNAME"
             {...methods.register("lastName")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-md"
             placeholder="FIRST NAME"
             {...methods.register("firstName")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-md"
             placeholder="MIDDLE NAME"
             {...methods.register("middleName")}
           />

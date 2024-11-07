@@ -4,7 +4,6 @@ import About from "./pages/About";
 import EForm from "./components/admission/EForm";
 import AboutLayout from "./layouts/about_layout/AboutLayout";
 import Mission from "./components/about/Mission";
-import PrevHome from "./components/home/PrevHome";
 import CoursesOffered from "./components/about/CoursesOffered";
 import Vision from "./components/about/Vision";
 import AMAHymn from "./components/about/AMAHymn";
@@ -12,6 +11,9 @@ import OfficeChairmanVice from "./components/about/OfficeChairmanVice";
 import Footer from "./components/Footer";
 import Layout from "./layouts/home_layout/Layout";
 import AdminLayout from "./layouts/AdminLayout";
+import PrevHome from "./components/home/prevHome";
+import UpdateProfile from "./components/UpdateProfile";
+import Dashboard from "./components/dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,10 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <AdminLayout />,
     children: [
+      {
+        path: "users/allusers",
+        element: <Dashboard />,
+      },
       {
         path: "admission/students",
         element: <EForm />,
@@ -69,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "footer",
         element: <Footer />,
+      },
+      {
+        path: "update",
+        element: <UpdateProfile />,
       },
     ],
   },

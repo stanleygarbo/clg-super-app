@@ -4,32 +4,22 @@ const EFormSchoolYear = () => {
   const methods = useFormContext();
 
   return (
-    <div className="m-auto p-10 flex flex-wrap justify-between w-full">
+    <div className="p-10 flex justify-between">
       <div>
-        <img src="./aclc-logo.png" alt="" />
+        <img src="./aclc-logo.png" alt="Img" />
       </div>
-      <div className="border-2 py-10 px-5 flex flex-col items-center border-black">
+      <div className="border-2 py-10 px-5 flex flex-col items-center border-black rounded-md">
         <section className="flex">
           <h1 className="pr-2 pl-2">SCHOOL YEAR : </h1>
           <input
-            className="pr-2 pl-2 w-[3rem]"
+            className="pr-2 pl-2 w-[30%] rounded-md"
             required
             type="number"
-            placeholder="xxxx"
-            maxLength={4}
+            placeholder="xxxx - xxxx"
             {...methods.register("schoolYear")}
           ></input>
-          <p className="pl-2 pr-2">-</p>
-          <input
-            className="pr-2 pl-2 w-[3rem]"
-            required
-            type="number"
-            maxLength={4}
-            {...methods.register("schoolYear2")}
-            placeholder="xxxx"
-          ></input>
         </section>
-        <section className="flex gap-2 flex-wrap">
+        <section className="flex gap-2">
           <input
             className="pl-2 pr-2 "
             type="radio"

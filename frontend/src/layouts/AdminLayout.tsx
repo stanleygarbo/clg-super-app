@@ -9,11 +9,11 @@ const sidebarItems: ISidebarItem[] = [
     name: "Users",
     icon: FaRegUser,
     type: "drawer",
-    path: "/users",
+    path: "admin/users",
     subItems: [
       {
         name: "All Users",
-        path: "/users",
+        path: "/admin/users/allusers",
       },
       {
         name: "SSC",

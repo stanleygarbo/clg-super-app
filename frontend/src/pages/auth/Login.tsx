@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const navigate = useNavigate();
 
   return (
     <div id="loginPopUp" className="py-20">
@@ -36,7 +38,13 @@ const Login = () => {
             setUserPassword(e.target.value);
           }}
         ></input>
-        <button className="mt-4 pr-3 pl-3 bg-blue-500 shadow-lg shadow-blue-500/50 hover:shadow-red-500/50 rounded-md text-white hover:bg-red-500 hover:text-white transition-all duration-300 py-2">
+        <button
+          type="button"
+          onClick={() => {
+            navigate("/about/update");
+          }}
+          className="mt-4 pr-3 pl-3 bg-blue-500 shadow-lg shadow-blue-500/50 hover:shadow-red-500/50 rounded-md text-white hover:bg-red-500 hover:text-white transition-all duration-300 py-2"
+        >
           Log In
         </button>
         <p className="text-xs mt-8 text-center px-10">
