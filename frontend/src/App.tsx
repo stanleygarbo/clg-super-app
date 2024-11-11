@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import About from "./pages/About";
-import EForm from "./components/admission/EForm";
 import AboutLayout from "./layouts/about_layout/AboutLayout";
 import Mission from "./components/about/Mission";
 import CoursesOffered from "./components/about/CoursesOffered";
@@ -10,10 +9,14 @@ import AMAHymn from "./components/about/AMAHymn";
 import OfficeChairmanVice from "./components/about/OfficeChairmanVice";
 import Footer from "./components/Footer";
 import Layout from "./layouts/home_layout/Layout";
-import AdminLayout from "./layouts/AdminLayout";
-import PrevHome from "./components/home/prevHome";
-import UpdateProfile from "./components/UpdateProfile";
+import AdminLayout from "./layouts/admin_layout/AdminLayout";
 import Dashboard from "./components/dashboard/Dashboard";
+import StudentUpdateProfile from "./components/update_profile/StudentUpdateProfile";
+import Home from "./pages/Home";
+import AdmissionLayout from "./layouts/admission_layout/AdmissionLayout";
+import EForm from "./components/admission/enrollment_form/EForm";
+import AdmissionProfile from "./components/admission/profile/AdmissionProfile";
+import AdmissionUpdateProfile from "./components/admission/profile/AdmissionUpdateProfile";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +25,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <PrevHome />,
+        element: <Home />,
       },
       {
         path: "/login",
@@ -42,8 +45,22 @@ const router = createBrowserRouter([
         path: "users/allusers",
         element: <Dashboard />,
       },
+    ],
+  },
+  {
+    path: "/admission",
+    element: <AdmissionLayout />,
+    children: [
       {
-        path: "admission/students",
+        path: "user/profile",
+        element: <AdmissionProfile />,
+      },
+      {
+        path: "user/updateprofile",
+        element: <AdmissionUpdateProfile />,
+      },
+      {
+        path: "main/eform",
         element: <EForm />,
       },
     ],
@@ -78,7 +95,7 @@ const router = createBrowserRouter([
       },
       {
         path: "update",
-        element: <UpdateProfile />,
+        element: <StudentUpdateProfile />,
       },
     ],
   },

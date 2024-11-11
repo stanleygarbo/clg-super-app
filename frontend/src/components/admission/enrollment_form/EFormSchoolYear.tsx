@@ -5,14 +5,14 @@ const EFormSchoolYear = () => {
 
   return (
     <div className="p-10 flex justify-between">
-      <div>
-        <img src="./aclc-logo.png" alt="Img" />
+      <div className="flex justify-center items-center w-[200px] h-[100px]">
+        <img src="/aclc-logo-text.png" alt="" className="" />
       </div>
       <div className="border-2 py-10 px-5 flex flex-col items-center border-black rounded-md">
         <section className="flex">
           <h1 className="pr-2 pl-2">SCHOOL YEAR : </h1>
           <input
-            className="pr-2 pl-2 w-[30%] rounded-md"
+            className="pr-2 pl-2 w-[100px] rounded-lg"
             required
             type="number"
             placeholder="xxxx - xxxx"
@@ -49,7 +49,7 @@ const EFormSchoolYear = () => {
               id="date"
               required
               type="date"
-              className=" w-[9rem] h-[32px] pr-3"
+              className=" w-[100px] h-[32px] px-3 rounded-lg"
               {...methods.register("date")}
             ></input>
           </div>
@@ -60,7 +60,7 @@ const EFormSchoolYear = () => {
             <input
               id="orNum"
               required
-              className=" w-[9rem] h-[32px] pr-3"
+              className=" w-[100px] h-[32px] pr-3 rounded-lg"
               type="number"
               {...methods.register("orNum")}
             ></input>
@@ -69,24 +69,32 @@ const EFormSchoolYear = () => {
             <label htmlFor="amount">Amount : </label>
             <input
               id="amount"
-              className=" w-[9rem] h-[32px] pr-3"
+              className=" w-[100px] h-[32px] pr-3 rounded-lg"
               required
               type="number"
               {...methods.register("amount")}
             ></input>
           </div>
         </section>
-        <section className="flex gap-2 items-center">
-          <input type="radio" className="g" id="BSIT" name="course"></input>
-          <label htmlFor="BSIT" className="">
-            BSIT
-          </label>
-          <input type="radio" id="BSCS" name="course"></input>
-          <label htmlFor="BSCS">BSCS</label>
-          <input type="radio" id="BSBA" name="course"></input>
-          <label htmlFor="BSBA">BSBA</label>
-          <input type="radio" id="BSHM" name="course"></input>
-          <label htmlFor="BSHM">BSHM</label>
+        <section className="flex gap-3 items-center">
+          <span className="flex gap-1">
+            <input type="radio" className="g" id="BSIT" name="course"></input>
+            <label htmlFor="BSIT" className="">
+              BSIT
+            </label>
+          </span>
+          <span className="flex gap-1">
+            <input type="radio" id="BSCS" name="course"></input>
+            <label htmlFor="BSCS">BSCS</label>
+          </span>
+          <span className="flex gap-1">
+            <input type="radio" id="BSBA" name="course"></input>
+            <label htmlFor="BSBA">BSBA</label>
+          </span>
+          <span className="flex gap-1">
+            <input type="radio" id="BSHM" name="course"></input>
+            <label htmlFor="BSHM">BSHM</label>
+          </span>
         </section>
       </div>
     </div>

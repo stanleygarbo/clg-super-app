@@ -1,11 +1,9 @@
-import Schedule from "./schedules/Schedules";
-import Subjects from "./subjects/Subjects";
+import AllUser from "./all-user/AllUser";
 
 const Dashboard = () => {
   return (
-    <div className="flex gap-5 p-10 text-slate-600">
-      <Schedule />
-      <Subjects />
+    <div className="flex flex-wrap gap-5 text-slate-800 my-10">
+      <AllUser />
     </div>
   );
 };

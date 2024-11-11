@@ -27,13 +27,15 @@ function EForm() {
           <EFormStudent />
           <EFormParents />
           <EformSiblings />
-          <button
-            type="submit"
-            className=" bg-red-500 py-2 w-[15%] font-bold text-white rounded-md 
-          transition-all hover:bg-blue-400 "
-          >
-            Submit
-          </button>
+          <section className="flex justify-end px-7">
+            <button
+              type="submit"
+              className="text-center bg-red-500 py-1 w-[120px] font-bold text-white rounded-lg 
+          transition-all hover:bg-blue-400"
+            >
+              Submit
+            </button>
+          </section>
         </div>
       </form>
     </FormProvider>

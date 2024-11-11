@@ -1,9 +1,9 @@
-import NewHome from "../components/home/NewHome";
+import PrevHome from "../components/home/prevHome";
 
 const Home = () => {
   return (
     <div className="d">
-      <NewHome />
+      <PrevHome />
     </div>
   );
 };

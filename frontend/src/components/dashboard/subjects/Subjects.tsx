@@ -35,7 +35,7 @@ const Subjects = () => {
   ];
 
   return (
-    <div className="flex flex-col border border-slate-500 rounded-md p-5 w-[500px] h-[200px] overflow-auto overflow-y-scroll no-scrollbar items-center">
+    <div className="flex flex-col border border-slate-500 rounded-md p-5 w-[500px] h-[400px] overflow-auto overflow-y-scroll no-scrollbar items-center">
       <h1 className="font-bold text-2xl mb-5 "> Subjects</h1>
       <div className="flex flex-wrap gap-5 justify-center text-center">
         {subjects.map((subjects, id) => (

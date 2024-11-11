@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/sidebar/Sidebar";
+import Sidebar from "../../components/sidebar/Sidebar";
 import { FaRegUser } from "react-icons/fa";
 import { LuDoorOpen, LuSchool } from "react-icons/lu";
-import { ISidebarItem } from "../components/sidebar/SidebarItems";
+import { ISidebarItem } from "../../components/sidebar/SidebarItems";
 
 const sidebarItems: ISidebarItem[] = [
   {
@@ -61,7 +61,7 @@ const AdminLayout = () => {
       <div className="fixed left-0 top-0 h-screen">
         <Sidebar sidebarItems={sidebarItems} />
       </div>
-      <div className="max-w-[1000px]">
+      <div className="pr-10">
         <Outlet />
       </div>
     </div>

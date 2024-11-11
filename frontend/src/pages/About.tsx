@@ -33,28 +33,28 @@ const About = () => {
 
       <div className="flex justify-between p-10 ">
         <Link to="/about/mission" className="flex flex-col">
-          <h1 className="font-bold p-3 border-b-2 hover:border-b-blue-300 hover:text-red-500 text-slate-500  transition-all">
+          <h1 className="font-bold p-3 border-b-2 border-white hover:border-b-blue-300 hover:text-red-500 text-slate-500  duration-200">
             MISSION
           </h1>
         </Link>
         <Link to="/about/vision">
-          <h1 className="font-bold p-3 border-b-2 hover:border-b-blue-300 hover:text-red-500 text-slate-500  transition-all">
+          <h1 className="font-bold p-3 border-b-2 border-white hover:border-b-blue-300 hover:text-red-500 text-slate-500  duration-200">
             VISION
           </h1>
         </Link>
 
         <Link to="/about/ama-hymn">
-          <h1 className="font-bold p-3 border-b-2 hover:border-b-blue-300 hover:text-red-500 text-slate-500  transition-all">
+          <h1 className="font-bold p-3 border-b-2 border-white hover:border-b-blue-300 hover:text-red-500 text-slate-500  duration-200">
             AMA HYMN
           </h1>
         </Link>
         <Link to="office-chairman-vice">
-          <h1 className="font-bold p-3 border-b-2 hover:border-b-blue-300 hover:text-red-500 text-slate-500  transition-all">
+          <h1 className="font-bold p-3 border-b-2 border-white hover:border-b-blue-300 hover:text-red-500 text-slate-500  duration-200">
             OFFICE OF THE CHAIRMAN AND VICE CHAIRMAN
           </h1>
         </Link>
         <Link to="/about/course-offered">
-          <h1 className="font-bold p-3 border-b-2 hover:border-b-blue-300 hover:text-red-500 text-slate-500  transition-all">
+          <h1 className="font-bold p-3 border-b-2 border-white hover:border-b-blue-300 hover:text-red-500 text-slate-500  duration-200">
             COURSES OFFERED
           </h1>
         </Link>

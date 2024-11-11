@@ -12,19 +12,19 @@ const EFormParents = () => {
         <div className="gap-5 grid grid-cols-3">
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="LAST NAME"
             {...methods.register("fatherLastName")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="FIRST NAME"
             {...methods.register("fatherFirstName")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="MIDDLE NAME"
             {...methods.register("fatherMiddleName")}
           />
@@ -32,19 +32,19 @@ const EFormParents = () => {
         <div className="grid grid-cols-3 gap-5 ">
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="OCCUPATION"
             {...methods.register("fatherOccupation")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="COMPANY/OFFICE NAME"
             {...methods.register("fatherCompany")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="COMPANY ADDRESS"
             {...methods.register("fatherCompanyAddress")}
           />
@@ -52,26 +52,26 @@ const EFormParents = () => {
         <div className="grid grid-cols-4 gap-5 ">
           <input
             type="number"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="TEL NO."
             maxLength={11}
             {...methods.register("fatherTelNum")}
           />
           <input
             type="number"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="FAX NO."
             {...methods.register("fatherFaxNum")}
           />
           <input
             type="number"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="CELLPHONE NO."
             {...methods.register("fatherPhoneNum")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="EMAIL"
             {...methods.register("fatherEmail")}
           />
@@ -84,19 +84,19 @@ const EFormParents = () => {
         <div className="grid grid-cols-3 gap-5">
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="LAST NAME"
             {...methods.register("motherLastName")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="FIRST NAME"
             {...methods.register("motherFirstName")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="MIDDLE NAME"
             {...methods.register("motherMiddleName")}
           />
@@ -104,19 +104,19 @@ const EFormParents = () => {
         <div className="grid grid-cols-3 gap-5 ">
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="OCCUPATION"
             {...methods.register("motherOccupation")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="COMPANY/OFFICE NAME"
             {...methods.register("motherCompany")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="COMPANY ADDRESS"
             {...methods.register("motherCompanyAddress")}
           />
@@ -124,26 +124,26 @@ const EFormParents = () => {
         <div className="grid grid-cols-4 gap-5 ">
           <input
             type="number"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="TEL NO."
             maxLength={11}
             {...methods.register("motherTelNum")}
           />
           <input
             type="number"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="FAX NO."
             {...methods.register("motherFaxNum")}
           />
           <input
             type="number"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="CELLPHONE NO."
             {...methods.register("motherPhoneNum")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="EMAIL"
             {...methods.register("motherEmail")}
           />
@@ -156,19 +156,19 @@ const EFormParents = () => {
         <div className="grid grid-cols-3 gap-5">
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="LAST NAME"
             {...methods.register("guardianLastName")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="FIRST NAME"
             {...methods.register("guardianFirstName")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="MIDDLE NAME"
             {...methods.register("guardianMiddleName")}
           />
@@ -177,13 +177,13 @@ const EFormParents = () => {
         <div className="grid grid-cols-2 gap-3 ">
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="SPOUSE'S NAME (IF GUARDIAN IS MARRIED)"
             {...methods.register("guardianSpouseName")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="RELATIONSHIP TO THE STUDENT"
             {...methods.register("guardianRelationshipStudent")}
           />
@@ -191,19 +191,19 @@ const EFormParents = () => {
         <div className="grid grid-cols-3 gap-5 ">
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="OCCUPATION"
             {...methods.register("guardianOccupation")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="COMPANY/OFFICE NAME"
             {...methods.register("guardianCompany")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="COMPANY ADDRESS"
             {...methods.register("guardianCompanyAddress")}
           />
@@ -211,26 +211,26 @@ const EFormParents = () => {
         <div className="grid grid-cols-4 gap-5 ">
           <input
             type="number"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="TEL NO."
             {...methods.register("guardianTelNum")}
           />
           <input
             type="number"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="FAX NO."
             {...methods.register("guardianFaxNum")}
           />
           <input
             type="number"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="CELLPHONE NO."
             maxLength={11}
             {...methods.register("guardianPhoneNum")}
           />
           <input
             type="text"
-            className="pl-5"
+            className="pl-5 rounded-lg py-1"
             placeholder="EMAIL"
             {...methods.register("guardianEmail")}
           />
