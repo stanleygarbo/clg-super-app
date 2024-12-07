@@ -1,17 +1,17 @@
 const OfficeChairmanVice = () => {
   return (
     <div>
-      <div className=" flex flex-col m-auto items-center py-10">
+      <div className=" flex flex-col items-center py-20">
         <img
           src="/chair_03.png"
           alt=""
-          className=" rounded-full border-2 border-red-500 shadow-xl hover:scale-[1.05] transition-transform "
+          className=" rounded-full drop-shadow-md hover:scale-[1.05] duration-200"
         />
-        <p className="pb-10 pt-6 opacity-50">
+        <p className="pb-10 pt-6 opacity-60 font-bold">
           Dr. Amable R. Aguiluz V, Chairman
         </p>
 
-        <article className="px-[10rem]">
+        <article className="px-20 xs:px-5 sm:px-2">
           We live in this period of human history where the whole world is right
           at our fingertips. The advent of computers has changed our lives and
           keeps changing the way we live. We now find ourselves in this
@@ -40,13 +40,13 @@ const OfficeChairmanVice = () => {
         <img
           src="/pres_03.png"
           alt=""
-          className=" rounded-full border-2 border-red-500 shadow-xl hover:scale-[1.05] transition-transform "
+          className=" rounded-full drop-shadow-md hover:scale-[1.05] duration-200"
         />
-        <p className="pb-10 pt-6 opacity-50">
+        <p className="pb-10 pt-6 opacity-60 font-bold">
           Dr. Amable C. Aguiluz IX, Vice Chairman
         </p>
 
-        <article className="px-[10rem]">
+        <article className="px-20 pb-20 xs:px-5 sm:px-2">
           One of the many challenges that we at AMAES is constantly faced with
           is competition. Global changes put pressure on how we develop and
           produce graduates who are relevant and in demand in today’s workforce.

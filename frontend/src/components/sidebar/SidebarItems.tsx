@@ -78,7 +78,7 @@ const SidebarItems = ({
                 }
               }}
               className={twMerge(
-                "leading-none text-sm font-medium",
+                "leading-none text-sm font-semibold",
                 isActive && depth === 1 ? textActiveStyles : textInactiveStyles
               )}
             >
@@ -88,10 +88,10 @@ const SidebarItems = ({
                   isActive && depth === 1 ? "bg-red-50" : "hover:bg-gray-100"
                 )}
                 style={{
-                  paddingLeft: depth > 0 ? `${16 * depth}px` : "",
+                  paddingLeft: depth > 0 ? ` ${16 * depth}px` : "",
                 }}
               >
-                <div className="flex items-center ">
+                <div className="flex items-center">
                   {i.icon ? (
                     <i.icon
                       size={18}
@@ -104,13 +104,13 @@ const SidebarItems = ({
                     depth > 0 && (
                       <div
                         className={twMerge(
-                          "w-4 h-4 rounded-full mr-4 flex items-center justify-center",
+                          "w-4 h-4 rounded-sm mr-4 flex items-center justify-center",
                           isActive && "bg-red-200"
                         )}
                       >
                         <span
                           className={twMerge(
-                            "w-2 h-2 rounded-full",
+                            "w-2 h-2 rounded-sm",
                             isActive ? "bg-red-500" : "bg-gray-400"
                           )}
                         />
@@ -122,7 +122,7 @@ const SidebarItems = ({
                 {i.type === "drawer" && (
                   <FaChevronDown
                     className={twMerge(
-                      "transition-all",
+                      "duration-200",
                       open === i.name && "rotate-180"
                     )}
                   />
@@ -131,7 +131,7 @@ const SidebarItems = ({
             </Link>
             <div
               className={twMerge(
-                "transition-all duration-300 overflow-hidden"
+                "duration-300 overflow-hidden"
                 // open === i.name ? "h-fit" : "h-0"
               )}
               style={{

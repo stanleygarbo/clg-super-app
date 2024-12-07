@@ -1,99 +1,143 @@
-import { useFormContext } from "react-hook-form";
+import { useSnapshot } from "valtio";
+import { studentData } from "../../../store/StudentData";
+import { userData } from "../../../store/UserData";
 
 const EFormSchoolYear = () => {
-  const methods = useFormContext();
+  const snap = useSnapshot(studentData);
+  const snap2 = useSnapshot(userData);
 
   return (
-    <div className="p-10 flex justify-between">
-      <div className="flex justify-center items-center w-[200px] h-[100px]">
+    <div className="p-10 xs:p-0 sm:p-1 md:p-2 flex xs:flex-col sm:flex-col md:flex-col xs:gap-3 sm:gap-5 md:gap-5 sm:items-center xs:items-center md:items-center justify-between">
+      <div className="flex justify-center items-center w-[200px]">
         <img src="/aclc-logo-text.png" alt="" className="" />
       </div>
-      <div className="border-2 py-10 px-5 flex flex-col items-center border-black rounded-md">
-        <section className="flex">
-          <h1 className="pr-2 pl-2">SCHOOL YEAR : </h1>
-          <input
-            className="pr-2 pl-2 w-[100px] rounded-lg"
-            required
-            type="number"
-            placeholder="xxxx - xxxx"
-            {...methods.register("schoolYear")}
-          ></input>
-        </section>
-        <section className="flex gap-2">
-          <input
-            className="pl-2 pr-2 "
-            type="radio"
-            id="1st"
-            name="sem"
-          ></input>
-          <label className="pl-2 pr-2" htmlFor="1st">
-            1<sup>st</sup> Semester
-          </label>
-          <input
-            className="radio2 pl-2 pr-2"
-            type="radio"
-            id="2nd"
-            name="sem"
-          ></input>
-          <label htmlFor="2nd">
-            2<sup>nd</sup> Semester
-          </label>
-        </section>
-        <h1 className="pb-0">INITIAL PAYMENT</h1>
-        <section className="flex gap-2">
-          <div className="grid grid-rows-2">
-            <label htmlFor="date" className="pr-2">
-              Date :{" "}
-            </label>
+      <div className="border py-10 px-5 flex flex-col border-slate-500 rounded-md w-[400px] xs:w-[100%] sm:w-[100%] md:[100%] gap-3">
+        <section className="grid grid-cols-2 gap-3">
+          <span
+            className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
+          >
+            <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              School Year
+            </p>
             <input
-              id="date"
+              className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              type="text"
               required
+              value={snap.schoolYear}
+              onChange={(e) => {
+                studentData.schoolYear = e.target.value;
+              }}
+            />
+          </span>
+          <span
+            className={` ${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
+          >
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Semester
+            </p>
+            <select
+              value={snap.semester}
+              onChange={(e) => {
+                studentData.semester = e.target.value;
+              }}
+              className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+            >
+              <option value=" "> </option>
+              <option value="1st">1st</option>
+              <option value="2nd">2nd</option>
+            </select>
+          </span>
+        </section>
+        <section className="grid grid-cols-2 gap-3">
+          <span
+            className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative  `}
+          >
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Course
+            </p>
+            <select
+              value={snap.course}
+              required
+              onChange={(e) => {
+                studentData.course = e.target.value;
+              }}
+              className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+            >
+              <option value=" "> </option>
+              <option value="BSCS">BSCS</option>
+              <option value="BSIT">BSIT</option>
+              <option value="BSBA">BSBA</option>
+              <option value="BSHM">BSHM</option>
+            </select>
+          </span>
+          <span
+            className={` ${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
+          >
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Year
+            </p>
+            <select
+              value={snap.year}
+              required
+              onChange={(e) => {
+                studentData.year = e.target.value;
+              }}
+              className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+            >
+              <option value=" "> </option>
+              <option value="1st">1st</option>
+              <option value="2nd">2nd</option>
+              <option value="3rd">3rd</option>
+              <option value="4th">4th</option>
+            </select>
+          </span>
+        </section>
+        <h1 className="text-sm font-bold text-black">INITIAL PAYMENT :</h1>
+        <section className="grid grid-cols-3 gap-3">
+          <span
+            className={` ${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
+          >
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Date
+            </p>
+            <input
+              className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="date"
-              className=" w-[100px] h-[32px] px-3 rounded-lg"
-              {...methods.register("date")}
-            ></input>
-          </div>
-          <div className="grid grid-rows-2">
-            <label htmlFor="orNum" className="pl-2">
-              O.R Number :{" "}
-            </label>
+              value={snap.date}
+              onChange={(e) => {
+                studentData.date = e.target.value;
+              }}
+            />
+          </span>
+          <span
+            className={` ${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
+          >
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              OR No.
+            </p>
             <input
-              id="orNum"
-              required
-              className=" w-[100px] h-[32px] pr-3 rounded-lg"
-              type="number"
-              {...methods.register("orNum")}
-            ></input>
-          </div>
-          <div className="grid grid-rows-2">
-            <label htmlFor="amount">Amount : </label>
+              className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              type="text"
+              value={snap.orNum}
+              onChange={(e) => {
+                studentData.orNum = e.target.value;
+              }}
+            />
+          </span>
+          <span
+            className={` ${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
+          >
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Amount
+            </p>
             <input
-              id="amount"
-              className=" w-[100px] h-[32px] pr-3 rounded-lg"
-              required
-              type="number"
-              {...methods.register("amount")}
-            ></input>
-          </div>
-        </section>
-        <section className="flex gap-3 items-center">
-          <span className="flex gap-1">
-            <input type="radio" className="g" id="BSIT" name="course"></input>
-            <label htmlFor="BSIT" className="">
-              BSIT
-            </label>
-          </span>
-          <span className="flex gap-1">
-            <input type="radio" id="BSCS" name="course"></input>
-            <label htmlFor="BSCS">BSCS</label>
-          </span>
-          <span className="flex gap-1">
-            <input type="radio" id="BSBA" name="course"></input>
-            <label htmlFor="BSBA">BSBA</label>
-          </span>
-          <span className="flex gap-1">
-            <input type="radio" id="BSHM" name="course"></input>
-            <label htmlFor="BSHM">BSHM</label>
+              className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              type="text"
+              value={snap.amount}
+              onChange={(e) => {
+                studentData.amount = e.target.value;
+              }}
+            />
           </span>
         </section>
       </div>

@@ -2,7 +2,7 @@ import PrevHome from "../components/home/prevHome";
 
 const Home = () => {
   return (
-    <div className="d">
+    <div className="">
       <PrevHome />
     </div>
   );

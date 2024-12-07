@@ -2,11 +2,11 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
-const AboutLayout = () => {
+const HomeLayout = () => {
   return (
-    <div>
+    <div className="">
       <Navbar />
-      <div className="m-20">
+      <div className="">
         <Outlet />
       </div>
       <Footer />
@@ -14,4 +14,4 @@ const AboutLayout = () => {
   );
 };
 
-export default AboutLayout;
+export default HomeLayout;
