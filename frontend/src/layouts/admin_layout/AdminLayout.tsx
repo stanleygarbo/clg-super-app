@@ -6,6 +6,10 @@ import { ISidebarItem } from "../../components/sidebar/SidebarItems";
 
 const sidebarItems: ISidebarItem[] = [
   {
+    name: "My Profile",
+    path: "admin/profile",
+  },
+  {
     name: "Users",
     icon: FaRegUser,
     type: "drawer",
