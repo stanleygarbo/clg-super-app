@@ -18,17 +18,17 @@ const Navbar = () => {
           </Link>
         </div>
         <section className="flex gap-5">
-          <div className=" hover:text-red-600 hover:scale-105 duration-200">
+          <div className=" hover:text-blue-700 hover:scale-105 duration-200">
             <Link className="xs:text-sm sm:text-sm font-bold" to="/">
               Home
             </Link>
           </div>
-          <div className=" hover:text-red-600 hover:scale-105 duration-200">
+          <div className=" hover:text-blue-700 hover:scale-105 duration-200">
             <Link className="xs:text-sm sm:text-sm font-bold" to="/about">
               About
             </Link>
           </div>
-          <div className=" hover:text-red-600 hover:scale-105 duration-200">
+          <div className=" hover:text-blue-700 hover:scale-105 duration-200">
             <Link className="xs:text-sm sm:text-sm font-bold" to="/login">
               Login
             </Link>

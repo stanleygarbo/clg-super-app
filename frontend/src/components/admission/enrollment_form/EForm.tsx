@@ -12,6 +12,7 @@ function EForm() {
     e.preventDefault();
 
     const datas = { studentData };
+    studentData.id = studentData.usn;
 
     studentData.status = "Enrolled";
 
@@ -23,7 +24,7 @@ function EForm() {
     console.log(datas);
 
     if (res.ok) {
-      navigate("/admin/admission/enroll-student");
+      navigate("/admission/enroll-student");
     } else {
       alert(`error${res.status}`);
     }
@@ -32,7 +33,7 @@ function EForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-10  xs:w-[68%] sm:w-[600px] md:w-[610px] lg:w-[950px] xl:[1000px] xs:mx-1 sm:mx-2 md:mx-60 lg:mx-72 xl:ml-60"
+      className="p-10 xs:w-[500px] sm:w-[600px] md:w-[610px] lg:w-[950px] w-[1100px] xs:mx-1 sm:mx-2 md:mx-60 lg:mx-72 xl:"
     >
       <div className="bg-black p-2 text-white rounded-t-md">
         <h1 className="text-2xl text-center font-bold justify-items-stretch">
@@ -47,8 +48,8 @@ function EForm() {
         <section className="flex justify-center px-7 mx-2">
           <button
             type="submit"
-            className="text-center border-2 py-1 w-[500px] border-blue-500 font-bold text-slate-700 rounded-lg shadow-md 
-           hover:border-green-500 active:shadow duration-200"
+            className="text-center bg-gradient-to-t from-blue-600 to-blue-400 shadow-lg shadow-blue-500/50 hover:scale-105 font-bold text-white rounded-lg
+            w-[40%] py-2 duration-200"
           >
             Enroll Student
           </button>

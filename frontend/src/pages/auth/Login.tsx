@@ -46,7 +46,7 @@ const Login = () => {
     <div id="loginPopUp" className=" h-screen py-20">
       <form
         onSubmit={proceedLogin}
-        className="flex flex-col m-auto gap-2 py-12 px-12 w-[500px] xs:w-[400px] sm:w-[450px] rounded-xl bg-white border mt-[100px]"
+        className="flex flex-col m-auto shadow-md gap-2 py-12 px-12 w-[500px] xs:w-[400px] sm:w-[450px] rounded-xl bg-white border mt-[100px]"
       >
         <h1 className="text-2xl text-black font-bold mb-6 flex items-center justify-center">
           <img
@@ -96,12 +96,12 @@ const Login = () => {
             }
             if (snap.usn === userUsn && snap.password === userPass) {
               console.log("Login Successfully");
-              navigate("/admin/profile");
+              navigate("/dashboard");
             } else {
               console.log("Wrong User Name or Password");
             }
           }}
-          className="mt-4 pr-3 pl-3 bg-gradient-to-t from-blue-600 to-blue-400 shadow-lg shadow-blue-500/50 rounded-md text-white  hover:bg-gradient-to-b hover:shadow-green-500/50 hover:from-green-400 hover:to-green-600 hover:text-white py-2 font-bold duration-200"
+          className="mt-4 pr-3 pl-3 bg-gradient-to-t from-blue-600 to-blue-400 shadow-md shadow-blue-500/50 rounded-md text-white hover:scale-105 py-2 active:scale-95 font-bold duration-200"
         >
           Log In
         </button>

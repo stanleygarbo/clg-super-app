@@ -1,4 +1,5 @@
 {
+  "proxy": "http://localhost:3000",
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "json-server": "^1.0.0-beta.3",
+    "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.5",

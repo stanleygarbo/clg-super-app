@@ -1,10 +1,10 @@
 import { useSnapshot } from "valtio";
 import { studentData } from "../../../store/StudentData";
-import { userData } from "../../../store/UserData";
+import { Data } from "../../../store/Data";
 
 const EFormParents = () => {
   const snap = useSnapshot(studentData);
-  const snap2 = useSnapshot(userData);
+  const isOpen = useSnapshot(Data);
 
   return (
     <div className="p-3">
@@ -17,7 +17,7 @@ const EFormParents = () => {
         </h1>
 
         <div className="gap-5 grid grid-cols-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Last Name
             </p>
@@ -30,7 +30,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               First Name
             </p>
@@ -43,7 +43,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Middle Name
             </p>
@@ -58,7 +58,7 @@ const EFormParents = () => {
           </span>
         </div>
         <div className="grid grid-cols-3 gap-5 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Occupation
             </p>
@@ -71,7 +71,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Company Name
             </p>
@@ -84,7 +84,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Company Address
             </p>
@@ -99,7 +99,7 @@ const EFormParents = () => {
           </span>
         </div>
         <div className="grid grid-cols-3 gap-5 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Telephone No.
             </p>
@@ -112,7 +112,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Phone No.
             </p>
@@ -125,7 +125,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Email
             </p>
@@ -147,7 +147,7 @@ const EFormParents = () => {
         </h1>
 
         <div className="gap-5 grid grid-cols-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Last Name
             </p>
@@ -160,7 +160,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               First Name
             </p>
@@ -173,7 +173,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Middle Name
             </p>
@@ -188,7 +188,7 @@ const EFormParents = () => {
           </span>
         </div>
         <div className="grid grid-cols-3 gap-5 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Occupation
             </p>
@@ -201,7 +201,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Company Name
             </p>
@@ -214,7 +214,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Company Address
             </p>
@@ -229,7 +229,7 @@ const EFormParents = () => {
           </span>
         </div>
         <div className="grid grid-cols-3 gap-5 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Telephone No.
             </p>
@@ -242,7 +242,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Phone No.
             </p>
@@ -255,7 +255,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Email
             </p>
@@ -277,7 +277,7 @@ const EFormParents = () => {
         </h1>
 
         <div className="grid grid-cols-4 gap-5 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Last Name
             </p>
@@ -290,7 +290,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               First Name
             </p>
@@ -303,7 +303,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Middle Name
             </p>
@@ -316,7 +316,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Relationship
             </p>
@@ -332,7 +332,7 @@ const EFormParents = () => {
         </div>
 
         <div className="grid grid-cols-3 gap-5 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Occupation
             </p>
@@ -345,7 +345,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Company Name
             </p>
@@ -358,7 +358,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Company Address
             </p>
@@ -373,7 +373,7 @@ const EFormParents = () => {
           </span>
         </div>
         <div className="grid grid-cols-3 gap-5 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Telephon No.
             </p>
@@ -386,7 +386,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Phone No.
             </p>
@@ -399,7 +399,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Email
             </p>
@@ -417,7 +417,7 @@ const EFormParents = () => {
           SPOUSE'S INFORMATION ( IF MARRIED )
         </h1>
         <div className="grid grid-cols-3 gap-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Last Name
             </p>
@@ -430,7 +430,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               First Name
             </p>
@@ -443,7 +443,7 @@ const EFormParents = () => {
               }}
             />
           </span>
-          <span className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Middle Name
             </p>

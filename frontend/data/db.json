@@ -1,24 +1,25 @@
 {
   "students": [
     {
-      "id": "6167",
+      "id": "55f7",
       "studentData": {
+        "id": "mhegz",
         "status": "Enrolled",
-        "usn": "",
+        "usn": "mhegz",
         "password": "",
         "schoolYear": "2024 - 2025",
         "semester": "1st",
-        "date": "2024-12-05",
-        "orNum": "31551",
-        "amount": "2750",
+        "date": "2024-12-07",
+        "orNum": "",
+        "amount": "",
         "course": "BSCS",
         "year": "3rd",
         "lastName": "Limpangog",
         "firstName": "Mheg Ryan",
-        "middleName": "Limpangog",
-        "telNum": "",
+        "middleName": "Tolibao",
+        "telNum": "09317619652",
         "phoneNum": "",
-        "email": "",
+        "email": "mhegryanlimpangog58@gmail.com",
         "birthDate": "",
         "birthPlace": "",
         "citizenship": "",
@@ -86,21 +87,22 @@
       }
     },
     {
-      "id": "6e3c",
+      "id": "8b81",
       "studentData": {
+        "id": "",
         "status": "Enrolled",
         "usn": "",
         "password": "",
         "schoolYear": "2024 - 2025",
         "semester": "1st",
-        "date": "2024-12-05",
-        "orNum": "31551",
-        "amount": "2750",
+        "date": "",
+        "orNum": "",
+        "amount": "",
         "course": "BSCS",
         "year": "3rd",
-        "lastName": "Limpangog",
-        "firstName": "Mheg Ryan",
-        "middleName": "Limpangog",
+        "lastName": "Garbo",
+        "firstName": "Stanley",
+        "middleName": "",
         "telNum": "",
         "phoneNum": "",
         "email": "",
@@ -173,12 +175,45 @@
   ],
   "users": [
     {
-      "id": "1efs",
+      "id": "afb4",
       "userData": {
         "usn": "mhegz",
-        "name": "Mheg Ryan T. Limpangog",
-        "role": "Admin",
-        "createdAt": "06/12/2024"
+        "password": "MM1008",
+        "confirmPass": "MM1008",
+        "name": "Mheg Ryan Tolibao Limpangog",
+        "role": "Student",
+        "createdAt": "10 / 11 / 2024 -- 9 : 43 : 15",
+        "open": true,
+        "opacity": "w-[400px] left-1/2 opacity-100"
+      }
+    },
+    {
+      "id": "1b88",
+      "userData": {
+        "usn": "Mac12",
+        "password": "Mac1234",
+        "confirmPass": "Mac1234",
+        "name": "Mac Alley Limpangog",
+        "role": "Student",
+        "createdAt": "",
+        "open": true,
+        "opacity": "opacity-0 left-0 w-0"
+      }
+    }
+  ],
+  "employee": [
+    {
+      "id": "75ed",
+      "employeeData": {
+        "firstName": "Kacelyn",
+        "middleName": "",
+        "lastName": "Ancheta",
+        "position": "Teacher",
+        "office": "Admission",
+        "sssNum": "",
+        "philhealthNum": "",
+        "pagibigID": "",
+        "tinNum": ""
       }
     }
   ]

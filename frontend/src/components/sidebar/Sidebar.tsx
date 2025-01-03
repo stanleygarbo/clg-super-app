@@ -2,22 +2,22 @@ import { useNavigate } from "react-router-dom";
 import { RiSidebarFoldFill } from "react-icons/ri";
 import SidebarItems, { ISidebarItem } from "./SidebarItems";
 import { useSnapshot } from "valtio";
-import { userData } from "../../store/UserData";
+import { Data } from "../../store/Data";
 
 const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
   const navigate = useNavigate();
-  const snap = useSnapshot(userData);
+  const isOpen = useSnapshot(Data);
 
   return (
     <aside
       className={` ${
-        snap.open ? "xs:w-[400px] sm:w-[400px] w-[250px]" : "w-[10px]"
+        isOpen ? "xs:w-[400px] sm:w-[400px] w-[250px]" : "w-[10px]"
       } relative duration-200 h-full bg-white xs:pr-4 sm:pr-4 border-r p-5  flex flex-col justify-between overflow-hidden`}
     >
       <button
         className={`absolute -right-3 top-9 w-7 text-xl md:hidden lg:hidden xl:hidden 2xl:hidden`}
         onClick={() => {
-          userData.open = !snap.open;
+          Data.isOpen = false;
         }}
       >
         <RiSidebarFoldFill />
@@ -28,9 +28,14 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
         } h-screen bg-slate-100 relative duration-200`}
       ></section> */}
       <div>
-        <img src="/aclc-logo-text.png" className="pl-4 mb-8 w-[200px]" alt="" />
-        <SidebarItems data={sidebarItems} depth={1} />
+        <section className="flex justify-center mb-10">
+          <img src="/aclc-logo.png" className="w-[100px] h-[100px]" alt="" />
+        </section>
+        <section>
+          <SidebarItems data={sidebarItems} depth={1} />
+        </section>
       </div>
+
       <section>
         {/* <div className="w-full h-px bg-gray-300 mb-5"></div> */}
         <button
@@ -38,7 +43,7 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
             sessionStorage.removeItem("");
             navigate("/login");
           }}
-          className="rounded-md bg-red-500 text-white w-full py-2 hover:scale-105 duration-200"
+          className="rounded-md bg-gradient-to-t from-red-600 to-red-400 shadow-md shadow-red-500/50 hover:scale-105 active:scale-95 text-white font-bold w-full py-2 duration-200"
         >
           Log out
         </button>

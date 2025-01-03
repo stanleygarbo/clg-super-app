@@ -51,7 +51,7 @@ const SidebarItems = ({
 }) => {
   const { pathname } = useLocation();
   const textInactiveStyles = "text-gray-600";
-  const textActiveStyles = "text-red-600";
+  const textActiveStyles = "text-blue-600";
   const [open, setOpen] = React.useState<string>("");
 
   return (
@@ -85,7 +85,7 @@ const SidebarItems = ({
               <section
                 className={twMerge(
                   "rounded-md h-[42px] flex justify-between items-center mb-1 pr-4",
-                  isActive && depth === 1 ? "bg-red-50" : "hover:bg-gray-100"
+                  isActive && depth === 1 ? "bg-blue-50" : "hover:bg-gray-100"
                 )}
                 style={{
                   paddingLeft: depth > 0 ? ` ${16 * depth}px` : "",
@@ -104,14 +104,14 @@ const SidebarItems = ({
                     depth > 0 && (
                       <div
                         className={twMerge(
-                          "w-4 h-4 rounded-sm mr-4 flex items-center justify-center",
-                          isActive && "bg-red-200"
+                          "w-4 h-4 rounded-full mr-4 flex items-center justify-center",
+                          isActive && "bg-blue-200"
                         )}
                       >
                         <span
                           className={twMerge(
-                            "w-2 h-2 rounded-sm",
-                            isActive ? "bg-red-500" : "bg-gray-400"
+                            "w-2 h-2 rounded-md",
+                            isActive ? "bg-blue-400" : "bg-gray-400"
                           )}
                         />
                       </div>

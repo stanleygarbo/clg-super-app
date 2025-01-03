@@ -4,13 +4,14 @@ import { userData } from "../../store/UserData";
 const AddUser = () => {
   const snap = useSnapshot(userData);
   return (
-    <div className="grid grid-rows-3 gap-3 w-[100%]">
+    <div className="grid grid-rows-1 gap-3">
       <span className="relative rounded-lg">
         <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
           Name
         </p>
         <input
           type="text"
+          required
           value={snap.name}
           onChange={(e) => {
             userData.name = e.target.value;
@@ -18,26 +19,29 @@ const AddUser = () => {
           className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
         />
       </span>
-      <span className="relative rounded-lg">
-        <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-          USN
-        </p>
-        <input
-          type="text"
-          value={snap.usn}
-          onChange={(e) => {
-            userData.usn = e.target.value;
-          }}
-          className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-        />
-      </span>
+
       <section className="grid grid-cols-2 gap-3">
+        <span className="relative rounded-lg">
+          <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+            USN
+          </p>
+          <input
+            type="text"
+            required
+            value={snap.usn}
+            onChange={(e) => {
+              userData.usn = e.target.value;
+            }}
+            className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+          />
+        </span>
         <span className="relative rounded-lg">
           <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
             Role
           </p>
           <select
             value={snap.role}
+            required
             onChange={(e) => {
               userData.role = e.target.value;
             }}
@@ -56,15 +60,32 @@ const AddUser = () => {
             <option value="Super">Super</option>
           </select>
         </span>
+      </section>
+      <section className="grid grid-cols-1 gap-3">
         <span className="relative rounded-lg">
           <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-            Date Today
+            Password
           </p>
           <input
-            type="date"
-            value={snap.createdAt}
+            type="password"
+            required
+            value={snap.password}
             onChange={(e) => {
-              userData.createdAt = e.target.value;
+              userData.password = e.target.value;
+            }}
+            className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+          />
+        </span>
+        <span className="relative rounded-lg">
+          <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+            Confirm Pass
+          </p>
+          <input
+            type="password"
+            required
+            value={snap.confirmPass}
+            onChange={(e) => {
+              userData.confirmPass = e.target.value;
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           />

@@ -11,6 +11,8 @@ import EnrolledStudents from "./components/admission/enrolled_students/EnrolledS
 import StudentsInfo from "./components/admission/enrolled_students/StudentsInfo";
 import TestLayout from "./layouts/TestLayout";
 import Users from "./components/new_components/Users";
+import Employees from "./components/new_components/Employees";
+import Dashboard from "./components/new_components/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,16 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/dashboard",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+    ],
+  },
+  {
     path: "admission",
     element: <AdminLayout />,
     children: [
@@ -60,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "studentInfo/:id",
         element: <StudentsInfo />,
+      },
+      {
+        path: "employees",
+        element: <Employees />,
       },
     ],
   },

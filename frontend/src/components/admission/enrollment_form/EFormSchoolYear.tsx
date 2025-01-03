@@ -1,10 +1,10 @@
 import { useSnapshot } from "valtio";
 import { studentData } from "../../../store/StudentData";
-import { userData } from "../../../store/UserData";
+import { Data } from "../../../store/Data";
 
 const EFormSchoolYear = () => {
   const snap = useSnapshot(studentData);
-  const snap2 = useSnapshot(userData);
+  const isOpen = useSnapshot(Data);
 
   return (
     <div className="p-10 xs:p-0 sm:p-1 md:p-2 flex xs:flex-col sm:flex-col md:flex-col xs:gap-3 sm:gap-5 md:gap-5 sm:items-center xs:items-center md:items-center justify-between">
@@ -13,9 +13,7 @@ const EFormSchoolYear = () => {
       </div>
       <div className="border py-10 px-5 flex flex-col border-slate-500 rounded-md w-[400px] xs:w-[100%] sm:w-[100%] md:[100%] gap-3">
         <section className="grid grid-cols-2 gap-3">
-          <span
-            className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
-          >
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
             <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               School Year
             </p>
@@ -29,9 +27,7 @@ const EFormSchoolYear = () => {
               }}
             />
           </span>
-          <span
-            className={` ${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
-          >
+          <span className={` ${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Semester
             </p>
@@ -49,9 +45,7 @@ const EFormSchoolYear = () => {
           </span>
         </section>
         <section className="grid grid-cols-2 gap-3">
-          <span
-            className={`${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative  `}
-          >
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative  `}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Course
             </p>
@@ -70,9 +64,7 @@ const EFormSchoolYear = () => {
               <option value="BSHM">BSHM</option>
             </select>
           </span>
-          <span
-            className={` ${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
-          >
+          <span className={` ${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Year
             </p>
@@ -94,9 +86,7 @@ const EFormSchoolYear = () => {
         </section>
         <h1 className="text-sm font-bold text-black">INITIAL PAYMENT :</h1>
         <section className="grid grid-cols-3 gap-3">
-          <span
-            className={` ${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
-          >
+          <span className={` ${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Date
             </p>
@@ -109,9 +99,7 @@ const EFormSchoolYear = () => {
               }}
             />
           </span>
-          <span
-            className={` ${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
-          >
+          <span className={` ${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               OR No.
             </p>
@@ -124,9 +112,7 @@ const EFormSchoolYear = () => {
               }}
             />
           </span>
-          <span
-            className={` ${snap2.open ? "xs:-z-50 sm:-z-50" : ""} relative `}
-          >
+          <span className={` ${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Amount
             </p>

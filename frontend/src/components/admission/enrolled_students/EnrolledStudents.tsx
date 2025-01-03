@@ -33,39 +33,46 @@ const EnrolledStudents = () => {
   }, []);
 
   return (
-    <div className="my-10  mx-20">
-      <table className="w-[1000px] h-[600px] p-10 border border-slate-400 flex flex-col rounded-md hover:border-red-500 shadow-md duration-200 overflow-hidden overflow-y-scroll no-scrollbar">
-        <h1 className="text-center pb-5 text-xl font-bold">All Students</h1>
-        <th className="grid grid-cols-3 text-lg font-bold gap-3 p-2 border-b mb-5 items-center w-[900px]">
-          <td className="w-[500px] text-start">Name</td>
-          <td className="w-[200px] text-center">Course</td>
-          <td className="w-[200px text-center">Year</td>
-        </th>
-        {error && (
-          <div className="flex justify-center items-center">
-            Failed to fetch data
-          </div>
-        )}
-        {loading && (
-          <div className="flex justify-center items-center">Loading...</div>
-        )}
-
-        {students?.map((i, index) => (
-          <Link to={`../../admin/admission/studentInfo/${i.id}`}>
-            <tr
-              key={index}
-              className="duration-200 hover:cursor-pointer hover:border-l-2 hover:border-blue-500 font-semibold gap-3 text-sm grid grid-cols-3 p-2 border-l-4 rounded-l-lg border-b m-1 w-[900px]"
-            >
-              <td className="w-[500px] text-start">
-                {i.studentData.lastName}, {i.studentData.firstName}{" "}
-                {i.studentData.middleName}
-              </td>
-              <td className="w-[200px] text-center">{i.studentData.course}</td>
-              <td className="w-[200px text-center">{i.studentData.year}</td>
-            </tr>
-          </Link>
-        ))}
-      </table>
+    <div className="">
+      <div className="">
+        <h1 className="text-center py-5 text-2xl font-bold bg-slate-50 border-t border-r border-l rounded-t-md shadow-sm">
+          All Students
+        </h1>
+        <table className="w-[1100px] h-[570px] border flex flex-col rounded-b-md shadow-md bg-white duration-200 py-10 px-12">
+          <th className="grid grid-cols-3 text-lg font-bold gap-3 p-2 border-b mb-5 text-blue-800 border-blue-300 items-center w-[100%]">
+            <td className="w-[500px] text-start">Name</td>
+            <td className="w-[200px] text-center">Course</td>
+            <td className="w-[200px text-center">Year</td>
+          </th>
+          {error && (
+            <div className="flex justify-center items-center">
+              Failed to fetch data
+            </div>
+          )}
+          {loading && (
+            <div className="flex justify-center items-center">Loading...</div>
+          )}
+          <section className="overflow-hidden overflow-y-auto no-scrollbar flex flex-col">
+            {students?.map((i, index) => (
+              <Link to={`/admission/studentInfo/${i.id}`}>
+                <tr
+                  key={index}
+                  className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-3 px-2 py-4 rounded-sm hover:rounded-lg bg-slate-50 shadow-sm border hover:bg-blue-100 hover:border-blue-100 active:scale-95"
+                >
+                  <td className="w-[500px] text-start">
+                    {i.studentData.lastName}, {i.studentData.firstName}{" "}
+                    {i.studentData.middleName}
+                  </td>
+                  <td className="w-[200px] text-center">
+                    {i.studentData.course}
+                  </td>
+                  <td className="w-[200px text-center">{i.studentData.year}</td>
+                </tr>
+              </Link>
+            ))}
+          </section>
+        </table>
+      </div>
     </div>
   );
 };

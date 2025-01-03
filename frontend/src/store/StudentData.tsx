@@ -1,6 +1,7 @@
 import { proxy } from "valtio";
 
 interface AppState {
+  id: string;
   status: string;
   schoolYear: string;
   semester: string;
@@ -97,6 +98,7 @@ interface AppState {
 
 export const studentData = proxy<AppState>({
   // Student Information
+  id: "",
   status: "",
   usn: "",
   password: "",

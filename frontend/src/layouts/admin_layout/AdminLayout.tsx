@@ -1,10 +1,15 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { FaRegUser } from "react-icons/fa";
+import { FaDatabase, FaRegUser } from "react-icons/fa";
 import { LuDoorOpen, LuSchool } from "react-icons/lu";
 import { ISidebarItem } from "../../components/sidebar/SidebarItems";
 
 const sidebarItems: ISidebarItem[] = [
+  {
+    name: "Dashboard",
+    icon: FaDatabase,
+    path: "/dashboard",
+  },
   {
     name: "Admin",
     icon: FaRegUser,
@@ -34,6 +39,10 @@ const sidebarItems: ISidebarItem[] = [
       {
         name: "Students",
         path: "/admission/enroll-student",
+      },
+      {
+        name: "Employees",
+        path: "/admission/employees",
       },
     ],
   },
@@ -77,7 +86,7 @@ const AdminLayout = () => {
       <div className="fixed left-0 top-0 h-screen">
         <Sidebar sidebarItems={sidebarItems} />
       </div>
-      <div className="pr-10">
+      <div className="w-screen mx-80 xs:mx-5 mt-10">
         <Outlet />
       </div>
     </div>
