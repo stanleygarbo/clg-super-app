@@ -12,6 +12,9 @@ import OfficeChairmanVice from "./components/about/OfficeChairmanVice";
 import Footer from "./components/Footer";
 import Layout from "./layouts/home_layout/Layout";
 import AdminLayout from "./layouts/AdminLayout";
+import AccountingLayout from "./layouts/accounting_layout/AccountingLayout";
+import AccountingDashboard from "./components/accounting/AccountingDashboard";
+import StudentFees from "./components/accounting/StudentFees";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +73,21 @@ const router = createBrowserRouter([
         path: "footer",
         element: <Footer />,
       },
+    ],
+  },
+  {
+    path: "/admin/accounting",
+    element: <AccountingLayout />,
+    children: [
+      {
+        path: "dashboard",
+        element: <AccountingDashboard />,
+      },
+      {
+        path: "student-fees",
+        element: <StudentFees />,
+      },
+      // Add more routes as needed
     ],
   },
 ]);
