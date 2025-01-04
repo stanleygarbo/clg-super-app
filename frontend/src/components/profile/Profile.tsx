@@ -313,81 +313,121 @@ const Profile = () => {
               </div>
               <h1 className="">HOME ADDRESS</h1>
               <div className="grid grid-cols-5 gap-5 ">
-                <input
-                  type="number"
-                  className="rounded-lg py-1 text-center border-0 shadow-md"
-                  placeholder="HOUSE NO."
-                  value={snap.houseNum}
-                  onChange={(e) => {
-                    studentData.houseNum = e.target.value;
-                  }}
-                />
-                <input
-                  type="text"
-                  className="rounded-lg py-1 text-center border-0 shadow-md"
-                  placeholder="STREET/BRGY."
-                  value={snap.street}
-                  onChange={(e) => {
-                    studentData.street = e.target.value;
-                  }}
-                />
-                <input
-                  type="text"
-                  className="rounded-lg py-1 text-center border-0 shadow-md"
-                  placeholder="CITY"
-                  value={snap.city}
-                  onChange={(e) => {
-                    studentData.city = e.target.value;
-                  }}
-                />
-                <input
-                  type="text"
-                  className="rounded-lg py-1 text-center border-0 shadow-md"
-                  placeholder="PROVINCE"
-                  value={snap.province}
-                  onChange={(e) => {
-                    studentData.province = e.target.value;
-                  }}
-                />
-                <input
-                  type="text"
-                  className="rounded-lg py-1 text-center border-0 shadow-md"
-                  placeholder="DISTRICT"
-                  value={snap.district}
-                  onChange={(e) => {
-                    studentData.district = e.target.value;
-                  }}
-                />
+                <span className="relative">
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    House No.
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="number"
+                    required
+                    value={snap.houseNum}
+                    onChange={(e) => {
+                      studentData.houseNum = e.target.value;
+                    }}
+                  />
+                </span>
+                <span className="relative">
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    Street
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    required
+                    value={snap.street}
+                    onChange={(e) => {
+                      studentData.street = e.target.value;
+                    }}
+                  />
+                </span>
+                <span className="relative">
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    City
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    required
+                    value={snap.city}
+                    onChange={(e) => {
+                      studentData.city = e.target.value;
+                    }}
+                  />
+                </span>
+                <span className="relative">
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    Province
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    required
+                    value={snap.province}
+                    onChange={(e) => {
+                      studentData.province = e.target.value;
+                    }}
+                  />
+                </span>
+                <span className="relative">
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    District
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    required
+                    value={snap.district}
+                    onChange={(e) => {
+                      studentData.district = e.target.value;
+                    }}
+                  />
+                </span>
               </div>
               <h1>CITY ADRESS (IF BOARDING)</h1>
               <div className="grid grid-cols-3 gap-5 ">
-                <input
-                  type="number"
-                  className="rounded-lg py-1 text-center border-0 shadow-md"
-                  placeholder="HOUSE NO."
-                  value={snap.boardingHouseNum}
-                  onChange={(e) => {
-                    studentData.boardingHouseNum = e.target.value;
-                  }}
-                />
-                <input
-                  type="text"
-                  className="rounded-lg py-1 text-center border-0 shadow-md"
-                  placeholder="STREET/BRGY."
-                  value={snap.boardingStreet}
-                  onChange={(e) => {
-                    studentData.boardingStreet = e.target.value;
-                  }}
-                />
-                <input
-                  type="text"
-                  className="rounded-lg py-1 text-center border-0 shadow-md"
-                  placeholder="CITY"
-                  value={snap.boardingCity}
-                  onChange={(e) => {
-                    studentData.boardingCity = e.target.value;
-                  }}
-                />
+                <span className="relative">
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    House No.
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="number"
+                    required
+                    value={snap.boardingHouseNum}
+                    onChange={(e) => {
+                      studentData.boardingHouseNum = e.target.value;
+                    }}
+                  />
+                </span>
+                <span className="relative">
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    Street
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    required
+                    value={snap.boardingStreet}
+                    onChange={(e) => {
+                      studentData.boardingStreet = e.target.value;
+                    }}
+                  />
+                </span>
+                <span className="relative">
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    City
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    required
+                    value={snap.boardingCity}
+                    onChange={(e) => {
+                      studentData.boardingCity = e.target.value;
+                    }}
+                  />
+                </span>
               </div>
             </div>
             <section className="flex justify-end">

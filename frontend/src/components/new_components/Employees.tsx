@@ -102,8 +102,8 @@ const Users = () => {
         </h1>
         <table className="w-[1100px] h-[570px] border flex flex-col rounded-b-md shadow-md bg-white duration-200 py-10 px-12">
           <th className="grid grid-cols-4 text-lg font-bold gap-3 p-2 border-b mb-5 text-blue-800 border-blue-300 items-center w-[100%]">
-            <td className="w-[300px] text-center">Name</td>
-            <td className="w-[200px] text-end pr-2">Position</td>
+            <td className="w-[300px] text-start">Name</td>
+            <td className="w-[200px] text-center ">Position</td>
             <td className="w-[200px text-center">Office</td>
             <td className="w-[200px] text-end">
               <button
@@ -133,12 +133,12 @@ const Users = () => {
                 key={index}
                 className="duration-200 hover:cursor-pointer font-semibold gap-3 items-center text-sm grid grid-cols-4 px-2 rounded-sm hover:rounded-lg bg-slate-50 group shadow-sm border hover:bg-blue-100 hover:border-blue-100 relative"
               >
-                <td className="w-[300px] text-center">
+                <td className="w-[300px] text-start">
                   {employee.employeeData.lastName}{" "}
                   {employee.employeeData.firstName}{" "}
                   {employee.employeeData.middleName}
                 </td>
-                <td className="w-[200px] text-end">
+                <td className="w-[200px] text-center">
                   {employee.employeeData.position}
                 </td>
                 <td className="w-[200px text-center">

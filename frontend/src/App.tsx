@@ -13,6 +13,8 @@ import TestLayout from "./layouts/TestLayout";
 import Users from "./components/new_components/Users";
 import Employees from "./components/new_components/Employees";
 import Dashboard from "./components/new_components/Dashboard";
+import AccountingDashboard from "./components/accounting/AccountingDashboard";
+import StudentFees from "./components/accounting/StudentFees";
 
 const router = createBrowserRouter([
   {
@@ -58,7 +60,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "admission",
+    path: "/admission",
     element: <AdminLayout />,
     children: [
       {
@@ -81,12 +83,16 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/test",
-    element: <TestLayout />,
+    path: "/accounting",
+    element: <AdminLayout />,
     children: [
       {
-        path: "mission",
-        element: <Mission />,
+        path: "dashboard",
+        element: <AccountingDashboard />,
+      },
+      {
+        path: "student-fees",
+        element: <StudentFees />,
       },
     ],
   },

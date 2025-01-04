@@ -52,10 +52,14 @@ const sidebarItems: ISidebarItem[] = [
     type: "drawer",
     path: "accounting",
     subItems: [
-      // {
-      //   name: "Enroll Student",
-      //   path: "/admin/main/eform",
-      // },
+      {
+        name: "Dashboard",
+        path: "/accounting/dashboard",
+      },
+      {
+        name: "Student Fees",
+        path: "/accounting/student-fees",
+      },
       // {
       //   name: "Enrolled Students",
       //   path: "/admin/main/enroll-student",
