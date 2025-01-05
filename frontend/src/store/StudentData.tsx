@@ -1,4 +1,5 @@
 import { proxy } from "valtio";
+import { GradeData } from "./CourseData";
 
 interface Address {
     houseNum: string;
@@ -41,6 +42,7 @@ interface AppState {
     year: string;
     usn: string;
     password: string;
+    grades: GradeData[];
     personalInfo: {
         lastName: string;
         firstName: string;
@@ -84,6 +86,7 @@ export const studentData = proxy<AppState>({
     year: "",
     usn: "",
     password: "",
+    grades: [],
     personalInfo: {
         lastName: "",
         firstName: "",

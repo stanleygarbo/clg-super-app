@@ -13,6 +13,18 @@
                 "year": "3",
                 "usn": "80321512587",
                 "password": "",
+                "grades": [
+                    {
+                        "course": {
+                            "course": "Intro to Human-Computer Interaction",
+                            "courseCode": "CS6200",
+                            "courseUnits": 3,
+                            "courseInstructor": "Ms. Gatchalian"
+                        },
+                        "grade": 1.75,
+                        "remark": "Passed"
+                    }
+                ],
                 "personalInfo": {
                     "lastName": "Limpangog",
                     "firstName": "Mheg Ryan",

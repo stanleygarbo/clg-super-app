@@ -24,6 +24,21 @@ function StudentGrade() {
         }
     };
 
+    const renderGrades = () => {
+        console.log(student?.grades);
+        return student?.grades.map((grade) => (
+            <tr
+                className="grid grid-cols-grades place-items-center"
+                key={grade.course.courseCode}
+            >
+                <td className="w-full text-start">{grade.course.courseCode}</td>
+                <td>{grade.course.course}</td>
+                <td>{grade.grade}</td>
+                <td>{grade.remark}</td>
+            </tr>
+        ));
+    };
+
     useEffect(() => {
         fetchStudents();
     }, []);
@@ -50,7 +65,19 @@ function StudentGrade() {
                     <p>{student && student.course}</p>
                 </div>
             </div>
-            <table></table>
+            <table className="flex flex-col gap-4 w-full px-6 py-8 border rounded-b-md shadow-md">
+                <thead>
+                    <tr className="grid grid-cols-grades px-4">
+                        <th>Course Code</th>
+                        <th>Course</th>
+                        <th>Grade</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody className="flex flex-col gap-2">
+                    {student && renderGrades()}
+                </tbody>
+            </table>
         </div>
     );
 }
