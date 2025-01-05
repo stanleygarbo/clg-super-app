@@ -26,7 +26,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    contact: {
+    telephone: {
+      type: String,
+      required: false,
+    },
+    phone: {
       type: String,
       required: false,
     },
@@ -53,13 +57,20 @@ const studentSchema = new mongoose.Schema(
     },
     standing: {
       type: String,
-      enum: ["Freshman", "Sophomore", "Junior", "Senior", "Graduate"],
+      enum: ["freshman", "sophomore", "junior", "senior", "graduate"],
     },
+    birth: { type: mongoose.Schema.Types.ObjectId, ref: "Birth" },
+    spouse: { type: mongoose.Schema.Types.ObjectId, ref: "Spouse" },
+    homeAddress: { type: mongoose.Schema.Types.ObjectId, ref: "HomeAddress" },
+    cityAddress: { type: mongoose.Schema.Types.ObjectId, ref: "CityAddress" },
+    father: { type: mongoose.Schema.Types.ObjectId, ref: "Parent" },
+    mother: { type: mongoose.Schema.Types.ObjectId, ref: "Parent" },
+    guardian: { type: mongoose.Schema.Types.ObjectId, ref: "Guardian" },
+    guardianSpouse: { type: mongoose.Schema.Types.ObjectId, ref: "Spouse" },
+    siblings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Sibling" }],
   },
   { timestamps: true }
 );
-
-const Employee = User.discriminator("Employee", studentSchema);
 
 const employeeSchema = new mongoose.Schema(
   {
@@ -82,10 +93,16 @@ const employeeSchema = new mongoose.Schema(
     },
     department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
     position: { type: mongoose.Schema.Types.ObjectId, ref: "Position" },
+    governmentId: { type: mongoose.Schema.Types.ObjectId, ref: "GovernmentId" },
+    birth: { type: mongoose.Schema.Types.ObjectId, ref: "Birth" },
+    spouse: { type: mongoose.Schema.Types.ObjectId, ref: "Spouse" },
+    homeAddress: { type: mongoose.Schema.Types.ObjectId, ref: "HomeAddress" },
+    cityAddress: { type: mongoose.Schema.Types.ObjectId, ref: "CityAddress" },
   },
   { timestamps: true }
 );
 
+const Employee = User.discriminator("Employee", employeeSchema);
 const Student = User.discriminator("Student", studentSchema);
 
-module.exports = { User, Student };
+module.exports = { User, Student, Employee };
