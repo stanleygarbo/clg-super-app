@@ -1,71 +1,92 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { FaRegUser } from "react-icons/fa";
+import { FaDatabase, FaRegUser } from "react-icons/fa";
 import { LuDoorOpen, LuSchool } from "react-icons/lu";
 import { ISidebarItem } from "../../components/sidebar/SidebarItems";
 
 const sidebarItems: ISidebarItem[] = [
   {
-    name: "My Profile",
-    path: "admin/profile",
+    name: "Dashboard",
+    icon: FaDatabase,
+    path: "/dashboard",
   },
   {
-    name: "Users",
+    name: "Admin",
     icon: FaRegUser,
     type: "drawer",
-    path: "admin/users",
+    path: "admin",
     subItems: [
       {
-        name: "All Users",
-        path: "/admin/users/allusers",
+        name: "Profile",
+        path: "/admin/profile",
       },
       {
-        name: "SSC",
-        path: "/users/ssc",
-        type: "drawer",
-        icon: LuSchool,
-        subItems: [
-          {
-            name: "CS Dept.",
-            path: "/users/ssc",
-          },
-          {
-            name: "HM Dept.",
-            path: "/users/ssc",
-          },
-          {
-            name: "BA Dept.",
-            path: "/users/ssc",
-          },
-        ],
+        name: "Users",
+        path: "/admin/users",
       },
     ],
   },
   {
     name: "Addmission",
-    icon: LuDoorOpen,
+    icon: LuSchool,
     type: "drawer",
-    path: "/admin/admission",
+    path: "admission",
     subItems: [
       {
-        name: "Students",
-        path: "/admin/admission/students",
+        name: "Enroll",
+        path: "/admission/eform",
       },
       {
-        name: "Enroll Student",
-        path: "/admin/admission/enroll-student",
+        name: "Students",
+        path: "/admission/enroll-student",
       },
+      {
+        name: "Employees",
+        path: "/admission/employees",
+      },
+    ],
+  },
+  {
+    name: "Accounting",
+    icon: LuDoorOpen,
+    type: "drawer",
+    path: "accounting",
+    subItems: [
+      // {
+      //   name: "Enroll Student",
+      //   path: "/admin/main/eform",
+      // },
+      // {
+      //   name: "Enrolled Students",
+      //   path: "/admin/main/enroll-student",
+      // },
+    ],
+  },
+  {
+    name: "Registrar",
+    icon: LuDoorOpen,
+    type: "drawer",
+    path: "registrar",
+    subItems: [
+      // {
+      //   name: "Enroll Student",
+      //   path: "/admin/main/eform",
+      // },
+      // {
+      //   name: "Enrolled Students",
+      //   path: "/admin/main/enroll-student",
+      // },
     ],
   },
 ];
 
 const AdminLayout = () => {
   return (
-    <div className="flex pl-[300px]">
+    <div className="flex">
       <div className="fixed left-0 top-0 h-screen">
         <Sidebar sidebarItems={sidebarItems} />
       </div>
-      <div className="pr-10">
+      <div className="w-screen mx-80 xs:mx-5 mt-10">
         <Outlet />
       </div>
     </div>

@@ -1,27 +1,23 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import About from "./pages/About";
-import AboutLayout from "./layouts/about_layout/AboutLayout";
 import Mission from "./components/about/Mission";
-import CoursesOffered from "./components/about/CoursesOffered";
-import Vision from "./components/about/Vision";
-import AMAHymn from "./components/about/AMAHymn";
-import OfficeChairmanVice from "./components/about/OfficeChairmanVice";
-import Footer from "./components/Footer";
-import Layout from "./layouts/home_layout/Layout";
 import AdminLayout from "./layouts/admin_layout/AdminLayout";
-import Dashboard from "./components/dashboard/Dashboard";
-import StudentUpdateProfile from "./components/update_profile/StudentUpdateProfile";
 import Home from "./pages/Home";
-import AdmissionLayout from "./layouts/admission_layout/AdmissionLayout";
+import HomeLayout from "./layouts/home_layout/HomeLayout";
 import EForm from "./components/admission/enrollment_form/EForm";
-import AdmissionProfile from "./components/admission/profile/AdmissionProfile";
-import AdmissionUpdateProfile from "./components/admission/profile/AdmissionUpdateProfile";
+import Profile from "./components/profile/Profile";
+import EnrolledStudents from "./components/admission/enrolled_students/EnrolledStudents";
+import StudentsInfo from "./components/admission/enrolled_students/StudentsInfo";
+import TestLayout from "./layouts/TestLayout";
+import Users from "./components/new_components/Users";
+import Employees from "./components/new_components/Employees";
+import Dashboard from "./components/new_components/Dashboard";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <HomeLayout />,
     children: [
       {
         path: "/",
@@ -42,60 +38,55 @@ const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       {
-        path: "users/allusers",
+        path: "users",
+        element: <Users />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/dashboard",
         element: <Dashboard />,
       },
     ],
   },
   {
-    path: "/admission",
-    element: <AdmissionLayout />,
+    path: "admission",
+    element: <AdminLayout />,
     children: [
       {
-        path: "user/profile",
-        element: <AdmissionProfile />,
-      },
-      {
-        path: "user/updateprofile",
-        element: <AdmissionUpdateProfile />,
-      },
-      {
-        path: "main/eform",
+        path: "eform",
         element: <EForm />,
+      },
+      {
+        path: "enroll-student",
+        element: <EnrolledStudents />,
+      },
+      {
+        path: "studentInfo/:id",
+        element: <StudentsInfo />,
+      },
+      {
+        path: "employees",
+        element: <Employees />,
       },
     ],
   },
+
   {
-    path: "/about",
-    element: <AboutLayout />,
+    path: "/test",
+    element: <TestLayout />,
     children: [
       {
         path: "mission",
         element: <Mission />,
-      },
-      {
-        path: "vision",
-        element: <Vision />,
-      },
-      {
-        path: "ama-hymn",
-        element: <AMAHymn />,
-      },
-      {
-        path: "office-chairman-vice",
-        element: <OfficeChairmanVice />,
-      },
-      {
-        path: "course-offered",
-        element: <CoursesOffered />,
-      },
-      {
-        path: "footer",
-        element: <Footer />,
-      },
-      {
-        path: "update",
-        element: <StudentUpdateProfile />,
       },
     ],
   },

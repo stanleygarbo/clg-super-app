@@ -51,7 +51,7 @@ const SidebarItems = ({
 }) => {
   const { pathname } = useLocation();
   const textInactiveStyles = "text-gray-600";
-  const textActiveStyles = "text-red-600";
+  const textActiveStyles = "text-blue-600";
   const [open, setOpen] = React.useState<string>("");
 
   return (
@@ -78,20 +78,20 @@ const SidebarItems = ({
                 }
               }}
               className={twMerge(
-                "leading-none text-sm font-medium",
+                "leading-none text-sm font-semibold",
                 isActive && depth === 1 ? textActiveStyles : textInactiveStyles
               )}
             >
               <section
                 className={twMerge(
                   "rounded-md h-[42px] flex justify-between items-center mb-1 pr-4",
-                  isActive && depth === 1 ? "bg-red-50" : "hover:bg-gray-100"
+                  isActive && depth === 1 ? "bg-blue-50" : "hover:bg-gray-100"
                 )}
                 style={{
-                  paddingLeft: depth > 0 ? `${16 * depth}px` : "",
+                  paddingLeft: depth > 0 ? ` ${16 * depth}px` : "",
                 }}
               >
-                <div className="flex items-center ">
+                <div className="flex items-center">
                   {i.icon ? (
                     <i.icon
                       size={18}
@@ -105,13 +105,13 @@ const SidebarItems = ({
                       <div
                         className={twMerge(
                           "w-4 h-4 rounded-full mr-4 flex items-center justify-center",
-                          isActive && "bg-red-200"
+                          isActive && "bg-blue-200"
                         )}
                       >
                         <span
                           className={twMerge(
-                            "w-2 h-2 rounded-full",
-                            isActive ? "bg-red-500" : "bg-gray-400"
+                            "w-2 h-2 rounded-md",
+                            isActive ? "bg-blue-400" : "bg-gray-400"
                           )}
                         />
                       </div>
@@ -122,7 +122,7 @@ const SidebarItems = ({
                 {i.type === "drawer" && (
                   <FaChevronDown
                     className={twMerge(
-                      "transition-all",
+                      "duration-200",
                       open === i.name && "rotate-180"
                     )}
                   />
@@ -131,7 +131,7 @@ const SidebarItems = ({
             </Link>
             <div
               className={twMerge(
-                "transition-all duration-300 overflow-hidden"
+                "duration-300 overflow-hidden"
                 // open === i.name ? "h-fit" : "h-0"
               )}
               style={{
