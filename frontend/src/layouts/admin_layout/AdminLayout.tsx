@@ -78,11 +78,9 @@ const sidebarItems: ISidebarItem[] = [
 
 const AdminLayout = () => {
     return (
-        <div className="flex">
-            <div className="fixed left-0 top-0 h-screen">
-                <Sidebar sidebarItems={sidebarItems} />
-            </div>
-            <div className="w-screen mx-80 xs:mx-5 mt-10">
+        <div className="flex h-screen">
+            <Sidebar sidebarItems={sidebarItems} />
+            <div className="w-screen px-20 xs:px-5 mt-10">
                 <Outlet />
             </div>
         </div>

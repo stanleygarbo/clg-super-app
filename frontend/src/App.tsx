@@ -13,7 +13,7 @@ import TestLayout from "./layouts/TestLayout";
 import Users from "./components/new_components/Users";
 import Employees from "./components/new_components/Employees";
 import Dashboard from "./components/new_components/Dashboard";
-import Grades from "./components/registrar/grades";
+import Grades from "./components/registrar/Grades";
 
 const router = createBrowserRouter([
     {
