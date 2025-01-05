@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 function StudentGrade() {
     const { usn } = useParams();
+    const [loading, setLoading] = useState(true);
     const [student, setStudent] = useState<typeof studentData>();
     const [gradesRow, setGradesRow] = useState<JSX.Element[]>([]);
     const [fullName, setFullName] = useState<string>();
@@ -38,7 +39,7 @@ function StudentGrade() {
 
             const newRow = (
                 <tr
-                    className="grid grid-cols-grades place-items-center"
+                    className="grid grid-cols-gradeRow place-items-center"
                     key={course.courseCode}
                 >
                     <td className="w-full text-start">{course.courseCode}</td>
@@ -53,10 +54,11 @@ function StudentGrade() {
 
     useEffect(() => {
         fetchStudents();
+        setLoading(false);
     }, []);
 
     useEffect(() => {
-        if (student) {
+        if (student && !loading) {
             setFullName(
                 `${student.personalInfo.lastName}, ${student.personalInfo.firstName} ${student.personalInfo.middleName}`
             );
@@ -65,12 +67,12 @@ function StudentGrade() {
     }, [student]);
 
     return (
-        <div className="w-full max-w-[1280px]">
+        <div className="flex flex-col gap-8 w-full max-w-[1280px]">
             <div className="grid grid-cols-[6rem,1fr]">
                 <div>
-                    <p>USN</p>
-                    <p>Name</p>
-                    <p>Course</p>
+                    <p className="font-bold">USN</p>
+                    <p className="font-bold">Name</p>
+                    <p className="font-bold">Course</p>
                 </div>
                 <div>
                     <p>{student && student.usn}</p>
@@ -80,7 +82,7 @@ function StudentGrade() {
             </div>
             <table className="flex flex-col gap-4 w-full px-6 py-8 border rounded-b-md shadow-md">
                 <thead>
-                    <tr className="grid grid-cols-grades px-4">
+                    <tr className="grid grid-cols-gradeRow">
                         <th>Course Code</th>
                         <th>Course</th>
                         <th>Grade</th>
