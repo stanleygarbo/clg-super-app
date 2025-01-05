@@ -1,23 +1,19 @@
 interface Course {
-    course: string;
+    courseUID: string;
+    courseName: string;
     courseCode: string;
     courseUnits: number;
     courseInstructor: string; // note: change to instructor ID in the backend when complete
 }
 
 interface Grade {
-    course: Course;
+    courseUID: string;
     grade: number;
     remark: string;
 }
 
 export interface GradeData extends Grade {
-    course: {
-        course: "";
-        courseCode: "";
-        courseUnits: 1;
-        courseInstructor: "";
-    };
+    courseUID: "";
     grade: 1.0;
     remark: "";
 }

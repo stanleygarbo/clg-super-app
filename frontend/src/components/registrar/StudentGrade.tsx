@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 function StudentGrade() {
     const { usn } = useParams();
     const [student, setStudent] = useState<typeof studentData>();
+    const [gradesRow, setGradesRow] = useState<JSX.Element[]>([]);
     const [fullName, setFullName] = useState<string>();
 
     const fetchStudents = async () => {
@@ -24,19 +25,30 @@ function StudentGrade() {
         }
     };
 
-    const renderGrades = () => {
-        console.log(student?.grades);
-        return student?.grades.map((grade) => (
-            <tr
-                className="grid grid-cols-grades place-items-center"
-                key={grade.course.courseCode}
-            >
-                <td className="w-full text-start">{grade.course.courseCode}</td>
-                <td>{grade.course.course}</td>
-                <td>{grade.grade}</td>
-                <td>{grade.remark}</td>
-            </tr>
-        ));
+    const fetchCourse = async (courseUID: string) => {
+        const res = await fetch(`http://localhost:8000/courses/${courseUID}`);
+        const data = await res.json();
+        return data.course || {};
+    };
+
+    const renderGrades = async () => {
+        const g = student?.grades.map(async (grade) => {
+            const course = await fetchCourse(grade.courseUID);
+            console.log(course);
+
+            const newRow = (
+                <tr
+                    className="grid grid-cols-grades place-items-center"
+                    key={course.courseCode}
+                >
+                    <td className="w-full text-start">{course.courseCode}</td>
+                    <td>{course.courseName}</td>
+                    <td>{grade.grade}</td>
+                    <td>{grade.remark}</td>
+                </tr>
+            );
+            setGradesRow([...gradesRow, newRow]);
+        });
     };
 
     useEffect(() => {
@@ -48,11 +60,12 @@ function StudentGrade() {
             setFullName(
                 `${student.personalInfo.lastName}, ${student.personalInfo.firstName} ${student.personalInfo.middleName}`
             );
+            renderGrades();
         }
     }, [student]);
 
     return (
-        <div>
+        <div className="w-full max-w-[1280px]">
             <div className="grid grid-cols-[6rem,1fr]">
                 <div>
                     <p>USN</p>
@@ -75,7 +88,7 @@ function StudentGrade() {
                     </tr>
                 </thead>
                 <tbody className="flex flex-col gap-2">
-                    {student && renderGrades()}
+                    {gradesRow && gradesRow}
                 </tbody>
             </table>
         </div>

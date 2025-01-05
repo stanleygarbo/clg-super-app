@@ -15,12 +15,7 @@
                 "password": "",
                 "grades": [
                     {
-                        "course": {
-                            "course": "Intro to Human-Computer Interaction",
-                            "courseCode": "CS6200",
-                            "courseUnits": 3,
-                            "courseInstructor": "Ms. Gatchalian"
-                        },
+                        "courseUID": "bVrRrj0up9",
                         "grade": 1.75,
                         "remark": "Passed"
                     }
@@ -125,6 +120,18 @@
                 "philhealthNum": "",
                 "pagibigID": "",
                 "tinNum": ""
+            }
+        }
+    ],
+    "courses": [
+        {
+            "id": "bVrRrj0up9",
+            "course": {
+                "courseUID": "bVrRrj0up9",
+                "courseName": "Intro to Human-Computer Interaction",
+                "courseCode": "CS6200",
+                "courseUnits": 3,
+                "courseInstructor": "Ms. Gatchalian"
             }
         }
     ]
