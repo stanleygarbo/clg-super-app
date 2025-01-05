@@ -32,7 +32,7 @@ function StudentGrade() {
     };
 
     const renderGrades = async () => {
-        const g = student?.grades.map(async (grade) => {
+        student?.grades.map(async (grade) => {
             const course = await fetchCourse(grade.courseUID);
             console.log(course);
 
