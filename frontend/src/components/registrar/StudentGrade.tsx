@@ -3,15 +3,14 @@ import { studentData } from "../../store/StudentData";
 import { useParams } from "react-router-dom";
 
 function StudentGrade() {
-    const { id } = useParams();
-    const data = { id, studentData };
-    const [student, setStudent] = useState<(typeof data)[]>();
+    const { usn } = useParams();
+    const [student, setStudent] = useState<typeof studentData>();
     const [fullName, setFullName] = useState<string>();
 
     const fetchStudents = async () => {
         try {
             const response = await fetch(
-                `http://localhost:8000/students/${id}`
+                `http://localhost:8000/students/${usn}`
             );
 
             if (!response.ok) {
@@ -19,7 +18,7 @@ function StudentGrade() {
             }
 
             const data = await response.json();
-            setStudent(data);
+            setStudent(data.studentData);
         } catch (err) {
             console.log("Error fetching students");
         }
@@ -32,7 +31,7 @@ function StudentGrade() {
     useEffect(() => {
         if (student) {
             setFullName(
-                `${student.studentData.lastName}, ${student.studentData.firstName} ${student.studentData.middleName}`
+                `${student.personalInfo.lastName}, ${student.personalInfo.firstName} ${student.personalInfo.middleName}`
             );
         }
     }, [student]);
@@ -46,9 +45,9 @@ function StudentGrade() {
                     <p>Course</p>
                 </div>
                 <div>
-                    <p>{student && student.studentData.usn}</p>
+                    <p>{student && student.usn}</p>
                     <p>{student && fullName}</p>
-                    <p>{student && student.studentData.course}</p>
+                    <p>{student && student.course}</p>
                 </div>
             </div>
             <table></table>

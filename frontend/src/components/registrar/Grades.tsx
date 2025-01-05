@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Grades() {
     const navigate = useNavigate();
     const [students, setStudents] = useState<(typeof studentData)[]>();
+    const [tableRows, setTableRows] = useState<JSX.Element[]>();
 
     const fetchStudents = async () => {
         try {
@@ -15,7 +16,7 @@ function Grades() {
             }
 
             const data = await response.json();
-            setStudents(await data);
+            setStudents(data?.map(({ id: {}, ...rest }) => rest.studentData));
         } catch (err) {
             console.log("Error fetching students");
         }
@@ -24,6 +25,28 @@ function Grades() {
     useEffect(() => {
         fetchStudents();
     }, []);
+
+    useEffect(() => {
+        const rows = students?.map((student, index) => {
+            console.log(student);
+            return (
+                <tr
+                    key={index}
+                    className="grid grid-cols-grades place-items-center h-12 px-4 bg-slate-100 shadow-sm hover:cursor-pointer hover:bg-blue-100 duration-300"
+                    onClick={() => navigate(`/registrar/grades/${student.usn}`)}
+                >
+                    <td className="w-full text-start">
+                        {student.personalInfo.firstName}
+                    </td>
+                    <td>{student.course}</td>
+                    <td>{student.year}</td>
+                    <td>5.0</td>
+                </tr>
+            );
+        });
+
+        setTableRows(rows);
+    }, [students]);
 
     return (
         <div className="w-full h-full">
@@ -36,24 +59,7 @@ function Grades() {
                         <th>GPA</th>
                     </tr>
                 </thead>
-                <tbody className="flex flex-col gap-2">
-                    {students?.map((student, index) => (
-                        <tr
-                            key={index}
-                            className="grid grid-cols-grades place-items-center h-12 px-4 bg-slate-100 shadow-sm hover:cursor-pointer hover:bg-blue-100 duration-300"
-                            onClick={() =>
-                                navigate(`/registrar/grades/${student.id}`)
-                            }
-                        >
-                            <td className="w-full text-start">
-                                {student.studentData.firstName}
-                            </td>
-                            <td>{student.studentData.course}</td>
-                            <td>{student.studentData.year}</td>
-                            <td>5.0</td>
-                        </tr>
-                    ))}
-                </tbody>
+                <tbody className="flex flex-col gap-2">{tableRows}</tbody>
             </table>
         </div>
     );

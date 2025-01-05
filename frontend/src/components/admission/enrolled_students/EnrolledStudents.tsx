@@ -3,7 +3,7 @@ import { studentData } from "../../../store/StudentData";
 import { Link, useParams } from "react-router-dom";
 
 const EnrolledStudents = () => {
-    const [students, setStudents] = useState<(typeof datas)[]>();
+    const [students, setStudents] = useState<(typeof studentData)[]>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const { id } = useParams();
@@ -18,7 +18,9 @@ const EnrolledStudents = () => {
             setError("");
 
             const data: (typeof datas)[] = await response.json();
-            setStudents(data);
+            setStudents(
+                data?.map(({ id: string, ...rest }) => rest.studentData)
+            );
             loading;
             console.log(students);
         } catch (err) {
@@ -28,9 +30,16 @@ const EnrolledStudents = () => {
         }
     };
 
+    const getFullName = (student: typeof studentData) =>
+        `${student.personalInfo.lastName}, ${student.personalInfo.firstName} ${student.personalInfo.middleName}`;
+
     useEffect(() => {
         fetchStudents();
     }, []);
+
+    useEffect(() => {
+        console.log(students);
+    }, [students]);
 
     return (
         <div className="">
@@ -56,21 +65,19 @@ const EnrolledStudents = () => {
                     )}
                     <section className="overflow-hidden overflow-y-auto no-scrollbar flex flex-col">
                         {students?.map((i, index) => (
-                            <Link to={`/admission/studentInfo/${i.id}`}>
+                            <Link to={`/admission/studentInfo/${i.usn}`}>
                                 <tr
                                     key={index}
                                     className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-3 px-2 py-4 rounded-sm hover:rounded-lg bg-slate-50 shadow-sm border hover:bg-blue-100 hover:border-blue-100 active:scale-95"
                                 >
                                     <td className="w-[500px] text-start">
-                                        {i.studentData.lastName},{" "}
-                                        {i.studentData.firstName}{" "}
-                                        {i.studentData.middleName}
+                                        {getFullName(i)}
                                     </td>
                                     <td className="w-[200px] text-center">
-                                        {i.studentData.course}
+                                        {i.course}
                                     </td>
                                     <td className="w-[200px text-center">
-                                        {i.studentData.year}
+                                        {i.year}
                                     </td>
                                 </tr>
                             </Link>
