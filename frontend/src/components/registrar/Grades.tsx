@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { studentData } from "../../store/StudentData";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Grades() {
-    const data = { studentData };
-    const [students, setStudents] = useState<(typeof data)[]>();
+    const navigate = useNavigate();
+    const [students, setStudents] = useState<(typeof studentData)[]>();
 
     const fetchStudents = async () => {
         try {
@@ -38,21 +38,20 @@ function Grades() {
                 </thead>
                 <tbody className="flex flex-col gap-2">
                     {students?.map((student, index) => (
-                        <Link
-                            to={`/admission/studentInfo/${student.studentData.id}`}
+                        <tr
+                            key={index}
+                            className="grid grid-cols-grades place-items-center h-12 px-4 bg-slate-100 shadow-sm hover:cursor-pointer hover:bg-blue-100 duration-300"
+                            onClick={() =>
+                                navigate(`/registrar/grades/${student.id}`)
+                            }
                         >
-                            <tr
-                                key={index}
-                                className="grid grid-cols-grades place-items-center h-12 px-4 bg-slate-100 shadow-sm hover:cursor-pointer hover:bg-blue-100 duration-300"
-                            >
-                                <td className="w-full text-start">
-                                    {student.studentData.firstName}
-                                </td>
-                                <td>{student.studentData.course}</td>
-                                <td>{student.studentData.year}</td>
-                                <td>5.0</td>
-                            </tr>
-                        </Link>
+                            <td className="w-full text-start">
+                                {student.studentData.firstName}
+                            </td>
+                            <td>{student.studentData.course}</td>
+                            <td>{student.studentData.year}</td>
+                            <td>5.0</td>
+                        </tr>
                     ))}
                 </tbody>
             </table>

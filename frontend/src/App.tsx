@@ -14,6 +14,7 @@ import Users from "./components/new_components/Users";
 import Employees from "./components/new_components/Employees";
 import Dashboard from "./components/new_components/Dashboard";
 import Grades from "./components/registrar/Grades";
+import StudentGrade from "./components/registrar/StudentGrade";
 
 const router = createBrowserRouter([
     {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
                 path: "grades",
                 element: <Grades />,
             },
+            {
+                path: "grades/:id",
+                element: <StudentGrade />,
+            },
         ],
     },
     {
@@ -90,7 +95,6 @@ const router = createBrowserRouter([
             },
         ],
     },
-
     {
         path: "/test",
         element: <TestLayout />,
