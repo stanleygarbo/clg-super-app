@@ -8,8 +8,27 @@ const { body } = require("express-validator");
 const roles = require("../constants/roles");
 const registerValidationRules = [
   [
-    body("username").notEmpty().trim(),
-    body("password").notEmpty().trim(),
+    body("username")
+      .if(
+        body("roles").custom(
+          (roles) => Array.isArray(roles) && !roles.includes("student")
+        )
+      )
+      .notEmpty()
+      .withMessage("username is required when role is an employee")
+      .trim(),
+    body("password")
+      .if(
+        body("roles").custom(
+          (roles) => Array.isArray(roles) && !roles.includes("student")
+        )
+      )
+      .notEmpty()
+      .withMessage("password is required when role is an employee")
+      .notEmpty()
+      .trim(),
+    body("firstName").notEmpty().trim(),
+    body("surname").notEmpty().trim(),
     body("roles")
       .isArray() // Check that roles is an array
       .withMessage("Roles must be an array")
@@ -34,4 +53,7 @@ router.post(
   userController.register
 );
 router.post("/login", userController.login);
+router.get("/:userId", userController.getUser);
+router.get("/", userController.getUsers);
+
 module.exports = router;

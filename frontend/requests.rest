@@ -4,12 +4,13 @@ GET http://localhost:3000/api/users/ HTTP/1.1
 
 POST http://localhost:3000/api/users/register HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmNiZDk3MjRlYjIwNzdlNDE0YTlkZiIsInVzZXJuYW1lIjoiMTk4Mzg5Iiwicm9sZSI6WyJ1c2VyIl0sImlhdCI6MTcyNzg0NjkyMywiZXhwIjoxNzI3ODc1NzIzfQ.1xb99Z0PKuhPiafCkV38M4aLyK-OngKjBi72sAVPZ-A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmNiZDk3MjRlYjIwNzdlNDE0YTlkZiIsInVzZXJuYW1lIjoiMTk4Mzg5Iiwicm9sZSI6WyJhZG1pbiJdLCJpYXQiOjE3MzYwNDc1NjIsImV4cCI6MTczNjA3NjM2Mn0.SBF70ZoaSEmMRgyi0Q_aXc-CqY8tXSVx__05JljFEaM
 
 {
-  "username": "1983s8s9",
-  "password": "sadsadasd",
-  "roles": ["admin"]
+  "username": "1983s8s9s",
+  "password":"password",
+  "firstName":"password",
+  "roles": ["student"]
 }
 
 ###

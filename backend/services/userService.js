@@ -68,13 +68,14 @@ const loginUser = async (userData) => {
  *
  * @param {string} id
  */
-const getUser = async (id) => {
+const getUsers = async (id) => {
   if (!id) {
     const users = await User.find();
     return users;
+  } else {
+    const users = await User.findById(id);
+    return users;
   }
-
-  return null;
 };
 
-module.exports = { loginUser, registerUser, getUser };
+module.exports = { loginUser, registerUser, getUsers };

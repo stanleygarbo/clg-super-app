@@ -1,13 +1,9 @@
 const mongoose = require("mongoose");
 const roles = require("../constants/roles");
+const { employmentType } = require("../constants/employmentType");
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     firstName: {
       type: String,
       required: true,
@@ -20,7 +16,6 @@ const userSchema = new mongoose.Schema(
     },
     middleName: {
       type: String,
-      required: true,
       unique: true,
     },
     birthDate: {
@@ -35,10 +30,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    password: {
-      type: String,
-      required: true,
-    },
     roles: {
       type: [String],
       enum: roles,
@@ -50,4 +41,51 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = { User };
+const studentSchema = new mongoose.Schema(
+  {
+    program: { type: mongoose.Schema.Types.ObjectId, ref: "Program" },
+    username: {
+      type: String,
+      unique: true,
+    },
+    password: {
+      type: String,
+    },
+    standing: {
+      type: String,
+      enum: ["Freshman", "Sophomore", "Junior", "Senior", "Graduate"],
+    },
+  },
+  { timestamps: true }
+);
+
+const Employee = User.discriminator("Employee", studentSchema);
+
+const employeeSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    sickLeave: { type: Number, default: 0 }, // Total leave days allotted
+    vacationLeave: { type: Number, default: 0 }, // Total vacation days allotted
+    hireDate: { type: Date, required: true },
+    employmentType: {
+      type: String,
+      required: true,
+      enum: employmentType,
+    },
+    department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
+    position: { type: mongoose.Schema.Types.ObjectId, ref: "Position" },
+  },
+  { timestamps: true }
+);
+
+const Student = User.discriminator("Student", studentSchema);
+
+module.exports = { User, Student };
