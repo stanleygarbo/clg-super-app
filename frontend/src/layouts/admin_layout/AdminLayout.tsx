@@ -3,11 +3,13 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { FaDatabase, FaRegUser } from "react-icons/fa";
 import { LuClipboard, LuDoorOpen, LuSchool } from "react-icons/lu";
 import { ISidebarItem } from "../../components/sidebar/SidebarItems";
+import { BiClinic } from "react-icons/bi";
+import { MdOutlineDashboard } from "react-icons/md";
 
 const sidebarItems: ISidebarItem[] = [
     {
         name: "Dashboard",
-        icon: FaDatabase,
+        icon: MdOutlineDashboard,
         path: "/dashboard",
     },
     {
@@ -71,6 +73,42 @@ const sidebarItems: ISidebarItem[] = [
             {
                 name: "Grades",
                 path: "/registrar/grades",
+            },
+        ],
+    },
+    {
+        name: "Faculty",
+        icon: LuDoorOpen,
+        type: "drawer",
+        path: "faculty",
+        subItems: [
+            {
+                name: "Faculty",
+                path: "/faculty/faculty",
+            },
+        ],
+    },
+    {
+        name: "Clinic",
+        icon: LuDoorOpen,
+        type: "drawer",
+        path: "clinic",
+        subItems: [
+            {
+                name: "Clinic",
+                path: "/clinic/clinic",
+            },
+        ],
+    },
+    {
+        name: "SSC",
+        icon: BiClinic,
+        type: "drawer",
+        path: "ssc",
+        subItems: [
+            {
+                name: "SSC",
+                path: "/ssc/ssc",
             },
         ],
     },
