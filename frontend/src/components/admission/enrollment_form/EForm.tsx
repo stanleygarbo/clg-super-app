@@ -31,7 +31,7 @@ function EForm() {
     return (
         <form
             onSubmit={handleSubmit}
-            className="p-10 xs:w-[500px] sm:w-[600px] md:w-[610px] lg:w-[950px] w-[1100px] xs:mx-1 sm:mx-2 md:mx-60 lg:mx-72 xl:"
+            className="p-10 w-full max-w-[1280px] xs:mx-1 sm:mx-2 md:mx-60 lg:mx-72 xl:"
         >
             <div className="bg-black p-2 text-white rounded-t-md">
                 <h1 className="text-2xl text-center font-bold justify-items-stretch">
