@@ -1,10 +1,13 @@
 const Mission = () => {
   return (
-    <div className="flex h-[600px]">
-      <div className="flex items-center h-[100%] ">
+    <div className="flex w-[50%] xs:w-[100%] xs:px-2 sm:w-[100%] sm:px-2 px-10">
+      <div className="flex items-center">
         <article>
-          <h1 className="text-center font-bold text-[40px]"> MISSION </h1>
-          <p className="text-[20px]">
+          <h1 className="text-center font-bold text-3xl xs:text-xl pb-2 sm:text-2xl">
+            {" "}
+            MISSION{" "}
+          </h1>
+          <p className="text-base font-semibold">
             To provide a holistic, relevant, quality and globally recognized
             IT-based education in all levels and disciplines with the objective
             of producing professionals and leaders responsive to the needs of
@@ -15,7 +18,7 @@ const Mission = () => {
           </p>
         </article>
       </div>
-      <div className="mt-20">
+      {/* <div className="mt-20">
         <iframe
           width="560"
           height="315"
@@ -27,7 +30,7 @@ const Mission = () => {
           allowFullScreen
           className="m-10 border-2 border-black"
         ></iframe>
-      </div>
+      </div> */}
     </div>
   );
 };

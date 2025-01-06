@@ -1,0 +1,138 @@
+{
+    "students": [
+        {
+            "id": "80321512587",
+            "studentData": {
+                "status": "",
+                "schoolYear": "2024-2025",
+                "semester": "1",
+                "date": "",
+                "orNum": "",
+                "amount": "",
+                "course": "BSIT",
+                "year": "3",
+                "usn": "80321512587",
+                "password": "",
+                "grades": [
+                    {
+                        "courseUID": "bVrRrj0up9",
+                        "grade": 1.75,
+                        "remark": "Passed"
+                    }
+                ],
+                "personalInfo": {
+                    "lastName": "Limpangog",
+                    "firstName": "Mheg Ryan",
+                    "middleName": "Tolibao",
+                    "telNum": "",
+                    "phoneNum": "",
+                    "email": "",
+                    "birthDate": "",
+                    "birthPlace": "",
+                    "citizenship": "",
+                    "sex": "Male",
+                    "religion": "",
+                    "spouse": {
+                        "lastName": "",
+                        "firstName": "",
+                        "middleName": "",
+                        "numChild": ""
+                    }
+                },
+                "address": {
+                    "permanent": {
+                        "houseNum": "",
+                        "street": "",
+                        "city": "",
+                        "province": "",
+                        "district": ""
+                    },
+                    "boarding": {
+                        "houseNum": "",
+                        "street": "",
+                        "city": "",
+                        "district": ""
+                    }
+                },
+                "family": {
+                    "father": {
+                        "lastName": "",
+                        "firstName": "",
+                        "middleName": "",
+                        "contact": { "phoneNum": "", "email": "" }
+                    },
+                    "mother": {
+                        "lastName": "",
+                        "firstName": "",
+                        "middleName": "",
+                        "contact": { "phoneNum": "", "email": "" }
+                    },
+                    "guardian": {
+                        "lastName": "",
+                        "firstName": "",
+                        "middleName": "",
+                        "relationship": "",
+                        "contact": { "phoneNum": "", "email": "" }
+                    }
+                },
+                "siblings": []
+            }
+        }
+    ],
+    "users": [
+        {
+            "id": "afb4",
+            "userData": {
+                "usn": "mhegz",
+                "password": "MM1008",
+                "confirmPass": "MM1008",
+                "name": "Mheg Ryan Tolibao Limpangog",
+                "role": "Student",
+                "createdAt": "10 / 11 / 2024 -- 9 : 43 : 15",
+                "open": true,
+                "opacity": "w-[400px] left-1/2 opacity-100"
+            }
+        },
+        {
+            "id": "1b88",
+            "userData": {
+                "usn": "Mac12",
+                "password": "Mac1234",
+                "confirmPass": "Mac1234",
+                "name": "Mac Alley Limpangog",
+                "role": "Student",
+                "createdAt": "",
+                "open": true,
+                "opacity": "opacity-0 left-0 w-0"
+            }
+        }
+    ],
+    "employee": [
+        {
+            "id": "75ed",
+            "employeeData": {
+                "firstName": "Kacelyn",
+                "middleName": "",
+                "lastName": "Ancheta",
+                "position": "Teacher",
+                "office": "Admission",
+                "sssNum": "",
+                "philhealthNum": "",
+                "pagibigID": "",
+                "tinNum": ""
+            }
+        }
+    ],
+    "courses": [
+        {
+            "id": "bVrRrj0up9",
+            "course": {
+                "UID": "bVrRrj0up9",
+                "name": "Intro to Human-Computer Interaction",
+                "code": "CS6200",
+                "units": 3,
+                "instructor": "Ms. Gatchalian"
+            }
+        }
+    ]
+}

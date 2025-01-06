@@ -1,85 +1,151 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import About from "./pages/About";
-import EForm from "./components/admission/EForm";
-import AboutLayout from "./layouts/about_layout/AboutLayout";
 import Mission from "./components/about/Mission";
-import PrevHome from "./components/home/PrevHome";
-import CoursesOffered from "./components/about/CoursesOffered";
-import Vision from "./components/about/Vision";
-import AMAHymn from "./components/about/AMAHymn";
-import OfficeChairmanVice from "./components/about/OfficeChairmanVice";
-import Footer from "./components/Footer";
-import Layout from "./layouts/home_layout/Layout";
-import AdminLayout from "./layouts/AdminLayout";
+import AdminLayout from "./layouts/admin_layout/AdminLayout";
+import Home from "./pages/Home";
+import HomeLayout from "./layouts/home_layout/HomeLayout";
+import EForm from "./components/admission/enrollment_form/EForm";
+import Profile from "./components/profile/Profile";
+import EnrolledStudents from "./components/admission/enrolled_students/EnrolledStudents";
+import StudentsInfo from "./components/admission/enrolled_students/StudentsInfo";
+import TestLayout from "./layouts/TestLayout";
+import Users from "./components/new_components/Users";
+import Employees from "./components/new_components/Employees";
+import Dashboard from "./components/new_components/Dashboard";
+import Grades from "./components/registrar/Grades";
+import StudentGrade from "./components/registrar/StudentGrade";
+import Faculty from "./components/faculty/Faculty";
+import Clinic from "./components/clinic/Clinic";
+import SSC from "./components/ssc/SSC";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
+    {
         path: "/",
-        element: <PrevHome />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/about",
-        element: <About />,
-      },
-    ],
-  },
-  {
-    path: "/admin",
-    element: <AdminLayout />,
-    children: [
-      {
-        path: "admission/students",
-        element: <EForm />,
-      },
-    ],
-  },
-  {
-    path: "/about",
-    element: <AboutLayout />,
-    children: [
-      {
-        path: "mission",
-        element: <Mission />,
-      },
-      {
-        path: "vision",
-        element: <Vision />,
-      },
-      {
-        path: "ama-hymn",
-        element: <AMAHymn />,
-      },
-      {
-        path: "office-chairman-vice",
-        element: <OfficeChairmanVice />,
-      },
-      {
-        path: "course-offered",
-        element: <CoursesOffered />,
-      },
-      {
-        path: "footer",
-        element: <Footer />,
-      },
-    ],
-  },
+        element: <HomeLayout />,
+        children: [
+            {
+                path: "/",
+                element: <Home />,
+            },
+            {
+                path: "/login",
+                element: <Login />,
+            },
+            {
+                path: "/about",
+                element: <About />,
+            },
+        ],
+    },
+    {
+        path: "/dashboard",
+        element: <AdminLayout />,
+        children: [
+            {
+                path: "/dashboard",
+                element: <Dashboard />,
+            },
+        ],
+    },
+    {
+        path: "/admin",
+        element: <AdminLayout />,
+        children: [
+            {
+                path: "users",
+                element: <Users />,
+            },
+            {
+                path: "profile",
+                element: <Profile />,
+            },
+        ],
+    },
+    {
+        path: "admission",
+        element: <AdminLayout />,
+        children: [
+            {
+                path: "eform",
+                element: <EForm />,
+            },
+            {
+                path: "enroll-student",
+                element: <EnrolledStudents />,
+            },
+            {
+                path: "studentInfo/:id",
+                element: <StudentsInfo />,
+            },
+            {
+                path: "employees",
+                element: <Employees />,
+            },
+        ],
+    },
+    {
+        path: "/registrar",
+        element: <AdminLayout />,
+        children: [
+            {
+                path: "grades",
+                element: <Grades />,
+            },
+            {
+                path: "grades/:usn",
+                element: <StudentGrade />,
+            },
+        ],
+    },
+    {
+        path: "/faculty",
+        element: <AdminLayout />,
+        children: [
+            {
+                path: "faculty",
+                element: <Faculty />,
+            },
+        ],
+    },
+    {
+        path: "/clinic",
+        element: <AdminLayout />,
+        children: [
+            {
+                path: "clinic",
+                element: <Clinic />,
+            },
+        ],
+    },
+    {
+        path: "/ssc",
+        element: <AdminLayout />,
+        children: [
+            {
+                path: "ssc",
+                element: <SSC />,
+            },
+        ],
+    },
+    {
+        path: "/test",
+        element: <TestLayout />,
+        children: [
+            {
+                path: "mission",
+                element: <Mission />,
+            },
+        ],
+    },
 ]);
 
 function App() {
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  );
+    return (
+        <>
+            <RouterProvider router={router} />
+        </>
+    );
 }
 
 export default App;
