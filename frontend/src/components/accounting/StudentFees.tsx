@@ -36,8 +36,8 @@ const StudentFees = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
-    <div className="w-[1100px] h-[600px] rounded-lg border mt-10">
-      <div className="bg-black p-2 text-white mb-6 rounded-t-lg">
+    <div className="w-[1100px] h-[600px] rounded-lg border">
+      <div className="bg-blue-600 py-5 text-white mb-6 rounded-t-lg">
         <h1 className="text-2xl text-center font-bold">
           Student Fees Management
         </h1>
@@ -55,10 +55,10 @@ const StudentFees = () => {
         </button>
       </div>
 
-      <div className="overflow-x-auto px-10 pb-10 relative">
-        <table className="min-w-full bg-white border border-gray-300">
+      <div className="overflow-x-auto pb-10 relative w-[100%] h-[95%]">
+        <table className="w-[100%] h-[85%] border flex flex-col rounded-b-md bg-white duration-200 py-10 px-12 overflow-hidden overflow-y-scroll no-scrollbar">
           <thead>
-            <tr className="bg-gray-100">
+            <tr className="grid grid-cols-7 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%] h-[100%]">
               <th className="px-6 py-3 border-b text-left">Student ID</th>
               <th className="px-6 py-3 border-b text-left">Student Name</th>
               <th className="px-6 py-3 border-b text-left">Fee Type</th>
@@ -69,8 +69,8 @@ const StudentFees = () => {
             </tr>
           </thead>
           <tbody>
-            {sampleData.map((fee) => (
-              <tr key={fee.id} className="hover:bg-gray-50">
+            {sampleData.map((fee, index) => (
+              <tr key={index} className="hover:bg-gray-50">
                 <td className="px-6 py-4 border-b">{fee.studentId}</td>
                 <td className="px-6 py-4 border-b">{fee.studentName}</td>
                 <td className="px-6 py-4 border-b">{fee.feeType}</td>

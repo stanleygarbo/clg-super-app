@@ -43,7 +43,7 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
             sessionStorage.removeItem("");
             navigate("/login");
           }}
-          className="rounded-md bg-gradient-to-t from-red-600 to-red-400 shadow-md shadow-red-500/50 hover:scale-105 active:scale-95 text-white font-bold w-full py-2 duration-200"
+          className="rounded-md shadow-sm bg-red-600 border border-red-600 shadow-red-600/50 hover:scale-105 active:scale-95 text-white font-bold w-full py-2 duration-200"
         >
           Log out
         </button>

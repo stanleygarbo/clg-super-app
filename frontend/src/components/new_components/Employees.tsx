@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { employeeData } from "../../store/EmployeeData";
 import AddEmployee from "./AddEmployee";
+import { IoMdPersonAdd } from "react-icons/io";
+import { FaBoxArchive } from "react-icons/fa6";
 
 const Users = () => {
   const [employees, setEmployees] = useState<(typeof employeesData)[]>();
@@ -81,7 +83,7 @@ const Users = () => {
                 onClick={() => {
                   setAddEmployeeForm(true);
                 }}
-                className="bg-red-200 px-2 font-bold rounded-md shadow-md hover:scale-105 duration-200"
+                className="bg-red-600 px-2 font-bold rounded-md text-white shadow-md hover:scale-105 duration-200"
               >
                 X
               </button>
@@ -91,34 +93,38 @@ const Users = () => {
           <h1 className="flex justify-center">
             <button
               type="submit"
-              className="w-[50%] bg-gradient-to-t from-blue-600 to-blue-400 shadow-blue-600/50 py-[5px] rounded-md font-bold shadow-md hover:scale-105 text-white active:scale-95 duration-200"
+              className="w-[50%] bg-blue-600 shadow-blue-600/50 py-[5px] rounded-md font-bold shadow-sm hover:scale-105 text-white active:scale-95 duration-200"
             >
               Add
             </button>
           </h1>
         </form>
-        <h1 className="text-center py-5 text-2xl font-bold bg-slate-50 border-t border-r border-l rounded-t-md shadow-sm">
+        <h1 className="text-center py-5 text-2xl font-bold bg-blue-600 text-white border-t border-r border-l rounded-t-md shadow-sm">
           All Employees
         </h1>
         <table className="w-[1100px] h-[570px] border flex flex-col rounded-b-md shadow-md bg-white duration-200 py-10 px-12">
-          <th className="grid grid-cols-4 text-lg font-bold gap-3 p-2 border-b mb-5 text-blue-800 border-blue-300 items-center w-[100%]">
-            <td className="w-[300px] text-start">Name</td>
-            <td className="w-[200px] text-center ">Position</td>
-            <td className="w-[200px text-center">Office</td>
-            <td className="w-[200px] text-end">
-              <button
-                type="button"
-                onClick={() => {
-                  addEmployeeForm === true
-                    ? setAddEmployeeForm(false)
-                    : setAddEmployeeForm(true);
-                }}
-                className="px-6 shadow-md text-bold hover:scale-105 active:scale-95 py-[5px] my-2 font-bold text-white bg-gradient-to-t from-blue-600 to-blue-400 shadow-blue-600/50 rounded-md duration-200"
-              >
-                Add User
-              </button>
-            </td>
-          </th>
+          <thead>
+            <tr className="grid grid-cols-4 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%]">
+              <th className="w-[300px] text-start">Name</th>
+              <th className=" text-center ">Position</th>
+              <th className="text-center">Office</th>
+              <th className=" text-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    addEmployeeForm === true
+                      ? setAddEmployeeForm(false)
+                      : setAddEmployeeForm(true);
+                  }}
+                  className="px-3 shadow-sm text-bold hover:scale-105 active:scale-95 py-[5px] my-2 font-bold text-white bg-blue-600 shadow-blue-600/50 rounded-md duration-200"
+                >
+                  <p className="flex justify-center items-center gap-2">
+                    <IoMdPersonAdd /> User
+                  </p>
+                </button>
+              </th>
+            </tr>
+          </thead>
           {error && (
             <div className="flex justify-center items-center">
               Failed to fetch data
@@ -128,25 +134,26 @@ const Users = () => {
             <div className="flex justify-center items-center">Loading...</div>
           )}
           <section className="overflow-hidden overflow-y-auto no-scrollbar flex flex-col">
+            {employees?.length === 0 && (
+              <div className="text-center">No Employees Added</div>
+            )}
             {employees?.map((employee, index) => (
               <tr
                 key={index}
-                className="duration-200 hover:cursor-pointer font-semibold gap-3 items-center text-sm grid grid-cols-4 px-2 rounded-sm hover:rounded-lg bg-slate-50 group shadow-sm border hover:bg-blue-100 hover:border-blue-100 relative"
+                className="duration-200 hover:cursor-pointer font-semibold gap-3 items-center text-sm grid grid-cols-4 px-2 rounded-sm  bg-slate-50 group shadow-sm border hover:bg-blue-600 hover:border-blue-600 hover:text-white"
               >
                 <td className="w-[300px] text-start">
                   {employee.employeeData.lastName}{" "}
                   {employee.employeeData.firstName}{" "}
                   {employee.employeeData.middleName}
                 </td>
-                <td className="w-[200px] text-center">
+                <td className=" text-center">
                   {employee.employeeData.position}
                 </td>
-                <td className="w-[200px text-center">
-                  {employee.employeeData.office}
-                </td>
-                <td className="w-[200px] text-end">
-                  <button className="opacity-0 group-hover:opacity-100 px-4 group-hover:bg-red-100 shadow-md text-bold hover:scale-105 active:scale-95 py-2 my-2 border font-bold group-hover:border-red-200 rounded-md duration-200">
-                    Archived
+                <td className=" text-center">{employee.employeeData.office}</td>
+                <td className=" text-center">
+                  <button className="opacity-0 group-hover:opacity-100 px-4 bg-red-600 text-white shadow-md text-bold hover:scale-110 active:scale-95 py-2 my-2 border font-bold border-red-600 rounded-md duration-200">
+                    <FaBoxArchive />
                   </button>
                 </td>
               </tr>

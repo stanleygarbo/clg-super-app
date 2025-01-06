@@ -54,7 +54,7 @@ const sidebarItems: ISidebarItem[] = [
     subItems: [
       {
         name: "Dashboard",
-        path: "/accounting/dashboard",
+        path: "/accounting/accounting-dashboard",
       },
       {
         name: "Student Fees",

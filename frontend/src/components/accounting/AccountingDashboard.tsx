@@ -8,7 +8,7 @@ import {
 const AccountingDashboard = () => {
   return (
     <div className="w-[1100px] shadow-md border rounded-lg mt-10">
-      <div className="bg-black p-2 text-white mb-6 rounded-t-lg">
+      <div className="bg-blue-600 py-5 text-white mb-6 rounded-t-lg">
         <h1 className="text-2xl text-center font-bold">Accounting Dashboard</h1>
       </div>
 
