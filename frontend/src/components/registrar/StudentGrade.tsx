@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { studentData } from "../../store/StudentData";
 import { useParams } from "react-router-dom";
+import { Course } from "../../store/CourseData";
 
 function StudentGrade() {
     const { usn } = useParams();
@@ -34,21 +35,24 @@ function StudentGrade() {
 
     const renderGrades = async () => {
         student?.grades.map(async (grade) => {
-            const course = await fetchCourse(grade.courseUID);
+            const course: Course = await fetchCourse(grade.courseUID);
             console.log(course);
 
             const newRow = (
                 <tr
                     className="grid grid-cols-gradeRow place-items-center"
-                    key={course.courseCode}
+                    key={course.code}
                 >
-                    <td className="w-full text-start">{course.courseCode}</td>
-                    <td>{course.courseName}</td>
+                    <td className="w-full text-start">{course.code}</td>
+                    <td>{course.name}</td>
+                    <td>{course.units}</td>
                     <td>{grade.grade}</td>
                     <td>{grade.remark}</td>
+                    <td>{course.instructor}</td>
                 </tr>
             );
             setGradesRow([...gradesRow, newRow]);
+            console.log(gradesRow);
         });
     };
 
@@ -81,12 +85,14 @@ function StudentGrade() {
                 </div>
             </div>
             <table className="flex flex-col gap-4 w-full px-6 py-8 border rounded-b-md shadow-md">
-                <thead>
+                <thead className="border-b border-blue-300 pb-2">
                     <tr className="grid grid-cols-gradeRow">
                         <th>Course Code</th>
-                        <th>Course</th>
+                        <th>Subject Description</th>
+                        <th>Units</th>
                         <th>Grade</th>
                         <th>Remark</th>
+                        <th>Instructor</th>
                     </tr>
                 </thead>
                 <tbody className="flex flex-col gap-2">

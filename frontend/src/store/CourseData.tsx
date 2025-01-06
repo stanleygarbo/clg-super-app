@@ -1,9 +1,9 @@
-interface Course {
-    courseUID: string;
-    courseName: string;
-    courseCode: string;
-    courseUnits: number;
-    courseInstructor: string; // note: change to instructor ID in the backend when complete
+export interface Course {
+    UID: string;
+    name: string;
+    code: string;
+    units: number;
+    instructor: string; // note: change to instructor ID in the backend when complete
 }
 
 interface Grade {

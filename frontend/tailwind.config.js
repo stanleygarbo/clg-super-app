@@ -32,7 +32,7 @@ module.exports = {
             },
             gridTemplateColumns: {
                 grades: "40% repeat(2, 25%) 10%",
-                gradeRow: "20% 40% 20% 20%",
+                gradeRow: "10% 30% 10% 10% 20% 20%",
             },
         },
     },

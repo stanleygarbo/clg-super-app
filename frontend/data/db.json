@@ -127,11 +127,11 @@
         {
             "id": "bVrRrj0up9",
             "course": {
-                "courseUID": "bVrRrj0up9",
-                "courseName": "Intro to Human-Computer Interaction",
-                "courseCode": "CS6200",
-                "courseUnits": 3,
-                "courseInstructor": "Ms. Gatchalian"
+                "UID": "bVrRrj0up9",
+                "name": "Intro to Human-Computer Interaction",
+                "code": "CS6200",
+                "units": 3,
+                "instructor": "Ms. Gatchalian"
             }
         }
     ]

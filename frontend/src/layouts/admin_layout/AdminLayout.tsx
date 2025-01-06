@@ -116,8 +116,10 @@ const sidebarItems: ISidebarItem[] = [
 
 const AdminLayout = () => {
     return (
-        <div className="flex min-h-screen">
-            <Sidebar sidebarItems={sidebarItems} />
+        <div className="grid grid-cols-[15rem,1fr] min-h-screen">
+            <div className="sticky top-0 h-screen">
+                <Sidebar sidebarItems={sidebarItems} />
+            </div>
             <div className="flex justify-center w-full px-20 xs:px-5 mt-10">
                 <Outlet />
             </div>
