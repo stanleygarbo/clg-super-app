@@ -17,15 +17,19 @@ const EFormSchoolYear = () => {
             <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               School Year
             </p>
-            <input
-              className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-              type="text"
-              required
+
+            <select
               value={snap.schoolYear}
               onChange={(e) => {
                 studentData.schoolYear = e.target.value;
               }}
-            />
+              required
+              className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+            >
+              <option value=" "> </option>
+              <option value="2024-2025">2024-2025</option>
+              <option value="2025-2026">2025-2026</option>
+            </select>
           </span>
           <span className={` ${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
@@ -38,7 +42,6 @@ const EFormSchoolYear = () => {
               }}
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
             >
-              <option value=" "> </option>
               <option value="1st">1st</option>
               <option value="2nd">2nd</option>
             </select>
@@ -76,7 +79,6 @@ const EFormSchoolYear = () => {
               }}
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
             >
-              <option value=" "> </option>
               <option value="1st">1st</option>
               <option value="2nd">2nd</option>
               <option value="3rd">3rd</option>

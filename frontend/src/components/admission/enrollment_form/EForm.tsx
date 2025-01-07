@@ -4,6 +4,7 @@ import EFormParents from "./EFormParents";
 import EformSiblings from "./EformSiblings";
 import { useNavigate } from "react-router-dom";
 import { studentData } from "../../../store/StudentData";
+import TestUpload from "../../new_components/TestUpload";
 
 function EForm() {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ function EForm() {
         <EFormStudent />
         <EFormParents />
         <EformSiblings />
+        <TestUpload />
         <section className="flex justify-center px-7 mx-2">
           <button
             type="submit"

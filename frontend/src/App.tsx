@@ -18,6 +18,7 @@ import StudentGrade from "./components/registrar/StudentGrade";
 import Grades from "./components/registrar/Grades";
 import AccountingDashboard from "./components/accounting/AccountingDashboard";
 import StudentFees from "./components/accounting/StudentFees";
+import TestUpload from "./components/new_components/TestUpload";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/test",
+        element: <TestUpload />,
       },
     ],
   },
