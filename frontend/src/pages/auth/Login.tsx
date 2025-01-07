@@ -101,7 +101,7 @@ const Login = () => {
               console.log("Wrong User Name or Password");
             }
           }}
-          className="mt-4 pr-3 pl-3 bg-gradient-to-t from-blue-600 to-blue-400 shadow-md shadow-blue-500/50 rounded-md text-white hover:scale-105 py-2 active:scale-95 font-bold duration-200"
+          className="mt-4 pr-3 pl-3 bg-blue-600 shadow-sm shadow-blue-500/50 rounded-md text-white hover:scale-105 py-2 active:scale-95 font-bold duration-200"
         >
           Log In
         </button>
