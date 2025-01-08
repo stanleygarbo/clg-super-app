@@ -14,6 +14,7 @@ const swaggerSchemas = require("./utils/swaggerSchemas.js");
 
 const { User } = require("./models/userModel");
 const bcrypt = require("bcrypt");
+const cors = require("cors");
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -42,6 +43,7 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 const app = express();
+app.use(cors());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const jsonParser = bodyParser.json();
