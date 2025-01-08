@@ -1,25 +1,103 @@
 const mongoose = require("mongoose");
 const roles = require("../constants/roles");
+const { employmentType } = require("../constants/employmentType");
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: false,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: false,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    surname: {
+      type: String,
+      required: true,
+    },
+    middleName: {
+      type: String,
+    },
+    birthDate: {
+      type: Date,
+      required: false,
+    },
+    email: {
+      type: String,
+      required: false,
+    },
+    telephone: {
+      type: String,
+      required: false,
+    },
+    phone: {
+      type: String,
+      required: false,
+    },
+    roles: {
+      type: [String],
+      enum: roles,
+      required: true,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+      select: false,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  roles: {
-    type: [String],
-    enum: roles,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+const studentSchema = new mongoose.Schema(
+  {
+    program: { type: mongoose.Schema.Types.ObjectId, ref: "Program" },
+    standing: {
+      type: String,
+      enum: ["freshman", "sophomore", "junior", "senior", "graduate"],
+    },
+    birth: { type: mongoose.Schema.Types.ObjectId, ref: "Birth" },
+    spouse: { type: mongoose.Schema.Types.ObjectId, ref: "Spouse" },
+    homeAddress: { type: mongoose.Schema.Types.ObjectId, ref: "HomeAddress" },
+    cityAddress: { type: mongoose.Schema.Types.ObjectId, ref: "CityAddress" },
+    father: { type: mongoose.Schema.Types.ObjectId, ref: "Parent" },
+    mother: { type: mongoose.Schema.Types.ObjectId, ref: "Parent" },
+    guardian: { type: mongoose.Schema.Types.ObjectId, ref: "Guardian" },
+    guardianSpouse: { type: mongoose.Schema.Types.ObjectId, ref: "Spouse" },
+    siblings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Sibling" }],
+  },
+  { timestamps: true }
+);
+
+const employeeSchema = new mongoose.Schema(
+  {
+    sickLeave: { type: Number, default: 0 }, // Total leave days allotted
+    vacationLeave: { type: Number, default: 0 }, // Total vacation days allotted
+    hireDate: { type: Date, required: true },
+    employmentType: {
+      type: String,
+      required: true,
+      enum: employmentType,
+    },
+    department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
+    position: { type: mongoose.Schema.Types.ObjectId, ref: "Position" },
+    governmentId: { type: mongoose.Schema.Types.ObjectId, ref: "GovernmentId" },
+    birth: { type: mongoose.Schema.Types.ObjectId, ref: "Birth" },
+    spouse: { type: mongoose.Schema.Types.ObjectId, ref: "Spouse" },
+    homeAddress: { type: mongoose.Schema.Types.ObjectId, ref: "HomeAddress" },
+    cityAddress: { type: mongoose.Schema.Types.ObjectId, ref: "CityAddress" },
+  },
+  { timestamps: true }
+);
+
+const Employee = User.discriminator("Employee", employeeSchema);
+const Student = User.discriminator("Student", studentSchema);
+
+module.exports = { User, Student, Employee };
