@@ -14,8 +14,6 @@ const courseSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    program: { type: mongoose.Schema.Types.ObjectId, ref: "Program" },
-    department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
   },
   { timestamps: true }
 );

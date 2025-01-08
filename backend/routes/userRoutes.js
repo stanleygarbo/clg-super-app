@@ -52,8 +52,5 @@ router.post(
   roleMiddleware(["admin", "super"]),
   userController.register
 );
-router.post("/login", userController.login);
-router.get("/:userId", userController.getUser);
-router.get("/", userController.getUsers);
 
 module.exports = router;

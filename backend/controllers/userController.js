@@ -18,19 +18,6 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
-  try {
-    const user = await userService.loginUser(req.body);
-    res.status(200).json({
-      message: "Login successful",
-      token: user.token, // Return the JWT token here
-      username: user.username,
-    });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
 const getUsers = async (req, res) => {
   try {
     const users = await userService.getUsers();
@@ -49,4 +36,4 @@ const getUser = async (req, res) => {
   }
 };
 
-module.exports = { register, login, getUsers, getUser };
+module.exports = { register, getUsers, getUser };

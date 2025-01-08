@@ -7,6 +7,11 @@ const departmentSchema = mongoose.Schema(
       required: true,
     },
     programs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Program" }],
+    isDeleted: {
+      type: Boolean,
+      default: false,
+      select: false,
+    },
   },
   { timestamps: true }
 );

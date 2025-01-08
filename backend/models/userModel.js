@@ -4,19 +4,25 @@ const { employmentType } = require("../constants/employmentType");
 
 const userSchema = new mongoose.Schema(
   {
+    username: {
+      type: String,
+      required: false,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: false,
+    },
     firstName: {
       type: String,
       required: true,
-      unique: true,
     },
     surname: {
       type: String,
       required: true,
-      unique: true,
     },
     middleName: {
       type: String,
-      unique: true,
     },
     birthDate: {
       type: Date,
@@ -39,6 +45,11 @@ const userSchema = new mongoose.Schema(
       enum: roles,
       required: true,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+      select: false,
+    },
   },
   { timestamps: true }
 );
@@ -48,13 +59,6 @@ const User = mongoose.model("User", userSchema);
 const studentSchema = new mongoose.Schema(
   {
     program: { type: mongoose.Schema.Types.ObjectId, ref: "Program" },
-    username: {
-      type: String,
-      unique: true,
-    },
-    password: {
-      type: String,
-    },
     standing: {
       type: String,
       enum: ["freshman", "sophomore", "junior", "senior", "graduate"],
@@ -74,15 +78,6 @@ const studentSchema = new mongoose.Schema(
 
 const employeeSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
     sickLeave: { type: Number, default: 0 }, // Total leave days allotted
     vacationLeave: { type: Number, default: 0 }, // Total vacation days allotted
     hireDate: { type: Date, required: true },

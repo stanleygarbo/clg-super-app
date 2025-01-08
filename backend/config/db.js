@@ -1,6 +1,9 @@
 // config/config.js
-const { connect } = require("mongoose");
+const { connect, plugin } = require("mongoose");
 require("dotenv").config();
+const mongoosePlugins = require("../utils/mongoosePlugins");
+
+plugin(mongoosePlugins.excludeIsDeletedPlugin);
 
 const connectDB = async () => {
   try {

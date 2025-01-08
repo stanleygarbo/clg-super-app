@@ -11,7 +11,6 @@ const programSchema = mongoose.Schema(
       required: true,
     },
     courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
-    department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
   },
   { timestamps: true }
 );
