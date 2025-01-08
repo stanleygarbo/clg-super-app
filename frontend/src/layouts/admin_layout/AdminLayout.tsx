@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { FaRegUser } from "react-icons/fa";
+import { FaDatabase, FaRegUser } from "react-icons/fa";
 import { LuClipboard, LuDoorOpen, LuSchool } from "react-icons/lu";
 import { ISidebarItem } from "../../components/sidebar/SidebarItems";
-import { BiClinic } from "react-icons/bi";
 import { MdOutlineDashboard } from "react-icons/md";
+import { BiClinic } from "react-icons/bi";
 
 const sidebarItems: ISidebarItem[] = [
   {

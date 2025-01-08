@@ -3,7 +3,7 @@ import { studentData } from "../../../store/StudentData";
 import { Link, useParams } from "react-router-dom";
 
 const EnrolledStudents = () => {
-  const [students, setStudents] = useState<(typeof datas)[]>();
+  const [students, setStudents] = useState<(typeof studentData)[]>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { id } = useParams();
@@ -18,7 +18,7 @@ const EnrolledStudents = () => {
       setError("");
 
       const data: (typeof datas)[] = await response.json();
-      setStudents(data);
+      setStudents(data?.map(({ id: string, ...rest }) => rest.studentData));
       loading;
       console.log(students);
     } catch (err) {
@@ -28,9 +28,16 @@ const EnrolledStudents = () => {
     }
   };
 
+  const getFullName = (student: typeof studentData) =>
+    `${student.personalInfo.lastName}, ${student.personalInfo.firstName} ${student.personalInfo.middleName}`;
+
   useEffect(() => {
     fetchStudents();
   }, []);
+
+  useEffect(() => {
+    console.log(students);
+  }, [students]);
 
   return (
     <div className="">
@@ -38,15 +45,12 @@ const EnrolledStudents = () => {
         <h1 className="text-center py-5 text-2xl font-bold bg-blue-600 text-white border-t border-r border-l rounded-t-md shadow-sm">
           All Students
         </h1>
-        <table className="w-[1100px] h-[570px] border flex flex-col rounded-b-md shadow-md bg-white duration-200 py-10 px-12">
-          <thead>
-            <tr className="grid grid-cols-4 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%]">
-              <th className="text-start">Name</th>
-              <th className=" text-center w-[400px]">Email</th>
-              <th className=" text-end">Course</th>
-              <th className="text-center">Year</th>
-            </tr>
-          </thead>
+        <table className="w-full h-[570px] border flex flex-col rounded-b-md shadow-md bg-white duration-200 py-10 px-12">
+          <th className="grid grid-cols-3 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%]">
+            <td className="w-[500px] text-start">Name</td>
+            <td className="w-[200px] text-center">Course</td>
+            <td className="w-[200px text-center">Year</td>
+          </th>
           {error && (
             <div className="flex justify-center items-center">
               Failed to fetch data
@@ -56,22 +60,17 @@ const EnrolledStudents = () => {
             <div className="flex justify-center items-center">Loading...</div>
           )}
           <section className="overflow-hidden overflow-y-auto no-scrollbar flex flex-col">
-            {students?.map((i, index) => (
-              <Link to={`/admission/studentInfo/${i.id}`}>
+            {students?.map((student, index) => (
+              <Link to={`/admission/studentInfo/${student.usn}`}>
                 <tr
                   key={index}
-                  className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-4 px-2 py-4 bg-slate-50 shadow-sm border hover:bg-blue-600 hover:border-blue-600 hover:text-white active:scale-95"
+                  className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-3 px-2 py-4 rounded-sm hover:text-white bg-slate-50 shadow-sm border hover:bg-blue-600 hover:border-blue-600 active:scale-95"
                 >
-                  <td className="w-[400px] text-start">
-                    {i.studentData.personalInfo.lastName},{" "}
-                    {i.studentData.personalInfo.firstName}{" "}
-                    {i.studentData.personalInfo.middleName}
+                  <td className="w-[500px] text-start">
+                    {getFullName(student)}
                   </td>
-                  <td className="text-center w-[400px]">
-                    {i.studentData.personalInfo.email}
-                  </td>
-                  <td className="text-end pr-3">{i.studentData.course}</td>
-                  <td className="text-center">{i.studentData.year}</td>
+                  <td className="w-[200px] text-center">{student.course}</td>
+                  <td className="w-[200px text-center">{student.year}</td>
                 </tr>
               </Link>
             ))}

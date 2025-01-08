@@ -11,14 +11,14 @@ import StudentsInfo from "./components/admission/enrolled_students/StudentsInfo"
 import Users from "./components/new_components/Users";
 import Employees from "./components/new_components/Employees";
 import Dashboard from "./components/new_components/Dashboard";
-import Grades from "./components/registrar/Grades";
-import StudentGrade from "./components/registrar/StudentGrade";
-import Faculty from "./components/faculty/Faculty";
-import Clinic from "./components/clinic/Clinic";
 import SSC from "./components/ssc/SSC";
+import Clinic from "./components/clinic/Clinic";
+import Faculty from "./components/faculty/Faculty";
+import StudentGrade from "./components/registrar/StudentGrade";
+import Grades from "./components/registrar/Grades";
 import AccountingDashboard from "./components/accounting/AccountingDashboard";
 import StudentFees from "./components/accounting/StudentFees";
-import Department from "./components/new_components/Department";
+import TestUpload from "./components/new_components/TestUpload";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/test",
+        element: <TestUpload />,
       },
     ],
   },
@@ -61,28 +65,10 @@ const router = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
-      {
-        path: "department",
-        element: <Department />,
-      },
     ],
   },
   {
-    path: "/accounting",
-    element: <AdminLayout />,
-    children: [
-      {
-        path: "accounting-dashboard",
-        element: <AccountingDashboard />,
-      },
-      {
-        path: "fee",
-        element: <StudentFees />,
-      },
-    ],
-  },
-  {
-    path: "admission",
+    path: "/admission",
     element: <AdminLayout />,
     children: [
       {
@@ -100,6 +86,50 @@ const router = createBrowserRouter([
       {
         path: "employees",
         element: <Employees />,
+      },
+    ],
+  },
+  {
+    path: "/registrar",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "grades",
+        element: <Grades />,
+      },
+      {
+        path: "grades/:usn",
+        element: <StudentGrade />,
+      },
+    ],
+  },
+  {
+    path: "/faculty",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "faculty",
+        element: <Faculty />,
+      },
+    ],
+  },
+  {
+    path: "/clinic",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "clinic",
+        element: <Clinic />,
+      },
+    ],
+  },
+  {
+    path: "/ssc",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "ssc",
+        element: <SSC />,
       },
     ],
   },
