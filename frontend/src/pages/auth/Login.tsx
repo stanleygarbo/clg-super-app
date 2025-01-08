@@ -1,45 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../api/auth";
+import { toast } from "react-toastify";
+import { authState } from "../../store/auth";
+import { jwtDecode } from "jwt-decode";
+import { IUser } from "../../interface/IUser";
+import { useMutation } from "@tanstack/react-query";
 import { useSnapshot } from "valtio";
-import { studentData } from "../../store/StudentData";
 
 const Login = () => {
+  const auth = useSnapshot(authState);
   const [userPass, setUserPass] = useState<string>("");
   const [userUsn, setUserUsn] = useState<string>("");
   const navigate = useNavigate();
 
-  const snap = useSnapshot(studentData);
+  useEffect(() => {
+    if (auth.token) {
+      navigate("/dashboard");
+    }
+  }, []);
 
-  const proceedLogin = (e: { preventDefault: () => void }) => {
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: (res) => {
+      console.log(res);
+      authState.token = res.token;
+      const user = jwtDecode<IUser>(res.token);
+      authState.user = user;
+
+      navigate("/dashboard");
+    },
+    onError: (err) => {
+      toast("Invalid credentials", { type: "error" });
+    },
+  });
+
+  const proceedLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (validate()) {
-      fetch("http://localhost:8000/students/" + snap.usn)
-        .then((res) => {
-          return res.json();
-        })
-        .then((resp) => {
-          setUserUsn(resp.id);
-          setUserPass(resp.studentData.password);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-      console.log("okay");
+    if (userUsn && userPass) {
+      mutation.mutate({ username: userUsn, password: userPass });
     }
-  };
-
-  const validate = () => {
-    let result = true;
-    if (snap.password === "" || snap.password === null) {
-      result = false;
-      console.log("Enter Password");
-    }
-    if (snap.usn === "" || snap.usn === null) {
-      result = false;
-      console.log("Enter User Name");
-    }
-
-    return result;
   };
 
   return (
@@ -65,9 +65,9 @@ const Login = () => {
             className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
             type="text"
             required
-            value={snap.usn}
+            value={userUsn}
             onChange={(e) => {
-              studentData.usn = e.target.value;
+              setUserUsn(e.target.value);
             }}
           />
         </span>
@@ -79,31 +79,22 @@ const Login = () => {
             className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
             type="password"
             required
-            value={snap.password}
+            value={userPass}
             onChange={(e) => {
-              studentData.password = e.target.value;
+              setUserPass(e.target.value);
             }}
           />
         </span>
         <button
           type="submit"
-          onClick={() => {
-            if (snap.usn === "") {
-              console.log("Enter User Name");
-            }
-            if (snap.password === "") {
-              console.log("Enter Password");
-            }
-            if (snap.usn === userUsn && snap.password === userPass) {
-              console.log("Login Successfully");
-              navigate("/dashboard");
-            } else {
-              console.log("Wrong User Name or Password");
-            }
-          }}
-          className="mt-4 pr-3 pl-3 bg-blue-600 shadow-sm shadow-blue-500/50 rounded-md text-white hover:scale-105 py-2 active:scale-95 font-bold duration-200"
+          disabled={mutation.isPending}
+          className="mt-4 flex items-center justify-center pr-3 pl-3 bg-blue-600 shadow-sm shadow-blue-500/50 rounded-md text-white hover:scale-105 py-2 active:scale-95 font-bold duration-200"
         >
-          Log In
+          {mutation.isPending ? (
+            <img src="/loading.svg" className="invert" alt="" />
+          ) : (
+            "Log In"
+          )}
         </button>
         <p className="xs:text-xs text-sm mt-8 text-center px-10">
           If you forgot your password please go to the admin to have it changed

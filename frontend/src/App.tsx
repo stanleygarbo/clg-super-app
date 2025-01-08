@@ -18,6 +18,8 @@ import StudentGrade from "./components/registrar/StudentGrade";
 import Grades from "./components/registrar/Grades";
 import AccountingDashboard from "./components/accounting/AccountingDashboard";
 import StudentFees from "./components/accounting/StudentFees";
+import { ToastContainer } from "react-toastify";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter([
   {
@@ -144,10 +146,14 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <ToastContainer />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </>
   );
 }
