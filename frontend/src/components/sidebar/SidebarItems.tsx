@@ -51,7 +51,7 @@ const SidebarItems = ({
 }) => {
   const { pathname } = useLocation();
   const textInactiveStyles = "text-gray-600";
-  const textActiveStyles = "text-blue-600 font-bold";
+  const textActiveStyles = "text-blue-600";
   const [open, setOpen] = React.useState<string>("");
 
   return (

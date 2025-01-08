@@ -94,9 +94,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.lastName}
+                    value={snap.personalInfo.lastName}
                     onChange={(e) => {
-                      studentData.lastName = e.target.value;
+                      studentData.personalInfo.lastName = e.target.value;
                     }}
                   />
                 </span>
@@ -108,9 +108,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.firstName}
+                    value={snap.personalInfo.firstName}
                     onChange={(e) => {
-                      studentData.firstName = e.target.value;
+                      studentData.personalInfo.firstName = e.target.value;
                     }}
                   />
                 </span>
@@ -122,9 +122,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.middleName}
+                    value={snap.personalInfo.middleName}
                     onChange={(e) => {
-                      studentData.middleName = e.target.value;
+                      studentData.personalInfo.middleName = e.target.value;
                     }}
                   />
                 </span>
@@ -138,9 +138,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.telNum}
+                    value={snap.personalInfo.telNum}
                     onChange={(e) => {
-                      studentData.telNum = e.target.value;
+                      studentData.personalInfo.telNum = e.target.value;
                     }}
                   />
                 </span>
@@ -152,9 +152,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.phoneNum}
+                    value={snap.personalInfo.phoneNum}
                     onChange={(e) => {
-                      studentData.phoneNum = e.target.value;
+                      studentData.personalInfo.phoneNum = e.target.value;
                     }}
                   />
                 </span>
@@ -166,9 +166,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.email}
+                    value={snap.personalInfo.email}
                     onChange={(e) => {
-                      studentData.email = e.target.value;
+                      studentData.personalInfo.email = e.target.value;
                     }}
                   />
                 </span>
@@ -183,9 +183,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="date"
                     required
-                    value={snap.birthDate}
+                    value={snap.personalInfo.birthDate}
                     onChange={(e) => {
-                      studentData.birthDate = e.target.value;
+                      studentData.personalInfo.birthDate = e.target.value;
                     }}
                   />
                 </span>
@@ -197,9 +197,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.birthPlace}
+                    value={snap.personalInfo.birthPlace}
                     onChange={(e) => {
-                      studentData.birthPlace = e.target.value;
+                      studentData.personalInfo.birthPlace = e.target.value;
                     }}
                   />
                 </span>
@@ -211,9 +211,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.citizenship}
+                    value={snap.personalInfo.citizenship}
                     onChange={(e) => {
-                      studentData.citizenship = e.target.value;
+                      studentData.personalInfo.citizenship = e.target.value;
                     }}
                   />
                 </span>
@@ -222,9 +222,9 @@ const Profile = () => {
                     Sex
                   </p>
                   <select
-                    value={snap.sex}
+                    value={snap.personalInfo.sex}
                     onChange={(e) => {
-                      studentData.sex = e.target.value;
+                      studentData.personalInfo.sex = e.target.value;
                     }}
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   >
@@ -241,9 +241,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.religion}
+                    value={snap.personalInfo.religion}
                     onChange={(e) => {
-                      studentData.religion = e.target.value;
+                      studentData.personalInfo.religion = e.target.value;
                     }}
                   />
                 </span>
@@ -262,9 +262,12 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.spouseLasttName}
+                    value={snap.personalInfo.spouse?.lastName}
                     onChange={(e) => {
-                      studentData.spouseLasttName = e.target.value;
+                      if (studentData.personalInfo.spouse?.lastName) {
+                        studentData.personalInfo.spouse.lastName =
+                          e.target.value;
+                      }
                     }}
                   />
                 </span>
@@ -276,9 +279,12 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.spouseFirsttName}
+                    value={snap.personalInfo.spouse?.firstName}
                     onChange={(e) => {
-                      studentData.spouseFirsttName = e.target.value;
+                      if (studentData.personalInfo.spouse?.firstName) {
+                        studentData.personalInfo.spouse.firstName =
+                          e.target.value;
+                      }
                     }}
                   />
                 </span>
@@ -290,9 +296,12 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.spouseMiddleName}
+                    value={snap.personalInfo.spouse?.middleName}
                     onChange={(e) => {
-                      studentData.spouseMiddleName = e.target.value;
+                      if (studentData.personalInfo.spouse?.middleName) {
+                        studentData.personalInfo.spouse.middleName =
+                          e.target.value;
+                      }
                     }}
                   />
                 </span>
@@ -304,9 +313,12 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="number"
                     required
-                    value={snap.spouseNumChild}
+                    value={snap.personalInfo.spouse?.middleName}
                     onChange={(e) => {
-                      studentData.spouseNumChild = e.target.value;
+                      if (studentData.personalInfo.spouse?.middleName) {
+                        studentData.personalInfo.spouse.middleName =
+                          e.target.value;
+                      }
                     }}
                   />
                 </span>
@@ -321,9 +333,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="number"
                     required
-                    value={snap.houseNum}
+                    value={snap.address.permanent.houseNum}
                     onChange={(e) => {
-                      studentData.houseNum = e.target.value;
+                      studentData.address.permanent.houseNum = e.target.value;
                     }}
                   />
                 </span>
@@ -335,9 +347,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.street}
+                    value={snap.address.permanent.street}
                     onChange={(e) => {
-                      studentData.street = e.target.value;
+                      studentData.address.permanent.street = e.target.value;
                     }}
                   />
                 </span>
@@ -349,9 +361,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.city}
+                    value={snap.address.permanent.city}
                     onChange={(e) => {
-                      studentData.city = e.target.value;
+                      studentData.address.permanent.city = e.target.value;
                     }}
                   />
                 </span>
@@ -363,9 +375,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.province}
+                    value={snap.address.permanent.province}
                     onChange={(e) => {
-                      studentData.province = e.target.value;
+                      studentData.address.permanent.province = e.target.value;
                     }}
                   />
                 </span>
@@ -377,9 +389,9 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.district}
+                    value={snap.address.permanent.district}
                     onChange={(e) => {
-                      studentData.district = e.target.value;
+                      studentData.address.permanent.district = e.target.value;
                     }}
                   />
                 </span>
@@ -394,9 +406,11 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="number"
                     required
-                    value={snap.boardingHouseNum}
+                    value={snap.address.boarding?.houseNum}
                     onChange={(e) => {
-                      studentData.boardingHouseNum = e.target.value;
+                      if (studentData.address.boarding?.houseNum) {
+                        studentData.address.boarding.houseNum = e.target.value;
+                      }
                     }}
                   />
                 </span>
@@ -408,9 +422,11 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.boardingStreet}
+                    value={snap.address.boarding?.street}
                     onChange={(e) => {
-                      studentData.boardingStreet = e.target.value;
+                      if (studentData.address.boarding?.street) {
+                        studentData.address.boarding.street = e.target.value;
+                      }
                     }}
                   />
                 </span>
@@ -422,9 +438,11 @@ const Profile = () => {
                     className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     required
-                    value={snap.boardingCity}
+                    value={snap.address.boarding?.city}
                     onChange={(e) => {
-                      studentData.boardingCity = e.target.value;
+                      if (studentData.address.boarding?.city) {
+                        studentData.address.boarding.city = e.target.value;
+                      }
                     }}
                   />
                 </span>

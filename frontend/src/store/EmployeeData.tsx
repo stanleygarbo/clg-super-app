@@ -5,7 +5,10 @@ interface AppState {
   middleName: string;
   lastName: string;
   position: string;
-  office: string;
+  department: string;
+  dateHired: string;
+  userName: string;
+  password: string;
   sssNum: string;
   philhealthNum: string;
   pagibigID: string;
@@ -17,7 +20,10 @@ export const employeeData = proxy<AppState>({
   middleName: "",
   lastName: "",
   position: "",
-  office: "",
+  department: "",
+  dateHired: "",
+  userName: "",
+  password: "",
   sssNum: "",
   philhealthNum: "",
   pagibigID: "",

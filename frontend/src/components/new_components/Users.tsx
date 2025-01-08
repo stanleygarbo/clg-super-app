@@ -101,7 +101,7 @@ const Users = () => {
               <th className=" text-center">USN</th>
               <th className="text-center">Role</th>
               <th className="text-center">Status</th>
-              <th className=" text-center">
+              {/* <th className=" text-center">
                 <button
                   type="button"
                   onClick={() => {
@@ -118,7 +118,7 @@ const Users = () => {
                     User
                   </p>
                 </button>
-              </th>
+              </th> */}
             </tr>
           </thead>
           {error && (

@@ -1,226 +1,253 @@
 {
   "students": [
     {
-      "id": "631b",
+      "id": "80321512587",
       "studentData": {
-        "id": "mhegz",
-        "status": "Enrolled",
-        "usn": "mhegz",
-        "password": "",
+        "status": "",
         "schoolYear": "2024-2025",
-        "semester": "1st",
-        "date": "2025-01-04",
-        "orNum": "456789890",
-        "amount": "2750",
-        "course": "BSCS",
-        "year": "3rd",
-        "lastName": "Limpangog",
-        "firstName": "Mheg Ryan",
-        "middleName": "Tolibao",
-        "telNum": "",
-        "phoneNum": "09317619652",
-        "email": "mhegryanlimpangog58@gmail.com",
-        "birthDate": "2003-06-18",
-        "birthPlace": "Ormoc City",
-        "citizenship": "Filipino",
-        "sex": "Male",
-        "religion": "Catholic",
-        "spouseLasttName": "",
-        "spouseFirsttName": "",
-        "spouseMiddleName": "",
-        "spouseNumChild": "",
-        "houseNum": "",
-        "street": "Macabug",
-        "city": "Ormoc",
-        "province": "Leyte",
-        "district": "",
-        "boardingHouseNum": "",
-        "boardingStreet": "",
-        "boardingCity": "",
-        "boardingDistrict": "",
-        "fatherLastName": "Limpangog",
-        "fatherFirstName": "Merlito",
-        "fatherMiddleName": "Gonzales",
-        "fatherOccupation": "Electrical Engineer",
-        "fatherCompany": "MDC",
-        "fatherCompanyAddress": "Davao",
-        "fatherEmail": "",
-        "fatherPhoneNum": "",
-        "fatherTelNum": "",
-        "motherLastName": "Limpangog",
-        "motherFirstName": "Josephine",
-        "motherMiddleName": "Tolibao",
-        "motherOccupation": "House Wife",
-        "motherCompany": "",
-        "motherCompanyAddress": "",
-        "motherEmail": "",
-        "motherPhoneNum": "",
-        "motherTelNum": "",
-        "guardianLastName": "Limpangog",
-        "guardianFirstName": "Josephine",
-        "guardianMiddleName": "Tolibao",
-        "guardianSpouseLastName": "Limpangog",
-        "guardianSpouseFirstName": "Merlito",
-        "guardianSpouseMiddleName": "Gonzales",
-        "guardianRelationship": "Mother",
-        "guardianOccupation": "House Wife",
-        "guardianCompany": "",
-        "guardianCompanyAddress": "",
-        "guardianPhoneNum": "",
-        "guardianTelNum": "",
-        "guardianEmail": "",
-        "siblingName": "Mac Alley Tolibao Limpangog",
-        "siblingName2": "Mher Kian Tolibao Limpangog",
-        "siblingName3": "",
-        "siblingName4": "",
-        "siblingName5": "",
-        "siblingAge": "19",
-        "siblingAge2": "12",
-        "siblingAge3": "",
-        "siblingAge4": "",
-        "siblingAge5": "",
-        "siblingOccupation": "ACLC",
-        "siblingOccupation2": "Macabug Elementary School",
-        "siblingOccupation3": "",
-        "siblingOccupation4": "",
-        "siblingOccupation5": ""
+        "semester": "1",
+        "date": "",
+        "orNum": "",
+        "amount": "",
+        "course": "BSIT",
+        "year": "3",
+        "usn": "80321512587",
+        "password": "",
+        "grades": [
+          {
+            "courseUID": "bVrRrj0up9",
+            "grade": 1.75,
+            "remark": "Passed"
+          }
+        ],
+        "personalInfo": {
+          "lastName": "Limpangog",
+          "firstName": "Mheg Ryan",
+          "middleName": "Tolibao",
+          "telNum": "",
+          "phoneNum": "",
+          "email": "",
+          "birthDate": "",
+          "birthPlace": "",
+          "citizenship": "",
+          "sex": "Male",
+          "religion": "",
+          "spouse": {
+            "lastName": "",
+            "firstName": "",
+            "middleName": "",
+            "numChild": ""
+          }
+        },
+        "address": {
+          "permanent": {
+            "houseNum": "",
+            "street": "",
+            "city": "",
+            "province": "",
+            "district": ""
+          },
+          "boarding": {
+            "houseNum": "",
+            "street": "",
+            "city": "",
+            "district": ""
+          }
+        },
+        "family": {
+          "father": {
+            "lastName": "",
+            "firstName": "",
+            "middleName": "",
+            "contact": {
+              "phoneNum": "",
+              "email": ""
+            }
+          },
+          "mother": {
+            "lastName": "",
+            "firstName": "",
+            "middleName": "",
+            "contact": {
+              "phoneNum": "",
+              "email": ""
+            }
+          },
+          "guardian": {
+            "lastName": "",
+            "firstName": "",
+            "middleName": "",
+            "relationship": "",
+            "contact": {
+              "phoneNum": "",
+              "email": ""
+            }
+          }
+        },
+        "siblings": []
       }
     },
     {
-      "id": "34b1",
+      "id": "89b0",
       "studentData": {
-        "id": "mac12",
         "status": "Enrolled",
-        "usn": "mac12",
-        "password": "",
-        "schoolYear": "2024-2025",
+        "schoolYear": "2024 -2025",
         "semester": "1st",
-        "date": "2025-01-04",
-        "orNum": "827542234",
-        "amount": "2750",
+        "date": "",
+        "orNum": "",
+        "amount": "",
         "course": "BSIT",
-        "year": "2nd",
-        "lastName": "Limpangog",
-        "firstName": "Mac Alley",
-        "middleName": "Tolibao",
-        "telNum": "",
-        "phoneNum": "09484002559",
-        "email": "mac12@gmail.com",
-        "birthDate": "2005-02-06",
-        "birthPlace": "Ormoc City",
-        "citizenship": "Filipino",
-        "sex": "Male",
-        "religion": "Catholic",
-        "spouseLasttName": "",
-        "spouseFirsttName": "",
-        "spouseMiddleName": "",
-        "spouseNumChild": "",
-        "houseNum": "",
-        "street": "Macabug",
-        "city": "Ormoc",
-        "province": "Leyte",
-        "district": "",
-        "boardingHouseNum": "",
-        "boardingStreet": "",
-        "boardingCity": "",
-        "boardingDistrict": "",
-        "fatherLastName": "Limpangog",
-        "fatherFirstName": "Merlito",
-        "fatherMiddleName": "Gonzales",
-        "fatherOccupation": "Electrical Engineer",
-        "fatherCompany": "MDC",
-        "fatherCompanyAddress": "Davao",
-        "fatherEmail": "",
-        "fatherPhoneNum": "",
-        "fatherTelNum": "",
-        "motherLastName": "Limpangog",
-        "motherFirstName": "Josephine",
-        "motherMiddleName": "Tolibao",
-        "motherOccupation": "House Wife",
-        "motherCompany": "",
-        "motherCompanyAddress": "",
-        "motherEmail": "",
-        "motherPhoneNum": "",
-        "motherTelNum": "",
-        "guardianLastName": "Limpangog",
-        "guardianFirstName": "Josephine",
-        "guardianMiddleName": "Tolibao",
-        "guardianSpouseLastName": "Limpangog",
-        "guardianSpouseFirstName": "Merlito",
-        "guardianSpouseMiddleName": "Gonzales",
-        "guardianRelationship": "Mother",
-        "guardianOccupation": "House Wife",
-        "guardianCompany": "",
-        "guardianCompanyAddress": "",
-        "guardianPhoneNum": "",
-        "guardianTelNum": "",
-        "guardianEmail": "",
-        "siblingName": "Mheg Ryan Tolibao Limpangog",
-        "siblingName2": "Mher Kian Tolibao Limpangog",
-        "siblingName3": "",
-        "siblingName4": "",
-        "siblingName5": "",
-        "siblingAge": "21",
-        "siblingAge2": "12",
-        "siblingAge3": "",
-        "siblingAge4": "",
-        "siblingAge5": "",
-        "siblingOccupation": "ACLC",
-        "siblingOccupation2": "Macabug Elementary School",
-        "siblingOccupation3": "",
-        "siblingOccupation4": "",
-        "siblingOccupation5": ""
+        "year": "1st",
+        "usn": "",
+        "password": "",
+        "grades": [],
+        "personalInfo": {
+          "lastName": "Rojas ",
+          "firstName": "Mark Jasper",
+          "middleName": "T",
+          "telNum": "",
+          "phoneNum": "09090909099",
+          "email": "mark122@gmail.com",
+          "birthDate": "2003-07-12",
+          "birthPlace": "Ormoc",
+          "citizenship": "Filipino",
+          "sex": "Male",
+          "religion": "Catholic",
+          "spouse": {
+            "lastName": "",
+            "firstName": "",
+            "middleName": "",
+            "numChild": ""
+          }
+        },
+        "address": {
+          "permanent": {
+            "houseNum": "31",
+            "street": "Danhug",
+            "city": "Ormoc",
+            "province": "Leyte",
+            "district": ""
+          },
+          "boarding": {
+            "houseNum": "",
+            "street": "",
+            "city": "",
+            "district": ""
+          }
+        },
+        "family": {
+          "father": {
+            "lastName": "Mag-usara",
+            "firstName": "Vicente",
+            "middleName": "P.",
+            "contact": {
+              "phoneNum": "",
+              "email": ""
+            }
+          },
+          "mother": {
+            "lastName": "Rojas",
+            "firstName": "Brenda",
+            "middleName": "P.",
+            "contact": {
+              "phoneNum": "",
+              "email": ""
+            }
+          },
+          "spouse": {
+            "lastName": "",
+            "firstName": "",
+            "middleName": "",
+            "contact": {
+              "phoneNum": "",
+              "email": ""
+            }
+          },
+          "guardian": {
+            "lastName": "",
+            "firstName": "",
+            "middleName": "",
+            "relationship": "",
+            "contact": {
+              "phoneNum": "",
+              "email": ""
+            }
+          }
+        },
+        "siblings": []
       }
     }
   ],
   "users": [
     {
-      "id": "6edf",
+      "id": "afb4",
       "userData": {
         "usn": "mhegz",
-        "password": "Mhegz1008",
-        "confirmPass": "Mhegz1008",
-        "name": "Mheg Ryan T. Limpangog",
+        "password": "MM1008",
+        "confirmPass": "MM1008",
+        "name": "Mheg Ryan Tolibao Limpangog",
         "role": "Student",
-        "createdAt": ""
+        "createdAt": "10 / 11 / 2024 -- 9 : 43 : 15",
+        "open": true,
+        "opacity": "w-[400px] left-1/2 opacity-100"
       }
     },
     {
-      "id": "b201",
+      "id": "1b88",
       "userData": {
-        "usn": "mac12",
+        "usn": "Mac12",
         "password": "Mac1234",
         "confirmPass": "Mac1234",
-        "name": "Mac Alley T. Limpangog",
+        "name": "Mac Alley Limpangog",
         "role": "Student",
-        "createdAt": ""
-      }
-    },
-    {
-      "id": "5844",
-      "userData": {
-        "usn": "jelzon",
-        "password": "jelzon1234",
-        "confirmPass": "jelzon1234",
-        "name": "Jelzon Holasca",
-        "role": "Faculty",
-        "createdAt": ""
+        "createdAt": "",
+        "open": true,
+        "opacity": "opacity-0 left-0 w-0"
       }
     }
   ],
   "employee": [
     {
-      "id": "7e9c",
+      "id": "75ed",
       "employeeData": {
-        "firstName": "Jelzon",
+        "firstName": "Kacelyn",
         "middleName": "",
-        "lastName": "Holasca",
+        "lastName": "Ancheta",
         "position": "Teacher",
-        "office": "Technical",
+        "department": "Admission",
         "sssNum": "",
         "philhealthNum": "",
         "pagibigID": "",
         "tinNum": ""
+      }
+    },
+    {
+      "id": "3ecb",
+      "employeeData": {
+        "firstName": "Mheg ",
+        "middleName": "Tolibao",
+        "lastName": "Limpangog",
+        "position": "Teacher",
+        "department": "Faculty",
+        "dateHired": "2025-01-01",
+        "userName": "mhegz",
+        "password": "mhegryan1008",
+        "sssNum": "3453623451345",
+        "philhealthNum": "32452345532",
+        "pagibigID": "35878324345",
+        "tinNum": ""
+      }
+    }
+  ],
+  "courses": [
+    {
+      "id": "bVrRrj0up9",
+      "course": {
+        "UID": "bVrRrj0up9",
+        "name": "Intro to Human-Computer Interaction",
+        "code": "CS6200",
+        "units": 3,
+        "instructor": "Ms. Gatchalian"
       }
     }
   ]

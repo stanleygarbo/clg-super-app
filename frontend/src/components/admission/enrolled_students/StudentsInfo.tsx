@@ -4,25 +4,20 @@ import { useEffect, useState } from "react";
 
 const StudentsInfo = () => {
   const { id } = useParams();
-  const [students, setStudents] = useState<typeof datas>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const datas = { id, studentData };
+  const [student, setStudent] = useState<typeof studentData>();
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch("http://localhost:8000/students/" + id);
+      const response = await fetch(`http://localhost:8000/students/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch students");
       }
 
-      const data: typeof datas = await response.json();
-      setStudents(data);
-      loading;
-      console.log(students);
+      const data = await response.json();
+      setStudent(data.studentData);
+      console.log(student);
     } catch (err) {
       console.log(err);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -47,7 +42,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.usn}
+              value={student?.usn}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </span>
@@ -61,7 +56,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.lastName}
+              value={student?.personalInfo.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -72,7 +67,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.firstName}
+              value={student?.personalInfo.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -83,7 +78,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.middleName}
+              value={student?.personalInfo.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -94,7 +89,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.course}
+              value={student?.course}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -105,7 +100,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.year}
+              value={student?.year}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -118,7 +113,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.usn}
+              value={student?.usn}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -129,7 +124,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.telNum}
+              value={student?.personalInfo.telNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -140,7 +135,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.phoneNum}
+              value={student?.personalInfo.phoneNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -151,7 +146,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.email}
+              value={student?.personalInfo.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -164,7 +159,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.birthDate}
+              value={student?.personalInfo.birthDate}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -175,7 +170,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.birthPlace}
+              value={student?.personalInfo.birthPlace}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -186,7 +181,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.citizenship}
+              value={student?.personalInfo.citizenship}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -197,7 +192,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.sex}
+              value={student?.personalInfo.sex}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -208,7 +203,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.religion}
+              value={student?.personalInfo.religion}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -224,7 +219,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.spouseLasttName}
+              value={student?.family.spouse?.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -235,7 +230,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.spouseFirsttName}
+              value={student?.family.spouse?.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -246,7 +241,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.spouseMiddleName}
+              value={student?.family.spouse?.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -257,7 +252,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.spouseNumChild}
+              value={student?.family.spouse?.numChildren || "0"}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -271,7 +266,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.houseNum}
+              value={student?.address.permanent.houseNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -282,7 +277,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.street}
+              value={student?.address.permanent.street}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -293,7 +288,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.city}
+              value={student?.address.permanent.city}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -304,7 +299,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.province}
+              value={student?.address.permanent.province}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -315,7 +310,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.district}
+              value={student?.address.permanent.district}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -331,7 +326,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.boardingHouseNum}
+              value={student?.address.boarding?.houseNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -342,7 +337,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.boardingStreet}
+              value={student?.address.boarding?.street}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -353,7 +348,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.boardingCity}
+              value={student?.address.boarding?.city}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -364,7 +359,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.boardingCity}
+              value={student?.address.boarding?.city}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -380,7 +375,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.fatherLastName}
+              value={student?.family.father.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -391,7 +386,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.fatherFirstName}
+              value={student?.family.father.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -402,7 +397,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.fatherMiddleName}
+              value={student?.family.father.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -413,7 +408,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.fatherOccupation}
+              value={student?.family.father.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -426,7 +421,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.fatherCompany}
+              value={student?.family.father.company}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -437,7 +432,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.fatherCompanyAddress}
+              value={student?.family.father.companyAddress}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -448,7 +443,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.fatherTelNum}
+              value={student?.family.father.contact.telNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -459,7 +454,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.fatherPhoneNum}
+              value={student?.family.father.contact.phoneNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -470,7 +465,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.fatherEmail}
+              value={student?.family.father.contact.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -486,7 +481,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.motherLastName}
+              value={student?.family.mother.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -497,7 +492,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.motherFirstName}
+              value={student?.family.mother.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -508,7 +503,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.motherMiddleName}
+              value={student?.family.mother.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -519,7 +514,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.motherOccupation}
+              value={student?.family.mother.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -532,7 +527,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.motherCompany}
+              value={student?.family.mother.company}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -543,7 +538,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.motherCompanyAddress}
+              value={student?.family.mother.companyAddress}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -554,7 +549,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.motherTelNum}
+              value={student?.family.mother.contact.telNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -565,7 +560,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.motherPhoneNum}
+              value={student?.family.mother.contact.phoneNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -576,7 +571,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.motherEmail}
+              value={student?.family.mother.contact.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -592,7 +587,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianLastName}
+              value={student?.family.guardian?.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -603,7 +598,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianFirstName}
+              value={student?.family.guardian?.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -614,7 +609,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianMiddleName}
+              value={student?.family.guardian?.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -625,7 +620,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianOccupation}
+              value={student?.family.guardian?.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -636,7 +631,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianRelationship}
+              value={student?.family.guardian?.relationship}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -649,7 +644,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianCompany}
+              value={student?.family.guardian?.company}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -660,7 +655,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianCompanyAddress}
+              value={student?.family.guardian?.companyAddress}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -671,7 +666,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianTelNum}
+              value={student?.family.guardian?.contact.telNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -682,7 +677,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianPhoneNum}
+              value={student?.family.guardian?.contact.phoneNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -693,7 +688,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianEmail}
+              value={student?.family.guardian?.contact.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -710,7 +705,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianSpouseLastName}
+              value={student?.family.guardian?.spouse?.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -721,7 +716,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianSpouseFirstName}
+              value={student?.family.guardian?.spouse?.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -732,7 +727,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.guardianSpouseMiddleName}
+              value={student?.family.guardian?.spouse?.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -749,7 +744,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingName}
+              value={student?.siblings[0]?.name}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -760,7 +755,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingAge}
+              value={student?.siblings[0]?.age}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -771,7 +766,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingOccupation}
+              value={student?.siblings[0]?.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -784,7 +779,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingName2}
+              value={student?.siblings[1]?.name}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -795,7 +790,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingAge2}
+              value={student?.siblings[1]?.age}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -806,7 +801,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingOccupation2}
+              value={student?.siblings[1]?.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -819,7 +814,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingName3}
+              value={student?.siblings[2]?.name}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -830,7 +825,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingAge3}
+              value={student?.siblings[2]?.age}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -841,7 +836,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingOccupation3}
+              value={student?.siblings[2]?.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -854,7 +849,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingName4}
+              value={student?.siblings[3]?.name}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -865,7 +860,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingAge4}
+              value={student?.siblings[3]?.age}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -876,7 +871,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingOccupation4}
+              value={student?.siblings[3]?.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -889,7 +884,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingName5}
+              value={student?.siblings[4]?.name}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -900,7 +895,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingAge5}
+              value={student?.siblings[4]?.age}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -911,7 +906,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly
-              value={students?.studentData.siblingOccupation5}
+              value={student?.siblings[4]?.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>

@@ -1,53 +1,12 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { studentData } from "../../store/StudentData";
 
 const Login = () => {
-  const [userPass, setUserPass] = useState<string>("");
-  const [userUsn, setUserUsn] = useState<string>("");
-  const navigate = useNavigate();
-
   const snap = useSnapshot(studentData);
-
-  const proceedLogin = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    if (validate()) {
-      fetch("http://localhost:8000/students/" + snap.usn)
-        .then((res) => {
-          return res.json();
-        })
-        .then((resp) => {
-          setUserUsn(resp.id);
-          setUserPass(resp.studentData.password);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-      console.log("okay");
-    }
-  };
-
-  const validate = () => {
-    let result = true;
-    if (snap.password === "" || snap.password === null) {
-      result = false;
-      console.log("Enter Password");
-    }
-    if (snap.usn === "" || snap.usn === null) {
-      result = false;
-      console.log("Enter User Name");
-    }
-
-    return result;
-  };
 
   return (
     <div id="loginPopUp" className=" h-screen py-20">
-      <form
-        onSubmit={proceedLogin}
-        className="flex flex-col m-auto shadow-md gap-2 py-12 px-12 w-[500px] xs:w-[400px] sm:w-[450px] rounded-xl bg-white border mt-[100px]"
-      >
+      <form className="flex flex-col m-auto shadow-md gap-2 py-12 px-12 w-[500px] xs:w-[400px] sm:w-[450px] rounded-xl bg-white border mt-[100px]">
         <h1 className="text-2xl text-black font-bold mb-6 flex items-center justify-center">
           <img
             src="/aclc-logo.png"
@@ -87,20 +46,6 @@ const Login = () => {
         </span>
         <button
           type="submit"
-          onClick={() => {
-            if (snap.usn === "") {
-              console.log("Enter User Name");
-            }
-            if (snap.password === "") {
-              console.log("Enter Password");
-            }
-            if (snap.usn === userUsn && snap.password === userPass) {
-              console.log("Login Successfully");
-              navigate("/dashboard");
-            } else {
-              console.log("Wrong User Name or Password");
-            }
-          }}
           className="mt-4 pr-3 pl-3 bg-blue-600 shadow-sm shadow-blue-500/50 rounded-md text-white hover:scale-105 py-2 active:scale-95 font-bold duration-200"
         >
           Log In

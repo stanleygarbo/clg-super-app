@@ -107,7 +107,7 @@ const Users = () => {
             <tr className="grid grid-cols-4 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%]">
               <th className="w-[300px] text-start">Name</th>
               <th className=" text-center ">Position</th>
-              <th className="text-center">Office</th>
+              <th className="text-center">Department</th>
               <th className=" text-center">
                 <button
                   type="button"
@@ -119,7 +119,7 @@ const Users = () => {
                   className="px-3 shadow-sm text-bold hover:scale-105 active:scale-95 py-[5px] my-2 font-bold text-white bg-blue-600 shadow-blue-600/50 rounded-md duration-200"
                 >
                   <p className="flex justify-center items-center gap-2">
-                    <IoMdPersonAdd /> User
+                    <IoMdPersonAdd /> Employee
                   </p>
                 </button>
               </th>
@@ -150,7 +150,9 @@ const Users = () => {
                 <td className=" text-center">
                   {employee.employeeData.position}
                 </td>
-                <td className=" text-center">{employee.employeeData.office}</td>
+                <td className=" text-center">
+                  {employee.employeeData.department}
+                </td>
                 <td className=" text-center">
                   <button className="opacity-0 group-hover:opacity-100 px-4 bg-red-600 text-white shadow-md text-bold hover:scale-110 active:scale-95 py-2 my-2 border font-bold border-red-600 rounded-md duration-200">
                     <FaBoxArchive />

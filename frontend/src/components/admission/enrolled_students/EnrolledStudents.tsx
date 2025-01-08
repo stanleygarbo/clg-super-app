@@ -63,11 +63,12 @@ const EnrolledStudents = () => {
                   className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-4 px-2 py-4 bg-slate-50 shadow-sm border hover:bg-blue-600 hover:border-blue-600 hover:text-white active:scale-95"
                 >
                   <td className="w-[400px] text-start">
-                    {i.studentData.lastName}, {i.studentData.firstName}{" "}
-                    {i.studentData.middleName}
+                    {i.studentData.personalInfo.lastName},{" "}
+                    {i.studentData.personalInfo.firstName}{" "}
+                    {i.studentData.personalInfo.middleName}
                   </td>
                   <td className="text-center w-[400px]">
-                    {i.studentData.email}
+                    {i.studentData.personalInfo.email}
                   </td>
                   <td className="text-end pr-3">{i.studentData.course}</td>
                   <td className="text-center">{i.studentData.year}</td>
