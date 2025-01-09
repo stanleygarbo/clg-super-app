@@ -86,96 +86,6 @@
         },
         "siblings": []
       }
-    },
-    {
-      "id": "89b0",
-      "studentData": {
-        "status": "Enrolled",
-        "schoolYear": "2024 -2025",
-        "semester": "1st",
-        "date": "",
-        "orNum": "",
-        "amount": "",
-        "course": "BSIT",
-        "year": "1st",
-        "usn": "",
-        "password": "",
-        "grades": [],
-        "personalInfo": {
-          "lastName": "Rojas ",
-          "firstName": "Mark Jasper",
-          "middleName": "T",
-          "telNum": "",
-          "phoneNum": "09090909099",
-          "email": "mark122@gmail.com",
-          "birthDate": "2003-07-12",
-          "birthPlace": "Ormoc",
-          "citizenship": "Filipino",
-          "sex": "Male",
-          "religion": "Catholic",
-          "spouse": {
-            "lastName": "",
-            "firstName": "",
-            "middleName": "",
-            "numChild": ""
-          }
-        },
-        "address": {
-          "permanent": {
-            "houseNum": "31",
-            "street": "Danhug",
-            "city": "Ormoc",
-            "province": "Leyte",
-            "district": ""
-          },
-          "boarding": {
-            "houseNum": "",
-            "street": "",
-            "city": "",
-            "district": ""
-          }
-        },
-        "family": {
-          "father": {
-            "lastName": "Mag-usara",
-            "firstName": "Vicente",
-            "middleName": "P.",
-            "contact": {
-              "phoneNum": "",
-              "email": ""
-            }
-          },
-          "mother": {
-            "lastName": "Rojas",
-            "firstName": "Brenda",
-            "middleName": "P.",
-            "contact": {
-              "phoneNum": "",
-              "email": ""
-            }
-          },
-          "spouse": {
-            "lastName": "",
-            "firstName": "",
-            "middleName": "",
-            "contact": {
-              "phoneNum": "",
-              "email": ""
-            }
-          },
-          "guardian": {
-            "lastName": "",
-            "firstName": "",
-            "middleName": "",
-            "relationship": "",
-            "contact": {
-              "phoneNum": "",
-              "email": ""
-            }
-          }
-        },
-        "siblings": []
-      }
     }
   ],
   "users": [
@@ -214,27 +124,10 @@
         "middleName": "",
         "lastName": "Ancheta",
         "position": "Teacher",
-        "department": "Admission",
+        "office": "Admission",
         "sssNum": "",
         "philhealthNum": "",
         "pagibigID": "",
-        "tinNum": ""
-      }
-    },
-    {
-      "id": "3ecb",
-      "employeeData": {
-        "firstName": "Mheg ",
-        "middleName": "Tolibao",
-        "lastName": "Limpangog",
-        "position": "Teacher",
-        "department": "Faculty",
-        "dateHired": "2025-01-01",
-        "userName": "mhegz",
-        "password": "mhegryan1008",
-        "sssNum": "3453623451345",
-        "philhealthNum": "32452345532",
-        "pagibigID": "35878324345",
         "tinNum": ""
       }
     }

@@ -1,11 +1,11 @@
-import PrevHome from "../components/home/PrevHome";
+import PrevHome from "../components/home/prevHome";
 
 const Home = () => {
-  return (
-    <div className="d">
-      <PrevHome />
-    </div>
-  );
+    return (
+        <div className="">
+            <PrevHome />
+        </div>
+    );
 };
 
 export default Home;

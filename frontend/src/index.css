@@ -10,8 +10,13 @@
   }
 }
 
+body {
+  /* overflow-y: hidden; */
+  overflow-x: hidden;
+}
+
 input {
-  border-color: black;
+  border-color: rgb(41, 40, 40);
   border: 1px solid;
 }
 
@@ -21,4 +26,16 @@ input {
     rgba(9, 9, 221, 1) 25%,
     rgba(255, 0, 0, 1) 100%
   );
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
