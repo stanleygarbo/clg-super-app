@@ -7,7 +7,7 @@ const getDepartment = async (id) => {
 };
 
 const getDepartments = async () => {
-  const department = await Department.findOne();
+  const department = await Department.find();
 
   return department;
 };
