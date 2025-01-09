@@ -1,27 +1,22 @@
 const mongoose = require("mongoose");
 
-const spouseSchema = mongoose.Schema(
-  {
-    lastName: {
-      type: String,
-      required: true,
-    },
-    middleName: {
-      type: String,
-      required: false,
-    },
-    firstName: {
-      type: String,
-      required: true,
-    },
-    children: {
-      type: Number,
-      required: false,
-    },
+const spouseSchema = mongoose.Schema({
+  lastName: {
+    type: String,
+    required: true,
   },
-  { timestamps: true }
-);
+  middleName: {
+    type: String,
+    required: false,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  children: {
+    type: Number,
+    required: false,
+  },
+});
 
-const Spouse = mongoose.model("Spouse", spouseSchema);
-
-module.exports = { Spouse };
+module.exports = spouseSchema;

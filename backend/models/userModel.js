@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 const roles = require("../constants/roles");
 const { employmentType } = require("../constants/employmentType");
+const spouseSchema = require("./spouseModel");
+const { parentSchema, guardianSchema } = require("./parentModel");
+const GovernmentIdSchema = require("./governmentIDsModel");
+const { birthSchema } = require("./birthModel");
+const { cityAddressSchema, homeAddressSchema } = require("./addressModel");
+const { siblingSchema } = require("./siblingModel");
 
 const userSchema = new mongoose.Schema(
   {
@@ -50,6 +56,7 @@ const userSchema = new mongoose.Schema(
       default: false,
       select: false,
     },
+    spouse: spouseSchema,
   },
   { timestamps: true }
 );
@@ -63,15 +70,14 @@ const studentSchema = new mongoose.Schema(
       type: String,
       enum: ["freshman", "sophomore", "junior", "senior", "graduate"],
     },
-    birth: { type: mongoose.Schema.Types.ObjectId, ref: "Birth" },
-    spouse: { type: mongoose.Schema.Types.ObjectId, ref: "Spouse" },
-    homeAddress: { type: mongoose.Schema.Types.ObjectId, ref: "HomeAddress" },
-    cityAddress: { type: mongoose.Schema.Types.ObjectId, ref: "CityAddress" },
-    father: { type: mongoose.Schema.Types.ObjectId, ref: "Parent" },
-    mother: { type: mongoose.Schema.Types.ObjectId, ref: "Parent" },
-    guardian: { type: mongoose.Schema.Types.ObjectId, ref: "Guardian" },
-    guardianSpouse: { type: mongoose.Schema.Types.ObjectId, ref: "Spouse" },
-    siblings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Sibling" }],
+    birth: birthSchema,
+    homeAddress: homeAddressSchema,
+    cityAddress: cityAddressSchema,
+    father: parentSchema,
+    mother: parentSchema,
+    guardian: guardianSchema,
+    guardianSpouse: spouseSchema,
+    siblings: [siblingSchema],
   },
   { timestamps: true }
 );
@@ -88,11 +94,10 @@ const employeeSchema = new mongoose.Schema(
     },
     department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
     position: { type: mongoose.Schema.Types.ObjectId, ref: "Position" },
-    governmentId: { type: mongoose.Schema.Types.ObjectId, ref: "GovernmentId" },
-    birth: { type: mongoose.Schema.Types.ObjectId, ref: "Birth" },
-    spouse: { type: mongoose.Schema.Types.ObjectId, ref: "Spouse" },
-    homeAddress: { type: mongoose.Schema.Types.ObjectId, ref: "HomeAddress" },
-    cityAddress: { type: mongoose.Schema.Types.ObjectId, ref: "CityAddress" },
+    governmentId: GovernmentIdSchema,
+    birth: birthSchema,
+    homeAddress: homeAddressSchema,
+    cityAddress: cityAddressSchema,
   },
   { timestamps: true }
 );

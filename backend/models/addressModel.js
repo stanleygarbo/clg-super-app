@@ -1,45 +1,38 @@
 const mongoose = require("mongoose");
 
-const addressSchema = mongoose.Schema(
-  {
-    houseNum: {
-      type: Number,
-      required: false,
-    },
-    streetBrgy: {
-      type: String,
-      required: true,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
-    district: {
-      type: String,
-      required: true,
-    },
+const addressSchema = mongoose.Schema({
+  houseNum: {
+    type: Number,
+    required: false,
   },
-  { timestamps: true }
-);
-
-const Address = mongoose.model("Address", addressSchema);
+  streetBrgy: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  district: {
+    type: String,
+    required: true,
+  },
+});
 
 const homeAddressSchema = mongoose.Schema({
+  ...addressSchema.obj,
   province: {
     type: String,
     required: true,
   },
 });
 
-const HomeAddress = Address.discriminator("HomeAddress", homeAddressSchema);
-
 const cityAddressSchema = mongoose.Schema({
+  ...addressSchema.obj,
   province: {
     type: String,
     required: false,
   },
 });
 
-const CityAddress = Address.discriminator("CityAddress", cityAddressSchema);
-
-module.exports = { HomeAddress, CityAddress };
+module.exports = { homeAddressSchema, cityAddressSchema };
