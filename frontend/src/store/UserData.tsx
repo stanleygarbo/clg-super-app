@@ -27,7 +27,7 @@ export const userData = proxy<AppState>({
     createdAt: "",
 });
 
-interface User {
+export interface User {
     username: string;
     password?: string;
     firstName: string;
@@ -41,7 +41,7 @@ interface User {
     isDeleted?: boolean;
 }
 
-interface Student {
+export interface Student extends User {
     program: Program;
     standing: "freshman" | "sophomore" | "junior" | "senior" | "graduate";
     birth: Birth;
@@ -55,7 +55,7 @@ interface Student {
     siblings?: Sibling[];
 }
 
-interface Employee {
+export interface Employee extends User {
     sickLeave: number;
     vacationLeave: number;
     hireDate: Date;
