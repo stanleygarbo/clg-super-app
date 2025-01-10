@@ -5,12 +5,7 @@ const positionService = require("../services/positionService");
 const getEmployee = async ({ id }) => {
   const employee = await Employee.findById(id)
     .populate("position")
-    .populate("department")
-    .populate("governmentId")
-    .populate("birth")
-    .populate("spouse")
-    .populate("homeAddress")
-    .populate("cityAddress");
+    .populate("department");
 
   return employee;
 };
@@ -39,7 +34,7 @@ const addEmployee = async (data) => {
 
   const employee = new Employee(data);
 
-  employee.save();
+  await employee.save();
 
   return employee;
 };

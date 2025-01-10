@@ -1,83 +1,86 @@
 const { validationResult } = require("express-validator");
-const employeeService = require("../services/employeeService");
+const studentService = require("../services/studentService");
 
-const addEmployee = async (req, res) => {
+const addStudent = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    console.log(req.body.username);
 
-    const employee = await employeeService.addEmployee(req.body);
-    res.status(201).json(employee);
+    const student = await studentService.addStudent(req.body);
+    res.status(201).json(student);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-const updateEmployee = async (req, res) => {
+const updateStudent = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const employee = await employeeService.updateEmployee({
+    const student = await studentService.updateStudent({
       id: req.params.id,
       data: req.body,
     });
-    res.status(201).json(employee);
+    res.status(201).json(student);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-const getEmployees = async (req, res) => {
+const getStudents = async (req, res) => {
   try {
-    const employees = await employeeService.getEmployees();
+    const student = await studentService.getStudents();
 
     res.status(200).json({
-      results: employees,
+      results: student,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-const getEmployee = async (req, res) => {
+const getStudent = async (req, res) => {
   try {
-    const employee = await employeeService.getEmployees({ id: req.params.id });
-    if (!employee) {
+    const student = await studentService.getStudent(req.params.id);
+    if (!student) {
       return res.status(404).json({
         message: "Not Found",
       });
     }
 
-    res.status(200).json(employee);
+    res.status(200).json(student);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-const deleteEmployee = async (req, res) => {
+const deleteStudent = async (req, res) => {
   try {
-    const employee = await employeeService.deleteEmployee(req.params.id);
-    if (!employee) {
+    const student = await studentService.deleteStudent(req.params.id);
+    if (!student) {
       return res.status(404).json({
         message: "Not Found",
       });
     }
 
-    res.status(200).json(res);
+    res.status(200).json(student);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-module.exports = {
-  addEmployee,
-  updateEmployee,
-  getEmployee,
-  getEmployees,
-  deleteEmployee,
+const studentController = {
+  addStudent,
+  updateStudent,
+  getStudent,
+  getStudents,
+  deleteStudent,
 };
+
+module.exports = studentController;
