@@ -18,7 +18,7 @@ const birthSchema = mongoose.Schema({
     enum: ["male", "female"],
     required: true,
   },
-  Religion: {
+  religion: {
     type: String,
     required: false,
   },
