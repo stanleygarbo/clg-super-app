@@ -6,12 +6,11 @@ const loginUser = async (userData) => {
   const { username, password } = userData;
 
   // Check if the user exists
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username }).select("+password");
   if (!user) {
     throw new Error("Invalid credentials");
   }
 
-  console.log(password, user.password);
   // Verify the password
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {

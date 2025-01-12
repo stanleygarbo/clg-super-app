@@ -123,7 +123,7 @@ router.post(
  *                         description: The validation error message.
  */
 router.patch(
-  "/",
+  "/:id",
   [body("departmentName").trim()],
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super"]),

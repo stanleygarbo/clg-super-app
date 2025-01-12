@@ -1,5 +1,6 @@
 const { Student } = require("../models/userModel");
 const departmentService = require("../services/departmentService");
+const bcrypt = require("bcrypt");
 
 const getStudent = async (id) => {
   const res = await Student.findById(id).populate("program");
@@ -23,6 +24,9 @@ const addStudent = async (data) => {
   if (!dept) {
     throw new Error("Department does not exist.");
   }
+
+  const salt = await bcrypt.genSalt(10);
+  data.password = await bcrypt.hash(data.password, salt);
 
   const student = new Student(data);
 
