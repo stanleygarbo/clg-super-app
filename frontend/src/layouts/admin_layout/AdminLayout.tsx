@@ -31,8 +31,12 @@ const sidebarItems: ISidebarItem[] = [
         path: "/admin/department",
       },
       {
-        name: "Add Department",
-        path: "/admin/add-department",
+        name: "Employees",
+        path: "/admin/employees",
+      },
+      {
+        name: "Positions",
+        path: "/admin/positions",
       },
     ],
   },
@@ -49,10 +53,6 @@ const sidebarItems: ISidebarItem[] = [
       {
         name: "Students",
         path: "/admission/enroll-student",
-      },
-      {
-        name: "Employees",
-        path: "/admission/employees",
       },
     ],
   },

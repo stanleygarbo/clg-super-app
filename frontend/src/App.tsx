@@ -21,7 +21,7 @@ import StudentFees from "./components/accounting/StudentFees";
 import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import DepartmentList from "./components/new_components/DepartmentList";
-import AddDepartment from "./components/new_components/AddDepartment";
+import PositionList from "./components/new_components/PositionList";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +53,16 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/:id/profile",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/:id/profile",
+        element: <Profile />,
+      },
+    ],
+  },
+  {
     path: "/admin",
     element: <AdminLayout />,
     children: [
@@ -69,8 +79,12 @@ const router = createBrowserRouter([
         element: <DepartmentList />,
       },
       {
-        path: "add-department",
-        element: <AddDepartment />,
+        path: "employees",
+        element: <Employees />,
+      },
+      {
+        path: "positions",
+        element: <PositionList />,
       },
     ],
   },
@@ -89,10 +103,6 @@ const router = createBrowserRouter([
       {
         path: "studentInfo/:id",
         element: <StudentsInfo />,
-      },
-      {
-        path: "employees",
-        element: <Employees />,
       },
     ],
   },

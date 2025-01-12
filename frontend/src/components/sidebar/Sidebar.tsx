@@ -40,7 +40,7 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
         {/* <div className="w-full h-px bg-gray-300 mb-5"></div> */}
         <button
           onClick={() => {
-            sessionStorage.removeItem("");
+            localStorage.removeItem('auth');
             navigate("/login");
           }}
           className="rounded-md bg-gradient-to-t from-red-600 to-red-400 shadow-md shadow-red-500/50 hover:scale-105 active:scale-95 text-white font-bold w-full py-2 duration-200"

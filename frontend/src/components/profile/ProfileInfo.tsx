@@ -1,15 +1,23 @@
 import { useSnapshot } from "valtio";
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { studentData } from "../../store/StudentData";
+import { useQuery } from "@tanstack/react-query";
+import { getEmployee } from "../../api/employee";
+import { authState } from "../../store/auth";
 
 const ProfileInfo = () => {
   const snap = useSnapshot(studentData);
+  const authSnap = useSnapshot(authState);
   const { id } = useParams();
 
-  useEffect(() => {
-    fetch("http://localhost:8000/students" + id);
-  }, []);
+  // authSnap.user.id
+
+  const query = useQuery({
+    queryKey: ["employee", id],
+    queryFn: () => getEmployee({ id }),
+  });
+  console.log("Query Data: ", query.data);
+
   return (
     <div>
       <div className="flex flex-col gap-3 pt-3 px-6 w-full">
@@ -19,7 +27,7 @@ const ProfileInfo = () => {
             className="rounded-lg py-1 text-center"
             readOnly
             placeholder="LASTNAME"
-            value={snap.personalInfo.lastName}
+            value={query.data}
           />
           <input
             type="text"

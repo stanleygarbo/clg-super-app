@@ -1,25 +1,29 @@
 import { proxy } from "valtio";
 
 interface AppState {
+  _id: string;
   firstName: string;
+  surname: string;
   middleName: string;
-  lastName: string;
+  username: string;
+  password: string;
+  department: string;
   position: string;
-  office: string;
-  sssNum: string;
-  philhealthNum: string;
-  pagibigID: string;
-  tinNum: string;
+  hireDate: string;
+  employmentType: string;
+  roles: string[];
 }
 
 export const employeeData = proxy<AppState>({
+  _id: "",
   firstName: "",
+  surname: "",
   middleName: "",
-  lastName: "",
+  username: "",
+  password: "",
+  department: "",
   position: "",
-  office: "",
-  sssNum: "",
-  philhealthNum: "",
-  pagibigID: "",
-  tinNum: "",
+  hireDate: "",
+  employmentType: "",
+  roles: [],
 });

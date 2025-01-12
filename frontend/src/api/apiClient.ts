@@ -13,7 +13,7 @@ apiClient.interceptors.request.use((config) => {
   const token = authState.token;
   console.log(token);
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `${token}`;
   }
   console.log("returning");
 
