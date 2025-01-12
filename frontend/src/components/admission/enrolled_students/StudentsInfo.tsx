@@ -15,7 +15,7 @@ const StudentsInfo = () => {
         enabled: !!id,
     });
 
-    // Mao nani ang pag set sa data, pero mag conflict ang interface ug ang sa backend
+    // Mao nani ang pag set sa data, pero mag conflict ang interface ug ang sa backend``
     // if (query.isSuccess && !student) {
     //     setStudent(query.data);
     // }

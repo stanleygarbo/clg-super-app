@@ -13,4 +13,4 @@ export const getStudents = async () => {
 export const getStudentById = async ({id}: {id?: string}) => {
     const response = await apiClient.get(`/students/${id}`);
     return response.data;
-  };
+};

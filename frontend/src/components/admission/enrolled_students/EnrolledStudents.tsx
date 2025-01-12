@@ -1,12 +1,8 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getStudents } from "../../../api/student";
 
 const EnrolledStudents = () => {
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [students, setStudents] = useState<any[]>();
     const navigate = useNavigate();
 
     const query = useQuery({
@@ -14,13 +10,7 @@ const EnrolledStudents = () => {
         queryFn: getStudents,
     });
 
-    if (query.isSuccess && !students) {
-        console.log("Query Data: ", query.data.results[0]);
-        setStudents(query.data.results);
-        setLoading(false);
-    } else if (query.isError) {
-        setError(true);
-    }
+    console.log(query.data);
 
     const getFullName = (student: any) => {
         return `${student.surname}, ${student.firstName} ${student.middleName}`;
@@ -38,38 +28,40 @@ const EnrolledStudents = () => {
                         <td className="w-[200px] text-center">Course</td>
                         <td className="w-[200px text-center">Year</td>
                     </thead>
-                    {error && (
+                    {query.isError && (
                         <div className="flex justify-center items-center">
                             Failed to fetch data
                         </div>
                     )}
-                    {loading && (
+                    {query.isPending && (
                         <div className="flex justify-center items-center">
                             Loading...
                         </div>
                     )}
                     <tbody className="overflow-hidden overflow-y-auto no-scrollbar flex flex-col">
-                        {students?.map((student, index) => (
-                            <tr
-                                onClick={() =>
-                                    navigate(
-                                        `/admission/studentInfo/${student._id}`
-                                    )
-                                }
-                                key={index}
-                                className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-3 px-2 py-4 rounded-sm hover:text-white bg-slate-50 shadow-sm border hover:bg-blue-600 hover:border-blue-600 active:scale-95"
-                            >
-                                <td className="w-[500px] text-start">
-                                    {getFullName(student)}
-                                </td>
-                                <td className="w-[200px] text-center">
-                                    {student.course}
-                                </td>
-                                <td className="w-[200px text-center">
-                                    {student.year}
-                                </td>
-                            </tr>
-                        ))}
+                        {query.data?.results.map(
+                            (student: any, index: number) => (
+                                <tr
+                                    onClick={() =>
+                                        navigate(
+                                            `/admission/studentInfo/${student._id}`
+                                        )
+                                    }
+                                    key={index}
+                                    className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-3 px-2 py-4 rounded-sm hover:text-white bg-slate-50 shadow-sm border hover:bg-blue-600 hover:border-blue-600 active:scale-95"
+                                >
+                                    <td className="w-[500px] text-start">
+                                        {getFullName(student)}
+                                    </td>
+                                    <td className="w-[200px] text-center">
+                                        {student.course}
+                                    </td>
+                                    <td className="w-[200px text-center">
+                                        {student.year}
+                                    </td>
+                                </tr>
+                            )
+                        )}
                     </tbody>
                 </table>
             </div>
