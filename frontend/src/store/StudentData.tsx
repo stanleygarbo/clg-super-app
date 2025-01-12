@@ -1,147 +1,211 @@
 import { proxy } from "valtio";
-import { Grade } from "./GradeData";
 
-interface Address {
-    houseNum: string;
-    street: string;
-    city: string;
-    province?: string;
-    district?: string;
-}
+// interface Address {
+//   houseNum: string;
+//   street: string;
+//   city: string;
+//   province?: string;
+//   district?: string;
+// }
 
-interface Contact {
-    phoneNum: string;
-    telNum?: string;
-    email: string;
-}
+// interface Contact {
+//   phoneNum: string;
+//   telNum?: string;
+//   email: string;
+// }
 
-interface Person {
-    lastName: string;
-    firstName: string;
-    middleName: string;
-    occupation?: string;
-    company?: string;
-    companyAddress?: string;
-    contact: Contact;
-}
+// interface Person {
+//   lastName: string;
+//   firstName: string;
+//   middleName: string;
+//   occupation?: string;
+//   company?: string;
+//   companyAddress?: string;
+//   contact: Contact;
+// }
 
-interface Sibling {
-    name: string;
-    age: string;
-    occupation: string;
-}
+// interface Sibling {
+//   fullName: string;
+//   age: string;
+//   occupationSchool: string;
+// }
 
 interface AppState {
-    status: string;
-    schoolYear: string;
-    semester: string;
-    date: string;
-    orNum: string;
-    amount: string;
-    course: string;
-    year: string;
-    usn: string;
-    password: string;
-    grades: Grade[];
-    personalInfo: {
-        lastName: string;
-        firstName: string;
-        middleName: string;
-        telNum: string;
-        phoneNum: string;
-        email: string;
-        birthDate: string;
-        birthPlace: string;
-        citizenship: string;
-        sex: string;
-        religion: string;
-        spouse?: {
-            lastName: string;
-            firstName: string;
-            middleName: string;
-            numChild: string;
-        };
-    };
-    address: {
-        permanent: Address;
-        boarding?: Address;
-    };
-    family: {
-        father: Person;
-        mother: Person;
-        spouse?: Person & { numChildren?: string };
-        guardian?: Person & { relationship: string; spouse?: Person };
-    };
-    siblings: Sibling[];
+  schoolYear: string;
+  year: String;
+  semester: string;
+  username: string;
+  firstName: string;
+  surname: string;
+  middleName: string;
+  email: string;
+  telephone: string;
+  phone: string;
+  roles: [string];
+  spouse: {
+    lastName: string;
+    middleName: string;
+    firstName: string;
+    children: number;
+  };
+  program: string;
+  standing: string;
+  birth: {
+    birthDate: string;
+    birthPlace: string;
+    citizenship: string;
+    sex: string;
+    religion: string;
+  };
+  homeAddress: {
+    houseNum: number;
+    streetBrgy: string;
+    city: string;
+    district: string;
+    province: string;
+  };
+  boardAddress: {
+    houseNum: number;
+    streetBrgy: string;
+    city: string;
+    district: string;
+    province: string;
+  };
+  father: {
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    occupation: string;
+    companyName: string;
+    companyAddress: string;
+    telephone: string;
+    phone: string;
+    email: string;
+  };
+  mother: {
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    occupation: string;
+    companyName: string;
+    companyAddress: string;
+    telephone: string;
+    phone: string;
+    email: string;
+  };
+  guardian: {
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    occupation: string;
+    companyName: string;
+    companyAddress: string;
+    telephone: string;
+    phone: string;
+    email: string;
+    relationship: string;
+  };
+  guardianSpouse: {
+    lastName: string;
+    middleName: string;
+    firstName: string;
+    children: number;
+  };
+  siblings: [
+    {
+      fullName: string;
+      age: string;
+      occupationSchool: string;
+    }
+  ];
 }
 
 export const studentData = proxy<AppState>({
-    status: "",
-    schoolYear: "",
-    semester: "",
-    date: "",
-    orNum: "",
-    amount: "",
-    course: "",
-    year: "",
-    usn: "",
-    password: "",
-    grades: [],
-    personalInfo: {
-        lastName: "",
-        firstName: "",
-        middleName: "",
-        telNum: "",
-        phoneNum: "",
-        email: "",
-        birthDate: "",
-        birthPlace: "",
-        citizenship: "",
-        sex: "",
-        religion: "",
-        spouse: {
-            lastName: "",
-            firstName: "",
-            middleName: "",
-            numChild: "",
-        },
+  schoolYear: "",
+  year: "",
+  semester: "",
+  username: "",
+  firstName: "",
+  surname: "",
+  middleName: "",
+  email: "",
+  telephone: "",
+  phone: "",
+  roles: [""],
+  spouse: {
+    lastName: "",
+    middleName: "",
+    firstName: "",
+    children: 0,
+  },
+  program: "",
+  standing: "",
+  birth: {
+    birthDate: "",
+    birthPlace: "",
+    citizenship: "",
+    sex: "",
+    religion: "",
+  },
+  homeAddress: {
+    houseNum: 0,
+    streetBrgy: "",
+    city: "",
+    district: "",
+    province: "",
+  },
+  boardAddress: {
+    houseNum: 0,
+    streetBrgy: "",
+    city: "",
+    district: "",
+    province: "",
+  },
+  father: {
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    occupation: "",
+    companyName: "",
+    companyAddress: "",
+    telephone: "",
+    phone: "",
+    email: "",
+  },
+  mother: {
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    occupation: "",
+    companyName: "",
+    companyAddress: "",
+    telephone: "",
+    phone: "",
+    email: "",
+  },
+  guardian: {
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    occupation: "",
+    companyName: "",
+    companyAddress: "",
+    telephone: "",
+    phone: "",
+    email: "",
+    relationship: "",
+  },
+  guardianSpouse: {
+    lastName: "",
+    middleName: "",
+    firstName: "",
+    children: 0,
+  },
+  siblings: [
+    {
+      fullName: "",
+      age: "",
+      occupationSchool: "",
     },
-    address: {
-        permanent: {
-            houseNum: "",
-            street: "",
-            city: "",
-            province: "",
-            district: "",
-        },
-        boarding: { houseNum: "", street: "", city: "", district: "" },
-    },
-    family: {
-        father: {
-            lastName: "",
-            firstName: "",
-            middleName: "",
-            contact: { phoneNum: "", email: "" },
-        },
-        mother: {
-            lastName: "",
-            firstName: "",
-            middleName: "",
-            contact: { phoneNum: "", email: "" },
-        },
-        spouse: {
-            lastName: "",
-            firstName: "",
-            middleName: "",
-            contact: { phoneNum: "", email: "" },
-        },
-        guardian: {
-            lastName: "",
-            firstName: "",
-            middleName: "",
-            relationship: "",
-            contact: { phoneNum: "", email: "" },
-        },
-    },
-    siblings: [],
+  ],
 });

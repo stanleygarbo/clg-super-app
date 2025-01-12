@@ -47,13 +47,13 @@ const EFormSchoolYear = () => {
         <section className="grid grid-cols-2 gap-3">
           <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative  `}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-              Course
+              Program
             </p>
             <select
-              value={snap.course}
+              value={snap.program}
               required
               onChange={(e) => {
-                studentData.course = e.target.value;
+                studentData.program = e.target.value;
               }}
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
             >
@@ -62,6 +62,10 @@ const EFormSchoolYear = () => {
               <option value="BSIT">BSIT</option>
               <option value="BSBA">BSBA</option>
               <option value="BSHM">BSHM</option>
+              <option value="WAD">WAD</option>
+              <option value="ACT">ACT</option>
+              <option value="HRT">HRT</option>
+              <option value="ICT">HRT</option>
             </select>
           </span>
           <span className={` ${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
@@ -69,7 +73,6 @@ const EFormSchoolYear = () => {
               Year
             </p>
             <select
-              value={snap.year}
               required
               onChange={(e) => {
                 studentData.year = e.target.value;
@@ -91,12 +94,12 @@ const EFormSchoolYear = () => {
               Date
             </p>
             <input
+              readOnly
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="date"
-              value={snap.date}
-              onChange={(e) => {
-                studentData.date = e.target.value;
-              }}
+              // onChange={(e) => {
+              //   studentData.date = e.target.value;
+              // }}
             />
           </span>
           <span className={` ${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
@@ -104,12 +107,13 @@ const EFormSchoolYear = () => {
               OR No.
             </p>
             <input
+              readOnly
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
-              value={snap.orNum}
-              onChange={(e) => {
-                studentData.orNum = e.target.value;
-              }}
+              // value={snap.}
+              // onChange={(e) => {
+              //   studentData.orNum = e.target.value;
+              // }}
             />
           </span>
           <span className={` ${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
@@ -117,12 +121,13 @@ const EFormSchoolYear = () => {
               Amount
             </p>
             <input
+              readOnly
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
-              value={snap.amount}
-              onChange={(e) => {
-                studentData.amount = e.target.value;
-              }}
+              // value={snap.amount}
+              // onChange={(e) => {
+              //   studentData.amount = e.target.value;
+              // }}
             />
           </span>
         </section>

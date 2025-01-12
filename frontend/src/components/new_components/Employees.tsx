@@ -199,17 +199,17 @@ const Users = () => {
                 type="button"
                 onClick={() => {
                   setUpdateEmployeeForm(true);
-                  employeeData._id = "";
-                  employeeData.password = "";
-                  employeeData.department = "";
-                  employeeData.employmentType = "";
-                  employeeData.firstName = "";
-                  employeeData.hireDate = "";
-                  employeeData.middleName = "";
-                  employeeData.position = "";
-                  employeeData.roles = [];
-                  employeeData.surname = "";
-                  employeeData.username = "";
+                  // employeeData._id = "";
+                  // employeeData.password = "";
+                  // employeeData.department = "";
+                  // employeeData.employmentType = "";
+                  // employeeData.firstName = "";
+                  // employeeData.hireDate = "";
+                  // employeeData.middleName = "";
+                  // employeeData.position = "";
+                  // employeeData.roles = [];
+                  // employeeData.surname = "";
+                  // employeeData.username = "";
                 }}
                 className="bg-red-600 px-2 font-bold rounded-md text-white shadow-md hover:scale-105 duration-200"
               >
@@ -240,7 +240,7 @@ const Users = () => {
             <tr className="grid grid-cols-4 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%]">
               <th className="w-[300px] text-start">Name</th>
               <th className=" text-center ">Position</th>
-              <th className="text-center">Office</th>
+              <th className="text-center">Deparment</th>
               <th className=" text-center">
                 <button
                   type="button"
@@ -290,10 +290,10 @@ const Users = () => {
                 <td className="w-[300px] text-start">
                   {employee.surname} {employee.firstName} {employee.middleName}
                 </td>
+                <td className="text-center">{employee.position.jobTitle}</td>
                 <td className="text-center">
                   {employee.department.departmentName}
                 </td>
-                <td className="text-center">{employee.position.jobTitle}</td>
 
                 <td className=" text-center flex gap-3 justify-center">
                   <button
