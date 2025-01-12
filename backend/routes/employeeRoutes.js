@@ -21,9 +21,9 @@ const addEmployeeValidationRules = [
     body("employmentType")
       .notEmpty()
       .custom((type) => {
-        // Check if all roles are valid
+        // Check if employement type is valid
         if (!employmentType.includes(type)) {
-          throw new Error(`Invalid employement type: ${type}`);
+          throw new Error(`Invalid employment type: ${type}`);
         }
 
         return true;
@@ -152,13 +152,12 @@ const updateEmployeeValidationRules = [
   [
     body("employmentType")
       .optional()
-      .custom((items) => {
-        // Check if all roles are valid
-        for (const type of items) {
-          if (!employmentType.includes(type)) {
-            throw new Error(`Invalid employement type: ${type}`);
-          }
+      .custom((type) => {
+        // Check if employement type is valid
+        if (!employmentType.includes(type)) {
+          throw new Error(`Invalid employment type: ${type}`);
         }
+
         return true;
       }),
     body("hireDate").optional().isISO8601().toDate(),
