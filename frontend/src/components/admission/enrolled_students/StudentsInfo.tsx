@@ -1,31 +1,24 @@
 import { useParams } from "react-router-dom";
-import { studentData } from "../../../store/StudentData";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { getStudentById } from "../../../api/student";
+import { useQuery } from "@tanstack/react-query";
 
 const StudentsInfo = () => {
     const { id } = useParams();
-    const [student, setStudent] = useState<typeof studentData>();
+    const [student, setStudent] = useState<any>();
 
-    const fetchStudents = async () => {
-        try {
-            const response = await fetch(
-                `http://localhost:8000/students/${id}`
-            );
-            if (!response.ok) {
-                throw new Error("Failed to fetch students");
-            }
+    if (!id) return;
 
-            const data = await response.json();
-            setStudent(data.studentData);
-            console.log(student);
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    const query = useQuery({
+        queryKey: ["students"],
+        queryFn: () => getStudentById({ id }),
+        enabled: !!id,
+    });
 
-    useEffect(() => {
-        fetchStudents();
-    }, []);
+    // Mao nani ang pag set sa data, pero mag conflict ang interface ug ang sa backend
+    // if (query.isSuccess && !student) {
+    //     setStudent(query.data);
+    // }
 
     return (
         <form className="mb-10 mt-5 flex flex-col border rounded-lg w-[1100px] shadow-md gap-5">
