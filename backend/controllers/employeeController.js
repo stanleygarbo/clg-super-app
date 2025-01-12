@@ -46,7 +46,7 @@ const getEmployees = async (req, res) => {
 
 const getEmployee = async (req, res) => {
   try {
-    const employee = await employeeService.getEmployees({ id: req.params.id });
+    const employee = await employeeService.getEmployee(req.params.id);
     if (!employee) {
       return res.status(404).json({
         message: "Not Found",
@@ -68,7 +68,7 @@ const deleteEmployee = async (req, res) => {
       });
     }
 
-    res.status(200).json(res);
+    res.status(200).json(employee);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
