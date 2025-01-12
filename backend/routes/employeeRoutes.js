@@ -150,19 +150,22 @@ router.post(
 
 const updateEmployeeValidationRules = [
   [
-    body("employmentType").custom((items) => {
-      // Check if all roles are valid
-      for (const type of items) {
-        if (!employmentType.includes(type)) {
-          throw new Error(`Invalid employement type: ${type}`);
+    body("employmentType")
+      .optional()
+      .custom((items) => {
+        // Check if all roles are valid
+        for (const type of items) {
+          if (!employmentType.includes(type)) {
+            throw new Error(`Invalid employement type: ${type}`);
+          }
         }
-      }
-      return true;
-    }),
-    body("hireDate").notEmpty().isISO8601().toDate(),
-    body("department").trim().custom(ObjectId.isValid),
-    body("position").trim().custom(ObjectId.isValid),
+        return true;
+      }),
+    body("hireDate").optional().isISO8601().toDate(),
+    body("department").optional().trim().custom(ObjectId.isValid),
+    body("position").optional().trim().custom(ObjectId.isValid),
     body("roles")
+      .optional()
       .isArray() // Check that roles is an array
       .withMessage("Roles must be an array")
       .custom((items) => {
@@ -187,9 +190,6 @@ const updateEmployeeValidationRules = [
  *     security:
  *       - BearerAuth: []
  *     parameters:
- *       - in: header
- *         name: Authorization
- *         required: true
  *       - in: path
  *         name: id
  *         required: true
@@ -284,7 +284,7 @@ const updateEmployeeValidationRules = [
  *                         description: The validation error message.
  */
 router.patch(
-  "/",
+  "/:id",
   updateEmployeeValidationRules,
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super"]),

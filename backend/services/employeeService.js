@@ -9,8 +9,6 @@ const getEmployee = async (id) => {
     { path: "department" },
   ]);
 
-  console.log(employee);
-
   return employee;
 };
 

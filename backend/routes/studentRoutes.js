@@ -138,9 +138,6 @@ const updateEmployeeValidationRules = [
  *     security:
  *       - BearerAuth: []
  *     parameters:
- *       - in: header
- *         name: Authorization
- *         required: true
  *       - in: path
  *         name: id
  *         required: true
@@ -220,7 +217,7 @@ const updateEmployeeValidationRules = [
  *                         description: The validation error message.
  */
 router.patch(
-  "/",
+  "/:id",
   updateEmployeeValidationRules,
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super", "admission", "registrar"]),
