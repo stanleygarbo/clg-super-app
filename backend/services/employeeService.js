@@ -13,7 +13,10 @@ const getEmployee = async (id) => {
 };
 
 const getEmployees = async () => {
-  const employees = await Employee.find();
+  const employees = await Employee.find().populate([
+    { path: "position" },
+    { path: "department" },
+  ]);
 
   return employees;
 };
