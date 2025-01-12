@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { studentData } from "../../store/StudentData";
 import { useQuery } from "@tanstack/react-query";
 import { getEmployee } from "../../api/employee";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Employee } from "../../interface/IEmployee";
 
 const ProfileInfo = () => {
