@@ -1,64 +1,68 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { employeeData } from "../../store/EmployeeData";
 import AddEmployee from "./AddEmployee";
 import { IoMdPersonAdd } from "react-icons/io";
 import { FaBoxArchive } from "react-icons/fa6";
+import apiClient from "../../api/apiClient";
+import { toast } from "react-toastify";
+import EmployeeInfo from "./EmployeeInfo";
 
 const Users = () => {
-  const [employees, setEmployees] = useState<(typeof employeesData)[]>();
+  const [employees, setEmployees] = useState<(typeof employeeData)[]>();
+  const [addedEmployee, setAddedEmployee] = useState<typeof employeeData>();
   const [loading, setLoading] = useState<boolean>(true);
   let { id } = useParams<string>();
-  const employeesData = { id, employeeData };
   const [error, setError] = useState<string | null>(null);
   const [addEmployeeForm, setAddEmployeeForm] = useState<boolean>(true);
+  const [viewEmployeeForm, setViewEmployeeForm] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   const fetchEmployee = async () => {
     try {
-      const response = await fetch("http://localhost:8000/employee");
-      if (!response.ok) {
-        throw new Error("Failed to fetch Employee");
-      }
-
-      const datas: (typeof employeesData)[] = await response.json();
-      setEmployees(datas);
-      console.log(employees);
+      const response = await apiClient.get("/employees");
+      setEmployees(response.data.results);
     } catch (err) {
       setError("Error Occured");
-      alert("Error Occured: ");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = async () => {
-    const datas = { employeeData };
-
-    const res = await fetch("http://localhost:8000/employee", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datas),
-    });
-    console.log(datas);
-
-    if (res.ok) {
-      alert("Employee Added Successfully");
-    } else {
-      alert(`error${res.status}`);
+  const addEmployee = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    setLoading(true); // Set loading state to true at the beginning
+    // console.log("Employee data: ", employees);
+    employeeData.hireDate = new Date().toISOString();
+    // setAddedEmployee(employeeData);
+    // console.log("To be added : ", );
+    try {
+      const data = {
+        firstName: employeeData?.firstName,
+        surname: employeeData?.surname,
+        middleName: employeeData?.middleName,
+        username: employeeData?.username,
+        password: employeeData?.password,
+        department: employeeData?.department,
+        position: employeeData?.position,
+        hireDate: employeeData?.hireDate,
+        employmentType: employeeData?.employmentType,
+        roles: employeeData?.roles
+          ? JSON.parse(JSON.stringify(employeeData.roles))
+          : [],
+      };
+      console.log("2nd", data);
+      await apiClient.post("/employees", data);
+      // console.log(response);
+      toast.success("Employee added successfully!");
+    } catch (err: any) {
+      console.error(err.response); // Log the error for debugging
+      setError("Error adding employee");
+      toast.error("Error adding employee");
+    } finally {
+      setLoading(false); // Ensure loading state is reset
     }
   };
-
-  // const handleDelete = async () => {
-  //   const res = await fetch("http://localhost:8000/employee/" + id, {
-  //     method: "DELETE",
-  //   });
-
-  //   if (res.ok) {
-  //     alert("Employee Deleted Successfully");
-  //   } else {
-  //     alert("Error Occured");
-  //   }
-  // };
 
   useEffect(() => {
     fetchEmployee();
@@ -68,7 +72,7 @@ const Users = () => {
       <div className=" flex flex-col justify-center relative">
         {/* Add user */}
         <form
-          onSubmit={handleSubmit}
+          onSubmit={addEmployee}
           className={`${
             addEmployeeForm
               ? "w-[0px] opacity-0 left-0"
@@ -99,6 +103,17 @@ const Users = () => {
             </button>
           </h1>
         </form>
+        {/* view employee */}
+        <form
+          className={`${
+            viewEmployeeForm
+              ? "w-[0px] opacity-0 left-0"
+              : "w-[550px] z-50 left-1/2 opacity-100"
+          } absolute top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-5 pb-5 bg-white border shadow-md rounded-lg flex flex-col gap-3 duration-150`}
+        >
+          <h1>Employee Info</h1>
+          <EmployeeInfo />
+        </form>
         <h1 className="text-center py-5 text-2xl font-bold bg-blue-600 text-white border-t border-r border-l rounded-t-md shadow-sm">
           All Employees
         </h1>
@@ -119,7 +134,7 @@ const Users = () => {
                   className="px-3 shadow-sm text-bold hover:scale-105 active:scale-95 py-[5px] my-2 font-bold text-white bg-blue-600 shadow-blue-600/50 rounded-md duration-200"
                 >
                   <p className="flex justify-center items-center gap-2">
-                    <IoMdPersonAdd /> User
+                    <IoMdPersonAdd /> Employee
                   </p>
                 </button>
               </th>
@@ -143,17 +158,21 @@ const Users = () => {
                 className="duration-200 hover:cursor-pointer font-semibold gap-3 items-center text-sm grid grid-cols-4 px-2 rounded-sm  bg-slate-50 group shadow-sm border hover:bg-blue-600 hover:border-blue-600 hover:text-white"
               >
                 <td className="w-[300px] text-start">
-                  {employee.employeeData.lastName}{" "}
-                  {employee.employeeData.firstName}{" "}
-                  {employee.employeeData.middleName}
+                  {employee.surname} {employee.firstName} {employee.middleName}
                 </td>
-                <td className=" text-center">
-                  {employee.employeeData.position}
-                </td>
-                <td className=" text-center">{employee.employeeData.office}</td>
-                <td className=" text-center">
+                <td className=" text-center">{employee.position}</td>
+                <td className=" text-center">{employee.department}</td>
+                <td className=" text-center flex gap-3 justify-center">
                   <button className="opacity-0 group-hover:opacity-100 px-4 bg-red-600 text-white shadow-md text-bold hover:scale-110 active:scale-95 py-2 my-2 border font-bold border-red-600 rounded-md duration-200">
-                    <FaBoxArchive />
+                    Archive
+                  </button>
+                  <button
+                    onClick={() => {
+                      navigate(`/${employee._id}/profile`);
+                    }}
+                    className="opacity-0 group-hover:opacity-100 px-4 bg-green-500 text-white shadow-md text-bold hover:scale-110 active:scale-95 py-2 my-2 border font-bold border-green-500 rounded-md duration-200"
+                  >
+                    View
                   </button>
                 </td>
               </tr>

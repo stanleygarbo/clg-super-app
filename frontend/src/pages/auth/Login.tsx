@@ -16,7 +16,7 @@ const Login = () => {
 
   useEffect(() => {
     if (auth.token) {
-      navigate("/dashboard");
+      navigate("/login");
     }
   }, []);
 
@@ -31,7 +31,7 @@ const Login = () => {
       navigate("/dashboard");
     },
     onError: (err) => {
-      toast("Invalid credentials", { type: "error" });
+      toast.error("Invalid credentials", { type: "error" });
     },
   });
 

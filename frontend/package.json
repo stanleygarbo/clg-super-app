@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost:3000",
+  "proxy": "https://clg-super-app.onrender.com/api",
   "name": "frontend",
   "private": true,
   "version": "0.0.0",

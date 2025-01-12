@@ -1,8 +1,50 @@
 import { useSnapshot } from "valtio";
 import { employeeData } from "../../store/EmployeeData";
+import { useEffect, useState } from "react";
+import apiClient from "../../api/apiClient";
+import { positionData } from "../../store/PositionData";
+
+type deptData = {
+  _id: string;
+  departmentName: string;
+};
+
+type postData = {
+  _id: string;
+  jobTitle: string;
+  hourlyWage: number;
+};
 
 const AddEmployee = () => {
   const snap = useSnapshot(employeeData);
+  const [departments, setDepartments] = useState<deptData[]>([]);
+  const [positions, setPositions] = useState<postData[]>([]);
+
+  const fetchDepartments = async () => {
+    try {
+      const response = await apiClient.get("/departments");
+      setDepartments(response.data.results);
+      console.log(departments);
+    } catch (err) {
+    } finally {
+    }
+  };
+
+  const fetchPositions = async () => {
+    try {
+      const response = await apiClient.get("/positions");
+      setPositions(response.data.results);
+      console.log("Positions : ", positions);
+    } catch (err) {
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    fetchPositions();
+    fetchDepartments();
+  }, []);
+
   return (
     <div className="flex flex-col gap-3 w-[100%]">
       <section className="grid grid-cols-3 gap-3">
@@ -13,9 +55,9 @@ const AddEmployee = () => {
           <input
             type="text"
             required
-            value={snap.lastName}
+            value={snap.surname}
             onChange={(e) => {
-              employeeData.lastName = e.target.value;
+              employeeData.surname = e.target.value;
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           />
@@ -53,81 +95,107 @@ const AddEmployee = () => {
           <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
             Position
           </p>
-          <input
-            type="text"
-            required
-            value={snap.position}
+          <select
             onChange={(e) => {
               employeeData.position = e.target.value;
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-          />
+          >
+            {positions?.map((post, index) => (
+              <option key={index} value={post._id}>
+                {post.jobTitle}
+              </option>
+            ))}
+          </select>
         </span>
         <span className="relative rounded-lg">
           <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-            Office
+            Department
+          </p>
+          <select
+            onChange={(e) => {
+              employeeData.department = e.target.value;
+            }}
+            className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+          >
+            {departments.map((dept, index) => (
+              <option key={index} value={dept._id}>
+                {dept.departmentName}
+              </option>
+            ))}
+          </select>
+          {/* <input
+            type="text"
+            required
+            value={snap.department}
+            
+            className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+          /> */}
+        </span>
+        <span className="relative rounded-lg">
+          <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+            Username
           </p>
           <input
             type="text"
             required
-            value={snap.office}
+            value={snap.username}
             onChange={(e) => {
-              employeeData.office = e.target.value;
+              employeeData.username = e.target.value;
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           />
         </span>
         <span className="relative rounded-lg">
           <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-            SSS No.
+            Password
           </p>
           <input
-            type="text"
-            value={snap.sssNum}
+            type="password"
+            required
+            value={snap.password}
             onChange={(e) => {
-              employeeData.sssNum = e.target.value;
+              employeeData.password = e.target.value;
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           />
         </span>
         <span className="relative rounded-lg">
           <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-            Phil Health No.
+            Roles
           </p>
-          <input
-            type="text"
-            value={snap.philhealthNum}
+          <select
             onChange={(e) => {
-              employeeData.philhealthNum = e.target.value;
+              employeeData.roles.push(e.target.value);
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-          />
+          >
+            <option value="user">User</option>
+            <option value="student">Student</option>
+            <option value="admin">Admin</option>
+            <option value="admission">Admission</option>
+            <option value="accounting">Accounting</option>
+            <option value="registrar">Registrar</option>
+            <option value="faculty">Faculty</option>
+            <option value="clinic">Clinic</option>
+            <option value="ssc">SCC</option>
+            <option value="super">Super</option>
+          </select>
         </span>
         <span className="relative rounded-lg">
           <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-            Pag-Ibig No.
+            Employment Type
           </p>
-          <input
-            type="text"
-            value={snap.pagibigID}
+          <select
             onChange={(e) => {
-              employeeData.pagibigID = e.target.value;
+              employeeData.employmentType = e.target.value;
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-          />
-        </span>
-        <span className="relative rounded-lg">
-          <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-            TIN No.
-          </p>
-          <input
-            type="text"
-            value={snap.tinNum}
-            onChange={(e) => {
-              employeeData.tinNum = e.target.value;
-            }}
-            className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-          />
+          >
+            <option value="probationary">Probationary</option>
+            <option value="regular">Regular</option>
+            <option value="contractual">Contractual</option>
+          </select>
         </span>
       </section>
     </div>

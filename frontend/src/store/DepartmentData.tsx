@@ -1,7 +1,9 @@
-import { Program } from "./ProgramData";
+import { proxy } from "valtio";
 
-export interface Department {
-    deprtmentName: string;
-    programs: Program;
-    isDeleted?: boolean;
+interface AppState {
+  departmentName: string;
 }
+
+export const departmentData = proxy<AppState>({
+  departmentName: "",
+});
