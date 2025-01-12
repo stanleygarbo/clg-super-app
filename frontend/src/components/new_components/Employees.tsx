@@ -3,25 +3,27 @@ import { useParams, useNavigate } from "react-router-dom";
 import { employeeData } from "../../store/EmployeeData";
 import AddEmployee from "./AddEmployee";
 import { IoMdPersonAdd } from "react-icons/io";
-import { FaBoxArchive } from "react-icons/fa6";
 import apiClient from "../../api/apiClient";
 import { toast } from "react-toastify";
-import EmployeeInfo from "./EmployeeInfo";
+import UpdateEmployee from "./UpdateEmployee";
+import { updateEmployeeData } from "../../store/UpdateEmployeeData";
 
 const Users = () => {
-  const [employees, setEmployees] = useState<(typeof employeeData)[]>();
-  const [addedEmployee, setAddedEmployee] = useState<typeof employeeData>();
+  const [employees, setEmployees] = useState<(typeof updateEmployeeData)[]>();
   const [loading, setLoading] = useState<boolean>(true);
   let { id } = useParams<string>();
   const [error, setError] = useState<string | null>(null);
+  // const [viewEmployeeForm, setViewEmployeeForm] = useState<boolean>(true);
   const [addEmployeeForm, setAddEmployeeForm] = useState<boolean>(true);
-  const [viewEmployeeForm, setViewEmployeeForm] = useState<boolean>(true);
+  const [updateEmployeeForm, setUpdateEmployeeForm] = useState<boolean>(true);
   const navigate = useNavigate();
 
+  // FETCH EMPLOYEE
   const fetchEmployee = async () => {
     try {
       const response = await apiClient.get("/employees");
       setEmployees(response.data.results);
+      // console.log("Data :: ", response.data.results);
     } catch (err) {
       setError("Error Occured");
     } finally {
@@ -29,48 +31,113 @@ const Users = () => {
     }
   };
 
+  // FETCH TO BE UPDATED EMPLOYEE
+  const fetchUpdateEmployee = async () => {
+    try {
+      const response = await apiClient.get("/employees/" + id);
+      // setEmployees(response.data.results);
+      // console.log("Update Res", response.data);
+      const res = response.data;
+      employeeData._id = res._id;
+      employeeData.password = res.password;
+      employeeData.department = res.department.departmentName;
+      employeeData.employmentType = res.employmentType;
+      employeeData.firstName = res.firstName;
+      employeeData.hireDate = res.hireDate;
+      employeeData.middleName = res.middleName;
+      employeeData.position = res.position.jobTitle;
+      employeeData.roles = res.roles;
+      employeeData.surname = res.surname;
+      employeeData.username = res.username;
+
+      console.log(employeeData);
+    } catch (err) {
+      setError("Error Occured");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ADD EMLOYEE
   const addEmployee = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setLoading(true); // Set loading state to true at the beginning
-    // console.log("Employee data: ", employees);
+    setLoading(true);
     employeeData.hireDate = new Date().toISOString();
-    // setAddedEmployee(employeeData);
-    // console.log("To be added : ", );
     try {
       const data = {
-        firstName: employeeData?.firstName,
-        surname: employeeData?.surname,
-        middleName: employeeData?.middleName,
-        username: employeeData?.username,
-        password: employeeData?.password,
-        department: employeeData?.department,
-        position: employeeData?.position,
-        hireDate: employeeData?.hireDate,
-        employmentType: employeeData?.employmentType,
-        roles: employeeData?.roles
+        firstName: employeeData.firstName,
+        surname: employeeData.surname,
+        middleName: employeeData.middleName,
+        username: employeeData.username,
+        password: employeeData.password,
+        department: employeeData.department,
+        position: employeeData.position,
+        hireDate: employeeData.hireDate,
+        employmentType: employeeData.employmentType,
+        roles: employeeData.roles
           ? JSON.parse(JSON.stringify(employeeData.roles))
           : [],
       };
-      console.log("2nd", data);
       await apiClient.post("/employees", data);
-      // console.log(response);
       toast.success("Employee added successfully!");
-    } catch (err: any) {
-      console.error(err.response); // Log the error for debugging
+    } catch (err) {
       setError("Error adding employee");
-      toast.error("Error adding employee");
+      toast.error(error);
     } finally {
-      setLoading(false); // Ensure loading state is reset
+      setAddEmployeeForm(true);
+      setLoading(false);
+    }
+  };
+
+  // DELETE EMPLOYEE
+  const deleteEmployee = async () => {
+    try {
+      await apiClient.delete("/employees/" + id);
+      toast.success("Successfully deleted employee");
+    } catch {
+      toast.error("Error in deleting employee");
+    } finally {
+    }
+  };
+
+  // UPDATE EMPLOYEE
+  const hanldeUpdateEmployee = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    try {
+      const updatedEmployee = {
+        firstName: employeeData.firstName,
+        middleName: employeeData.middleName,
+        surname: employeeData.surname,
+        roles: employeeData.roles,
+        employmentType: employeeData.employmentType,
+        department: employeeData.department,
+        position: employeeData.position,
+      };
+      id = employeeData._id;
+      console.log("ID :: ", id);
+      console.log(updatedEmployee);
+      const response = await apiClient.patch(
+        "/employees/" + id,
+        updatedEmployee
+      );
+      console.log("Resposnde::: ", response.data.results);
+      toast.success("Employee updated successfully!");
+    } catch {
+      setError("Error updating employee");
+      toast.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchEmployee();
-  }, []);
+  }, [employees?.length]);
+
   return (
     <div className="">
       <div className=" flex flex-col justify-center relative">
-        {/* Add user */}
+        {/* ADD USER FORM */}
         <form
           onSubmit={addEmployee}
           className={`${
@@ -103,8 +170,9 @@ const Users = () => {
             </button>
           </h1>
         </form>
-        {/* view employee */}
-        <form
+
+        {/* VIEW EMPLOYEE FORM */}
+        {/* <form
           className={`${
             viewEmployeeForm
               ? "w-[0px] opacity-0 left-0"
@@ -113,7 +181,57 @@ const Users = () => {
         >
           <h1>Employee Info</h1>
           <EmployeeInfo />
+        </form> */}
+
+        {/* UPDATE EMPLOYEE FORM */}
+        <form
+          onSubmit={hanldeUpdateEmployee}
+          className={`${
+            updateEmployeeForm
+              ? "w-[0px] opacity-0 left-0"
+              : "w-[550px] z-50 left-1/2 opacity-100"
+          } absolute top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-5 pb-5 bg-white border shadow-md rounded-lg flex flex-col gap-3 duration-150`}
+        >
+          <section className="flex flex-col-reverse">
+            <h1 className="text-center font-bold pb-3">Update Employee</h1>
+            <h1 className="flex justify-end mt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setUpdateEmployeeForm(true);
+                  employeeData._id = "";
+                  employeeData.password = "";
+                  employeeData.department = "";
+                  employeeData.employmentType = "";
+                  employeeData.firstName = "";
+                  employeeData.hireDate = "";
+                  employeeData.middleName = "";
+                  employeeData.position = "";
+                  employeeData.roles = [];
+                  employeeData.surname = "";
+                  employeeData.username = "";
+                }}
+                className="bg-red-600 px-2 font-bold rounded-md text-white shadow-md hover:scale-105 duration-200"
+              >
+                X
+              </button>
+            </h1>
+          </section>
+          <UpdateEmployee />
+          <h1 className="flex justify-center">
+            <button
+              onClick={() => {
+                setUpdateEmployeeForm(true);
+              }}
+              type="submit"
+              className="w-[50%] bg-blue-600 shadow-blue-600/50 py-[5px] rounded-md font-bold shadow-sm hover:scale-105 text-white active:scale-95 duration-200"
+            >
+              Update
+            </button>
+          </h1>
         </form>
+
+        {/* DISPLAY EMPLOYEE */}
         <h1 className="text-center py-5 text-2xl font-bold bg-blue-600 text-white border-t border-r border-l rounded-t-md shadow-sm">
           All Employees
         </h1>
@@ -130,6 +248,18 @@ const Users = () => {
                     addEmployeeForm === true
                       ? setAddEmployeeForm(false)
                       : setAddEmployeeForm(true);
+
+                    employeeData._id = "";
+                    employeeData.password = "";
+                    employeeData.department = "";
+                    employeeData.employmentType = "";
+                    employeeData.firstName = "";
+                    employeeData.hireDate = "";
+                    employeeData.middleName = "";
+                    employeeData.position = "";
+                    employeeData.roles = [];
+                    employeeData.surname = "";
+                    employeeData.username = "";
                   }}
                   className="px-3 shadow-sm text-bold hover:scale-105 active:scale-95 py-[5px] my-2 font-bold text-white bg-blue-600 shadow-blue-600/50 rounded-md duration-200"
                 >
@@ -140,11 +270,11 @@ const Users = () => {
               </th>
             </tr>
           </thead>
-          {error && (
+          {/* {error && (
             <div className="flex justify-center items-center">
               Failed to fetch data
             </div>
-          )}
+          )} */}
           {loading && (
             <div className="flex justify-center items-center">Loading...</div>
           )}
@@ -155,24 +285,48 @@ const Users = () => {
             {employees?.map((employee, index) => (
               <tr
                 key={index}
-                className="duration-200 hover:cursor-pointer font-semibold gap-3 items-center text-sm grid grid-cols-4 px-2 rounded-sm  bg-slate-50 group shadow-sm border hover:bg-blue-600 hover:border-blue-600 hover:text-white"
+                className="duration-200 hover:cursor-pointer font-semibold gap-3 items-center text-base grid grid-cols-4 px-2 rounded-sm  bg-slate-50 group shadow-sm border hover:bg-slate-300 hover:border-slate-300"
               >
                 <td className="w-[300px] text-start">
                   {employee.surname} {employee.firstName} {employee.middleName}
                 </td>
-                <td className=" text-center">{employee.position}</td>
-                <td className=" text-center">{employee.department}</td>
+                <td className="text-center">
+                  {employee.department.departmentName}
+                </td>
+                <td className="text-center">{employee.position.jobTitle}</td>
+
                 <td className=" text-center flex gap-3 justify-center">
-                  <button className="opacity-0 group-hover:opacity-100 px-4 bg-red-600 text-white shadow-md text-bold hover:scale-110 active:scale-95 py-2 my-2 border font-bold border-red-600 rounded-md duration-200">
+                  <button
+                    onClick={() => {
+                      id = employee._id;
+                      console.log(id);
+                      deleteEmployee();
+                    }}
+                    className="opacity-0 group-hover:opacity-100 px-2 bg-red-600 text-white shadow-md text-base hover:scale-110 active:scale-95 py-2 my-2 border font-bold border-red-600 rounded-md duration-200"
+                  >
                     Archive
                   </button>
                   <button
                     onClick={() => {
                       navigate(`/${employee._id}/profile`);
                     }}
-                    className="opacity-0 group-hover:opacity-100 px-4 bg-green-500 text-white shadow-md text-bold hover:scale-110 active:scale-95 py-2 my-2 border font-bold border-green-500 rounded-md duration-200"
+                    className="opacity-0 group-hover:opacity-100 px-4 bg-blue-600 text-white shadow-md text-base hover:scale-110 active:scale-95 py-2 my-2 border font-bold border-blue-600 rounded-md duration-200"
                   >
                     View
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      id = employee._id;
+                      fetchUpdateEmployee();
+                      updateEmployeeForm === true
+                        ? setUpdateEmployeeForm(false)
+                        : setUpdateEmployeeForm(true);
+                    }}
+                    className="opacity-0 group-hover:opacity-100 px-2 bg-blue-600 text-white shadow-md text-base hover:scale-110 active:scale-95 py-2 my-2 border font-bold border-blue-600 rounded-md duration-200"
+                  >
+                    Update
                   </button>
                 </td>
               </tr>

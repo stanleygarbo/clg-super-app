@@ -7,14 +7,14 @@ import { toast } from "react-toastify";
 import AddPosition from "./AddPosition";
 import { positionData } from "../../store/PositionData";
 
-type deptData = {
+type postData = {
   _id: string;
   jobTitle: string;
   hourlyWage: number;
 };
 
 const PositionList = () => {
-  const [positions, setPositions] = useState<deptData[]>([]);
+  const [positions, setPositions] = useState<postData[]>([]);
   let id: any;
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);

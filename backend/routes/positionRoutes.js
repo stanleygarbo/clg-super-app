@@ -142,7 +142,7 @@ const updatePositionValidationRules = [
  *                         description: The validation error message.
  */
 router.patch(
-  "/",
+  "/:id",
   updatePositionValidationRules,
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super"]),
