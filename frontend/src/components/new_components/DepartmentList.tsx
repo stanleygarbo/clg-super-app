@@ -6,10 +6,12 @@ import AddDepartment from "./AddDepartment";
 import { useNavigate } from "react-router-dom";
 import { departmentData } from "../../store/DepartmentData";
 import { toast } from "react-toastify";
+
 type deptData = {
   _id: string;
   departmentName: string;
 };
+
 const DepartmentList = () => {
   const [departments, setDepartments] = useState<deptData[]>([]);
   let id: any;

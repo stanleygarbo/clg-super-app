@@ -16,7 +16,7 @@ const ProfileInfo = () => {
     queryKey: ["employee", id],
     queryFn: () => getEmployee({ id }),
   });
-  console.log("Query Data: ", query.data);
+  // console.log("Query Data: ", query.data);
 
   return (
     <div>
