@@ -3,7 +3,8 @@ const { Position } = require("../models/positionModel");
 const { Department } = require("../models/departmentModel");
 const { Employee, Student } = require("../models/userModel");
 
-const m2sWrapper = (model) => m2s(model, { omitFields: ["isDeleted"] });
+const m2sWrapper = (model) =>
+  m2s(model, { omitFields: ["isDeleted", "password"] });
 
 const swaggerSchemas = {
   Position: m2sWrapper(Position),
