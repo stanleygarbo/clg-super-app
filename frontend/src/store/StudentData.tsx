@@ -1,5 +1,5 @@
 import { proxy } from "valtio";
-import { GradeData } from "./CourseData";
+import { Grade } from "./GradeData";
 
 interface Address {
     houseNum: string;
@@ -42,7 +42,7 @@ interface AppState {
     year: string;
     usn: string;
     password: string;
-    grades: GradeData[];
+    grades: Grade[];
     personalInfo: {
         lastName: string;
         firstName: string;

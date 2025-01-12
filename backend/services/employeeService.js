@@ -5,12 +5,7 @@ const positionService = require("../services/positionService");
 const getEmployee = async ({ id }) => {
   const employee = await Employee.findById(id)
     .populate("position")
-    .populate("department")
-    .populate("governmentId")
-    .populate("birth")
-    .populate("spouse")
-    .populate("homeAddress")
-    .populate("cityAddress");
+    .populate("department");
 
   return employee;
 };
@@ -22,7 +17,12 @@ const getEmployees = async () => {
 };
 
 const addEmployee = async (data) => {
-  const dept = departmentService.getDepartment({ id: data.department });
+  const doesExist = await Employee.findOne({ username: data.username });
+  if (doesExist) {
+    throw new Error("Username already exists.");
+  }
+
+  const dept = departmentService.getDepartment(data.department);
   if (!dept) {
     throw new Error("Department does not exist.");
   }
@@ -34,7 +34,7 @@ const addEmployee = async (data) => {
 
   const employee = new Employee(data);
 
-  employee.save();
+  await employee.save();
 
   return employee;
 };

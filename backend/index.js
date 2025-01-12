@@ -15,6 +15,7 @@ const swaggerSchemas = require("./utils/swaggerSchemas.js");
 const { User } = require("./models/userModel");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
+const studentRoutes = require("./routes/studentRoutes.js");
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -56,20 +57,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/positions", positionRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/employees", employeeRoutes);
-app.get("/api/s", async (req, res) => {
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash("password", salt);
-
-  const admin = new User({
-    firstName: "Super",
-    surname: "Admin",
-    roles: ["super"],
-    username: "admin",
-    password: hashedPassword,
-  });
-  await admin.save();
-  res.status(200).json(admin);
-});
+app.use("/api/students", studentRoutes);
 
 app.get("/", (req, res) => {
   res.json({

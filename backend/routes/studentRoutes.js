@@ -1,33 +1,18 @@
 const express = require("express");
-const employeeController = require("../controllers/employeeController");
 const router = express.Router();
 const passport = require("passport");
 const roleMiddleware = require("../middlewares/roleMiddleware");
 const { body } = require("express-validator");
 const roles = require("../constants/roles");
-const employmentType = require("../constants/employmentType");
 const { ObjectId } = require("mongodb");
+const studentController = require("../controllers/studentController");
 
-const addEmployeeValidationRules = [
+const addStudentValidationRules = [
   [
     body("firstName").notEmpty().trim(),
     body("surname").notEmpty().trim(),
     body("middleName").notEmpty().trim(),
-    body("username").notEmpty().trim(),
-    body("password").notEmpty().trim(),
     body("department").notEmpty().trim().custom(ObjectId.isValid),
-    body("hireDate").notEmpty().isISO8601().toDate(),
-    body("position").notEmpty().trim().custom(ObjectId.isValid),
-    body("employmentType")
-      .notEmpty()
-      .custom((type) => {
-        // Check if all roles are valid
-        if (!employmentType.includes(type)) {
-          throw new Error(`Invalid employement type: ${type}`);
-        }
-
-        return true;
-      }),
     body("roles")
       .isArray() // Check that roles is an array
       .withMessage("Roles must be an array")
@@ -46,11 +31,11 @@ const addEmployeeValidationRules = [
 
 /**
  * @swagger
- * /api/employees:
+ * /api/students:
  *   post:
- *     summary: Add a new employee
+ *     summary: Add a new student
  *     tags:
- *       - Employees
+ *       - Students
  *     security:
  *       - BearerAuth: []
  *     requestBody:
@@ -63,10 +48,7 @@ const addEmployeeValidationRules = [
  *               - firstName
  *               - surname
  *               - middleName
- *               - username
- *               - password
  *               - department
- *               - position
  *               - roles
  *             properties:
  *               firstName:
@@ -81,43 +63,23 @@ const addEmployeeValidationRules = [
  *                 type: string
  *                 description: The middle name of the employee.
  *                 example: Ten
- *               username:
- *                 type: string
- *                 description: A unique username for the employee.
- *               password:
- *                 type: string
- *                 format: password
- *                 description: A secure password for the employee.
- *                 example: password
  *               department:
  *                 type: string
  *                 description: The department where the employee will work.
  *                 example: departmentId
- *               position:
- *                 type: string
- *                 description: The position of the employee within the department.
- *                 example: positionId
- *               hireDate:
- *                 type: string
- *                 description: Date in which the employee was hired.
- *                 example: 2025-01-06T11:01:49.676Z
- *               employmentType:
- *                 type: string
- *                 description: Contractual, Probationary, Regular, OJT
- *                 example: probationary
  *               roles:
  *                 type: array
  *                 description: A list of roles assigned to the employee.
  *                 items:
  *                   type: string
- *                 example: ["admin"]
+ *                 example: ["student"]
  *     responses:
  *       201:
  *         description: Employee added successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Employee'
+ *                $ref: '#/components/schemas/Student'
  *       400:
  *         description: Validation error.
  *         content:
@@ -142,26 +104,15 @@ const addEmployeeValidationRules = [
  */
 router.post(
   "/",
-  addEmployeeValidationRules,
+  addStudentValidationRules,
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
-  employeeController.addEmployee
+  roleMiddleware(["admin", "super", "admission"]),
+  studentController.addStudent
 );
 
 const updateEmployeeValidationRules = [
   [
-    body("employmentType").custom((items) => {
-      // Check if all roles are valid
-      for (const type of items) {
-        if (!employmentType.includes(type)) {
-          throw new Error(`Invalid employement type: ${type}`);
-        }
-      }
-      return true;
-    }),
-    body("hireDate").notEmpty().isISO8601().toDate(),
     body("department").trim().custom(ObjectId.isValid),
-    body("position").trim().custom(ObjectId.isValid),
     body("roles")
       .isArray() // Check that roles is an array
       .withMessage("Roles must be an array")
@@ -179,11 +130,11 @@ const updateEmployeeValidationRules = [
 
 /**
  * @swagger
- * /api/employees/{id}:
+ * /api/students/{id}:
  *   patch:
- *     summary: Update an employee
+ *     summary: Update a student
  *     tags:
- *       - Employees
+ *       - Students
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -195,7 +146,7 @@ const updateEmployeeValidationRules = [
  *         required: true
  *         schema:
  *           type: string
- *         description: The unique ID of the employee.
+ *         description: The unique ID of the student.
  *     requestBody:
  *       required: true
  *       content:
@@ -206,10 +157,7 @@ const updateEmployeeValidationRules = [
  *               - firstName
  *               - surname
  *               - middleName
- *               - username
- *               - password
  *               - department
- *               - position
  *               - roles
  *             properties:
  *               firstName:
@@ -236,31 +184,19 @@ const updateEmployeeValidationRules = [
  *                 type: string
  *                 description: The department where the employee will work.
  *                 example: departmentId
- *               position:
- *                 type: string
- *                 description: The position of the employee within the department.
- *                 example: positionId
- *               hireDate:
- *                 type: string
- *                 description: Date in which the employee was hired.
- *                 example: 2025-01-06T11:01:49.676Z
- *               employmentType:
- *                 type: string
- *                 description: Contractual, Probationary, Regular, OJT
- *                 example: probationary
  *               roles:
  *                 type: array
- *                 description: A list of roles assigned to the employee.
+ *                 description: A list of roles assigned to the student.
  *                 items:
  *                   type: string
- *                 example: ["admin"]
+ *                 example: ["student"]
  *     responses:
  *       201:
- *         description: Employee added successfully.
+ *         description: Student added successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Employee'
+ *                $ref: '#/components/schemas/Student'
  *       400:
  *         description: Validation error.
  *         content:
@@ -287,17 +223,17 @@ router.patch(
   "/",
   updateEmployeeValidationRules,
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
-  employeeController.updateEmployee
+  roleMiddleware(["admin", "super", "admission", "registrar"]),
+  studentController.updateStudent
 );
 
 /**
  * @swagger
- * /api/employees/{id}:
+ * /api/students/{id}:
  *   get:
- *     summary: Get an employee by user ID
+ *     summary: Get a student by user ID
  *     tags:
- *       - Employees
+ *       - Students
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -306,16 +242,16 @@ router.patch(
  *         required: true
  *         schema:
  *           type: string
- *         description: The unique ID of the employee.
+ *         description: The unique ID of the student.
  *     responses:
  *       200:
- *         description: Employee retrieved successfully.
+ *         description: student retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
  *                $ref: '#/components/schemas/Employee'
  *       404:
- *         description: Employee not found.
+ *         description: Student not found.
  *         content:
  *           application/json:
  *             schema:
@@ -323,7 +259,7 @@ router.patch(
  *               properties:
  *                 message:
  *                   type: string
- *                   example: Employee not found.
+ *                   example: Student not found.
  *       500:
  *         description: Server error.
  *         content:
@@ -338,25 +274,25 @@ router.patch(
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  employeeController.getEmployee
+  studentController.getStudent
 );
 
 /**
  * @swagger
- * /api/employees:
+ * /api/students:
  *   get:
- *     summary: Get a list of all employees
+ *     summary: Get a list of all students
  *     tags:
- *       - Employees
+ *       - Students
  *     security:
  *       - BearerAuth: []
  *     responses:
  *       200:
- *         description: List of employees retrieved successfully.
+ *         description: List of students retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Employee'
+ *                $ref: '#/components/schemas/Student'
  *       400:
  *         description: Server error.
  *         content:
@@ -371,16 +307,16 @@ router.get(
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  employeeController.getEmployees
+  studentController.getStudents
 );
 
 /**
  * @swagger
- * /api/employees/{id}:
+ * /api/students/{id}:
  *   delete:
- *     summary: delete an employee by ID
+ *     summary: delete a student by ID
  *     tags:
- *       - Employees
+ *       - Students
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -389,14 +325,14 @@ router.get(
  *         required: true
  *         schema:
  *           type: string
- *         description: The unique ID of the employee.
+ *         description: The unique ID of the student.
  *     responses:
  *       201:
- *         description: employee deleted successfully.
+ *         description: department deleted successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Employee'
+ *                $ref: '#/components/schemas/Student'
  *       400:
  *         description: Validation error.
  *         content:
@@ -411,8 +347,10 @@ router.get(
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
-  employeeController.deleteEmployee
+  roleMiddleware(["admin", "super", "admission", "registrar"]),
+  studentController.deleteStudent
 );
 
-module.exports = router;
+const studentRoutes = router;
+
+module.exports = studentRoutes;
