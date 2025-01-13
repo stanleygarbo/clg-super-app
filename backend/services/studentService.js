@@ -25,8 +25,10 @@ const addStudent = async (data) => {
     throw new Error("Department does not exist.");
   }
 
-  const salt = await bcrypt.genSalt(10);
-  data.password = await bcrypt.hash(data.password, salt);
+  if (data.password) {
+    const salt = await bcrypt.genSalt(10);
+    data.password = await bcrypt.hash(data.password, salt);
+  }
 
   const student = new Student(data);
 
