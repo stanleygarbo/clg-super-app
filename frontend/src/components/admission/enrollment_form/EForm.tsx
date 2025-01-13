@@ -32,7 +32,8 @@ function EForm() {
   //   }
   // };
 
-  const addStudent = async () => {
+  const addStudent = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
     try {
       const studentDatas = {
         username: snapStudent.username,
@@ -66,11 +67,11 @@ function EForm() {
           province: snapStudent.homeAddress.province,
         },
         cityAddress: {
-          houseNum: snapStudent.cityAddress.houseNum,
-          streetBrgy: snapStudent.cityAddress.streetBrgy,
-          city: snapStudent.cityAddress.city,
-          district: snapStudent.cityAddress.city,
-          province: snapStudent.cityAddress.province,
+          houseNum: snapStudent.cityAddress?.houseNum,
+          streetBrgy: snapStudent.cityAddress?.streetBrgy,
+          city: snapStudent.cityAddress?.city,
+          district: snapStudent.cityAddress?.city,
+          province: snapStudent.cityAddress?.province,
         },
         father: {
           firstName: snapStudent.father.firstName,
@@ -114,16 +115,18 @@ function EForm() {
         },
         siblings: [
           {
-            fullName: snapStudent.siblings.fullName,
-            age: snapStudent.siblings.age,
-            occupationSchool: snapStudent.siblings.occupationSchool,
+            fullName: snapStudent.siblings?.fullName,
+            age: snapStudent.siblings?.age,
+            occupationSchool: snapStudent.siblings?.occupationSchool,
           },
         ],
       };
       const response = await apiClient.post("/students", studentDatas);
-      console.log(response);
+      console.log(studentDatas);
+      console.log(response.data);
       toast.success("Successfully added a student");
-    } catch {
+    } catch (err) {
+      toast.error("Error in adding the student :: " + err);
     } finally {
     }
   };

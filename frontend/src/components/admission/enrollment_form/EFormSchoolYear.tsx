@@ -17,7 +17,16 @@ const EFormSchoolYear = () => {
             <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               School Year
             </p>
-            <input
+            <select
+              onChange={(e) => {
+                studentData.schoolYear = e.target.value;
+              }}
+              className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+            >
+              <option value=""></option>
+              <option value="2024-2025">2024-2025</option>
+            </select>
+            {/* <input
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
               required
@@ -25,7 +34,7 @@ const EFormSchoolYear = () => {
               onChange={(e) => {
                 studentData.schoolYear = e.target.value;
               }}
-            />
+            /> */}
           </span>
           <span className={` ${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">

@@ -1,84 +1,80 @@
-import { useEffect, useState } from "react";
-import { studentData } from "../../../store/StudentData";
-import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getStudents } from "../../../api/student";
 
 const EnrolledStudents = () => {
-  const [students, setStudents] = useState<(typeof studentData)[]>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const { id } = useParams();
-  const datas = { id, studentData };
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [students, setStudents] = useState<any[]>();
+    const navigate = useNavigate();
 
-  const fetchStudents = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/students");
-      if (!response.ok) {
-        throw new Error("Failed to fetch students");
-      }
-      setError("");
+    const query = useQuery({
+        queryKey: ["students"],
+        queryFn: getStudents,
+    });
 
-      const data: (typeof datas)[] = await response.json();
-      setStudents(data?.map(({ id: string, ...rest }) => rest.studentData));
-      loading;
-      console.log(students);
-    } catch (err) {
-      setError("Error fetching students");
-    } finally {
-      setLoading(false);
+    if (query.isSuccess && !students) {
+        console.log("Query Data: ", query.data.results[0]);
+        setStudents(query.data.results);
+        setLoading(false);
+    } else if (query.isError) {
+        setError(true);
     }
-  };
 
-  const getFullName = (student: typeof studentData) =>
-    `${student.personalInfo.lastName}, ${student.personalInfo.firstName} ${student.personalInfo.middleName}`;
+    const getFullName = (student: any) => {
+        return `${student.surname}, ${student.firstName} ${student.middleName}`;
+    };
 
-  useEffect(() => {
-    fetchStudents();
-  }, []);
-
-  useEffect(() => {
-    console.log(students);
-  }, [students]);
-
-  return (
-    <div className="">
-      <div className="">
-        <h1 className="text-center py-5 text-2xl font-bold bg-blue-600 text-white border-t border-r border-l rounded-t-md shadow-sm">
-          All Students
-        </h1>
-        <table className="w-full h-[570px] border flex flex-col rounded-b-md shadow-md bg-white duration-200 py-10 px-12">
-          <th className="grid grid-cols-3 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%]">
-            <td className="w-[500px] text-start">Name</td>
-            <td className="w-[200px] text-center">Course</td>
-            <td className="w-[200px text-center">Year</td>
-          </th>
-          {error && (
-            <div className="flex justify-center items-center">
-              Failed to fetch data
+    return (
+        <div className="">
+            <div className="">
+                <h1 className="text-center py-5 text-2xl font-bold bg-blue-600 text-white border-t border-r border-l rounded-t-md shadow-sm">
+                    All Students
+                </h1>
+                <table className="w-full h-[570px] border flex flex-col rounded-b-md shadow-md bg-white duration-200 py-10 px-12">
+                    <thead className="grid grid-cols-3 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%]">
+                        <td className="w-[500px] text-start">Name</td>
+                        <td className="w-[200px] text-center">Course</td>
+                        <td className="w-[200px text-center">Year</td>
+                    </thead>
+                    {error && (
+                        <div className="flex justify-center items-center">
+                            Failed to fetch data
+                        </div>
+                    )}
+                    {loading && (
+                        <div className="flex justify-center items-center">
+                            Loading...
+                        </div>
+                    )}
+                    <tbody className="overflow-hidden overflow-y-auto no-scrollbar flex flex-col">
+                        {students?.map((student, index) => (
+                            <tr
+                                onClick={() =>
+                                    navigate(
+                                        `/admission/studentInfo/${student._id}`
+                                    )
+                                }
+                                key={index}
+                                className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-3 px-2 py-4 rounded-sm hover:text-white bg-slate-50 shadow-sm border hover:bg-blue-600 hover:border-blue-600 active:scale-95"
+                            >
+                                <td className="w-[500px] text-start">
+                                    {getFullName(student)}
+                                </td>
+                                <td className="w-[200px] text-center">
+                                    {student.course}
+                                </td>
+                                <td className="w-[200px text-center">
+                                    {student.year}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
-          )}
-          {loading && (
-            <div className="flex justify-center items-center">Loading...</div>
-          )}
-          <section className="overflow-hidden overflow-y-auto no-scrollbar flex flex-col">
-            {students?.map((student, index) => (
-              <Link to={`/admission/studentInfo/${student.usn}`}>
-                <tr
-                  key={index}
-                  className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-3 px-2 py-4 rounded-sm hover:text-white bg-slate-50 shadow-sm border hover:bg-blue-600 hover:border-blue-600 active:scale-95"
-                >
-                  <td className="w-[500px] text-start">
-                    {getFullName(student)}
-                  </td>
-                  <td className="w-[200px] text-center">{student.course}</td>
-                  <td className="w-[200px text-center">{student.year}</td>
-                </tr>
-              </Link>
-            ))}
-          </section>
-        </table>
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default EnrolledStudents;
