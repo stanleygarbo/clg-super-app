@@ -48,8 +48,11 @@ const EFormSchoolYear = () => {
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
             >
               <option value=" "> </option>
-              <option value="1st">1st</option>
-              <option value="2nd">2nd</option>
+              <option value="freshmen">Freshmen</option>
+              <option value="sophomore">Sophomore</option>
+              <option value="junior">Junior</option>
+              <option value="senior ">Senior </option>
+              <option value="graduate">Graduate</option>
             </select>
           </span>
         </section>

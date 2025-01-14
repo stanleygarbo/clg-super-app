@@ -38,12 +38,22 @@ const EformSiblings = () => {
 
   return (
     <div className="p-3 duration-200">
-      <p className="font-bold pb-2 xs:text-center xs:pb-5 sm:text-center sm:pb-5 md:pb-5 md:text-center">
-        SIBLING'S INFORMATION
-      </p>
+      <section className="flex justify-between">
+        <p className="font-bold pb-2 xs:text-center xs:pb-5 sm:text-center sm:pb-5 md:pb-5 md:text-center">
+          SIBLING'S INFORMATION
+        </p>
+        <button
+          type="button"
+          onClick={addSibling}
+          className="py-2 bg-blue-500 w-52 text-white font-bold rounded-md shadow-sm hover:shadow-blue-600/50 hover:shadow-md hover:bg-blue-600 duration-200"
+        >
+          Add Another Sibling
+        </button>
+      </section>
+
       <div className="flex flex-col gap-3 px-6">
         <section className="">
-          {siblings.map((sibling, index) => (
+          {siblings?.map((sibling, index) => (
             <div key={index} className="flex flex-col relative">
               <div className="grid grid-cols-3 gap-3 py-5">
                 <span
@@ -55,7 +65,7 @@ const EformSiblings = () => {
                   <input
                     className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
-                    value={sibling.fullName}
+                    value={sibling?.fullName}
                     onChange={(e) => {
                       handleChange(index, "fullName", e.target.value);
                     }}
@@ -70,7 +80,7 @@ const EformSiblings = () => {
                   <input
                     className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="number"
-                    value={sibling.age}
+                    value={sibling?.age}
                     onChange={(e) => {
                       handleChange(index, "age", e.target.value);
                     }}
@@ -85,7 +95,7 @@ const EformSiblings = () => {
                   <input
                     className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
-                    value={sibling.occupationSchool}
+                    value={sibling?.occupationSchool}
                     onChange={(e) => {
                       handleChange(index, "occupationSchool", e.target.value);
                     }}
@@ -103,13 +113,7 @@ const EformSiblings = () => {
               </div>
             </div>
           ))}
-          <button
-            type="button"
-            onClick={addSibling}
-            className="w-full py-2 bg-blue-500 text-white font-bold rounded-md shadow-sm hover:shadow-blue-600/50 hover:shadow-md hover:bg-blue-600 duration-200"
-          >
-            Add Another Sibling
-          </button>
+
           {/* <button
             type="submit"
             className="w-full py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700"

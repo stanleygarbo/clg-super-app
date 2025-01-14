@@ -123,7 +123,7 @@ const EFormStudent = () => {
             <input
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="date"
-              value={snap.birth.birthDate}
+              value={snap.birth?.birthDate}
               onChange={(e) => {
                 studentData.birth.birthDate = e.target.value;
               }}
@@ -136,7 +136,7 @@ const EFormStudent = () => {
             <input
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
-              value={snap.birth.birthPlace}
+              value={snap.birth?.birthPlace}
               onChange={(e) => {
                 studentData.birth.birthPlace = e.target.value;
               }}
@@ -149,7 +149,7 @@ const EFormStudent = () => {
             <input
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
-              value={snap.birth.citizenship}
+              value={snap.birth?.citizenship}
               onChange={(e) => {
                 studentData.birth.citizenship = e.target.value;
               }}
@@ -161,14 +161,14 @@ const EFormStudent = () => {
             </p>
             <select
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-              value={snap.birth.sex}
+              value={snap.birth?.sex}
               onChange={(e) => {
                 studentData.birth.sex = e.target.value;
               }}
             >
               <option value=" "> </option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
           </span>
           <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
@@ -200,7 +200,7 @@ const EFormStudent = () => {
             <input
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
-              value={snap.spouse.lastName}
+              value={snap.spouse?.lastName}
               onChange={(e) => {
                 studentData.spouse.lastName = e.target.value;
               }}
@@ -213,7 +213,7 @@ const EFormStudent = () => {
             <input
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
-              value={snap.spouse.firstName}
+              value={snap.spouse?.firstName}
               onChange={(e) => {
                 studentData.spouse.firstName = e.target.value;
               }}
@@ -226,7 +226,7 @@ const EFormStudent = () => {
             <input
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
-              value={snap.spouse.middleName}
+              value={snap.spouse?.middleName}
               onChange={(e) => {
                 studentData.spouse.middleName = e.target.value;
               }}
@@ -239,7 +239,7 @@ const EFormStudent = () => {
             <input
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="number"
-              value={snap.spouse.children}
+              value={snap.spouse?.children}
               onChange={(e) => {
                 studentData.spouse.children = Number(e.target.value);
               }}
@@ -257,7 +257,7 @@ const EFormStudent = () => {
             <input
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="number"
-              value={snap.homeAddress.houseNum}
+              value={snap.homeAddress?.houseNum}
               onChange={(e) => {
                 studentData.homeAddress.houseNum = Number(e.target.value);
               }}
@@ -270,7 +270,7 @@ const EFormStudent = () => {
             <input
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
-              value={snap.homeAddress.streetBrgy}
+              value={snap.homeAddress?.streetBrgy}
               onChange={(e) => {
                 studentData.homeAddress.streetBrgy = e.target.value;
               }}

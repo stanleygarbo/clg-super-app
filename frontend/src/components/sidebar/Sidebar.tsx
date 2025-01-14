@@ -12,7 +12,7 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
     <aside
       className={` ${
         isOpen ? "xs:w-[400px] sm:w-[400px] w-[250px]" : "w-[10px]"
-      } relative duration-200 min-h-screen h-full bg-white xs:pr-4 sm:pr-4 border-r p-5 flex flex-col justify-between overflow-hidden`}
+      } duration-200 min-h-screen h-full bg-white xs:pr-4 sm:pr-4 fixed border-r p-5 flex flex-col justify-between overflow-hidden`}
     >
       <button
         className={`absolute -right-3 top-9 w-7 text-xl md:hidden lg:hidden xl:hidden 2xl:hidden`}
@@ -40,7 +40,7 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
         {/* <div className="w-full h-px bg-gray-300 mb-5"></div> */}
         <button
           onClick={() => {
-            localStorage.removeItem('auth');
+            localStorage.removeItem("auth");
             navigate("/login");
           }}
           className="rounded-md bg-gradient-to-t from-red-600 to-red-400 shadow-md shadow-red-500/50 hover:scale-105 active:scale-95 text-white font-bold w-full py-2 duration-200"

@@ -42,6 +42,7 @@ interface AppState {
   telephone: string;
   phone: string;
   roles: [string];
+  department: string;
   spouse: {
     lastName: string;
     middleName: string;
@@ -132,6 +133,7 @@ export const studentData = proxy<AppState>({
   telephone: "",
   phone: "",
   roles: [""],
+  department: "",
   spouse: {
     lastName: "",
     middleName: "",
@@ -141,11 +143,11 @@ export const studentData = proxy<AppState>({
   program: "",
   standing: "",
   birth: {
-    birthDate: "",
-    birthPlace: "",
-    citizenship: "",
-    sex: "",
-    religion: "",
+    birthDate: " ",
+    birthPlace: " ",
+    citizenship: " ",
+    sex: " ",
+    religion: " ",
   },
   homeAddress: {
     houseNum: 0,
