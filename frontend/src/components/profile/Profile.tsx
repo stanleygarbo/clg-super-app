@@ -84,7 +84,7 @@ const Profile = () => {
                 x
               </button>
             </section>
-            <div className="flex flex-col gap-3 pt- px-6 w-full">
+            {/* <div className="flex flex-col gap-3 pt- px-6 w-full">
               <div className="gap-3 grid grid-cols-3">
                 <span className="relative">
                   <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
@@ -407,7 +407,7 @@ const Profile = () => {
                   }}
                 />
               </div>
-            </div>
+            </div> */}
             <section className="flex justify-end">
               <button
                 type="submit"

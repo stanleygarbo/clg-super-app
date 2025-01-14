@@ -7,58 +7,58 @@ import { useState } from "react";
 import { Employee } from "../../interface/IEmployee";
 
 const ProfileInfo = () => {
-    const snap = useSnapshot(studentData);
-    const [employee, setEmployee] = useState<Employee>();
-    const { id } = useParams();
+  const snap = useSnapshot(studentData);
+  const [employee, setEmployee] = useState<Employee>();
+  const { id } = useParams();
 
-    // const authSnap = useSnapshot(authState);
-    // console.log(authSnap.user.id);
+  // const authSnap = useSnapshot(authState);
+  // console.log(authSnap.user.id);
 
-    if (id) {
-        const query = useQuery({
-            queryKey: ["employee", id],
-            queryFn: () => getEmployee({ id }),
-            enabled: !!id,
-        });
+  if (id) {
+    const query = useQuery({
+      queryKey: ["employee", id],
+      queryFn: () => getEmployee({ id }),
+      enabled: !!id,
+    });
 
-        console.log("Query Data: ", query.isSuccess);
+    console.log("Query Data: ", query.isSuccess);
 
-        if (query.isSuccess && !employee) {
-            console.log(query.data);
-            setEmployee(query.data);
-        }
+    if (query.isSuccess && !employee) {
+      console.log(query.data);
+      setEmployee(query.data);
     }
+  }
 
-    // TEST ID: 67838a242a0c891e5b2c0de0
+  // TEST ID: 67838a242a0c891e5b2c0de0
 
-    return (
-        <div>
-            <div className="flex flex-col gap-3 pt-3 px-6 w-full">
-                <div className="gap-5 grid grid-cols-3">
-                    <input
-                        type="text"
-                        className="rounded-lg py-1 text-center"
-                        readOnly
-                        placeholder="LASTNAME"
-                        defaultValue={employee?.surname}
-                    />
-                    <input
-                        type="text"
-                        className="rounded-lg py-1 text-center"
-                        readOnly
-                        placeholder="FIRST NAME"
-                        defaultValue={employee?.firstName}
-                    />
-                    <input
-                        type="text"
-                        className="rounded-lg py-1 text-center"
-                        readOnly
-                        placeholder="MIDDLE NAME"
-                        defaultValue={employee?.middleName}
-                    />
-                </div>
-                <div className="grid grid-cols-3 gap-5 ">
-                    <input
+  return (
+    <div>
+      <div className="flex flex-col gap-3 pt-3 px-6 w-full">
+        <div className="gap-5 grid grid-cols-3">
+          <input
+            type="text"
+            className="rounded-lg py-1 text-center"
+            readOnly
+            placeholder="LASTNAME"
+            defaultValue={employee?.surname}
+          />
+          <input
+            type="text"
+            className="rounded-lg py-1 text-center"
+            readOnly
+            placeholder="FIRST NAME"
+            defaultValue={employee?.firstName}
+          />
+          <input
+            type="text"
+            className="rounded-lg py-1 text-center"
+            readOnly
+            placeholder="MIDDLE NAME"
+            defaultValue={employee?.middleName}
+          />
+        </div>
+        <div className="grid grid-cols-3 gap-5 ">
+          {/* <input
                         type="number"
                         className="rounded-lg py-1 text-center"
                         readOnly
@@ -216,11 +216,11 @@ const ProfileInfo = () => {
                         readOnly
                         placeholder="CITY"
                         value={snap.address.boarding?.city}
-                    />
-                </div>
-            </div>
+                    /> */}
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default ProfileInfo;

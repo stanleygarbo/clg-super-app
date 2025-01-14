@@ -7,6 +7,7 @@ import apiClient from "../../api/apiClient";
 import { toast } from "react-toastify";
 import UpdateEmployee from "./UpdateEmployee";
 import { updateEmployeeData } from "../../store/UpdateEmployeeData";
+// import { useSnapshot } from "valtio";
 
 const Users = () => {
   const [employees, setEmployees] = useState<(typeof updateEmployeeData)[]>();
@@ -17,6 +18,7 @@ const Users = () => {
   const [addEmployeeForm, setAddEmployeeForm] = useState<boolean>(true);
   const [updateEmployeeForm, setUpdateEmployeeForm] = useState<boolean>(true);
   const navigate = useNavigate();
+  // const snap = useSnapshot(employeeData);
 
   // FETCH EMPLOYEE
   const fetchEmployee = async () => {
@@ -40,17 +42,24 @@ const Users = () => {
       const res = response.data;
       employeeData._id = res._id;
       employeeData.password = res.password;
+      employeeData.departmentId = res.department._id;
       employeeData.department = res.department.departmentName;
       employeeData.employmentType = res.employmentType;
       employeeData.firstName = res.firstName;
       employeeData.hireDate = res.hireDate;
       employeeData.middleName = res.middleName;
       employeeData.position = res.position.jobTitle;
+      employeeData.positionId = res.position._id;
       employeeData.roles = res.roles;
       employeeData.surname = res.surname;
       employeeData.username = res.username;
 
-      console.log(employeeData);
+      console.log(
+        "Data to be updated :: ",
+        employeeData.departmentId,
+        " ",
+        employeeData.positionId
+      );
     } catch (err) {
       setError("Error Occured");
     } finally {
@@ -110,12 +119,13 @@ const Users = () => {
         surname: employeeData.surname,
         roles: employeeData.roles,
         employmentType: employeeData.employmentType,
-        department: employeeData.department,
-        position: employeeData.position,
+        department: employeeData.departmentId,
+        position: employeeData.positionId,
       };
       id = employeeData._id;
-      console.log("ID :: ", id);
+      // console.log("ID :: ", id);
       console.log(updatedEmployee);
+      console.log(employeeData.department);
       const response = await apiClient.patch(
         "/employees/" + id,
         updatedEmployee
@@ -199,17 +209,17 @@ const Users = () => {
                 type="button"
                 onClick={() => {
                   setUpdateEmployeeForm(true);
-                  employeeData._id = "";
-                  employeeData.password = "";
-                  employeeData.department = "";
-                  employeeData.employmentType = "";
-                  employeeData.firstName = "";
-                  employeeData.hireDate = "";
-                  employeeData.middleName = "";
-                  employeeData.position = "";
-                  employeeData.roles = [];
-                  employeeData.surname = "";
-                  employeeData.username = "";
+                  // employeeData._id = "";
+                  // employeeData.password = "";
+                  // employeeData.department = "";
+                  // employeeData.employmentType = "";
+                  // employeeData.firstName = "";
+                  // employeeData.hireDate = "";
+                  // employeeData.middleName = "";
+                  // employeeData.position = "";
+                  // employeeData.roles = [];
+                  // employeeData.surname = "";
+                  // employeeData.username = "";
                 }}
                 className="bg-red-600 px-2 font-bold rounded-md text-white shadow-md hover:scale-105 duration-200"
               >
@@ -240,7 +250,7 @@ const Users = () => {
             <tr className="grid grid-cols-4 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%]">
               <th className="w-[300px] text-start">Name</th>
               <th className=" text-center ">Position</th>
-              <th className="text-center">Office</th>
+              <th className="text-center">Deparment</th>
               <th className=" text-center">
                 <button
                   type="button"
@@ -290,10 +300,10 @@ const Users = () => {
                 <td className="w-[300px] text-start">
                   {employee.surname} {employee.firstName} {employee.middleName}
                 </td>
+                <td className="text-center">{employee.position.jobTitle}</td>
                 <td className="text-center">
                   {employee.department.departmentName}
                 </td>
-                <td className="text-center">{employee.position.jobTitle}</td>
 
                 <td className=" text-center flex gap-3 justify-center">
                   <button

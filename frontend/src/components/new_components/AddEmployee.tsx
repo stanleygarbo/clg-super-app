@@ -122,6 +122,7 @@ const AddEmployee = () => {
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           >
+            <option value={snap.department}> </option>
             {departments.map((dept, index) => (
               <option selected key={index} value={dept._id}>
                 {dept.departmentName}

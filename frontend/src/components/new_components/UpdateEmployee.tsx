@@ -99,10 +99,13 @@ const UpdateEmployee = () => {
           </p>
           <select
             onChange={(e) => {
-              employeeData.position = e.target.value;
+              employeeData.positionId = e.target.value;
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           >
+            <option selected value={employeeData.positionId}>
+              {employeeData.position}
+            </option>
             {positions.map((post, index) => (
               <option key={index} value={post._id}>
                 {post.jobTitle}
@@ -116,10 +119,13 @@ const UpdateEmployee = () => {
           </p>
           <select
             onChange={(e) => {
-              employeeData.department = e.target.value;
+              employeeData.departmentId = e.target.value;
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           >
+            <option selected value={employeeData.departmentId}>
+              {employeeData.department}
+            </option>
             {departments?.map((dept, index) => (
               <option key={index} value={dept._id}>
                 {dept.departmentName}
