@@ -41,13 +41,6 @@ const addStudent = async (data) => {
 };
 
 const updateStudent = async ({ id, data }) => {
-  if (data.username) {
-    const doesExist = await Student.findOne({ username: data.username });
-    if (doesExist) {
-      throw new Error("Username already exists.");
-    }
-  }
-
   const dept = departmentService.getDepartment(data.department);
   if (!dept) {
     throw new Error("Department does not exist.");
