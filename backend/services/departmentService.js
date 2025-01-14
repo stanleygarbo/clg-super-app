@@ -15,7 +15,7 @@ const getDepartments = async () => {
 const addDepartment = async (data) => {
   const department = new Department(data);
 
-  department.save();
+  await department.save();
 
   return department;
 };

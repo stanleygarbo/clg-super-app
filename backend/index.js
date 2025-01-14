@@ -4,6 +4,8 @@ const authRoutes = require("./routes/authRoutes.js");
 const positionRoutes = require("./routes/positionRoutes.js");
 const departmentRoutes = require("./routes/departmentRoutes.js");
 const employeeRoutes = require("./routes/employeeRoutes.js");
+const programRoutes = require("./routes/programRoutes.js");
+const courseRoutes = require("./routes/courseRoutes.js");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 require("./config/passport")(passport);
@@ -58,6 +60,8 @@ app.use("/api/positions", positionRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/employees", employeeRoutes);
 app.use("/api/students", studentRoutes);
+app.use("/api/programs", programRoutes);
+app.use("/api/courses", courseRoutes);
 
 app.get("/", (req, res) => {
   res.json({

@@ -1,19 +1,20 @@
 const express = require("express");
-const departmentController = require("../controllers/departmentController");
 const router = express.Router();
 const passport = require("passport");
 const roleMiddleware = require("../middlewares/roleMiddleware");
 const { body } = require("express-validator");
+const { ObjectId } = require("mongodb");
+const programController = require("../controllers/programController");
 
 /**
  * @swagger
- * /api/departments:
+ * /api/programs:
  *   post:
- *     summary: Add a new department
+ *     summary: Add a new program
  *     security:
  *       - BearerAuth: []
  *     tags:
- *       - Departments
+ *       - Programs
  *     requestBody:
  *       required: true
  *       content:
@@ -21,13 +22,22 @@ const { body } = require("express-validator");
  *           schema:
  *             type: object
  *             required:
- *               - jobTitle
- *               - hourlyWage
+ *               - programName
+ *               - programAcronym
+ *               - departmentId
  *             properties:
- *               departmentName:
+ *               programName:
  *                 type: string
- *                 description: The name of the department.
- *                 example: Computer Studies
+ *                 description: The name of the program.
+ *                 example: Bachelor of Science in Information Technology
+ *               programAcronym:
+ *                 type: string
+ *                 description: The acronym of the program.
+ *                 example: BSIT
+ *               departmentId:
+ *                 type: string
+ *                 description: The id of the department where this program belongs to.
+ *                 example: 677fb8cf94a19054d2207415
  *     responses:
  *       201:
  *         description: department added successfully.
@@ -35,7 +45,7 @@ const { body } = require("express-validator");
  *           application/json:
  *             schema:
  *               type: object
- *               $ref: '#/components/schemas/Department'
+ *               $ref: '#/components/schemas/Program'
  *       400:
  *         description: Validation error.
  *         content:
@@ -60,19 +70,23 @@ const { body } = require("express-validator");
  */
 router.post(
   "/",
-  [body("departmentName").notEmpty().trim()],
+  [
+    body("programName").notEmpty().trim(),
+    body("programAcronym").notEmpty().trim(),
+    body("departmentId").notEmpty().trim().custom(ObjectId.isValid),
+  ],
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super"]),
-  departmentController.addDepartment
+  programController.addProgram
 );
 
 /**
  * @swagger
- * /api/departments/{id}:
+ * /api/programs/{id}:
  *   patch:
- *     summary: Update a department
+ *     summary: Update a program
  *     tags:
- *       - Departments
+ *       - Programs
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -81,7 +95,7 @@ router.post(
  *         required: true
  *         schema:
  *           type: string
- *         description: The unique ID of the department.
+ *         description: The unique ID of the program.
  *     requestBody:
  *       required: true
  *       content:
@@ -89,17 +103,25 @@ router.post(
  *           schema:
  *             type: object
  *             properties:
- *               departmentName:
+ *               programName:
  *                 type: string
- *                 description: The name of the department.
- *                 example: Business Administration
+ *                 description: The name of the program.
+ *                 example: Bachelor of Science in Information Technology
+ *               programAcronym:
+ *                 type: string
+ *                 description: The acronym of the program.
+ *                 example: BSIT
+ *               departmentId:
+ *                 type: string
+ *                 description: The id of the department where this program belongs to.
+ *                 example: 677fb8cf94a19054d2207415
  *     responses:
  *       201:
- *         description: department added successfully.
+ *         description: Program added successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Department'
+ *                $ref: '#/components/schemas/Program'
  *       400:
  *         description: Validation error.
  *         content:
@@ -124,19 +146,23 @@ router.post(
  */
 router.patch(
   "/:id",
-  [body("departmentName").trim()],
+  [
+    body("programName").optional().trim(),
+    body("programAcronym").optional().trim(),
+    body("departmentId").optional().trim().custom(ObjectId.isValid),
+  ],
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super"]),
-  departmentController.updateDepartment
+  programController.updateProgram
 );
 
 /**
  * @swagger
- * /api/departments/{id}:
+ * /api/programs/{id}:
  *   get:
- *     summary: Get a department by ID
+ *     summary: Get a program by ID
  *     tags:
- *       - Departments
+ *       - Programs
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -145,14 +171,14 @@ router.patch(
  *         required: true
  *         schema:
  *           type: string
- *         description: The unique ID of the department.
+ *         description: The unique ID of the program.
  *     responses:
- *       201:
- *         description: department added successfully.
+ *       200:
+ *         description: program retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Department'
+ *                $ref: '#/components/schemas/Program'
  *       400:
  *         description: Validation error.
  *         content:
@@ -168,27 +194,27 @@ router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super"]),
-  departmentController.getDepartment
+  programController.getProgram
 );
 
 /**
  * @swagger
- * /api/departments:
+ * /api/programs:
  *   get:
- *     summary: Get a list of all departments
+ *     summary: Get a list of all programs
  *     tags:
- *       - Departments
+ *       - Programs
  *     security:
  *       - BearerAuth: []
  *     responses:
  *       200:
- *         description: List of departments retrieved successfully.
+ *         description: List of progrags retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Department'
+ *                 $ref: '#/components/schemas/Program'
  *       400:
  *         description: Server error.
  *         content:
@@ -204,16 +230,16 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super"]),
-  departmentController.getDepartments
+  programController.getPrograms
 );
 
 /**
  * @swagger
- * /api/departments/{id}:
+ * /api/programs/{id}:
  *   delete:
- *     summary: delete a department by ID
+ *     summary: Delete a program by ID
  *     tags:
- *       - Departments
+ *       - Programs
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -222,14 +248,14 @@ router.get(
  *         required: true
  *         schema:
  *           type: string
- *         description: The unique ID of the department.
+ *         description: The unique ID of the program.
  *     responses:
- *       201:
- *         description: department added successfully.
+ *       200:
+ *         description: program deleted successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Department'
+ *                $ref: '#/components/schemas/Program'
  *       400:
  *         description: Validation error.
  *         content:
@@ -245,7 +271,7 @@ router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super"]),
-  departmentController.deleteDepartment
+  programController.deleteProgram
 );
 
 module.exports = router;
