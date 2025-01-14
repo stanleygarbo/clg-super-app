@@ -4,10 +4,18 @@ import { useState } from "react";
 import { useSnapshot } from "valtio";
 import ProfileInfo from "./ProfileInfo";
 import { studentData } from "../../store/StudentData";
+import { useParams } from "react-router-dom";
+import { Employee } from "../../interface/IEmployee";
+import { useQuery } from "@tanstack/react-query";
+import { getEmployee } from "../../api/employee";
 
 const Profile = () => {
-  const [pfp, setPfp] = useState("");
+  const [pfp, setPfp] = useState(
+    "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
+  );
   const [infoOpacity, setInfoOpacity] = useState("opacity-0 w-0");
+  const [employee, setEmployee] = useState<Employee>();
+  const { id } = useParams();
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -19,7 +27,22 @@ const Profile = () => {
     multiple: false,
   });
 
-  const snap = useSnapshot(studentData);
+  // const snap = useSnapshot(studentData);
+
+  if (id) {
+    const query = useQuery({
+      queryKey: ["employee", id],
+      queryFn: () => getEmployee({ id }),
+      enabled: !!id,
+    });
+
+    console.log("Query Data: ", query.isSuccess);
+
+    if (query.isSuccess && !employee) {
+      console.log(query.data);
+      setEmployee(query.data);
+    }
+  }
 
   return (
     <div className="shadow-lg rounded-lg relative w-full xs:m-[] mb-10">
@@ -34,20 +57,19 @@ const Profile = () => {
           <img
             src={pfp}
             alt=""
-            className="w-[100px] h-[100px] bg-blue-400 rounded-full shadow-md object-cover border border-slate-700"
+            className="w-[100px] h-[100px] bg-blue-400 rounded-full shadow-md object-cover border"
           />
         </section>
         <section className="flex flex-col justify-center ">
           <p className="text-lg text-start font-bold text-slate-800">
-            Mheg Ryan T. Limpangog
+            {employee?.firstName} {employee?.firstName} {employee?.middleName}
           </p>
           <p className="flex gap-2 text-slate-500 font-semibold">
-            <p>Computer Science</p>
-            <p>
-              3<sup>rd</sup> Year
-            </p>
+            <p>{employee?.position.jobTitle}</p>
           </p>
-          <p className="text-slate-500 font-semibold">Student</p>
+          <p className="text-slate-500 font-semibold">
+            Office : {employee?.department.departmentName}
+          </p>
         </section>
       </span>
       <section className="flex absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-sm bg-white">
@@ -57,7 +79,7 @@ const Profile = () => {
       <section className="flex flex-col gap-5 p-10 relative">
         <section className="flex justify-between">
           <h1 className="font-bold text-lg">Information</h1>
-          <button
+          {/* <button
             onClick={() => {
               setInfoOpacity("opacity-100 left-1/2 w-[100%]");
             }}
@@ -65,7 +87,7 @@ const Profile = () => {
             className="bg-slate-50 py-2 px-4 font-bold rounded-lg shadow-sm"
           >
             Edit
-          </button>
+          </button> */}
         </section>
         <span className="flex flex-col gap-6 my-5">
           {/* Edit Profile */}
@@ -409,12 +431,12 @@ const Profile = () => {
               </div>
             </div> */}
             <section className="flex justify-end">
-              <button
+              {/* <button
                 type="submit"
                 className="border border-red-500 shadow-md font-bold rounded-lg py-1 px-10 mx-6 hover:border-blue-500 duration-200"
               >
                 Save
-              </button>
+              </button> */}
             </section>
           </form>
           <ProfileInfo />
