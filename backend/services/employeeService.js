@@ -58,6 +58,11 @@ const updateEmployee = async ({ id, data }) => {
     throw new Error("Position does not exist.");
   }
 
+  if (data.password) {
+    const salt = await bcrypt.genSalt(10);
+    data.password = await bcrypt.hash(data.password, salt);
+  }
+
   const res = await Employee.updateOne({ _id: id }, data);
 
   return res;

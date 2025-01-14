@@ -7,6 +7,7 @@ const GovernmentIdSchema = require("./governmentIDsModel");
 const { birthSchema } = require("./birthModel");
 const { cityAddressSchema, homeAddressSchema } = require("./addressModel");
 const { siblingSchema } = require("./siblingModel");
+const standing = require("../constants/studentStanding");
 
 const userSchema = new mongoose.Schema(
   {
@@ -69,7 +70,8 @@ const studentSchema = new mongoose.Schema(
     program: { type: mongoose.Schema.Types.ObjectId, ref: "Program" },
     standing: {
       type: String,
-      enum: ["freshman", "sophomore", "junior", "senior", "graduate"],
+      enum: standing,
+      default: "freshman",
     },
     birth: birthSchema,
     homeAddress: homeAddressSchema,

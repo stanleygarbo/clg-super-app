@@ -12,11 +12,10 @@ const addStudentValidationRules = [
     body("firstName").notEmpty().trim(),
     body("surname").notEmpty().trim(),
     body("middleName").notEmpty().trim(),
-    body("department").notEmpty().trim().custom(ObjectId.isValid),
     body("roles")
       .isArray() // Check that roles is an array
       .withMessage("Roles must be an array")
-      .notEmpty()
+      .optional()
       .custom((items) => {
         // Check if all roles are valid
         for (const role of items) {
@@ -110,11 +109,12 @@ router.post(
   studentController.addStudent
 );
 
-const updateEmployeeValidationRules = [
+const updateStudentValidationRules = [
   [
-    body("department").trim().custom(ObjectId.isValid),
+    body("department").optional().trim().custom(ObjectId.isValid),
     body("roles")
       .isArray() // Check that roles is an array
+      .optional()
       .withMessage("Roles must be an array")
       .custom((items) => {
         // Check if all roles are valid
@@ -218,7 +218,7 @@ const updateEmployeeValidationRules = [
  */
 router.patch(
   "/:id",
-  updateEmployeeValidationRules,
+  updateStudentValidationRules,
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super", "admission", "registrar"]),
   studentController.updateStudent

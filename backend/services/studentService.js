@@ -15,18 +15,23 @@ const getStudents = async () => {
 };
 
 const addStudent = async (data) => {
+  if (!data.username) {
+    data.username = data.firstName + data.surname;
+  }
+
   const doesExist = await Student.findOne({ username: data.username });
   if (doesExist) {
     throw new Error("Username already exists.");
   }
 
-  const dept = departmentService.getDepartment(data.department);
-  if (!dept) {
-    throw new Error("Department does not exist.");
+  if (!data.password) {
+    const salt = await bcrypt.genSalt(10);
+    data.password = await bcrypt.hash(crypto.randomUUID(), salt);
   }
 
-  const salt = await bcrypt.genSalt(10);
-  data.password = await bcrypt.hash(data.password, salt);
+  if (!data.roles || data.roles?.length === 0) {
+    data.roles = ["student"];
+  }
 
   const student = new Student(data);
 
@@ -36,17 +41,24 @@ const addStudent = async (data) => {
 };
 
 const updateStudent = async ({ id, data }) => {
+  if (data.username) {
+    const doesExist = await Student.findOne({ username: data.username });
+    if (doesExist) {
+      throw new Error("Username already exists.");
+    }
+  }
+
   const dept = departmentService.getDepartment(data.department);
   if (!dept) {
     throw new Error("Department does not exist.");
   }
 
-  const position = positionService.getPosition(data.position);
-  if (!position) {
-    throw new Error("Position does not exist.");
+  if (data.password) {
+    const salt = await bcrypt.genSalt(10);
+    data.password = await bcrypt.hash(data.password, salt);
   }
 
-  const res = await Employee.updateOne({ _id: id }, data);
+  const res = await Student.updateOne({ _id: id }, data);
 
   return res;
 };
