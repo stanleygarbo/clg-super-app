@@ -1,4 +1,4 @@
-const { Program } = require("../models/programModel");
+const Program = require("../models/programModel");
 const departmentService = require("./departmentService");
 
 const getProgram = async (id) => {
