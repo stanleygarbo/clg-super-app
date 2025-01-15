@@ -45,7 +45,7 @@ const ProgramList = () => {
           key={prog._id}
           className="relative group bg-blue-600 p-2 text-white font-semibold flex justify-center items-center rounded-md shadow-sm shadow-blue-600/50 duration-200"
         >
-          <h1 className="">
+          <h1 className="flex flex-wrap w-[200px]">
             {prog.programName} ({prog.programAcronym})
           </h1>
           <button
