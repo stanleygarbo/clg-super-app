@@ -1,10 +1,10 @@
 import { useSnapshot } from "valtio";
 import { useParams } from "react-router-dom";
-import { studentData } from "../../store/StudentData";
+import { studentData } from "../../../store/StudentData";
 import { useQuery } from "@tanstack/react-query";
-import { getEmployee } from "../../api/employee";
+import { getEmployee } from "../../../api/employee";
 import { useState } from "react";
-import { Employee } from "../../interface/IEmployee";
+import { Employee } from "../../../interface/IEmployee";
 
 const ProfileInfo = () => {
   const snap = useSnapshot(studentData);

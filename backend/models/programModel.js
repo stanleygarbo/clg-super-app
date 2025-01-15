@@ -10,11 +10,15 @@ const programSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
+    department: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Department",
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
 const Program = mongoose.model("Program", programSchema);
 
-module.exports = { Program };
+module.exports = Program;

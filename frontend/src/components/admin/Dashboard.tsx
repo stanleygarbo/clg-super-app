@@ -145,7 +145,7 @@ const Dashboard = () => {
           <p
             className="bg-blue-600 text-center py-10 rounded-md hover:cursor-pointer text-white font-bold text-xl hover:scale-105 active:scale-95 duration-200 shadow-sm shadow-blue-600/50"
             onClick={() => {
-              navigate("/admission/employees");
+              navigate("/admins/employees");
             }}
           >
             Employees

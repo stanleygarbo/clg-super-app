@@ -5,12 +5,9 @@ import AdminLayout from "./layouts/admin_layout/AdminLayout";
 import Home from "./pages/Home";
 import HomeLayout from "./layouts/home_layout/HomeLayout";
 import EForm from "./components/admission/enrollment_form/EForm";
-import Profile from "./components/profile/Profile";
+import Profile from "./components/admin/profile/Profile";
 import EnrolledStudents from "./components/admission/enrolled_students/EnrolledStudents";
 import StudentsInfo from "./components/admission/enrolled_students/StudentsInfo";
-import Users from "./components/new_components/Users";
-import Employees from "./components/new_components/Employees";
-import Dashboard from "./components/new_components/Dashboard";
 import SSC from "./components/ssc/SSC";
 import Clinic from "./components/clinic/Clinic";
 import Faculty from "./components/faculty/Faculty";
@@ -20,8 +17,10 @@ import AccountingDashboard from "./components/accounting/AccountingDashboard";
 import StudentFees from "./components/accounting/StudentFees";
 import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import DepartmentList from "./components/new_components/DepartmentList";
-import PositionList from "./components/new_components/PositionList";
+import Dashboard from "./components/admin/Dashboard";
+import ListAll from "./components/admin/ListAll";
+import Users from "./components/admin/users/Users";
+import Employees from "./components/admin/employees/Employees";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +52,16 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/profile",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+    ],
+  },
+  {
     path: "/:id/profile",
     element: <AdminLayout />,
     children: [
@@ -71,20 +80,12 @@ const router = createBrowserRouter([
         element: <Users />,
       },
       {
-        path: "profile",
-        element: <Profile />,
-      },
-      {
-        path: "department",
-        element: <DepartmentList />,
+        path: "list-all",
+        element: <ListAll />,
       },
       {
         path: "employees",
         element: <Employees />,
-      },
-      {
-        path: "positions",
-        element: <PositionList />,
       },
     ],
   },

@@ -7,6 +7,8 @@ import { useSnapshot } from "valtio";
 import { studentData } from "../../../store/StudentData";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
+import { BsThreeDots } from "react-icons/bs";
+import { ThreeDot } from "react-loading-indicators";
 
 const StudentsInfo = () => {
   const { id } = useParams();
@@ -30,6 +32,7 @@ const StudentsInfo = () => {
     "button"
   );
   const [select, setSelect] = useState<"on" | "off" | undefined>("off");
+  const [loading, setLoading] = useState(true);
   const snapStudent = useSnapshot(studentData);
 
   const updateStudent = async (e: { preventDefault: () => void }) => {
@@ -57,6 +60,8 @@ const StudentsInfo = () => {
     } catch {
       toast.error("Error in updating student");
     } finally {
+      isUpdate ? setLoading(false) : setLoading(true);
+      setIsUpdate(true);
     }
   };
 
@@ -88,7 +93,6 @@ const StudentsInfo = () => {
             type="button"
             onClick={() => {
               isUpdate ? setIsUpdate(false) : setIsUpdate(true);
-              setSelect("on");
             }}
             className={`${
               isUpdate
@@ -102,8 +106,8 @@ const StudentsInfo = () => {
             type={type}
             onClick={() => {
               isUpdate ? setType("button") : setType("submit");
-              isUpdate ? setSelect("on") : setSelect("off");
-              isUpdate ? setIsUpdate(false) : setIsUpdate(true);
+              isUpdate ? setLoading(false) : setLoading(true);
+              setIsUpdate(false);
             }}
             // disabled={isUpdate}
             className={`${
@@ -112,7 +116,13 @@ const StudentsInfo = () => {
                 : "bg-green-600 shadow-green-500/50"
             } p-1 px-4 text-white font-bold text-xl rounded-md shadow-sm  hover:scale-105 active:scale-95 duration-200`}
           >
-            {isUpdate ? "Edit" : "Save"}
+            {isUpdate ? (
+              "Edit"
+            ) : loading ? (
+              <img src="/loading.svg" className="invert px-5" alt="" />
+            ) : (
+              "Update"
+            )}
           </button>
         </section>
         <section className="flex justify-between">

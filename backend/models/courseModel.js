@@ -6,11 +6,11 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    couseCode: {
+    courseCode: {
       type: String,
       required: true,
     },
-    credits: {
+    units: {
       type: Number,
       required: true,
     },
@@ -20,4 +20,4 @@ const courseSchema = mongoose.Schema(
 
 const Course = mongoose.model("Course", courseSchema);
 
-module.exports = { Course };
+module.exports = Course;

@@ -3,11 +3,11 @@ import { MdEdit } from "react-icons/md";
 import { useState } from "react";
 import { useSnapshot } from "valtio";
 import ProfileInfo from "./ProfileInfo";
-import { studentData } from "../../store/StudentData";
-import { useParams } from "react-router-dom";
-import { Employee } from "../../interface/IEmployee";
+import { studentData } from "../../../store/StudentData";
+import { useNavigate, useParams } from "react-router-dom";
+import { Employee } from "../../../interface/IEmployee";
 import { useQuery } from "@tanstack/react-query";
-import { getEmployee } from "../../api/employee";
+import { getEmployee } from "../../../api/employee";
 
 const Profile = () => {
   const [pfp, setPfp] = useState(
@@ -16,6 +16,7 @@ const Profile = () => {
   const [infoOpacity, setInfoOpacity] = useState("opacity-0 w-0");
   const [employee, setEmployee] = useState<Employee>();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -46,9 +47,9 @@ const Profile = () => {
 
   return (
     <div className="shadow-lg rounded-lg relative w-full xs:m-[] mb-10">
-      <span className="flex gap-5 items-start border-b p-10 rounded-t-lg bg-slate-100">
+      <span className="flex gap-5 items-start border-b p-10 rounded-t-lg bg-blue-600">
         <section {...getRootProps()} className="relative">
-          <div className=" flex hover:opacity-100 justify-center items-center opacity-0 w-full h-full bg-black/50 absolute top-0 left-0 rounded-full duration-200 cursor-pointer">
+          <div className=" flex hover:opacity-100 justify-center items-center opacity-0 w-full h-full bg-black/50 absolute top-0 left-0 rounded-lg duration-200 cursor-pointer">
             <p className="flex text-white text-xl">
               <MdEdit />
             </p>
@@ -57,37 +58,39 @@ const Profile = () => {
           <img
             src={pfp}
             alt=""
-            className="w-[100px] h-[100px] bg-blue-400 rounded-full shadow-md object-cover border"
+            className="w-[100px] h-[100px] bg-blue-400 rounded-lg shadow-md object-cover border"
           />
         </section>
         <section className="flex flex-col justify-center ">
-          <p className="text-lg text-start font-bold text-slate-800">
-            {employee?.firstName} {employee?.firstName} {employee?.middleName}
+          <p className="text-lg text-start font-bold text-slate-50">
+            {employee?.surname}, {employee?.firstName} {employee?.middleName[0]}
+            .
           </p>
-          <p className="flex gap-2 text-slate-500 font-semibold">
+          <p className="flex gap-2 text-slate-300 font-semibold">
             <p>{employee?.position.jobTitle}</p>
           </p>
-          <p className="text-slate-500 font-semibold">
+          <p className="text-slate-300 font-semibold">
             Office : {employee?.department.departmentName}
           </p>
         </section>
       </span>
-      <section className="flex absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-sm bg-white">
+      <section className="flex absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-md bg-slate-50 z-50">
         <h1 className="py-2 px-5 font-bold">Personal Information</h1>
       </section>
 
       <section className="flex flex-col gap-5 p-10 relative">
         <section className="flex justify-between">
-          <h1 className="font-bold text-lg">Information</h1>
-          {/* <button
+          <h1 className="font-bold text-2xl">Information</h1>
+          <button
             onClick={() => {
-              setInfoOpacity("opacity-100 left-1/2 w-[100%]");
+              // setInfoOpacity("opacity-100 left-1/2 w-[100%]");
+              navigate("/admin/employees");
             }}
             type="button"
-            className="bg-slate-50 py-2 px-4 font-bold rounded-lg shadow-sm"
+            className="bg-blue-600 py-2 px-5 font-bold rounded-lg shadow-md shadow-bluee-600/50 text-white text-lg hover:scale-105 active:scale-95 duration-200"
           >
-            Edit
-          </button> */}
+            Emlpoyees
+          </button>
         </section>
         <span className="flex flex-col gap-6 my-5">
           {/* Edit Profile */}

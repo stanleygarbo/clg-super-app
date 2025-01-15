@@ -1,19 +1,19 @@
 const express = require("express");
-const departmentController = require("../controllers/departmentController");
 const router = express.Router();
 const passport = require("passport");
 const roleMiddleware = require("../middlewares/roleMiddleware");
 const { body } = require("express-validator");
+const courseController = require("../controllers/courseController");
 
 /**
  * @swagger
- * /api/departments:
+ * /api/courses:
  *   post:
- *     summary: Add a new department
+ *     summary: Add a new course
  *     security:
  *       - BearerAuth: []
  *     tags:
- *       - Departments
+ *       - Courses
  *     requestBody:
  *       required: true
  *       content:
@@ -21,21 +21,30 @@ const { body } = require("express-validator");
  *           schema:
  *             type: object
  *             required:
- *               - jobTitle
- *               - hourlyWage
+ *               - courseName
+ *               - courseCode
+ *               - units
  *             properties:
- *               departmentName:
+ *               courseName:
  *                 type: string
- *                 description: The name of the department.
- *                 example: Computer Studies
+ *                 description: The name of the course.
+ *                 example: Software Engineering 1
+ *               courseCode:
+ *                 type: string
+ *                 description: The Course code.
+ *                 example: CS-6209
+ *               units:
+ *                 type: string
+ *                 description: The number of units for the course.
+ *                 example: 3
  *     responses:
  *       201:
- *         description: department added successfully.
+ *         description: course added successfully.
  *         content:
  *           application/json:
  *             schema:
  *               type: object
- *               $ref: '#/components/schemas/Department'
+ *               $ref: '#/components/schemas/Course'
  *       400:
  *         description: Validation error.
  *         content:
@@ -60,19 +69,23 @@ const { body } = require("express-validator");
  */
 router.post(
   "/",
-  [body("departmentName").notEmpty().trim()],
+  [
+    body("courseName").notEmpty().trim(),
+    body("courseCode").notEmpty().trim(),
+    body("units").notEmpty().trim().isNumeric(),
+  ],
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
-  departmentController.addDepartment
+  roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
+  courseController.addCourse
 );
 
 /**
  * @swagger
- * /api/departments/{id}:
+ * /api/courses/{id}:
  *   patch:
- *     summary: Update a department
+ *     summary: Update a course
  *     tags:
- *       - Departments
+ *       - Courses
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -81,7 +94,7 @@ router.post(
  *         required: true
  *         schema:
  *           type: string
- *         description: The unique ID of the department.
+ *         description: The unique ID of the course.
  *     requestBody:
  *       required: true
  *       content:
@@ -89,17 +102,25 @@ router.post(
  *           schema:
  *             type: object
  *             properties:
- *               departmentName:
+ *               courseName:
  *                 type: string
- *                 description: The name of the department.
- *                 example: Business Administration
+ *                 description: The name of the course.
+ *                 example: Software Engineering 1
+ *               courseCode:
+ *                 type: string
+ *                 description: The Course code.
+ *                 example: CS-6209
+ *               units:
+ *                 type: string
+ *                 description: The number of units for the course.
+ *                 example: 3
  *     responses:
- *       201:
- *         description: department added successfully.
+ *       200:
+ *         description: Course updated successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Department'
+ *                $ref: '#/components/schemas/Course'
  *       400:
  *         description: Validation error.
  *         content:
@@ -124,19 +145,23 @@ router.post(
  */
 router.patch(
   "/:id",
-  [body("departmentName").trim()],
+  [
+    body("courseName").optional().trim(),
+    body("courseCode").optional().trim(),
+    body("units").optional().trim().isNumeric(),
+  ],
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
-  departmentController.updateDepartment
+  roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
+  courseController.updateCourse
 );
 
 /**
  * @swagger
- * /api/departments/{id}:
+ * /api/courses/{id}:
  *   get:
- *     summary: Get a department by ID
+ *     summary: Get a course by ID
  *     tags:
- *       - Departments
+ *       - Courses
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -145,14 +170,14 @@ router.patch(
  *         required: true
  *         schema:
  *           type: string
- *         description: The unique ID of the department.
+ *         description: The unique ID of the course.
  *     responses:
- *       201:
- *         description: department added successfully.
+ *       200:
+ *         description: course retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Department'
+ *                $ref: '#/components/schemas/Course'
  *       400:
  *         description: Validation error.
  *         content:
@@ -167,28 +192,28 @@ router.patch(
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
-  departmentController.getDepartment
+  roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
+  courseController.getCourse
 );
 
 /**
  * @swagger
- * /api/departments:
+ * /api/courses:
  *   get:
- *     summary: Get a list of all departments
+ *     summary: Get a list of all courses
  *     tags:
- *       - Departments
+ *       - Courses
  *     security:
  *       - BearerAuth: []
  *     responses:
  *       200:
- *         description: List of departments retrieved successfully.
+ *         description: List of courses retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Department'
+ *                 $ref: '#/components/schemas/Course'
  *       400:
  *         description: Server error.
  *         content:
@@ -203,17 +228,17 @@ router.get(
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
-  departmentController.getDepartments
+  roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
+  courseController.getCourses
 );
 
 /**
  * @swagger
- * /api/departments/{id}:
+ * /api/courses/{id}:
  *   delete:
- *     summary: delete a department by ID
+ *     summary: Delete a course by ID
  *     tags:
- *       - Departments
+ *       - Courses
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -222,16 +247,16 @@ router.get(
  *         required: true
  *         schema:
  *           type: string
- *         description: The unique ID of the department.
+ *         description: The unique ID of the course.
  *     responses:
- *       201:
- *         description: department added successfully.
+ *       200:
+ *         description: course deleted successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Department'
- *       400:
- *         description: Validation error.
+ *                $ref: '#/components/schemas/Course'
+ *       404:
+ *         description: Not found.
  *         content:
  *           application/json:
  *             schema:
@@ -244,8 +269,8 @@ router.get(
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
-  departmentController.deleteDepartment
+  roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
+  courseController.deleteCourse
 );
 
 module.exports = router;

@@ -1,7 +1,12 @@
 import { useSnapshot } from "valtio";
 import { useEffect, useState } from "react";
-import apiClient from "../../api/apiClient";
-import { employeeData } from "../../store/EmployeeData";
+import { employeeData } from "../../../store/EmployeeData";
+import apiClient from "../../../api/apiClient";
+
+type deptData = {
+  _id: string;
+  departmentName: string;
+};
 
 type postData = {
   _id: string;
@@ -9,24 +14,16 @@ type postData = {
   hourlyWage: number;
 };
 
-type deptData = {
-  _id: string;
-  departmentName: string;
-};
-
-const UpdateEmployee = () => {
+const AddEmployee = () => {
   const snap = useSnapshot(employeeData);
   const [departments, setDepartments] = useState<deptData[]>([]);
   const [positions, setPositions] = useState<postData[]>([]);
-  // const [toUpdateEmployees, setToUpdateEmployees] = useState<typeof employeeData>();
 
   const fetchDepartments = async () => {
     try {
-      const response = await apiClient.get(
-        "/departments" + employeeData.department
-      );
+      const response = await apiClient.get("/departments");
       setDepartments(response.data.results);
-      //   console.log(departments);
+      console.log(departments);
     } catch (err) {
     } finally {
     }
@@ -36,6 +33,7 @@ const UpdateEmployee = () => {
     try {
       const response = await apiClient.get("/positions");
       setPositions(response.data.results);
+      console.log("Positions : ", positions);
     } catch (err) {
     } finally {
     }
@@ -54,12 +52,12 @@ const UpdateEmployee = () => {
             Last Name
           </p>
           <input
-            onChange={(e) => {
-              employeeData.surname = e.target.value;
-            }}
             type="text"
             required
             value={snap.surname}
+            onChange={(e) => {
+              employeeData.surname = e.target.value;
+            }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           />
         </span>
@@ -68,12 +66,12 @@ const UpdateEmployee = () => {
             First Name
           </p>
           <input
-            onChange={(e) => {
-              employeeData.firstName = e.target.value;
-            }}
             type="text"
             required
             value={snap.firstName}
+            onChange={(e) => {
+              employeeData.firstName = e.target.value;
+            }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           />
         </span>
@@ -82,12 +80,11 @@ const UpdateEmployee = () => {
             Middle Name
           </p>
           <input
+            type="text"
+            value={snap.middleName}
             onChange={(e) => {
               employeeData.middleName = e.target.value;
             }}
-            required
-            type="text"
-            value={snap.middleName}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           />
         </span>
@@ -99,15 +96,17 @@ const UpdateEmployee = () => {
           </p>
           <select
             onChange={(e) => {
-              employeeData.positionId = e.target.value;
+              employeeData.position = e.target.value;
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           >
-            <option selected value={employeeData.positionId}>
-              {employeeData.position}
-            </option>
-            {positions.map((post, index) => (
-              <option key={index} value={post._id}>
+            {positions?.map((post, index) => (
+              <option
+                selected
+                key={index}
+                defaultValue={post._id[0]}
+                value={post._id}
+              >
                 {post.jobTitle}
               </option>
             ))}
@@ -119,19 +118,24 @@ const UpdateEmployee = () => {
           </p>
           <select
             onChange={(e) => {
-              employeeData.departmentId = e.target.value;
+              employeeData.department = e.target.value;
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           >
-            <option selected value={employeeData.departmentId}>
-              {employeeData.department}
-            </option>
-            {departments?.map((dept, index) => (
-              <option key={index} value={dept._id}>
+            <option value={snap.department}> </option>
+            {departments.map((dept, index) => (
+              <option selected key={index} value={dept._id}>
                 {dept.departmentName}
               </option>
             ))}
           </select>
+          {/* <input
+            type="text"
+            required
+            value={snap.department}
+            
+            className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+          /> */}
         </span>
         <span className="relative rounded-lg">
           <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -139,19 +143,25 @@ const UpdateEmployee = () => {
           </p>
           <input
             type="text"
-            readOnly
+            required
             value={snap.username}
+            onChange={(e) => {
+              employeeData.username = e.target.value;
+            }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           />
         </span>
         <span className="relative rounded-lg">
           <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-            Date Hired
+            Password
           </p>
           <input
-            type="text"
-            readOnly
-            value={snap.hireDate}
+            type="password"
+            required
+            value={snap.password}
+            onChange={(e) => {
+              employeeData.password = e.target.value;
+            }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           />
         </span>
@@ -160,15 +170,15 @@ const UpdateEmployee = () => {
             Roles
           </p>
           <select
+            defaultValue="user"
             onChange={(e) => {
               employeeData.roles.push(e.target.value);
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           >
-            {/* <option value={snap.roles}>
-              {snap.roles}
-            </option> */}
-            <option value="user">User</option>
+            <option selected value="user">
+              User
+            </option>
             <option value="student">Student</option>
             <option value="admin">Admin</option>
             <option value="admission">Admission</option>
@@ -190,11 +200,11 @@ const UpdateEmployee = () => {
             }}
             className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
           >
-            <option value="probationary">Probationary</option>
+            <option selected value="probationary">
+              Probationary
+            </option>
             <option value="regular">Regular</option>
             <option value="contractual">Contractual</option>
-            <option value="part-time">Part-time</option>
-            <option value="OJT">OJT</option>
           </select>
         </span>
       </section>
@@ -202,4 +212,4 @@ const UpdateEmployee = () => {
   );
 };
 
-export default UpdateEmployee;
+export default AddEmployee;
