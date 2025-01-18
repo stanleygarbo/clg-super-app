@@ -9,7 +9,7 @@ const getStudent = async (id) => {
 };
 
 const getStudents = async () => {
-  const res = await Student.find();
+  const res = await Student.find().populate("program");
 
   return res;
 };
