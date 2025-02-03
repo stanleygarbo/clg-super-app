@@ -12,7 +12,7 @@ const addEmployeeValidationRules = [
   [
     body("firstName").notEmpty().trim(),
     body("surname").notEmpty().trim(),
-    body("middleName").notEmpty().trim(),
+    body("middleName").trim(),
     body("username").notEmpty().trim(),
     body("password").notEmpty().trim(),
     body("department").notEmpty().trim().custom(ObjectId.isValid),

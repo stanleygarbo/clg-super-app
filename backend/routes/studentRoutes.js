@@ -11,7 +11,7 @@ const addStudentValidationRules = [
   [
     body("firstName").notEmpty().trim(),
     body("surname").notEmpty().trim(),
-    body("middleName").notEmpty().trim(),
+    body("middleName").trim(),
     body("roles")
       .isArray() // Check that roles is an array
       .withMessage("Roles must be an array")
