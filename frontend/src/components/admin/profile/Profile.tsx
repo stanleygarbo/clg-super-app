@@ -1,20 +1,18 @@
 import { useDropzone } from "react-dropzone";
 import { MdEdit } from "react-icons/md";
 import { useState } from "react";
-import { useSnapshot } from "valtio";
 import ProfileInfo from "./ProfileInfo";
-import { studentData } from "../../../store/StudentData";
 import { useNavigate, useParams } from "react-router-dom";
-import { Employee } from "../../../interface/IEmployee";
 import { useQuery } from "@tanstack/react-query";
 import { getEmployee } from "../../../api/employee";
+import { IEmployee } from "../../../interface/IEmployee";
 
 const Profile = () => {
   const [pfp, setPfp] = useState(
     "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
   );
   const [infoOpacity, setInfoOpacity] = useState("opacity-0 w-0");
-  const [employee, setEmployee] = useState<Employee>();
+  const [employee, setEmployee] = useState<IEmployee>();
   const { id } = useParams();
   const navigate = useNavigate();
 

@@ -4,11 +4,11 @@ import { studentData } from "../../../store/StudentData";
 import { useQuery } from "@tanstack/react-query";
 import { getEmployee } from "../../../api/employee";
 import { useState } from "react";
-import { Employee } from "../../../interface/IEmployee";
+import { IEmployee } from "../../../interface/IEmployee";
 
 const ProfileInfo = () => {
   const snap = useSnapshot(studentData);
-  const [employee, setEmployee] = useState<Employee>();
+  const [employee, setEmployee] = useState<IEmployee>();
   const { id } = useParams();
 
   // const authSnap = useSnapshot(authState);

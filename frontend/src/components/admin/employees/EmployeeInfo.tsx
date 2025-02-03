@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import apiClient from "../../api/apiClient";
-import { employeeData } from "../../store/EmployeeData";
 import { useParams } from "react-router-dom";
+import apiClient from "../../../api/apiClient";
+import { employeeData } from "../../../store/EmployeeData";
 
 const EmployeeInfo = () => {
   const [employeeInfo, setEmployeeInfo] = useState(typeof employeeData);

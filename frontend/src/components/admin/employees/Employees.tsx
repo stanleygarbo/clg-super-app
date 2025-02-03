@@ -5,12 +5,12 @@ import AddEmployee from "./AddEmployee";
 import { IoMdPersonAdd } from "react-icons/io";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
-import { updateEmployeeData } from "../../../store/UpdateEmployeeData";
 import UpdateEmployee from "./UpdateEmployee";
+import { IEmployee } from "../../../interface/IEmployee";
 // import { useSnapshot } from "valtio";
 
 const Employees = () => {
-  const [employees, setEmployees] = useState<(typeof updateEmployeeData)[]>();
+  const [employees, setEmployees] = useState<IEmployee[]>();
   const [loading, setLoading] = useState<boolean>(true);
   let { id } = useParams<string>();
   const [error, setError] = useState<string | null>(null);
