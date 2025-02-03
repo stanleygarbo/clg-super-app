@@ -1,10 +1,10 @@
 import { useSnapshot } from "valtio";
 import { useParams } from "react-router-dom";
-import { studentData } from "../../store/StudentData";
+import { studentData } from "../../../store/StudentData";
 import { useQuery } from "@tanstack/react-query";
-import { getEmployee } from "../../api/employee";
+import { getEmployee } from "../../../api/employee";
 import { useState } from "react";
-import { Employee } from "../../interface/IEmployee";
+import { Employee } from "../../../interface/IEmployee";
 
 const ProfileInfo = () => {
   const snap = useSnapshot(studentData);
@@ -24,7 +24,6 @@ const ProfileInfo = () => {
     console.log("Query Data: ", query.isSuccess);
 
     if (query.isSuccess && !employee) {
-      console.log(query.data);
       setEmployee(query.data);
     }
   }
@@ -35,29 +34,85 @@ const ProfileInfo = () => {
     <div>
       <div className="flex flex-col gap-3 pt-3 px-6 w-full">
         <div className="gap-5 grid grid-cols-3">
-          <input
-            type="text"
-            className="rounded-lg py-1 text-center"
-            readOnly
-            placeholder="LASTNAME"
-            defaultValue={employee?.surname}
-          />
-          <input
-            type="text"
-            className="rounded-lg py-1 text-center"
-            readOnly
-            placeholder="FIRST NAME"
-            defaultValue={employee?.firstName}
-          />
-          <input
-            type="text"
-            className="rounded-lg py-1 text-center"
-            readOnly
-            placeholder="MIDDLE NAME"
-            defaultValue={employee?.middleName}
-          />
+          <span className="relative">
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Last Name
+            </p>
+            <input
+              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              type="text"
+              readOnly
+              value={employee?.surname}
+            />
+          </span>
+          <span className="relative">
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              First Name
+            </p>
+            <input
+              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              type="text"
+              readOnly
+              value={employee?.firstName}
+            />
+          </span>
+          <span className="relative">
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Middle Name
+            </p>
+            <input
+              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              type="text"
+              readOnly
+              value={employee?.middleName}
+            />
+          </span>
         </div>
-        <div className="grid grid-cols-3 gap-5 ">
+        <div className="grid grid-cols-4 gap-5 ">
+          <span className="relative">
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Position
+            </p>
+            <input
+              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              type="text"
+              readOnly
+              value={employee?.position.jobTitle}
+            />
+          </span>
+          <span className="relative">
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Office
+            </p>
+            <input
+              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              type="text"
+              readOnly
+              value={employee?.department.departmentName}
+            />
+          </span>
+          <span className="relative">
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Username
+            </p>
+            <input
+              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              type="text"
+              readOnly
+              value={employee?.username}
+            />
+          </span>
+          <span className="relative">
+            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              Employment
+            </p>
+            <input
+              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              type="text"
+              readOnly
+              value={employee?.employmentType}
+            />
+          </span>
           {/* <input
                         type="number"
                         className="rounded-lg py-1 text-center"

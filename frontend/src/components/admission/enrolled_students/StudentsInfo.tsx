@@ -2,11 +2,13 @@ import { useParams } from "react-router-dom";
 // import { useState } from "react";
 import { getStudentById } from "../../../api/student";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
 import { studentData } from "../../../store/StudentData";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
+import { BsThreeDots } from "react-icons/bs";
+import { ThreeDot } from "react-loading-indicators";
 
 const StudentsInfo = () => {
   const { id } = useParams();
@@ -24,16 +26,13 @@ const StudentsInfo = () => {
   });
 
   // Mao nani ang pag set sa data, pero mag conflict ang interface ug ang sa backend``
-  if (query.isSuccess) {
-    // setStudent(query.data);
-    // console.log(query.data);
-    studentData.surname = query.data.surname;
-  }
 
   const [isUpdate, setIsUpdate] = useState<boolean>(true);
   const [type, setType] = useState<"button" | "submit" | "reset" | undefined>(
     "button"
   );
+  const [select, setSelect] = useState<"on" | "off" | undefined>("off");
+  const [loading, setLoading] = useState(true);
   const snapStudent = useSnapshot(studentData);
 
   const updateStudent = async (e: { preventDefault: () => void }) => {
@@ -61,8 +60,23 @@ const StudentsInfo = () => {
     } catch {
       toast.error("Error in updating student");
     } finally {
+      isUpdate ? setLoading(false) : setLoading(true);
+      setIsUpdate(true);
     }
   };
+
+  useEffect(() => {
+    if (query.data) {
+      studentData.surname = query.data.surname;
+      studentData.firstName = query.data.firstName;
+      studentData.middleName = query.data.middleName;
+      studentData.username = query.data.username;
+      studentData.telephone = query.data.telephone;
+      studentData.phone = query.data.phone;
+      studentData.email = query.data.email;
+      studentData.birth = query.data.birth;
+    }
+  }, [query.data]);
 
   return (
     <form
@@ -92,7 +106,8 @@ const StudentsInfo = () => {
             type={type}
             onClick={() => {
               isUpdate ? setType("button") : setType("submit");
-              isUpdate ? setIsUpdate(false) : setIsUpdate(true);
+              isUpdate ? setLoading(false) : setLoading(true);
+              setIsUpdate(false);
             }}
             // disabled={isUpdate}
             className={`${
@@ -101,7 +116,13 @@ const StudentsInfo = () => {
                 : "bg-green-600 shadow-green-500/50"
             } p-1 px-4 text-white font-bold text-xl rounded-md shadow-sm  hover:scale-105 active:scale-95 duration-200`}
           >
-            {isUpdate ? "Edit" : "Save"}
+            {isUpdate ? (
+              "Edit"
+            ) : loading ? (
+              <img src="/loading.svg" className="invert px-5" alt="" />
+            ) : (
+              "Update"
+            )}
           </button>
         </section>
         <section className="flex justify-between">
@@ -130,9 +151,12 @@ const StudentsInfo = () => {
               First Name
             </p>
             <input
+              onChange={(e) => {
+                studentData.firstName = e.target.value;
+              }}
               type="text"
               readOnly={isUpdate}
-              value={query.data?.firstName}
+              value={snapStudent.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -141,9 +165,12 @@ const StudentsInfo = () => {
               Middle Name
             </p>
             <input
+              onChange={(e) => {
+                studentData.middleName = e.target.value;
+              }}
+              value={snapStudent.middleName}
               type="text"
               readOnly={isUpdate}
-              value={query.data?.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -153,7 +180,7 @@ const StudentsInfo = () => {
             </p>
             <input
               type="text"
-              readOnly={isUpdate}
+              readOnly
               value={query.data?.program}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
@@ -163,7 +190,7 @@ const StudentsInfo = () => {
               Standing
             </p>
             <input
-              readOnly={isUpdate}
+              readOnly
               type="text"
               value={query.data?.standing}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -178,7 +205,10 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.username}
+              onChange={(e) => {
+                studentData.username = e.target.value;
+              }}
+              value={snapStudent.username}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -189,7 +219,10 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.telephone}
+              onChange={(e) => {
+                studentData.telephone = e.target.value;
+              }}
+              value={snapStudent.telephone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -200,7 +233,10 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.phone}
+              onChange={(e) => {
+                studentData.phone = e.target.value;
+              }}
+              value={snapStudent.phone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -211,7 +247,10 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.email}
+              onChange={(e) => {
+                studentData.email = e.target.value;
+              }}
+              value={snapStudent.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -224,7 +263,10 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.birth?.birthDate}
+              onChange={(e) => {
+                studentData.birth.birthDate = e.target.value;
+              }}
+              value={snapStudent.birth.birthDate}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -235,7 +277,10 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.birth?.birthPlace}
+              onChange={(e) => {
+                studentData.birth.birthPlace = e.target.value;
+              }}
+              value={snapStudent.birth.birthPlace}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -246,20 +291,40 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.birth?.citizenship}
+              onChange={(e) => {
+                studentData.birth.citizenship = e.target.value;
+              }}
+              value={snapStudent.birth.citizenship}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+          <section className={`relative rounded-lg`}>
+            <p className="text-xs font-bold absolute text-slate-600 z-50 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               Sex
             </p>
-            <input
+            <select
+              disabled={isUpdate}
+              onChange={(e) => {
+                studentData.birth.sex = e.target.value;
+              }}
+              value={snapStudent.birth.sex}
+              className={`border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1`}
+            >
+              <option value={snapStudent.birth.sex}>
+                {snapStudent.birth.sex}
+              </option>
+              <option value="male">male</option>
+              <option value="female">female</option>
+            </select>
+            {/* <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.birth?.sex}
+              onChange={(e) => {
+                studentData.birth.sex = e.target.value;
+              }}
+              value={snapStudent.birth.sex}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
+            /> */}
           </section>
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -268,7 +333,10 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.birth?.religion}
+              onChange={(e) => {
+                studentData.birth.religion = e.target.value;
+              }}
+              value={snapStudent.birth.religion}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>

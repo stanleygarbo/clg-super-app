@@ -1,4 +1,4 @@
-import PrevHome from "../components/home/prevHome";
+import PrevHome from "../components/home/PrevHome";
 
 const Home = () => {
     return (

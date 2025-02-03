@@ -1,5 +1,5 @@
 import { useSnapshot } from "valtio";
-import { userData } from "../../store/UserData";
+import { userData } from "../../../store/UserData";
 
 const AddUser = () => {
   const snap = useSnapshot(userData);

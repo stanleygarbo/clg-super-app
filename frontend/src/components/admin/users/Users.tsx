@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { userData } from "../../store/UserData";
+import { userData } from "../../../store/UserData";
 import AddUser from "./AddUser";
 import { useParams } from "react-router-dom";
 import { FaBoxArchive } from "react-icons/fa6";
-import { IoIosAdd, IoMdPersonAdd } from "react-icons/io";
+import { IoMdPersonAdd } from "react-icons/io";
 
 const Users = () => {
   const [users, setUsers] = useState<(typeof usersData)[]>();

@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { employeeData } from "../../store/EmployeeData";
+import { employeeData } from "../../../store/EmployeeData";
 import AddEmployee from "./AddEmployee";
 import { IoMdPersonAdd } from "react-icons/io";
-import apiClient from "../../api/apiClient";
+import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
+import { updateEmployeeData } from "../../../store/UpdateEmployeeData";
 import UpdateEmployee from "./UpdateEmployee";
-import { updateEmployeeData } from "../../store/UpdateEmployeeData";
 // import { useSnapshot } from "valtio";
 
-const Users = () => {
+const Employees = () => {
   const [employees, setEmployees] = useState<(typeof updateEmployeeData)[]>();
   const [loading, setLoading] = useState<boolean>(true);
   let { id } = useParams<string>();
@@ -93,8 +93,8 @@ const Users = () => {
       setError("Error adding employee");
       toast.error(error);
     } finally {
-      setAddEmployeeForm(true);
       setLoading(false);
+      setAddEmployeeForm(true);
     }
   };
 
@@ -113,6 +113,7 @@ const Users = () => {
   const hanldeUpdateEmployee = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const updatedEmployee = {
         firstName: employeeData.firstName,
         middleName: employeeData.middleName,
@@ -137,6 +138,7 @@ const Users = () => {
       toast.error(error);
     } finally {
       setLoading(false);
+      setUpdateEmployeeForm(true);
     }
   };
 
@@ -147,7 +149,7 @@ const Users = () => {
   return (
     <div className="">
       <div className=" flex flex-col justify-center relative">
-        {/* ADD USER FORM */}
+        {/* ADD EMPLOYEE FORM */}
         <form
           onSubmit={addEmployee}
           className={`${
@@ -176,7 +178,7 @@ const Users = () => {
               type="submit"
               className="w-[50%] bg-blue-600 shadow-blue-600/50 py-[5px] rounded-md font-bold shadow-sm hover:scale-105 text-white active:scale-95 duration-200"
             >
-              Add
+              {loading ? "Adding..." : "Add"}
             </button>
           </h1>
         </form>
@@ -230,13 +232,10 @@ const Users = () => {
           <UpdateEmployee />
           <h1 className="flex justify-center">
             <button
-              onClick={() => {
-                setUpdateEmployeeForm(true);
-              }}
               type="submit"
               className="w-[50%] bg-blue-600 shadow-blue-600/50 py-[5px] rounded-md font-bold shadow-sm hover:scale-105 text-white active:scale-95 duration-200"
             >
-              Update
+              {loading ? "Updating..." : "Update"}
             </button>
           </h1>
         </form>
@@ -348,4 +347,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Employees;

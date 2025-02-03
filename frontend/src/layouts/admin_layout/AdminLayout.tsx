@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaUser } from "react-icons/fa";
 import { LuClipboard, LuDoorOpen, LuSchool } from "react-icons/lu";
 import { ISidebarItem } from "../../components/sidebar/SidebarItems";
 import { MdOutlineDashboard } from "react-icons/md";
 import { BiClinic } from "react-icons/bi";
+import { FaPersonDotsFromLine } from "react-icons/fa6";
+import { RiAdminFill } from "react-icons/ri";
 
 const sidebarItems: ISidebarItem[] = [
   {
@@ -13,30 +15,27 @@ const sidebarItems: ISidebarItem[] = [
     path: "/dashboard",
   },
   {
+    name: "Profile",
+    icon: FaUser,
+    path: "/profile",
+  },
+  {
     name: "Admin",
-    icon: FaRegUser,
+    icon: RiAdminFill,
     type: "drawer",
     path: "admin",
     subItems: [
-      {
-        name: "Profile",
-        path: "/admin/profile",
-      },
       {
         name: "Users",
         path: "/admin/users",
       },
       {
-        name: "Department",
-        path: "/admin/department",
+        name: "Positions & Departments",
+        path: "/admin/list-all",
       },
       {
         name: "Employees",
         path: "/admin/employees",
-      },
-      {
-        name: "Positions",
-        path: "/admin/positions",
       },
     ],
   },
