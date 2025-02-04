@@ -30,8 +30,20 @@ const sidebarItems: ISidebarItem[] = [
         path: "/admin/users",
       },
       {
-        name: "Positions & Departments",
-        path: "/admin/list-all",
+        name: "Departments",
+        path: "/admin/departmentdashboard",
+      },
+      {
+        name: "Positions",
+        path: "/admin/positiondashboard",
+      },
+      {
+        name: "Programs",
+        path: "/admin/programdashboard",
+      },
+      {
+        name: "Courses",
+        path: "/admin/coursedashboard",
       },
       {
         name: "Employees",
