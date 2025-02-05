@@ -18,9 +18,12 @@ import StudentFees from "./components/accounting/StudentFees";
 import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Dashboard from "./components/admin/Dashboard";
-import ListAll from "./components/admin/ListAll";
 import Users from "./components/admin/users/Users";
 import Employees from "./components/admin/employees/Employees";
+import DepartmentDashboard from "./components/admin/departments/DepartmentDashboard";
+import PositionDashboard from "./components/admin/positions/PositionDashboard";
+import ProgramDashboard from "./components/admin/programs/ProgramDashboard";
+import CourseDashboard from "./components/admin/courses/CourseDashboard";
 
 const router = createBrowserRouter([
   {
@@ -80,8 +83,20 @@ const router = createBrowserRouter([
         element: <Users />,
       },
       {
-        path: "list-all",
-        element: <ListAll />,
+        path: "departmentdashboard",
+        element: <DepartmentDashboard />,
+      },
+      {
+        path: "positiondashboard",
+        element: <PositionDashboard />,
+      },
+      {
+        path: "programdashboard",
+        element: <ProgramDashboard />,
+      },
+      {
+        path: "coursedashboard",
+        element: <CourseDashboard />,
       },
       {
         path: "employees",

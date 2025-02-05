@@ -41,7 +41,38 @@ const sidebarItemsConditional = [
     icon: FaUser,
     path: "/profile",
   },
-  authState.user.role.includes("super") ? adminItems : null,
+  {
+    name: "Admin",
+    icon: RiAdminFill,
+    type: "drawer",
+    path: "admin",
+    subItems: [
+      {
+        name: "Users",
+        path: "/admin/users",
+      },
+      {
+        name: "Departments",
+        path: "/admin/departmentdashboard",
+      },
+      {
+        name: "Positions",
+        path: "/admin/positiondashboard",
+      },
+      {
+        name: "Programs",
+        path: "/admin/programdashboard",
+      },
+      {
+        name: "Courses",
+        path: "/admin/coursedashboard",
+      },
+      {
+        name: "Employees",
+        path: "/admin/employees",
+      },
+    ],
+  },
   {
     name: "Addmission",
     icon: LuSchool,
