@@ -67,10 +67,10 @@ const Profile = () => {
             .
           </p>
           <p className="flex gap-2 text-slate-300 font-semibold">
-            <p>{employee?.position.jobTitle}</p>
+            <p>{employee?.position?.jobTitle}</p>
           </p>
           <p className="text-slate-300 font-semibold">
-            Office : {employee?.department.departmentName}
+            Office : {employee?.department?.departmentName}
           </p>
         </section>
       </span>

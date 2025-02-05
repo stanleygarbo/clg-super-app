@@ -17,14 +17,16 @@ type deptData = {
 
 function EForm() {
   const snapStudent = useSnapshot(studentData);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-  const [departments, setDepartments] = useState<deptData[]>();
+  // const [departments, setDepartments] = useState<deptData[]>();
 
-  const getDepartment = async () => {
-    const response = await apiClient.get("/departments");
-    setDepartments(response.data.results);
-    // console.log("data :: ", departments);
-  };
+  // const getDepartment = async () => {
+  //   const response = await apiClient.get("/departments");
+  //   setDepartments(response.data.results);
+  //   // console.log("data :: ", departments);
+  // };
+
   // let id: string;
   // const handleSubmit = async (e: { preventDefault: () => void }) => {
   //   e.preventDefault();
@@ -48,14 +50,15 @@ function EForm() {
 
   const addStudent = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    isLoading;
     try {
-      // if (snapStudent.program == "BSCS" || "BSIT" || "ACT" || "WAD") {
-      //   studentData.department = "677fb8cf94a19054d2207415";
-      // } else if (snapStudent.program == "BSHM" || "HRT") {
-      //   studentData.department = "677fbe1894a19054d2207b73";
-      // } else {
-      //   studentData.department = "677fc5e749af6b48f0ff2c0f";
-      // }
+      if (snapStudent.program == "BSCS" || "BSIT" || "ACT" || "WAD") {
+        studentData.department = "677fb8cf94a19054d2207415";
+      } else if (snapStudent.program == "BSHM" || "HRT") {
+        studentData.department = "677fbe1894a19054d2207b73";
+      } else {
+        studentData.department = "677fc5e749af6b48f0ff2c0f";
+      }
       const studentDatas = {
         username: snapStudent?.username,
         firstName: snapStudent?.firstName,
@@ -64,9 +67,10 @@ function EForm() {
         email: snapStudent?.email,
         telephone: snapStudent?.telephone,
         phone: snapStudent?.phone,
+        semester: snapStudent?.semester,
         // program: snapStudent.program,
         // year: snapStudent?.year,
-        // schoolYear: snapStudent?.schoolYear,
+        schoolYear: snapStudent?.schoolYear,
         // standing: snapStudent?.standing,
         birth: {
           birthDate: snapStudent?.birth?.birthDate,
@@ -75,13 +79,13 @@ function EForm() {
           sex: snapStudent?.birth?.sex,
           religion: snapStudent?.birth?.religion,
         },
-        // homeAddress: {
-        //   houseNum: snapStudent?.homeAddress.houseNum,
-        //   streetBrgy: snapStudent?.homeAddress.streetBrgy,
-        //   city: snapStudent?.homeAddress.city,
-        //   district: snapStudent?.homeAddress.district,
-        //   province: snapStudent?.homeAddress.province,
-        // },
+        homeAddress: {
+          houseNum: snapStudent?.homeAddress.houseNum,
+          streetBrgy: snapStudent?.homeAddress.streetBrgy,
+          city: snapStudent?.homeAddress.city,
+          district: snapStudent?.homeAddress.district,
+          province: snapStudent?.homeAddress.province,
+        },
         // cityAddress: {
         //   houseNum: snapStudent?.cityAddress?.houseNum,
         //   streetBrgy: snapStudent?.cityAddress?.streetBrgy,
@@ -129,7 +133,7 @@ function EForm() {
         //   firstName: snapStudent?.guardianSpouse.firstName,
         //   children: snapStudent?.guardianSpouse.children,
         // },
-        // siblings: snapStudent?.siblings,
+        siblings: snapStudent?.siblings,
       };
       const response = await apiClient.post("/students", studentDatas);
       console.log("Data to be added :: ", studentDatas);
@@ -140,11 +144,12 @@ function EForm() {
       toast.error("Error in adding the student :: " + err);
       console.log(err);
     } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    getDepartment();
+    // getDepartment();
   }, []);
 
   // const methods = useForm();
@@ -173,7 +178,11 @@ function EForm() {
             className="text-center bg-blue-600 shadow-sm shadow-blue-500/50 hover:scale-105 active:scale-95 font-bold text-white rounded-lg
             w-[40%] py-2 duration-200"
           >
-            Enroll Student
+            {isLoading ? (
+              "Enroll Student"
+            ) : (
+              <img src="/loading.svg" className="invert px-5" alt="" />
+            )}
           </button>
         </section>
       </div>

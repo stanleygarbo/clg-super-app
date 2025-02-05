@@ -5,7 +5,7 @@ const AMAHymn = () => {
         <h1 className="font-bold text-center pl-10 pb-5 xs:pl-0 sm:pl-0">
           AMA Hymn
         </h1>
-        <article className="w-[1000px] flex xs:flex-col sm:flex-col justify-between md:justify-around">
+        <article className="">
           <p>
             <em className="font-semibold">1st stanza:</em>
             <br />

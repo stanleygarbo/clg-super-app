@@ -1,4 +1,4 @@
-export interface Sibling {
+export interface ISibling {
     fullName: string;
     age: number;
     occupationSchool: string;

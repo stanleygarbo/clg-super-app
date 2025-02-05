@@ -77,7 +77,7 @@ const ProfileInfo = () => {
               className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
               readOnly
-              value={employee?.position.jobTitle}
+              value={employee?.position?.jobTitle}
             />
           </span>
           <span className="relative">
@@ -88,7 +88,7 @@ const ProfileInfo = () => {
               className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
               readOnly
-              value={employee?.department.departmentName}
+              value={employee?.department?.departmentName}
             />
           </span>
           <span className="relative">

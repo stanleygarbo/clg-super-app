@@ -42,20 +42,17 @@ const EformSiblings = () => {
         <p className="font-bold pb-2 xs:text-center xs:pb-5 sm:text-center sm:pb-5 md:pb-5 md:text-center">
           SIBLING'S INFORMATION
         </p>
-        <button
-          type="button"
-          onClick={addSibling}
-          className="py-2 bg-blue-500 w-52 text-white font-bold rounded-md shadow-sm hover:shadow-blue-600/50 hover:shadow-md hover:bg-blue-600 duration-200"
-        >
-          Add Another Sibling
-        </button>
       </section>
 
       <div className="flex flex-col gap-3 px-6">
         <section className="">
           {siblings?.map((sibling, index) => (
             <div key={index} className="flex flex-col relative">
-              <div className="grid grid-cols-3 gap-3 py-5">
+              <div
+                className={`${
+                  siblings.length > 1 ? "pr-10" : ""
+                } grid grid-cols-3 gap-3 py-5`}
+              >
                 <span
                   className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}
                 >
@@ -105,7 +102,7 @@ const EformSiblings = () => {
                   <button
                     type="button"
                     onClick={() => removeSibling(index)}
-                    className="text-white text-xl shadow-sm shadow-red-600/50 mt-2 rounded-md bg-red-600 p-1 absolute transform -translate-x-1 -translate-y-5 top-0 right-0 hover:scale-105 active:scale-95 duration-200"
+                    className="text-white text-xl shadow-sm shadow-red-600/50 my-1 rounded-md bg-red-600 p-1 absolute transform -translate-x-1 -translate-y-5 top-1/2 right-0 hover:scale-105 active:scale-95 duration-200"
                   >
                     <MdDeleteForever />
                   </button>
@@ -113,6 +110,13 @@ const EformSiblings = () => {
               </div>
             </div>
           ))}
+          <button
+            type="button"
+            onClick={addSibling}
+            className="py-2 bg-slate-200 w-52 text-black font-bold rounded-md shadow-sm hover:shadow-slate-200/50 hover:shadow-md hover:scale-105 active:scale-95 duration-200"
+          >
+            Add Another Sibling
+          </button>
 
           {/* <button
             type="submit"

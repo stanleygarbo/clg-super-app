@@ -43,10 +43,10 @@ const Login = () => {
   };
 
   return (
-    <div id="loginPopUp" className=" h-screen py-20">
+    <div id="loginPopUp" className="h-screen py-20">
       <form
         onSubmit={proceedLogin}
-        className="flex flex-col m-auto shadow-md gap-2 py-12 px-12 w-[500px] xs:w-[400px] sm:w-[450px] rounded-xl bg-white border mt-[100px]"
+        className="flex flex-col m-auto shadow-md gap-2 mt-28 p-10 mx-5 md:mx-36 lg:mx-60 xl:mx-[440px] rounded-lg border "
       >
         <h1 className="text-2xl text-black font-bold mb-6 flex items-center justify-center">
           <img

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 const EmployeeInfo = () => {
   const [employeeInfo, setEmployeeInfo] = useState(typeof employeeData);
   const { id } = useParams();
+    
   const fetchEmployee = async () => {
     try {
       const response = await apiClient.get("/employees/" + id);

@@ -12,7 +12,7 @@ type progData = {
 
 const ProgramList = () => {
   const [programs, setPrograms] = useState<progData[]>([]);
-  let id: any;
+  let id: string;
 
   const fetchPrograms = async () => {
     try {
@@ -26,7 +26,8 @@ const ProgramList = () => {
 
   const deleteProgram = async () => {
     try {
-      await apiClient.delete("/positions/" + id);
+      console.log(id);
+      await apiClient.delete("/programs/" + id);
       toast.success("Successly deleted");
     } catch (err) {
     } finally {
@@ -43,7 +44,7 @@ const ProgramList = () => {
       {programs.map((prog) => (
         <section
           key={prog._id}
-          className="relative group bg-blue-600 p-2 text-white font-semibold flex justify-center items-center rounded-md shadow-sm shadow-blue-600/50 duration-200"
+          className="relative group bg-slate-400 p-2 text-white font-semibold flex justify-center items-center rounded-md shadow-sm shadow-slate-300/50 duration-200"
         >
           <h1 className="flex flex-wrap w-[200px]">
             {prog.programName} ({prog.programAcronym})

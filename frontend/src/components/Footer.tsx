@@ -3,37 +3,74 @@ import { TfiEmail } from "react-icons/tfi";
 
 const Footer = () => {
   return (
-    <footer className="bg-white text-black flex text-lg xs:text-base xs:flex-col sm:flex-col xs:gap-7 sm:gap-10 xs:items-center sm:items-center justify-evenly xs:p-3 sm:p-4 p-5 border-t w-screen">
-      <section>
-        <address className="font-bold xs:text-md">
-          Lilia Avenue Cogon Ormoc City
-        </address>
-      </section>
-      <section>
-        <h1 className="font-bold text-center">Contact US</h1>
-        <p></p>
-        <a href="https://www.facebook.com/aclccollegeoformoc" target="_blank">
-          <h1 className="flex items-center gap-1">
-            <p className="">
-              <FaSquareFacebook />
-            </p>{" "}
-            Facebook
-          </h1>
-        </a>
-        <a
-          href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJNqtLCBWQZsQZdFTXVVsPTSzvLfbtsRrFpdsQSkcSfPbQwgGNPGFnbPjRxFgwFBWVDMgdq"
-          target="_blank"
-        >
-          <h1 className="flex items-center gap-1">
-            <p className="">
-              <TfiEmail />
+    <footer className="bg-white text-black text-lg flex flex-col sm:justify-center p-5 gap-5 border-t w-[100%]">
+      <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-5 w-[100%]">
+        <span className="flex flex-col lg:justify-center lg:items-center xl:w-[100%] gap-5">
+          <section className="px-5">
+            <h1 className="font-bold font-serif text-lg md:text-xl">
+              ACLC College
+            </h1>
+            <p className="text-xs md:text-base">
+              ACLC College is a member of the AMA Education System and is one of
+              the leading computer schools in the country.
             </p>
-            ACLCOrmoc@gmail.com
-          </h1>
-        </a>
-      </section>
-      <section className="">
-        <h1 className="font-bold">@Copy Right</h1>
+          </section>
+        </span>
+
+        <span className="flex gap-5 justify-evenly xs:grid-cols-2 xs:grid lg:w-[100%]">
+          <section className="text-sm">
+            <h1 className="font-semibold font-serif text-slate-600">
+              Bachelor's
+            </h1>
+            <div className="font-mono md:text-base">
+              <p>BSCS</p>
+              <p>BSIT</p>
+              <p>BSHM</p>
+              <p>BSBA</p>
+            </div>
+          </section>
+          <section className="text-sm">
+            <h1 className="font-semibold font-serif text-slate-600">TESDA</h1>
+            <div className="font-mono md:text-base">
+              <p>WAD</p>
+              <p>HRT</p>
+              <p>OMT</p>
+            </div>
+          </section>
+          <section className="text-sm">
+            <h1 className="font-semibold font-serif text-slate-600">Help</h1>
+            <div className="font-mono md:text-base">
+              <p>Get Started</p>
+              <p>Support Center</p>
+              <section className="flex gap-5 py-2">
+                <a
+                  href="https://www.facebook.com/aclccollegeoformoc"
+                  target="_blank"
+                >
+                  <h1 className="text-xl">
+                    <FaSquareFacebook />
+                  </h1>
+                </a>
+                <a
+                  href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJNqtLCBWQZsQZdFTXVVsPTSzvLfbtsRrFpdsQSkcSfPbQwgGNPGFnbPjRxFgwFBWVDMgdq"
+                  target="_blank"
+                >
+                  <h1 className="text-xl">
+                    <TfiEmail />
+                  </h1>
+                </a>
+              </section>
+            </div>
+          </section>
+        </span>
+      </div>
+
+      <section className="flex flex-row-reverse justify-between lg:px-5 md:justify-between text-sm pt-5 border-t font-semibold">
+        <h1 className="flex gap-5">
+          <p>Privacy Policy</p>
+          <p>Terms of Use</p>
+        </h1>
+        <h1 className="text-xs text-slate-600 flex items-center">© 2024 AMA</h1>
       </section>
     </footer>
   );

@@ -7,31 +7,19 @@ import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
 import { updateEmployeeData } from "../../../store/UpdateEmployeeData";
 import UpdateEmployee from "./UpdateEmployee";
+import { useQuery } from "@tanstack/react-query";
+import { getEmployees } from "../../../api/employee";
 // import { useSnapshot } from "valtio";
 
 const Employees = () => {
   const [employees, setEmployees] = useState<(typeof updateEmployeeData)[]>();
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   let { id } = useParams<string>();
   const [error, setError] = useState<string | null>(null);
   // const [viewEmployeeForm, setViewEmployeeForm] = useState<boolean>(true);
   const [addEmployeeForm, setAddEmployeeForm] = useState<boolean>(true);
   const [updateEmployeeForm, setUpdateEmployeeForm] = useState<boolean>(true);
   const navigate = useNavigate();
-  // const snap = useSnapshot(employeeData);
-
-  // FETCH EMPLOYEE
-  const fetchEmployee = async () => {
-    try {
-      const response = await apiClient.get("/employees");
-      setEmployees(response.data.results);
-      // console.log("Data :: ", response.data.results);
-    } catch (err) {
-      setError("Error Occured");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // FETCH TO BE UPDATED EMPLOYEE
   const fetchUpdateEmployee = async () => {
@@ -54,12 +42,12 @@ const Employees = () => {
       employeeData.surname = res.surname;
       employeeData.username = res.username;
 
-      console.log(
-        "Data to be updated :: ",
-        employeeData.departmentId,
-        " ",
-        employeeData.positionId
-      );
+      // console.log(
+      //   "Data to be updated :: ",
+      //   employeeData.departmentId,
+      //   " ",
+      //   employeeData.positionId
+      // );
     } catch (err) {
       setError("Error Occured");
     } finally {
@@ -142,9 +130,7 @@ const Employees = () => {
     }
   };
 
-  useEffect(() => {
-    fetchEmployee();
-  }, [employees?.length]);
+  const query = useQuery({ queryKey: ["employees"], queryFn: getEmployees });
 
   return (
     <div className="">
@@ -284,14 +270,14 @@ const Employees = () => {
               Failed to fetch data
             </div>
           )} */}
-          {loading && (
+          {query.isPending && (
             <div className="flex justify-center items-center">Loading...</div>
           )}
           <section className="overflow-hidden overflow-y-auto no-scrollbar flex flex-col">
             {employees?.length === 0 && (
               <div className="text-center">No Employees Added</div>
             )}
-            {employees?.map((employee, index) => (
+            {query.data?.results?.map((employee, index) => (
               <tr
                 key={index}
                 className="duration-200 hover:cursor-pointer font-semibold gap-3 items-center text-base grid grid-cols-4 px-2 rounded-sm  bg-slate-50 group shadow-sm border hover:bg-slate-300 hover:border-slate-300"
@@ -299,9 +285,9 @@ const Employees = () => {
                 <td className="w-[300px] text-start">
                   {employee.surname} {employee.firstName} {employee.middleName}
                 </td>
-                <td className="text-center">{employee.position.jobTitle}</td>
+                <td className="text-center">{employee.position?.jobTitle}</td>
                 <td className="text-center">
-                  {employee.department.departmentName}
+                  {employee.department?.departmentName}
                 </td>
 
                 <td className=" text-center flex gap-3 justify-center">

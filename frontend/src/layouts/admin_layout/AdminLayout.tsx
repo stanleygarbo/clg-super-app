@@ -7,8 +7,30 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { BiClinic } from "react-icons/bi";
 import { FaPersonDotsFromLine } from "react-icons/fa6";
 import { RiAdminFill } from "react-icons/ri";
+import { authState } from "../../store/auth";
 
-const sidebarItems: ISidebarItem[] = [
+const adminItems: ISidebarItem = {
+  name: "Admin",
+  icon: RiAdminFill,
+  type: "drawer",
+  path: "admin",
+  subItems: [
+    {
+      name: "Users",
+      path: "/admin/users",
+    },
+    {
+      name: "Positions & Departments",
+      path: "/admin/list-all",
+    },
+    {
+      name: "Employees",
+      path: "/admin/employees",
+    },
+  ],
+};
+
+const sidebarItemsConditional = [
   {
     name: "Dashboard",
     icon: MdOutlineDashboard,
@@ -19,26 +41,7 @@ const sidebarItems: ISidebarItem[] = [
     icon: FaUser,
     path: "/profile",
   },
-  {
-    name: "Admin",
-    icon: RiAdminFill,
-    type: "drawer",
-    path: "admin",
-    subItems: [
-      {
-        name: "Users",
-        path: "/admin/users",
-      },
-      {
-        name: "Positions & Departments",
-        path: "/admin/list-all",
-      },
-      {
-        name: "Employees",
-        path: "/admin/employees",
-      },
-    ],
-  },
+  authState.user.role.includes("super") ? adminItems : null,
   {
     name: "Addmission",
     icon: LuSchool,
@@ -120,6 +123,10 @@ const sidebarItems: ISidebarItem[] = [
     ],
   },
 ];
+
+const sidebarItems = sidebarItemsConditional.filter((i) => {
+  return i != null;
+}) as ISidebarItem[];
 
 const AdminLayout = () => {
   return (

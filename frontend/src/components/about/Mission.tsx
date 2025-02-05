@@ -1,12 +1,9 @@
 const Mission = () => {
   return (
-    <div className="flex w-[50%] xs:w-[100%] xs:px-2 sm:w-[100%] sm:px-2 px-10">
+    <div className="flex">
       <div className="flex items-center">
         <article>
-          <h1 className="text-center font-bold text-3xl xs:text-xl pb-2 sm:text-2xl">
-            {" "}
-            MISSION{" "}
-          </h1>
+          <h1 className="text-center font-bold text-3xl"> MISSION </h1>
           <p className="text-base font-semibold">
             To provide a holistic, relevant, quality and globally recognized
             IT-based education in all levels and disciplines with the objective

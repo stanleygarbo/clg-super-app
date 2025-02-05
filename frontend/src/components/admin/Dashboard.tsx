@@ -77,7 +77,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   return (
     <div className="">
-      <h1 className="text-center bg-blue-600 text-white text-2xl font-bold py-5 rounded-t-md">
+      <h1 className="text-center bg-blue-600 text-white text-2xl font-bold p-5 rounded-t-md">
         Dashboard
       </h1>
       <div className="flex flex-col gap-5 w-[1100px] border shadow-md rounded-b-md">
