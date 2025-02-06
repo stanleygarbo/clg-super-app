@@ -5,8 +5,8 @@ const AddDepartment = () => {
   const snap = useSnapshot(departmentData);
 
   return (
-    <div className="p-4">
-      <div className="mb-4">
+    <div className="">
+      <div className="">
         <span className="relative">
           <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
             Department Name

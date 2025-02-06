@@ -1,9 +1,6 @@
 import { proxy } from "valtio";
+import { IDepartment } from "../interface/IDepartment";
 
-interface AppState {
-  departmentName: string;
-}
-
-export const departmentData = proxy<AppState>({
+export const departmentData = proxy<IDepartment>({
   departmentName: "",
 });

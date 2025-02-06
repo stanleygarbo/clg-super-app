@@ -26,11 +26,11 @@ const EFormSchoolYear = () => {
   }, []);
 
   return (
-    <div className="p-10 xs:p-0 sm:p-1 md:p-2 flex xs:flex-col sm:flex-col md:flex-col xs:gap-3 sm:gap-5 md:gap-5 sm:items-center xs:items-center md:items-center justify-between">
+    <div className="p-10 flex justify-between">
       <div className="flex justify-center items-center w-[200px]">
         <img src="/aclc-logo-text.png" alt="" className="" />
       </div>
-      <div className="border py-10 px-5 flex flex-col border-slate-500 rounded-md w-[400px] xs:w-[100%] sm:w-[100%] md:[100%] gap-3">
+      <div className="border py-10 px-5 flex flex-col border-slate-500 rounded-md w-[400px] gap-3">
         <section className="grid grid-cols-2 gap-3">
           <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative `}>
             <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">

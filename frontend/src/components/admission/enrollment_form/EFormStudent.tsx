@@ -7,16 +7,10 @@ const EFormStudent = () => {
   const isOpen = useSnapshot(Data);
   return (
     <div className="p-3">
-      <div className="flex flex-col gap-3 pt-3 px-6 xs:px-0 sm:px-2 md:px-6 lg:px-0 w-full">
-        <section className="flex xs:flex-col xs:gap-5 sm:flex-col sm:gap-5 md:flex-col md:gap-5 lg:mb-5 xl:mb-5 justify-between">
-          <p className="font-bold xs:text-center sm:text-center md:text-center lg:text-start">
-            STUDENT'S INFORMATION
-          </p>
-          <span
-            className={`${
-              isOpen ? "xs:-z-50 sm:-z-50" : ""
-            } relative xs:mr-0 sm:mr-0 md:mr-0 lg:mr-6`}
-          >
+      <div className="flex flex-col gap-3 pt-3 px-6 w-full">
+        <section className="flex justify-between">
+          <p className="font-bold">STUDENT'S INFORMATION</p>
+          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               USN/LRN
             </p>
@@ -30,7 +24,7 @@ const EFormStudent = () => {
             />
           </span>
         </section>
-        <div className="gap-5 grid grid-cols-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:px-6">
+        <div className="gap-3 grid grid-cols-3">
           <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Last Name
@@ -71,7 +65,7 @@ const EFormStudent = () => {
             />
           </span>
         </div>
-        <div className="grid grid-cols-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-5 lg:px-6">
+        <div className="grid grid-cols-3 gap-3">
           <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Telephone No.
@@ -112,10 +106,8 @@ const EFormStudent = () => {
             />
           </span>
         </div>
-        <h1 className="text-start font-semibold xs:text-center xs:py-5 sm:text-center md:text-center sm:py-5 md:py-5 lg:px-6">
-          BIRTH'S INFORMATION
-        </h1>
-        <div className="grid grid-cols-5 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-5 lg:px-6">
+        <h1 className="text-start font-semibold">BIRTH'S INFORMATION</h1>
+        <div className="grid grid-cols-5 gap-3">
           <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Birthdate
@@ -187,12 +179,12 @@ const EFormStudent = () => {
         </div>
       </div>
 
-      <div className="px-6 flex flex-col gap-3 pt-3 xs:px-0 sm:px-2">
-        <h1 className="text-start xs:text-center sm:text-center xs:py-5 sm:py-5 md:text-center md:py-5 font-semibold">
+      <div className="px-6 flex flex-col gap-3 pt-3">
+        <h1 className="text-start font-semibold">
           SPOUSE'S INFORMATION ( IF MARRIED )
         </h1>
 
-        <div className="grid grid-cols-4 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-5">
+        <div className="grid grid-cols-4 gap-3">
           <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Last Name

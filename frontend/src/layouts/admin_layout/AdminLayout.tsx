@@ -74,7 +74,7 @@ const sidebarItemsConditional = [
     ],
   },
   {
-    name: "Addmission",
+    name: "Admission",
     icon: LuSchool,
     type: "drawer",
     path: "admission",
