@@ -62,6 +62,7 @@ const Employees = () => {
         try {
             const response = await apiClient.get("/employees");
             setEmployees(response.data.results);
+            console.log(response.data.results);
         } catch {
             toast.error("Error while getting data");
         } finally {
