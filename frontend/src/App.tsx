@@ -140,7 +140,7 @@ const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
             {
-                path: "schdule",
+                path: "schedule",
                 element: <Schedule />,
             },
         ],

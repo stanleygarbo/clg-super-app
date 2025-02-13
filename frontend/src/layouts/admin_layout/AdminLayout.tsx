@@ -111,8 +111,8 @@ const sidebarItemsConditional = [
         path: "registrar",
         subItems: [
             {
-                name: "Grades",
-                path: "/registrar/grades",
+                name: "Schedule",
+                path: "/registrar/schedule",
             },
         ],
     },

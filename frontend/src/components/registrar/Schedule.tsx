@@ -7,7 +7,6 @@ function Schedule() {
     const fetchCourses = async () => {
         try {
             const res = await getCourses();
-            console.log(res.results);
             setCourses(res.results);
         } catch (error) {
             console.log("Error:", error);
@@ -19,9 +18,14 @@ function Schedule() {
     }, []);
 
     return (
-        <div className="w-full h-min border rounded-md">
-            <h1>Schedule</h1>
-        </div>
+        <main className="w-full border rounded-md overflow-hidden">
+            <header className="flex justify-center items-center h-12 bg-blue-600">
+                <p className="text-lg font-bold text-white">Schedule</p>
+            </header>
+            <div>
+                <table></table>
+            </div>
+        </main>
     );
 }
 
