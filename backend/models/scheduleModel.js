@@ -16,7 +16,7 @@ const subjectScheduleSchema = new mongoose.Schema(
             required: true,
         },
         day: {
-            type: String,
+            type: [days],
             enum: days,
             required: true,
         },
@@ -35,7 +35,7 @@ const subjectScheduleSchema = new mongoose.Schema(
 const scheduleSchema = new mongoose.Schema(
     {
         schoolYear: {
-            type: Date,
+            type: String,
             required: true,
         },
         semester: {

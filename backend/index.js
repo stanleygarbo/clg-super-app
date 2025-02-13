@@ -18,29 +18,30 @@ const { User } = require("./models/userModel");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 const studentRoutes = require("./routes/studentRoutes.js");
+const scheduleRoutes = require("./routes/scheduleRoutes.js");
 
 const swaggerDefinition = {
-  openapi: "3.0.0",
-  info: {
-    title: "REST API for ACLC Super App",
-    version: "1.0.0",
-  },
-  components: {
-    schemas: { ...swaggerSchemas },
-    securitySchemes: {
-      BearerAuth: {
-        type: "http",
-        scheme: "bearer",
-        bearerFormat: "JWT",
-      },
+    openapi: "3.0.0",
+    info: {
+        title: "REST API for ACLC Super App",
+        version: "1.0.0",
     },
-  },
+    components: {
+        schemas: { ...swaggerSchemas },
+        securitySchemes: {
+            BearerAuth: {
+                type: "http",
+                scheme: "bearer",
+                bearerFormat: "JWT",
+            },
+        },
+    },
 };
 
 const options = {
-  swaggerDefinition,
-  // Paths to files containing OpenAPI definitions
-  apis: ["./routes/*.js"],
+    swaggerDefinition,
+    // Paths to files containing OpenAPI definitions
+    apis: ["./routes/*.js"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -62,13 +63,14 @@ app.use("/api/employees", employeeRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/programs", programRoutes);
 app.use("/api/courses", courseRoutes);
+app.use("/api/schedules", scheduleRoutes);
 
 app.get("/", (req, res) => {
-  res.json({
-    message: "Hello world",
-  });
+    res.json({
+        message: "Hello world",
+    });
 });
 
 app.listen(port, () => {
-  console.log("App listening on port: ", port);
+    console.log("App listening on port: ", port);
 });
