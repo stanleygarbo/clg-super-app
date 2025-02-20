@@ -1,21 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IPositionGet } from "../../../interface/IPosition";
 import { IDepartmentGet } from "../../../interface/IDepartment";
 import RoleSelect from "./RoleSelect";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
-import { employeePostData } from "../../../store/EmployeeData";
+import { employeeGetData, employeePostData } from "../../../store/EmployeeData";
 import { useSnapshot } from "valtio";
 import { useParams } from "react-router-dom";
-import { IEmployeeGet, IEmployeePost } from "../../../interface/IEmployee";
+import { IEmployeeGet } from "../../../interface/IEmployee";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getEmployeeById, updateEmployee } from "../../../api/employee";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-const UpdateEmployee = () => {
+const EmploymentForm = () => {
   const [gender, setGender] = useState<string>("");
   const [position, setPosition] = useState<IPositionGet[]>([]);
-  const [employee, setEmployee] = useState<IEmployeeGet>();
+  const [employee, setEmployee] = useState<IEmployeeGet[]>([]);
   const [department, setDepartment] = useState<IDepartmentGet[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +22,7 @@ const UpdateEmployee = () => {
   const [day, setDay] = useState<string>("");
   const [month, setMonth] = useState<string>("");
   const [year, setYear] = useState<string>("");
-  let { id } = useParams<string>();
+  const { id } = useParams();
 
   const handleCheckboxChange = (selectedGender: string) => {
     setGender(selectedGender);
@@ -48,6 +47,7 @@ const UpdateEmployee = () => {
       const response = await apiClient.get("/departments");
       setDepartment(response.data.results);
     } catch {
+      toast.error("Error while getting the departments");
     } finally {
     }
   };
@@ -58,31 +58,62 @@ const UpdateEmployee = () => {
       const response = await apiClient.get("/positions");
       setPosition(response.data.results);
     } catch {
+      toast.error("Error while getting the departments");
     } finally {
     }
   };
 
-  const updateMutation = useMutation({
-    mutationFn: updateEmployee,
-    onSuccess: (data) => {
-      console.log("Update successful:", data);
-    },
-    onError: (error) => {
-      console.error("Error updating employee:", error);
-    },
-  });
-
-  const query = useQuery({
-    queryKey: ["employee", id],
-    queryFn: () => getEmployeeById({ id }),
-  });
-
-  const { handleSubmit, register } = useForm<IEmployeePost>();
+  // ADD EMPLOYEE
+  const addEmployee = async (e: { preventDefault: () => void }) => {
+    try {
+      e.preventDefault();
+      setIsLoading(true);
+      employeePostData.hireDate = new Date().toISOString();
+      employeePostData.birthDate = new Date(
+        day + "-" + month + "-" + year
+      ).toISOString();
+      try {
+        const data = {
+          firstName: employeePostData.firstName,
+          surname: employeePostData.surname,
+          middleName: employeePostData.middleName,
+          username: employeePostData.username,
+          password: employeePostData.password,
+          department: employeePostData.department,
+          position: employeePostData.position,
+          hireDate: employeePostData.hireDate,
+          employmentType: employeePostData.employmentType,
+          roles: employeePostData.roles
+            ? JSON.parse(JSON.stringify(employeePostData.roles))
+            : [],
+        };
+        console.log("DATA :: ", data);
+        await apiClient.post("/employees", data);
+        toast.success("Employee added successfully!");
+      } catch (err) {
+        setError("Error adding employee");
+        toast.error(error);
+      } finally {
+        // fetchEmployee();
+        setIsLoading(false);
+        // setIsOpen(false);
+      }
+    } catch {}
+  };
 
   useEffect(() => {
     getDepartments();
     getPositions();
   }, []);
+
+  const addMutation = useMutation({
+    mutationFn: addEmployee,
+    onSuccess: () => {
+      toast.success("New employee added successfully");
+    },
+  });
+
+  const { handleSubmit, register } = useForm();
 
   return (
     <div className="m-10">
@@ -91,9 +122,7 @@ const UpdateEmployee = () => {
           Employee Form
         </h1>
         <form
-          onSubmit={handleSubmit((id) => {
-            updateMutation.mutate(id);
-          })}
+          onSubmit={handleSubmit(() => addMutation)}
           className="pt-6 p-5 grid gap-5"
         >
           {/* <img
@@ -106,25 +135,62 @@ const UpdateEmployee = () => {
               type="text"
               placeholder="Last Name"
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              defaultValue={query.data?.surname}
               {...register("surname")}
             />
             <input
               type="text"
               placeholder="First Name"
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              defaultValue={query.data?.firstName}
-              {...register("firstName")}
+              value={snap.firstName}
+              onChange={(e) => {
+                employeePostData.firstName = e.target.value;
+              }}
             />
             <input
               type="text"
               placeholder="Middle Name"
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              defaultValue={query.data?.middleName}
-              {...register("middleName")}
+              value={snap.middleName}
+              onChange={(e) => {
+                employeePostData.middleName = e.target.value;
+              }}
             />
           </section>
           <section className="grid grid-cols-3 gap-5 px-10">
+            <span className="flex flex-col gap-2">
+              <h1 className="text-sm font-semibold">Birthdate :</h1>
+              <span className="grid grid-cols-3 gap-2">
+                <input
+                  type="text"
+                  placeholder="dd"
+                  className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+                  value={day}
+                  onChange={(e) => {
+                    setDay(e.target.value);
+                  }}
+                />
+
+                <input
+                  type="text"
+                  placeholder="mm"
+                  className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+                  value={month}
+                  onChange={(e) => {
+                    setMonth(e.target.value);
+                  }}
+                />
+
+                <input
+                  type="text"
+                  placeholder="yyyy"
+                  className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+                  value={year}
+                  onChange={(e) => {
+                    setYear(e.target.value);
+                  }}
+                />
+              </span>
+            </span>
             <span className="flex flex-col gap-2">
               <h1 className="text-sm font-semibold">Roles :</h1>
               <RoleSelect roles={roles} />
@@ -158,19 +224,35 @@ const UpdateEmployee = () => {
             </span>
           </section>
           <section className="grid grid-cols-3 gap-5 px-10">
+            <input
+              type="text"
+              placeholder="Brgy/Street"
+              className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+            />
+            <input
+              type="text"
+              placeholder="City"
+              className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+            />
+            <input
+              type="text"
+              placeholder="Province"
+              className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+            />
+          </section>
+          <section className="grid grid-cols-3 gap-5 px-10">
             <span className="flex flex-col gap-2">
               <h1 className="text-sm font-semibold">Position :</h1>
+
               <select
-                {...register("position")}
                 className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-                defaultValue={query.data?.position._id}
+                value={snap.position}
+                onChange={(e) => {
+                  employeePostData.position = e.target.value;
+                }}
               >
                 {position.map((pos, index) => (
-                  <option
-                    key={index}
-                    value={pos._id}
-                    selected={query.data?.position._id == pos._id}
-                  >
+                  <option key={index} value={pos._id} selected={true}>
                     {pos.jobTitle}
                   </option>
                 ))}
@@ -181,15 +263,13 @@ const UpdateEmployee = () => {
 
               <select
                 className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-                defaultValue={query.data?.department._id}
-                {...register("department")}
+                value={snap.department}
+                onChange={(e) => {
+                  employeePostData.department = e.target.value;
+                }}
               >
                 {department.map((dept, index) => (
-                  <option
-                    key={index}
-                    value={dept._id}
-                    selected={query.data?.department._id == dept._id}
-                  >
+                  <option key={index} value={dept._id} selected>
                     {dept.departmentName}
                   </option>
                 ))}
@@ -199,8 +279,10 @@ const UpdateEmployee = () => {
               <h1 className="text-sm font-semibold">Employment Type :</h1>
               <select
                 className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-                defaultValue={query.data?.employmentType}
-                {...register("employmentType")}
+                value={snap.employmentType}
+                onChange={(e) => {
+                  employeePostData.employmentType = e.target.value;
+                }}
               >
                 <option value="regular" selected>
                   regular
@@ -214,15 +296,19 @@ const UpdateEmployee = () => {
               type="text"
               placeholder="Username"
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              defaultValue={query.data?.username}
-              {...register("username")}
+              value={snap.username}
+              onChange={(e) => {
+                employeePostData.username = e.target.value;
+              }}
             />
             <input
               type="password"
               placeholder="Password"
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              defaultValue={query.data?.password}
-              {...register("password")}
+              value={snap.password}
+              onChange={(e) => {
+                employeePostData.password = e.target.value;
+              }}
             />
             <input
               type="password"
@@ -244,4 +330,4 @@ const UpdateEmployee = () => {
   );
 };
 
-export default UpdateEmployee;
+export default EmploymentForm;

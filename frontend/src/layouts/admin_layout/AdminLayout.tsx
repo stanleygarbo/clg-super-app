@@ -1,34 +1,32 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { FaRegUser, FaUser } from "react-icons/fa";
 import { LuClipboard, LuDoorOpen, LuSchool } from "react-icons/lu";
 import { ISidebarItem } from "../../components/sidebar/SidebarItems";
 import { MdOutlineDashboard } from "react-icons/md";
 import { BiClinic } from "react-icons/bi";
-import { FaPersonDotsFromLine } from "react-icons/fa6";
 import { RiAdminFill } from "react-icons/ri";
-import { authState } from "../../store/auth";
+import { FaUser } from "react-icons/fa";
 
-const adminItems: ISidebarItem = {
-  name: "Admin",
-  icon: RiAdminFill,
-  type: "drawer",
-  path: "admin",
-  subItems: [
-    {
-      name: "Users",
-      path: "/admin/users",
-    },
-    {
-      name: "Positions & Departments",
-      path: "/admin/list-all",
-    },
-    {
-      name: "Employees",
-      path: "/admin/employees",
-    },
-  ],
-};
+// const adminItems: ISidebarItem = {
+//   name: "Admin",
+//   icon: RiAdminFill,
+//   type: "drawer",
+//   path: "admin",
+//   subItems: [
+//     {
+//       name: "Users",
+//       path: "/admin/users",
+//     },
+//     {
+//       name: "Positions & Departments",
+//       path: "/admin/list-all",
+//     },
+//     {
+//       name: "Employees",
+//       path: "/admin/employees",
+//     },
+//   ],
+// };
 
 const sidebarItemsConditional = [
   {
@@ -80,7 +78,7 @@ const sidebarItemsConditional = [
     path: "admission",
     subItems: [
       {
-        name: "Enroll",
+        name: "Enroll Student",
         path: "/admission/eform",
       },
       {

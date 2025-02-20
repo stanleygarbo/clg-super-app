@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import apiClient from "../../api/apiClient";
-import { employeeData } from "../../store/EmployeeData";
 import { useParams } from "react-router-dom";
+import { employeeGetData } from "../../../store/EmployeeData";
+import apiClient from "../../../api/apiClient";
 
 const EmployeeInfo = () => {
-  const [employeeInfo, setEmployeeInfo] = useState(typeof employeeData);
+  const [employeeInfo, setEmployeeInfo] = useState(typeof employeeGetData);
   const { id } = useParams();
     
   const fetchEmployee = async () => {

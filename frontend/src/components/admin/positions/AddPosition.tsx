@@ -1,9 +1,9 @@
 // src/components/AddDepartment.tsx
 import { useSnapshot } from "valtio";
-import { positionData } from "../../../store/PositionData";
+import { positionPostData } from "../../../store/PositionData";
 
 const AddPosition = () => {
-  const snap = useSnapshot(positionData);
+  const snap = useSnapshot(positionPostData);
 
   return (
     <div className="p-4">
@@ -15,7 +15,7 @@ const AddPosition = () => {
           <input
             type="text"
             value={snap.jobTitle}
-            onChange={(e) => (positionData.jobTitle = e.target.value)}
+            onChange={(e) => (positionPostData.jobTitle = e.target.value)}
             className="mt-1 text-center block h-[42px] w-[100%] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-3"
             required
           />
@@ -27,7 +27,9 @@ const AddPosition = () => {
           <input
             type="number"
             value={snap.hourlyWage}
-            onChange={(e) => (positionData.hourlyWage = Number(e.target.value))}
+            onChange={(e) =>
+              (positionPostData.hourlyWage = Number(e.target.value))
+            }
             className="mt-1 text-center block h-[42px] w-[100%] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             required
           />

@@ -1,8 +1,8 @@
-export interface IDepartment {
+export interface IDepartmentPost {
     departmentName: string;
 }
 
-export interface IDepartmentFetch {
-    department_id: string;
+export interface IDepartmentGet {
+    _id: string;
     departmentName: string;
 }

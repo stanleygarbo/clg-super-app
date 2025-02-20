@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getStudents } from "../../../api/student";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
-import { studentData } from "../../../store/StudentData";
 
 const EnrolledStudents = () => {
   const navigate = useNavigate();
