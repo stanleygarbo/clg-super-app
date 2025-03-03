@@ -15,17 +15,17 @@ const CoursesOfferedTESDA = () => {
   ];
 
   return (
-    <div className="relative w-full m-auto grid grid-cols-2">
-      <div className=" pr-20">
-        <h1 className="font-bold pb-2 pt-10 text-xl text-start">TESDA</h1>
-        {TESDAcourses.map((TESDAcourses, index) => (
+    <div className="w-full">
+      <h2 className="font-bold text-xl mb-6">TESDA Programs</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {TESDAcourses.map((course, index) => (
           <div
-            className="flex group my-5 px-3 py-4 relative hover:bg-blue-50 transition-all duration-[.30s] rounded-tr-xl rounded-br-xl"
+            className="flex group px-4 py-5 relative hover:bg-blue-50 transition-all duration-300 rounded-tr-xl rounded-br-xl shadow-sm"
             key={index}
           >
-            <div className="w-1 h-full rounded group-hover:bg-blue-500 transition-all duration-[.30s] absolute top-0 left-0"></div>
-            <div className="ml-2">
-              <p className="pr-5 font-bold">{TESDAcourses.cName}</p>
+            <div className="w-1 h-full rounded group-hover:bg-blue-500 transition-all duration-300 absolute top-0 left-0"></div>
+            <div className="ml-3">
+              <p className="font-bold text-gray-800">{course.cName}</p>
             </div>
           </div>
         ))}
