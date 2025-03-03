@@ -54,6 +54,10 @@ const sidebarItemsConditional = [
         path: "/admin/departmentdashboard",
       },
       {
+        name: "Room List",
+        path: "/admin/room-list",
+      },
+      {
         name: "Positions",
         path: "/admin/positiondashboard",
       },

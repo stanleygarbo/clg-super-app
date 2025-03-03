@@ -1,28 +1,18 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IPositionGet } from "../../../interface/IPosition";
 import { IDepartmentGet } from "../../../interface/IDepartment";
-import RoleSelect from "./RoleSelect";
 import apiClient from "../../../api/apiClient";
-import { toast } from "react-toastify";
-import { employeePostData } from "../../../store/EmployeeData";
-import { useSnapshot } from "valtio";
 import { useParams } from "react-router-dom";
-import { IEmployeeGet, IEmployeePost } from "../../../interface/IEmployee";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getEmployeeById, updateEmployee } from "../../../api/employee";
-import { SubmitHandler, useForm } from "react-hook-form";
+import Select from "react-select";
+import { useForm } from "react-hook-form";
+import { IEmployeePost } from "../../../interface/IEmployee";
 
 const UpdateEmployee = () => {
   const [gender, setGender] = useState<string>("");
   const [position, setPosition] = useState<IPositionGet[]>([]);
-  const [employee, setEmployee] = useState<IEmployeeGet>();
   const [department, setDepartment] = useState<IDepartmentGet[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const snap = useSnapshot(employeePostData);
-  const [day, setDay] = useState<string>("");
-  const [month, setMonth] = useState<string>("");
-  const [year, setYear] = useState<string>("");
   let { id } = useParams<string>();
 
   const handleCheckboxChange = (selectedGender: string) => {
@@ -30,16 +20,18 @@ const UpdateEmployee = () => {
   };
 
   const roles = [
-    "user",
-    "student",
-    "admin",
-    "admission",
-    "accounting",
-    "registrar",
-    "faculty",
-    "clinic",
-    "ssc",
-    "super",
+    {value: "user", label: "user"},
+    {value: "student", label: "student"},
+    {value: "admin", label: "admin"},
+    {value: "admission", label: "admission"},
+    {value: "accounting", label: "accounting"},
+    {value: "registrar", label: "registrar"},
+    {value: "faculty", label: "faculty"},
+    {value: "clinic", label: "clinic"},
+    {value: "ssc", label: "ssc"},
+    {value: "super", label: "super"},
+
+
   ];
 
   // FETCH DEPARTMENT
@@ -91,8 +83,8 @@ const UpdateEmployee = () => {
           Employee Form
         </h1>
         <form
-          onSubmit={handleSubmit((id) => {
-            updateMutation.mutate(id);
+          onSubmit={handleSubmit((data) => {
+            if(id) updateMutation.mutate({value: data , id: id});
           })}
           className="pt-6 p-5 grid gap-5"
         >
@@ -124,10 +116,11 @@ const UpdateEmployee = () => {
               {...register("middleName")}
             />
           </section>
-          <section className="grid grid-cols-3 gap-5 px-10">
+          <section className="grid grid-cols-[1fr_200px] gap-5 px-10">
             <span className="flex flex-col gap-2">
               <h1 className="text-sm font-semibold">Roles :</h1>
-              <RoleSelect roles={roles} />
+              {/* <RoleSelect roles={roles} /> */}
+              <Select options={roles} isMulti className="h-[40px] w-[100%]"/>
             </span>
             <span className="px-5">
               <h1 className="text-sm font-semibold pb-3">Gender:</h1>

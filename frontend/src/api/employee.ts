@@ -29,9 +29,9 @@ export const addEmployee = async (value: IEmployeePost) => {
   await apiClient.post('/employees', value)
 }
 
-export const updateEmployee = async (value: IEmployeeGet) => {
+export const updateEmployee = async ({value, id}:{value: IEmployeePost, id: string}) => {
   try {
-    const response = await apiClient.patch(`/employees/${value._id}`, value);
+    const response = await apiClient.patch(`/employees/${id}`, value);
     return response.data; // Ensure we return the updated data
   } catch (error) {
     console.error("API Error:", error);

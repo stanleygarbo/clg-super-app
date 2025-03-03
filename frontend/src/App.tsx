@@ -27,6 +27,7 @@ import CourseDashboard from "./components/admin/courses/CourseDashboard";
 import EmploymentForm from "./components/admin/employees/EmployeeForm";
 import UpdateEmployee from "./components/admin/employees/UpdateEmployee";
 import Test from "./components/admin/employees/Test";
+import RoomList from "./components/admin/rooms/RoomList";
 
 const router = createBrowserRouter([
   {
@@ -122,6 +123,10 @@ const router = createBrowserRouter([
       {
         path: "add-employee",
         element: <EmploymentForm />,
+      },
+      {
+        path: "room-list",
+        element: <RoomList />,
       },
     ],
   },
