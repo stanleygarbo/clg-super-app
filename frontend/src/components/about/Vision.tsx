@@ -1,10 +1,8 @@
 const Vision = () => {
   return (
-    <div className="flex w-[50%] xs:w-[100%] px-10 xs:px-2 xs:pt-5 sm:w-[100%] sm:px-2 sm:pt-5">
+    <div className="flex w-[50%]">
       <article>
-        <h1 className="text-3xl text-center font-bold pb-2 xs:text-2xl sm:text-2xl">
-          Vision
-        </h1>
+        <h1 className="text-3xl text-center font-bold">Vision</h1>
         <p className="text-base font-semibold">
           To be the leader and dominant provider of relevant globally recognized
           information technology-based education and related services in the

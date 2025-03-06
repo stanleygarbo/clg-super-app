@@ -278,7 +278,7 @@ const ListAll = () => {
 
           {/* ADD COURSE */}
           <form
-            // onSubmit={handleSubmitProgram}
+            onSubmit={handleSubmitCourse}
             className={`${
               isOpenCour
                 ? "opacity-0 w-0 left-0"

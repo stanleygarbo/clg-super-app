@@ -5,15 +5,15 @@ import Vision from "../components/about/Vision";
 
 const About = () => {
   return (
-    <div className="px-10 pt-20 flex flex-col justify-evenly">
-      <section className=" flex xs:flex-col 2xl:relative xl:relative sm:flex-col md:flex-col lg:flex-col">
+    <div className="flex flex-col justify-evenly w-screen">
+      <section className=" flex flex-col">
         <img
           src="./students.png"
           alt="Image"
-          className="border rounded-md opacity-30 shadow-md xs:w-[500px] xs:h-[250px] xs:mx-2 xs:opacity-45 sm:w-[600px] sm:h-[300px] sm:mx-2 sm:opacity-45 md:w-[900px] md:h-[50%] md:opacity-45 lg:w-[100%] lg:h-[60%] lg:mx-3"
+          className="border rounded-md opacity-30 shadow-md"
         />
-        <div className="flex flex-col items-center px-60 pt-16 2xl:absolute xl:absolute xs:px-2 xs:py-10 xs:gap-3 xs:items-start sm:px-4 sm:py-10 sm:gap-5 md:gap-5 md:px-10 md:py-10 md:items-start lg:px-10 lg:py-10">
-          <p className="text-center text-xl font-bold xs:text-base xs:font-semibold xs:text-start sm:font-semibold sm:text-base sm:text-start md:text-start md:text-lg lg:text-start lg:text-lg">
+        <div className="flex flex-col items-center">
+          <p className="text-center text-xl">
             ACLC College is a member of the AMA Education System and is one of
             the leading computer schools in the country. With a curriculum that
             is based on the requirements of the actual industry, ACLC College
@@ -22,7 +22,7 @@ const About = () => {
           </p>
           <br />
 
-          <p className="text-center text-xl font-bold xs:text-base xs:font-semibold xs:text-start sm:font-semibold sm:text-base sm:text-start md:text-start md:text-lg lg:text-start lg:text-lg">
+          <p className="text-center text-xl font-bold">
             AMA Computer Learning Center (ACLC) is a leading computer training
             institution in the country offering full 2-year programs and
             short-term courses. It is focused on producing highly competent and
@@ -34,7 +34,7 @@ const About = () => {
           </p>
         </div>
       </section>
-      <div className="flex px-5 gap-20 py-10 xs:gap-5 xs:px-1 xs:flex-col sm:flex-col sm:px-1 sm:gap-5 md:gap-10 md:px-4  ">
+      <div className="flex flex-col px-5">
         <Mission />
         <Vision />
       </div>

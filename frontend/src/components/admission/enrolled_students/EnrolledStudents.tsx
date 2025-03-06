@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getStudents } from "../../../api/student";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
+import { studentData } from "../../../store/StudentData";
 
 const EnrolledStudents = () => {
   const navigate = useNavigate();
@@ -66,7 +67,9 @@ const EnrolledStudents = () => {
                 className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-4 px-2 items-center py-2 rounded-sm group bg-slate-50 shadow-sm border hover:bg-slate-200 hover:border-slate-200"
               >
                 <td className="w-[500px] text-start">{getFullName(student)}</td>
-                <td className="w-[200px] text-center">{student.program}</td>
+                <td className="w-[200px] text-center">
+                  {student.program?.programAcronym}
+                </td>
                 <td className="w-[200px text-center">{student.standing}</td>
                 <td className="flex gap-3 justify-center">
                   <button

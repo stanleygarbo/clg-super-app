@@ -7,8 +7,8 @@ interface AppState {
   middleName: string;
   username: string;
   password: string;
-  department: object;
-  position: object;
+  department: string;
+  position: string;
   hireDate: string;
   employmentType: string;
   roles: string[];
@@ -21,8 +21,8 @@ export const updateEmployeeData = proxy<AppState>({
   middleName: "",
   username: "",
   password: "",
-  department: {},
-  position: {},
+  department: "",
+  position: "",
   hireDate: "",
   employmentType: "",
   roles: [],

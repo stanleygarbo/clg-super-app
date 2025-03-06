@@ -7,8 +7,8 @@ import { useSnapshot } from "valtio";
 import { studentData } from "../../../store/StudentData";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
-import { BsThreeDots } from "react-icons/bs";
-import { ThreeDot } from "react-loading-indicators";
+import { ISibling } from "../../../store/SiblingData";
+import { IProgram } from "../../../store/ProgramData";
 
 const StudentsInfo = () => {
   const { id } = useParams();
@@ -31,9 +31,11 @@ const StudentsInfo = () => {
   const [type, setType] = useState<"button" | "submit" | "reset" | undefined>(
     "button"
   );
-  const [select, setSelect] = useState<"on" | "off" | undefined>("off");
+  // const [select, setSelect] = useState<"on" | "off" | undefined>("off");
   const [loading, setLoading] = useState(true);
   const snapStudent = useSnapshot(studentData);
+  const [sibling, setSibling] = useState<ISibling[]>([]);
+  const [programs, setPrograms] = useState<IProgram[]>([]);
 
   const updateStudent = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -46,12 +48,20 @@ const StudentsInfo = () => {
         email: snapStudent?.email,
         telephone: snapStudent?.telephone,
         phone: snapStudent?.phone,
+        program: snapStudent.program,
         birth: {
           birthDate: snapStudent?.birth?.birthDate,
           birthPlace: snapStudent?.birth?.birthPlace,
           citizenship: snapStudent?.birth?.citizenship,
           sex: snapStudent?.birth?.sex,
           religion: snapStudent?.birth?.religion,
+        },
+        homeAddress: {
+          houseNum: snapStudent?.homeAddress.houseNum,
+          streetBrgy: snapStudent?.homeAddress.streetBrgy,
+          city: snapStudent?.homeAddress.city,
+          district: snapStudent?.homeAddress.district,
+          province: snapStudent?.homeAddress.province,
         },
       };
 
@@ -65,6 +75,15 @@ const StudentsInfo = () => {
     }
   };
 
+  const fetchPrograms = async () => {
+    try {
+      const response = await apiClient.get("/programs");
+      setPrograms(response.data.results);
+    } catch {
+    } finally {
+    }
+  };
+
   useEffect(() => {
     if (query.data) {
       studentData.surname = query.data.surname;
@@ -75,7 +94,13 @@ const StudentsInfo = () => {
       studentData.phone = query.data.phone;
       studentData.email = query.data.email;
       studentData.birth = query.data.birth;
+      studentData.program = query.data.program;
+
+      setSibling(query.data.siblings);
     }
+
+    // console.log(studentData.program.)
+    fetchPrograms();
   }, [query.data]);
 
   return (
@@ -175,29 +200,86 @@ const StudentsInfo = () => {
             />
           </section>
           <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+            <p className="text-xs font-bold absolute text-slate-600 z-50 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               Program
             </p>
-            <input
+            <select
+              disabled={isUpdate}
+              onChange={(e) => {
+                studentData.program = e.target.value;
+              }}
+              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+            >
+              {/* <option value={snapStudent.program?._id}>
+                {snapStudent.program?.programAcronym}
+              </option> */}
+              {programs.map((prog, index) => (
+                <option
+                  selected={
+                    prog.programAcronym === snapStudent.program.programAcronym
+                  }
+                  key={index}
+                  value={prog._id}
+                >
+                  {prog.programAcronym}
+                </option>
+              ))}
+            </select>
+            {/* <input
               type="text"
               readOnly
               value={query.data?.program}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
+            /> */}
           </section>
           <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+            <p className="text-xs font-bold absolute text-slate-600 z-50 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               Standing
             </p>
-            <input
+            <select
+              disabled={isUpdate}
+              onChange={(e) => {
+                studentData.standing = e.target.value;
+              }}
+              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+            >
+              {["freshman", "sophomore", "junior", "senoir", "graduate"].map(
+                (standing, index) => {
+                  return (
+                    <option
+                      selected={standing === snapStudent.standing}
+                      key={index}
+                      value={standing}
+                    >
+                      {standing}
+                    </option>
+                  );
+                }
+              )}
+            </select>
+            {/* <input
               readOnly
               type="text"
               value={query.data?.standing}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
+            /> */}
           </section>
         </span>
-        <span className="grid grid-cols-4 gap-2">
+        <span className="grid grid-cols-5 gap-2">
+          <section className="relative rounded-lg">
+            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+              School Year
+            </p>
+            <input
+              type="text"
+              readOnly={isUpdate}
+              onChange={(e) => {
+                studentData.schoolYear = e.target.value;
+              }}
+              value={snapStudent.schoolYear}
+              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+            />
+          </section>
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               USN
@@ -559,7 +641,7 @@ const StudentsInfo = () => {
             />
           </section>
           <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+            <p className="text-xs font-bold absolute text-slate-600 w-[105px] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               Company Address
             </p>
             <input
@@ -665,7 +747,7 @@ const StudentsInfo = () => {
             />
           </section>
           <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+            <p className="text-xs font-bold absolute text-slate-600 w-[105px] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               Company Address
             </p>
             <input
@@ -782,7 +864,7 @@ const StudentsInfo = () => {
             />
           </section>
           <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+            <p className="text-xs font-bold absolute text-slate-600 w-[105px] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               Company Address
             </p>
             <input
@@ -868,182 +950,81 @@ const StudentsInfo = () => {
         <h1 className="text-md font-bold text-red-500">
           Sibling Information :{" "}
         </h1>
-
-        <span className="grid grid-cols-3 gap-2">
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Full Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[0]?.name}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Age
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[0]?.age}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              School/Occupation
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[0]?.occupation}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-        </span>
-        <span className="grid grid-cols-3 gap-2">
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Full Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[1]?.name}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Age
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[1]?.age}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              School/Occupation
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[1]?.occupation}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-        </span>
-        <span className="grid grid-cols-3 gap-2">
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Full Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[2]?.name}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Age
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[2]?.age}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              School/Occupation
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[2]?.occupation}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-        </span>
-        <span className="grid grid-cols-3 gap-2">
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Full Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[3]?.name}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Age
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[3]?.age}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              School/Occupation
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[3]?.occupation}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-        </span>
-        <span className="grid grid-cols-3 gap-2">
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Full Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[4]?.name}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Age
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[4]?.age}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              School/Occupation
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              value={query.data?.siblings[4]?.occupation}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-        </span>
+        {snapStudent.siblings.length > 0 ? (
+          sibling.map((sib, index) => (
+            <span key={index} className="grid grid-cols-3 gap-2">
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  Full Name
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  value={sib.fullName}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  Age
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  value={sib.age}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  School/Occupation
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  value={sib.occupationSchool}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+            </span>
+          ))
+        ) : (
+          <span className="grid grid-cols-3 gap-2">
+            <section className="relative rounded-lg">
+              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                Full Name
+              </p>
+              <input
+                type="text"
+                readOnly={isUpdate}
+                value={query.data?.siblings?.name}
+                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+              />
+            </section>
+            <section className="relative rounded-lg">
+              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                Age
+              </p>
+              <input
+                type="text"
+                readOnly={isUpdate}
+                value={query.data?.siblings[0]?.age}
+                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+              />
+            </section>
+            <section className="relative rounded-lg">
+              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                School/Occupation
+              </p>
+              <input
+                type="text"
+                readOnly={isUpdate}
+                value={query.data?.siblings[0]?.occupation}
+                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+              />
+            </section>
+          </span>
+        )}
       </div>
     </form>
   );

@@ -15,12 +15,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmNiZDk3M
 
 ###
 
-POST http://localhost:3000/api/users/login HTTP/1.1
+POST https://clg-super-app.onrender.com/api/auth/login HTTP/1.1
 content-type: application/json
 
 {
-  "username": "198389",
-  "password": "sadsadasd"
+  "username": "admin",
+  "password": "password"
 }
 
 ###
@@ -32,6 +32,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmNiZDk3M
 {
   
 }
-###
-# Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmNiZDk3MjRlYjIwNzdlNDE0YTlkZiIsInVzZXJuYW1lIjoiMTk4Mzg5IiwiaWF0IjoxNzI3ODQzMjg4LCJleHAiOjE3Mjc4NzIwODh9.gabd72P5mNt4aMCyOWVGNqccfdtpN4HpOm7953C3Nq0
 
+###
+
+GET https://clg-super-app.onrender.com/api/employees HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTczOTQxNTg4MywiZXhwIjoxNzM5NDQ0NjgzfQ._rZwkWEwtGg6p08kq25srSMceCPPoh4mPXCe065olAA
+
+###
+
+GET https://clg-super-app.onrender.com/api/employees/678b4e6024a3e046c80324a3 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTczOTQxNTg4MywiZXhwIjoxNzM5NDQ0NjgzfQ._rZwkWEwtGg6p08kq25srSMceCPPoh4mPXCe065olAA

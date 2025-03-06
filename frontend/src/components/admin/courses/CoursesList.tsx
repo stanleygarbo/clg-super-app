@@ -45,10 +45,10 @@ const CoursesList = () => {
       {courses.map((cour) => (
         <section
           key={cour._id}
-          className="relative group bg-blue-600 p-2 text-white font-semibold flex justify-center items-center rounded-md shadow-sm shadow-blue-600/50 duration-200"
+          className="relative group bg-slate-400 p-2 text-white font-semibold flex justify-center items-center rounded-md shadow-sm shadow-slate-300/50 duration-200"
         >
           <h1 className="flex flex-col items-center">
-            ({cour.courseCode}) -:- {cour.units} units
+            ( {cour.courseCode} ) -:- {cour.units} units
             <p>{cour.courseName} </p>
           </h1>
 

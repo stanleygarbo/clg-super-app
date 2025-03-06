@@ -41,7 +41,7 @@ const PositionList = () => {
       {positions.map((dept) => (
         <section
           key={dept._id}
-          className="relative group bg-blue-600 p-2 text-white font-semibold flex justify-center items-center rounded-md shadow-sm shadow-blue-600/50 duration-200"
+          className="relative group bg-slate-400 p-2 text-white font-semibold flex justify-center items-center rounded-md shadow-sm shadow-slate-300/50 duration-200"
         >
           <h1 className="">
             {dept.jobTitle} : ₱{dept.hourlyWage}.00
