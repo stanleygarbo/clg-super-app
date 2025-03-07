@@ -1,36 +1,32 @@
 const mongoose = require("mongoose");
-// import days from "../utils/days";
 
-const subjectScheduleSchema = new mongoose.Schema(
-  {
-    courseID: {
-      type: String,
-      required: true,
-    },
-    timeStart: {
-      type: String,
-      required: true,
-    },
-    timeEnd: {
-      type: String,
-      required: true,
-    },
-    // day: {
-    //     type: [days],
-    //     enum: days,
-    //     required: true,
-    // },
-    room: {
-      type: String,
-      required: true,
-    },
-    instructorID: {
-      type: String,
-      required: true,
-    },
+const subjectScheduleSchema = new mongoose.Schema({
+  courseID: {
+    type: String,
+    required: true,
   },
-  { timestamps: true }
-);
+  timeStart: {
+    type: String,
+    required: true,
+  },
+  timeEnd: {
+    type: String,
+    required: true,
+  },
+  day: {
+    type: [String],
+    enum: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
+    required: true,
+  },
+  room: {
+    type: String,
+    required: true,
+  },
+  instructorID: {
+    type: String,
+    required: true,
+  },
+});
 
 const scheduleSchema = new mongoose.Schema(
   {

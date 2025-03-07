@@ -42,7 +42,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlN
 
 POST http://localhost:3000/api/schedules HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTIyNjk1OCwiZXhwIjoxNzQxMjU1NzU4fQ.PZ4HtpKXIkLAIbGtd-X5Bb7gPTVsICUN23jN3A6jw_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTM0MzkyMywiZXhwIjoxNzQxMzcyNzIzfQ.kckcDtptevRY9wyCRkHFuEN2ecky8ulIKM-CbKz2thY
+
+{
+  "schoolYear": "2024-2025",
+  "semester": "1st",
+  "subjectSchedules": [
+    {
+      "courseID": "678625a887792f18812e1372",
+      "timeStart": "8:00",
+      "timeEnd": "9:00",
+      "day": ["mon", "wed"],
+      "room": "A301",
+      "instructorID": "67ac0f63b1c33b64568215f2"
+    }
+  ]
+}
 
 ###
 

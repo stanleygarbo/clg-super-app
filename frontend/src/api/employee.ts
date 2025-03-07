@@ -1,5 +1,5 @@
 import apiClient from "./apiClient";
-import { Employee } from "../interface/IEmployee";
+import { IEmployee } from "../interface/IEmployee";
 
 type authResp = {};
 
@@ -7,15 +7,14 @@ export const getEmployee = async ({
   id,
 }: {
     id?: string
-}): Promise<Employee> => {
-  const response = await apiClient.get<Employee>(`/employees/${id}`);
+}): Promise<IEmployee> => {
+  const response = await apiClient.get<IEmployee>(`/employees/${id}`);
   return response.data;
 };
 
-type Empoyees = (Omit<Employee, "department"> & Omit<Employee, "position"> & {position: {jobTitle:string; hourlyWage:number}, department:{departmentName:string}})[]
+type Empoyees = (Omit<IEmployee, "department"> & Omit<IEmployee, "position"> & {position: {jobTitle:string; hourlyWage:number}, department:{departmentName:string}})[]
 
-export const getEmployees = async (): Promise<{results:Empoyees}> => {
-  const response = await apiClient.get<{results:Empoyees}>(`/employees`);
-  console.log(response)
-  return response.data;
+export const getEmployees = async (): Promise<IEmployee[]> => {
+  const response = await apiClient.get(`/employees`);
+  return response.data.results;
 };

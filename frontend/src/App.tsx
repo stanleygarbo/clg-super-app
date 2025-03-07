@@ -23,170 +23,175 @@ import DepartmentDashboard from "./components/admin/departments/DepartmentDashbo
 import PositionDashboard from "./components/admin/positions/PositionDashboard";
 import ProgramDashboard from "./components/admin/programs/ProgramDashboard";
 import CourseDashboard from "./components/admin/courses/CourseDashboard";
+import CreateSchedule from "./components/registrar/CreateSchedule";
 
 const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <HomeLayout />,
+    children: [
+      {
         path: "/",
-        element: <HomeLayout />,
-        children: [
-            {
-                path: "/",
-                element: <Home />,
-            },
-            {
-                path: "/login",
-                element: <Login />,
-            },
-            {
-                path: "/about",
-                element: <About />,
-            },
-        ],
-    },
-    {
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <AdminLayout />,
+    children: [
+      {
         path: "/dashboard",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "/dashboard",
-                element: <Dashboard />,
-            },
-        ],
-    },
-    {
+        element: <Dashboard />,
+      },
+    ],
+  },
+  {
+    path: "/profile",
+    element: <AdminLayout />,
+    children: [
+      {
         path: "/profile",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "/profile",
-                element: <Profile />,
-            },
-        ],
-    },
-    {
+        element: <Profile />,
+      },
+    ],
+  },
+  {
+    path: "/:id/profile",
+    element: <AdminLayout />,
+    children: [
+      {
         path: "/:id/profile",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "/:id/profile",
-                element: <Profile />,
-            },
-        ],
-    },
-    {
-        path: "/admin",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "users",
-                element: <Users />,
-            },
-            {
-                path: "departmentdashboard",
-                element: <DepartmentDashboard />,
-            },
-            {
-                path: "positiondashboard",
-                element: <PositionDashboard />,
-            },
-            {
-                path: "programdashboard",
-                element: <ProgramDashboard />,
-            },
-            {
-                path: "coursedashboard",
-                element: <CourseDashboard />,
-            },
-            {
-                path: "employees",
-                element: <Employees />,
-            },
-        ],
-    },
-    {
-        path: "/admission",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "eform",
-                element: <EForm />,
-            },
-            {
-                path: "enroll-student",
-                element: <EnrolledStudents />,
-            },
-            {
-                path: "studentInfo/:id",
-                element: <StudentsInfo />,
-            },
-        ],
-    },
-    {
-        path: "/accounting",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "accounting-dashboard",
-                element: <AccountingDashboard />,
-            },
-            {
-                path: "student-fees",
-                element: <StudentFees />,
-            },
-        ],
-    },
-    {
-        path: "/registrar",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "schedule",
-                element: <Schedule />,
-            },
-        ],
-    },
-    {
-        path: "/faculty",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "faculty",
-                element: <Faculty />,
-            },
-        ],
-    },
-    {
-        path: "/clinic",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "clinic",
-                element: <Clinic />,
-            },
-        ],
-    },
-    {
-        path: "/ssc",
-        element: <AdminLayout />,
-        children: [
-            {
-                path: "ssc",
-                element: <SSC />,
-            },
-        ],
-    },
+        element: <Profile />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "users",
+        element: <Users />,
+      },
+      {
+        path: "departmentdashboard",
+        element: <DepartmentDashboard />,
+      },
+      {
+        path: "positiondashboard",
+        element: <PositionDashboard />,
+      },
+      {
+        path: "programdashboard",
+        element: <ProgramDashboard />,
+      },
+      {
+        path: "coursedashboard",
+        element: <CourseDashboard />,
+      },
+      {
+        path: "employees",
+        element: <Employees />,
+      },
+    ],
+  },
+  {
+    path: "/admission",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "eform",
+        element: <EForm />,
+      },
+      {
+        path: "enroll-student",
+        element: <EnrolledStudents />,
+      },
+      {
+        path: "studentInfo/:id",
+        element: <StudentsInfo />,
+      },
+    ],
+  },
+  {
+    path: "/accounting",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "accounting-dashboard",
+        element: <AccountingDashboard />,
+      },
+      {
+        path: "student-fees",
+        element: <StudentFees />,
+      },
+    ],
+  },
+  {
+    path: "/registrar",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "schedule",
+        element: <Schedule />,
+      },
+      {
+        path: "schedule/create",
+        element: <CreateSchedule />,
+      },
+    ],
+  },
+  {
+    path: "/faculty",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "faculty",
+        element: <Faculty />,
+      },
+    ],
+  },
+  {
+    path: "/clinic",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "clinic",
+        element: <Clinic />,
+      },
+    ],
+  },
+  {
+    path: "/ssc",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "ssc",
+        element: <SSC />,
+      },
+    ],
+  },
 ]);
 
 const queryClient = new QueryClient();
 function App() {
-    return (
-        <>
-            <ToastContainer />
-            <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router} />
-            </QueryClientProvider>
-        </>
-    );
+  return (
+    <>
+      <ToastContainer />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </>
+  );
 }
 
 export default App;

@@ -1,82 +1,84 @@
 import { useEffect, useState } from "react";
 import { getCourses } from "../../api/course";
 import { getSchedules } from "../../api/schedule";
+import { ISchedule } from "../../interface/ISchedule";
+import { ICourse } from "../../interface/ICourse";
+import { IEmployee } from "../../interface/IEmployee";
+import { getEmployees } from "../../api/employee";
 
 function Schedule() {
-    const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState<ICourse[]>([]);
+  const [schedules, setSchedules] = useState<ISchedule[]>([]);
+  const [employees, setEmployees] = useState<IEmployee[]>([]);
 
-    const fetchCourses = async () => {
-        try {
-            const res = await getCourses();
-            setCourses(res.results);
-            // const sched = await getSchedules();
-            // console.log(sched);
-        } catch (error) {
-            console.log("Error:", error);
-        }
+  const fetchCourses = async () => {
+    try {
+      const res = await getCourses();
+      const sched = await getSchedules();
+      const emp = await getEmployees();
+      setCourses(res.results);
+      setSchedules(sched);
+      setEmployees(emp);
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
 
-        // fetch("http://localhost:5173/api/schedules/")
-        //     .then((res) => {
-        //         console.log(res.json());
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
-    };
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
-    const postNew = async () => {
-        fetch("http://localhost:5173/api/schedules/", {
-            method: "POST",
-            body: JSON.stringify({
-                schoolYear: "2024-2025",
-                semester: "1st",
-                subjectSchedules: [
-                    {
-                        courseID: "678625a887792f18812e1372",
-                        timeStart: "08:00",
-                        timeEnd: "09:00",
-                        day: ["mon", "fri"],
-                        room: "A301",
-                        instructorID: "67ac0f63b1c33b64568215f2",
-                    },
-                ],
-            }),
-        })
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+  return (
+    <main className="w-full">
+      <header className="flex justify-between items-center h-12">
+        <p className="text-2xl font-bold">Schedule</p>
+        <button className="px-3 py-2 text-white font-semibold rounded-md bg-blue-600">
+          Create schedule
+        </button>
+      </header>
+      <div>
+        <div className="bg-slate-100"></div>
+        <table className="w-full">
+          <thead className="bg-gray-200">
+            <tr className="grid grid-cols-scheduleCol">
+              <th>Course Code</th>
+              <th>Subject Title</th>
+              <th>Time</th>
+              <th>Days</th>
+              <th>Room</th>
+              <th>Instructor</th>
+            </tr>
+          </thead>
+          <tbody>
+            {schedules.map((schedule) => {
+              const subjectSchedules = schedule.subjectSchedules;
+              const courseID = subjectSchedules[0].courseID;
+              const course = courses.find((course) => course._id == courseID);
+              console.log(employees);
+              const instructor = employees.find(
+                (employee) => employee._id == subjectSchedules[0].instructorID
+              );
 
-    useEffect(() => {
-        fetchCourses();
-    }, []);
-
-    return (
-        <main className="w-full border rounded-md overflow-hidden">
-            <header className="flex justify-center items-center h-12 bg-blue-600">
-                <p className="text-lg font-bold text-white">Schedule</p>
-            </header>
-            <div className="p-4">
-                <table className="w-full">
-                    <thead className="bg-gray-200">
-                        <tr className="grid grid-cols-scheduleCol">
-                            <th>Course Code</th>
-                            <th>Subject Title</th>
-                            <th>Time</th>
-                            <th>Days</th>
-                            <th>Room</th>
-                            <th>Instructor</th>
-                        </tr>
-                    </thead>
-                    <tbody>{/* {WIP} */}</tbody>
-                </table>
-            </div>
-            <button onClick={postNew}>Test</button>
-        </main>
-    );
+              return (
+                <tr className="grid grid-cols-scheduleCol">
+                  <td>{course?.courseCode}</td>
+                  <td>{course?.courseName}</td>
+                  <td>
+                    {subjectSchedules[0].timeStart +
+                      " / " +
+                      subjectSchedules[0].timeEnd}
+                  </td>
+                  <td>{subjectSchedules[0].day.join(", ")}</td>
+                  <td>{subjectSchedules[0].room}</td>
+                  <td>{instructor?.firstName}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  );
 }
 
 export default Schedule;
