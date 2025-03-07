@@ -3,10 +3,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoListOutline } from "react-icons/io5";
 import { addRoom } from "../../../api/room";
+import { useNavigate } from "react-router-dom";
 
-const RoomList = () => {
+const SubjectLoad = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { handleSubmit, register } = useForm();
+  const navigate = useNavigate();
 
   const addMutation = useMutation({
     mutationFn: addRoom,
@@ -18,14 +20,14 @@ const RoomList = () => {
     <div className="">
       <div className="w-[1000px] h-[650px] relative">
         <section className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Room's List</h1>
+          <h1 className="text-2xl font-bold">Subject Load</h1>
           <button
             onClick={() => {
               isOpen ? setIsOpen(false) : setIsOpen(true);
             }}
             className="bg-blue-700 px-3 py-2 text-white font-semibold rounded-md text-sm"
           >
-            Add Room
+            Add Schedule
           </button>
         </section>
         <form
@@ -35,7 +37,7 @@ const RoomList = () => {
           } absolute tranform translate-x-1/2 translate-y-1/2  bottom-1/2 rounded-md bg-white flex flex-col shadow-md p-5 backdrop-blur-md duration-150`}
         >
           <section className="flex items-center justify-between mb-5 pl-2">
-            <h1 className="font-bold">Add Room</h1>
+            <h1 className="font-bold">Add Schedule</h1>
             <button
               type="button"
               onClick={() => {
@@ -94,18 +96,23 @@ const RoomList = () => {
         </section>
         <section className="py-3">
           <span className="flex gap-5 mb-3">
-            <h1 className="w-[250px] font-bold">Room Name</h1>
-            <h1 className="w-[150px] font-bold">Building</h1>
-            <h1 className="w-[150px] font-bold">Floor</h1>
+            <h1 className="w-[250px] font-bold pl-4">Course</h1>
             <h1 className="w-[230px] font-bold text-center">Action</h1>
           </span>
           <span className="flex gap-5 bg-slate-100 pl-3 py-3 text-sm items-center rounded-md border">
             <h1 className="flex gap-2 items-center w-[240px] pl-4 font-semibold">
               A601
             </h1>
-            <h1 className="w-[150px] font-semibold">Building A</h1>
-            <h1 className="w-[150px] font-semibold">6th</h1>
-            <h1 className="w-[230px] font-semibold flex gap-5 justify-center">
+            <h1 className="w-[230px] font-semibold flex gap-2 justify-center">
+              <button
+                onClick={() => {
+                  navigate("/admin/subject-load-details");
+                }}
+                type="button"
+                className="bg-green-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-green-700 active:scale-95 duration-200"
+              >
+                View
+              </button>
               <button
                 type="button"
                 className="bg-green-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-green-700 active:scale-95 duration-200"
@@ -126,4 +133,4 @@ const RoomList = () => {
   );
 };
 
-export default RoomList;
+export default SubjectLoad;

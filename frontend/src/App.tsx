@@ -28,6 +28,8 @@ import EmploymentForm from "./components/admin/employees/EmployeeForm";
 import UpdateEmployee from "./components/admin/employees/UpdateEmployee";
 import Test from "./components/admin/employees/Test";
 import RoomList from "./components/admin/rooms/RoomList";
+import SubjectLoad from "./components/admin/subject-load/SubjectLoad";
+import SubjectLoadDetails from "./components/admin/subject-load/SubjectLoadDetails";
 
 const router = createBrowserRouter([
   {
@@ -127,6 +129,14 @@ const router = createBrowserRouter([
       {
         path: "room-list",
         element: <RoomList />,
+      },
+      {
+        path: "subject-load",
+        element: <SubjectLoad />,
+      },
+      {
+        path: "subject-load-details",
+        element: <SubjectLoadDetails />,
       },
     ],
   },

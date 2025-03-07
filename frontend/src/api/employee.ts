@@ -1,11 +1,10 @@
 import apiClient from "./apiClient";
 import { IEmployeeGet, IEmployeePost } from "../interface/IEmployee";
 
-
 export const getEmployeeById = async ({
   id,
 }: {
-    id?: string
+  id?: string;
 }): Promise<IEmployeeGet> => {
   const response = await apiClient.get<IEmployeeGet>(`/employees/${id}`);
   return response.data;
@@ -19,22 +18,27 @@ export const getEmployeeById = async ({
 //   return response.data;
 // };
 
-export const getEmployees = async () => {
-  const response = await apiClient.get('/employees');
-  // console.log("Data :: ",response.data.results)
-  return response.data.results
-}
+export const getEmployees = async (): Promise<IEmployeeGet> => {
+  const response = await apiClient.get("/employees");
+  return response.data.results;
+};
 
-export const addEmployee = async (value: IEmployeePost) => {
-  await apiClient.post('/employees', value)
-}
+export const addEmployee = async (data: IEmployeePost) => {
+  const response = await apiClient.post("/employees", data);
+  return response.data;
+};
 
-export const updateEmployee = async ({value, id}:{value: IEmployeePost, id: string}) => {
+export const updateEmployee = async ({
+  value,
+  id,
+}: {
+  value: IEmployeePost;
+  id: string;
+}) => {
   try {
-    const response = await apiClient.patch(`/employees/${id}`, value);
-    return response.data; // Ensure we return the updated data
+    await apiClient.patch(`/employees/${id}`, value);
   } catch (error) {
     console.error("API Error:", error);
-    throw error; // Rethrow the error to let `onError` handle it in `useMutation`
+    throw error;
   }
 };

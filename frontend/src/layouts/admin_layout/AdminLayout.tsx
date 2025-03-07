@@ -73,6 +73,10 @@ const sidebarItemsConditional = [
         name: "Employees",
         path: "/admin/employees",
       },
+      {
+        name: "Subject Load",
+        path: "/admin/subject-load",
+      },
     ],
   },
   {

@@ -13,6 +13,7 @@ const Employees = () => {
   let { id } = useParams<string>();
   const navigate = useNavigate();
 
+  const query = useQuery({ queryKey: ["employee"], queryFn: getEmployees });
   // DELETE EMPLOYEE
   const deleteEmployee = async () => {
     try {
@@ -21,18 +22,11 @@ const Employees = () => {
     } catch {
       toast.error("Error in deleting employee");
     } finally {
+      query.refetch;
     }
   };
 
-  // get all employees
-  const query = useQuery({ queryKey: ["employee"], queryFn: getEmployees });
-
-  console.log("Query Data :: ", query.data);
-
   const [search, setSearch] = useState("");
-  // const filteredEmployees = query.data.filter((employee: IEmployeeGet) =>
-  //   employee.includes(search.toLowerCase())
-  // );
 
   const filteredEmployees = query.data?.length
     ? query.data.filter((employee: IEmployeeGet) =>
@@ -145,6 +139,7 @@ const Employees = () => {
                 </button>
                 <button
                   onClick={() => {
+                    id = employee._id;
                     deleteEmployee();
                   }}
                   type="button"
