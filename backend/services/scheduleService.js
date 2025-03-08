@@ -1,19 +1,19 @@
 const { Schedule } = require("../models/scheduleModel");
 
 const getSchedule = async (id) => {
-  const course = await Schedule.findById(id);
-  return course;
+  const schedule = await Schedule.findById(id);
+  return schedule;
 };
 
 const getSchedules = async () => {
-  const course = await Schedule.find();
-  return course;
+  const schedule = await Schedule.find();
+  return schedule;
 };
 
 const addSchedule = async (data) => {
-  const course = new Schedule(data);
-  await course.save();
-  return course;
+  const schedule = new Schedule(data);
+  await schedule.save();
+  return schedule;
 };
 
 const scheduleService = {

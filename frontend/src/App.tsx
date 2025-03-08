@@ -30,6 +30,7 @@ import RoomList from "./components/admin/rooms/RoomList";
 import SubjectLoad from "./components/admin/subject-load/SubjectLoad";
 import SubjectLoadDetails from "./components/admin/subject-load/SubjectLoadDetails";
 import CreateSchedule from "./components/registrar/CreateSchedule";
+import ViewSchedule from "./components/registrar/ViewSchedule";
 
 const router = createBrowserRouter([
   {
@@ -183,6 +184,10 @@ const router = createBrowserRouter([
       {
         path: "schedule/create",
         element: <CreateSchedule />,
+      },
+      {
+        path: "schedule/:id",
+        element: <ViewSchedule />,
       },
     ],
   },

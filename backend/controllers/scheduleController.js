@@ -27,4 +27,20 @@ const getSchedules = async (req, res) => {
   }
 };
 
-module.exports = { addSchedule, getSchedules };
+const getSchedule = async (req, res) => {
+  try {
+    const schedule = await scheduleService.getSchedule(req.params.id);
+
+    if (!schedule) {
+      return res.status(404).json({
+        message: "Not Found",
+      });
+    }
+
+    res.status(200).json(schedule);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+module.exports = { addSchedule, getSchedules, getSchedule };

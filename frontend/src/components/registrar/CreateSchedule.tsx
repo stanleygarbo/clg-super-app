@@ -266,22 +266,18 @@ function CreateSchedule() {
             />
           )}
         />
-        <div>
-          <input
-            {...subjectForm.register("timeStart")}
-            type="time"
-            className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
-            required
-          />
-        </div>
-        <div>
-          <input
-            {...subjectForm.register("timeEnd")}
-            type="time"
-            className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
-            required
-          />
-        </div>
+        <input
+          {...subjectForm.register("timeStart")}
+          type="time"
+          className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
+          required
+        />
+        <input
+          {...subjectForm.register("timeEnd")}
+          type="time"
+          className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
+          required
+        />
         <Controller
           control={subjectForm.control}
           name="day"

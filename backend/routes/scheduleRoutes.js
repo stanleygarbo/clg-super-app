@@ -33,6 +33,12 @@ router.get(
   scheduleController.getSchedules
 );
 
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  scheduleController.getSchedule
+);
+
 const scheduleRoutes = router;
 
 module.exports = scheduleRoutes;
