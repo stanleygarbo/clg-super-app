@@ -1,31 +1,36 @@
-import { IDepartmentFetch } from "./IDepartment";
+import { IDepartmentGet } from "./IDepartment";
+import { IPositionGet } from "./IPosition";
 
-export interface IEmployee {
-    _id: string;
-    firstName: string;
-    surname: string;
-    middleName: string;
-    username: string;
-    password: string;
-    department: IDepartmentFetch;
-    position: object;
-    hireDate: string;
-    employmentType: string;
-    roles: string[];
+export interface IEmployeeGet {
+  includes: any;
+  toLowerCase(): unknown;
+  _id: string;
+  firstName: string;
+  surname: string;
+  middleName: string;
+  username: string;
+  password: string;
+  department: IDepartmentGet;
+  position: IPositionGet;
+  hireDate: String;
+  employmentType: string;
+  roles: string[];
+  address: object;
+  gender: string;
 }
 
-export interface IEmployeeFetch {
-    _id: string;
-    firstName: string;
-    surname: string;
-    middleName: string;
-    username: string;
-    password: string;
-    departmentId: string;
-    department: string;
-    positionId: string;
-    position: string;
-    hireDate: string;
-    employmentType: string;
-    roles: string[];
-  }
+export interface IEmployeePost {
+  firstName: string;
+  surname: string;
+  middleName: string;
+  birthDate: string;
+  username: string;
+  password: string;
+  department: string;
+  position: string;
+  hireDate: String;
+  employmentType: string;
+  roles: string[];
+  address: object;
+  gender: string;
+}

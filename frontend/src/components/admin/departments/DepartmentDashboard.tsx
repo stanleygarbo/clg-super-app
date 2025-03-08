@@ -3,28 +3,17 @@ import AddDepartment from "./AddDepartment";
 import { useEffect, useState } from "react";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
-import { IDepartment } from "../../../interface/IDepartment";
-import { departmentData } from "../../../store/DepartmentData";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { IDepartmentGet } from "../../../interface/IDepartment";
+import { departmentPostData } from "../../../store/DepartmentData";
+import DepartmentList from "./DepartmentList";
+import { MdDelete } from "react-icons/md";
 
 const DepartmentDashboard = () => {
-  // const departments = [
-  //   { departmentName: "Faculty" },
-  //   { departmentName: "Clinic" },
-  //   { departmentName: "Registrar" },
-  //   { departmentName: "Admission" },
-  //   { departmentName: "SCC" },
-  //   { departmentName: "Accouting" },
-  //   { departmentName: "Admin" },
-  //   { departmentName: "Super" },
-  //   { departmentName: "HR" },
-  //   { departmentName: "CS Department" },
-  //   { departmentName: "HM Department" },
-  //   { departmentName: "BA Department" },
-  // ];
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [departments, setDepartments] = useState<IDepartment[]>([]);
+  const [departments, setDepartments] = useState<IDepartmentGet[]>([]);
+  let id: string;
   // const navigate = useNavigate();
 
   // FETCH DEPARTMENT
@@ -34,7 +23,6 @@ const DepartmentDashboard = () => {
       const response = await apiClient.get("/departments");
       setDepartments(response.data.results);
     } catch {
-      toast.error("Error while fetching data");
     } finally {
       setIsLoading(false);
     }
@@ -44,7 +32,7 @@ const DepartmentDashboard = () => {
   const handleSubmitDepartment = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setIsLoading(true);
-    let departmentName = departmentData.departmentName;
+    let departmentName = departmentPostData.departmentName;
 
     try {
       await apiClient.post("/departments", {
@@ -54,12 +42,24 @@ const DepartmentDashboard = () => {
       setIsOpen(true);
       toast.success("Department added successfully!");
     } catch (err) {
-      console.log(departmentData.departmentName);
+      console.log(departmentPostData.departmentName);
       toast.error("Error adding department");
     } finally {
       setIsLoading(false);
       setIsOpen(false);
-      departmentData.departmentName = "";
+      departmentPostData.departmentName = "";
+      fetchDepartment();
+    }
+  };
+
+  // DELETE DEPARTMENT
+  const deleteDepartment = async () => {
+    try {
+      await apiClient.delete("/departments/" + id);
+      toast.success("Successfully deleted department");
+    } catch {
+      toast.error("Error in deleting department");
+    } finally {
       fetchDepartment();
     }
   };
@@ -77,7 +77,7 @@ const DepartmentDashboard = () => {
             onClick={() => {
               isOpen ? setIsOpen(false) : setIsOpen(true);
             }}
-            className="bg-blue-700 px-3 py-2 text-white rounded-md text-sm font-semibold shadow hover:bg-blue-600 duration-200"
+            className="bg-blue-500 px-3 py-2 text-white rounded-md text-lg font-semibold shadow hover:bg-blue-700 active:scale-95 duration-200"
           >
             Add Department
           </button>
@@ -105,22 +105,22 @@ const DepartmentDashboard = () => {
           <AddDepartment />
           <button
             type="submit"
-            className="bg-blue-600 mt-5 p-1 text-white font-bold rounded-md hover:bg-blue-700 active:scale-95 duration-200"
+            className="bg-blue-500 mt-5 p-1 py-2 text-white font-bold rounded-md hover:bg-blue-700 active:scale-95 duration-200"
           >
-            Add
+            Add Department
           </button>
         </form>
 
         <section className="mt-5 bg-slate-100 px-5 py-3 rounded-t-md flex justify-between mb-3">
           <span className="flex gap-3">
-            <button
-              className={`bg-blue-600 text-white flex items-center gap-1 px-2 py-2 rounded-md shadow border-t`}
+            <h1
+              className={`bg-white text-blue-700 flex items-center gap-1 px-2 py-2 rounded-md hover:cursor-default`}
             >
               <p className="font-bold text-lg">
                 <IoListOutline />
               </p>
               <p className="text-sm font-semibold">LIST</p>
-            </button>
+            </h1>
           </span>
           <span className="flex gap-3 ">
             {/* <input
@@ -131,16 +131,34 @@ const DepartmentDashboard = () => {
           </span>
         </section>
         <section>
-          <span className="flex flex-col flex-wrap gap-3 h-[550px] overflow-scroll no-scrollbar">
-            {departments?.map((dept, index) => (
-              <h1
-                key={index}
-                className="bg-slate-100 px-5 py-2 font-bold rounded-md shadow border-t text-center"
-              >
-                {dept.departmentName}
+          <span className="flex flex-col flex-wrap gap- h-[550px] overflow-scroll no-scrollbar">
+            <span className="flex gap-5 mb-3 mt-2">
+              <h1 className="w-[240px] font-bold text-start px-3">
+                Department ID
               </h1>
+              <h1 className="w-[400px] font-bold">Department Name</h1>
+              <h1 className="w-[200px] font-bold text-start pl-5">Action</h1>
+            </span>
+            {departments.map((dept) => (
+              <section
+                key={dept._id}
+                className="flex gap-5 bg-slate-100 py-2 border"
+              >
+                <h1 className="w-[240px] px-3">{dept._id}</h1>
+                <h1 className="w-[400px]">{dept.departmentName}</h1>
+                <button
+                  onClick={() => {
+                    id = dept._id;
+                    deleteDepartment();
+                  }}
+                  className="bg-red-500 p-1 px-5 font-semibold text-white rounded-md hover:bg-red-700 active:scale-95 duration-200"
+                >
+                  Delete
+                </button>
+              </section>
             ))}
           </span>
+          {/* <DepartmentList /> */}
         </section>
       </div>
     </div>

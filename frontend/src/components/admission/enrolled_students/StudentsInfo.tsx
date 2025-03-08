@@ -4,11 +4,11 @@ import { getStudentById } from "../../../api/student";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
-import { studentData } from "../../../store/StudentData";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
 import { ISibling } from "../../../store/SiblingData";
 import { IProgram } from "../../../store/ProgramData";
+import { studentGetData } from "../../../store/StudentData";
 
 const StudentsInfo = () => {
   const { id } = useParams();
@@ -33,7 +33,7 @@ const StudentsInfo = () => {
   );
   // const [select, setSelect] = useState<"on" | "off" | undefined>("off");
   const [loading, setLoading] = useState(true);
-  const snapStudent = useSnapshot(studentData);
+  const snapStudent = useSnapshot(studentGetData);
   const [sibling, setSibling] = useState<ISibling[]>([]);
   const [programs, setPrograms] = useState<IProgram[]>([]);
 
@@ -86,20 +86,20 @@ const StudentsInfo = () => {
 
   useEffect(() => {
     if (query.data) {
-      studentData.surname = query.data.surname;
-      studentData.firstName = query.data.firstName;
-      studentData.middleName = query.data.middleName;
-      studentData.username = query.data.username;
-      studentData.telephone = query.data.telephone;
-      studentData.phone = query.data.phone;
-      studentData.email = query.data.email;
-      studentData.birth = query.data.birth;
-      studentData.program = query.data.program;
+      studentGetData.surname = query.data.surname;
+      studentGetData.firstName = query.data.firstName;
+      studentGetData.middleName = query.data.middleName;
+      studentGetData.username = query.data.username;
+      studentGetData.telephone = query.data.telephone;
+      studentGetData.phone = query.data.phone;
+      studentGetData.email = query.data.email;
+      studentGetData.birth = query.data.birth;
+      studentGetData.program = query.data.program;
 
       setSibling(query.data.siblings);
     }
 
-    // console.log(studentData.program.)
+    // console.log(studentGetData.program.)
     fetchPrograms();
   }, [query.data]);
 
@@ -163,7 +163,7 @@ const StudentsInfo = () => {
             </p>
             <input
               onChange={(e) => {
-                studentData.surname = e.target.value;
+                studentGetData.surname = e.target.value;
               }}
               type="text"
               readOnly={isUpdate}
@@ -177,7 +177,7 @@ const StudentsInfo = () => {
             </p>
             <input
               onChange={(e) => {
-                studentData.firstName = e.target.value;
+                studentGetData.firstName = e.target.value;
               }}
               type="text"
               readOnly={isUpdate}
@@ -191,7 +191,7 @@ const StudentsInfo = () => {
             </p>
             <input
               onChange={(e) => {
-                studentData.middleName = e.target.value;
+                studentGetData.middleName = e.target.value;
               }}
               value={snapStudent.middleName}
               type="text"
@@ -206,7 +206,7 @@ const StudentsInfo = () => {
             <select
               disabled={isUpdate}
               onChange={(e) => {
-                studentData.program = e.target.value;
+                studentGetData.program = e.target.value;
               }}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             >
@@ -215,9 +215,7 @@ const StudentsInfo = () => {
               </option> */}
               {programs.map((prog, index) => (
                 <option
-                  selected={
-                    prog.programAcronym === snapStudent.program.programAcronym
-                  }
+                  selected={prog.programAcronym === snapStudent.program}
                   key={index}
                   value={prog._id}
                 >
@@ -239,7 +237,7 @@ const StudentsInfo = () => {
             <select
               disabled={isUpdate}
               onChange={(e) => {
-                studentData.standing = e.target.value;
+                studentGetData.standing = e.target.value;
               }}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             >
@@ -274,7 +272,7 @@ const StudentsInfo = () => {
               type="text"
               readOnly={isUpdate}
               onChange={(e) => {
-                studentData.schoolYear = e.target.value;
+                studentGetData.schoolYear = e.target.value;
               }}
               value={snapStudent.schoolYear}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -288,7 +286,7 @@ const StudentsInfo = () => {
               type="text"
               readOnly={isUpdate}
               onChange={(e) => {
-                studentData.username = e.target.value;
+                studentGetData.username = e.target.value;
               }}
               value={snapStudent.username}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -302,7 +300,7 @@ const StudentsInfo = () => {
               type="text"
               readOnly={isUpdate}
               onChange={(e) => {
-                studentData.telephone = e.target.value;
+                studentGetData.telephone = e.target.value;
               }}
               value={snapStudent.telephone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -316,7 +314,7 @@ const StudentsInfo = () => {
               type="text"
               readOnly={isUpdate}
               onChange={(e) => {
-                studentData.phone = e.target.value;
+                studentGetData.phone = e.target.value;
               }}
               value={snapStudent.phone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -330,7 +328,7 @@ const StudentsInfo = () => {
               type="text"
               readOnly={isUpdate}
               onChange={(e) => {
-                studentData.email = e.target.value;
+                studentGetData.email = e.target.value;
               }}
               value={snapStudent.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -346,7 +344,7 @@ const StudentsInfo = () => {
               type="text"
               readOnly={isUpdate}
               onChange={(e) => {
-                studentData.birth.birthDate = e.target.value;
+                studentGetData.birth.birthDate = e.target.value;
               }}
               value={snapStudent.birth.birthDate}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -360,7 +358,7 @@ const StudentsInfo = () => {
               type="text"
               readOnly={isUpdate}
               onChange={(e) => {
-                studentData.birth.birthPlace = e.target.value;
+                studentGetData.birth.birthPlace = e.target.value;
               }}
               value={snapStudent.birth.birthPlace}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -374,7 +372,7 @@ const StudentsInfo = () => {
               type="text"
               readOnly={isUpdate}
               onChange={(e) => {
-                studentData.birth.citizenship = e.target.value;
+                studentGetData.birth.citizenship = e.target.value;
               }}
               value={snapStudent.birth.citizenship}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -387,7 +385,7 @@ const StudentsInfo = () => {
             <select
               disabled={isUpdate}
               onChange={(e) => {
-                studentData.birth.sex = e.target.value;
+                studentGetData.birth.sex = e.target.value;
               }}
               value={snapStudent.birth.sex}
               className={`border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1`}
@@ -402,7 +400,7 @@ const StudentsInfo = () => {
               type="text"
               readOnly={isUpdate}
               onChange={(e) => {
-                studentData.birth.sex = e.target.value;
+                studentGetData.birth.sex = e.target.value;
               }}
               value={snapStudent.birth.sex}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -416,7 +414,7 @@ const StudentsInfo = () => {
               type="text"
               readOnly={isUpdate}
               onChange={(e) => {
-                studentData.birth.religion = e.target.value;
+                studentGetData.birth.religion = e.target.value;
               }}
               value={snapStudent.birth.religion}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -881,7 +879,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.contact.telNum}
+              value={query.data?.guardian?.contact?.telnum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -892,7 +890,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.contact.phoneNum}
+              value={query.data?.guardian?.contact?.phoneNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -903,7 +901,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.contact.email}
+              value={query.data?.guardian?.contact?.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>

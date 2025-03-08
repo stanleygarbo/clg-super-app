@@ -1,14 +1,11 @@
-import { useSnapshot } from "valtio";
 import { useParams } from "react-router-dom";
-import { studentData } from "../../../store/StudentData";
 import { useQuery } from "@tanstack/react-query";
-import { getEmployee } from "../../../api/employee";
+import { getEmployeeById } from "../../../api/employee";
 import { useState } from "react";
-import { Employee } from "../../../interface/IEmployee";
+import { IEmployeeGet } from "../../../interface/IEmployee";
 
 const ProfileInfo = () => {
-  const snap = useSnapshot(studentData);
-  const [employee, setEmployee] = useState<Employee>();
+  const [employee, setEmployee] = useState<IEmployeeGet>();
   const { id } = useParams();
 
   // const authSnap = useSnapshot(authState);
@@ -17,7 +14,7 @@ const ProfileInfo = () => {
   if (id) {
     const query = useQuery({
       queryKey: ["employee", id],
-      queryFn: () => getEmployee({ id }),
+      queryFn: () => getEmployeeById({ id }),
       enabled: !!id,
     });
 

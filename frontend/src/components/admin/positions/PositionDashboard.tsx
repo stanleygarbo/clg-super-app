@@ -1,10 +1,10 @@
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { positionData } from "../../../store/PositionData";
 import apiClient from "../../../api/apiClient";
 import AddPosition from "./AddPosition";
 import PositionList from "./PositionList";
+import { positionPostData } from "../../../store/PositionData";
 
 const PositionDashboard = () => {
   const [isOpenPost, setIsOpenPost] = useState<boolean>(true);
@@ -19,8 +19,8 @@ const PositionDashboard = () => {
 
     try {
       const data = {
-        jobTitle: positionData?.jobTitle,
-        hourlyWage: positionData?.hourlyWage,
+        jobTitle: positionPostData?.jobTitle,
+        hourlyWage: positionPostData?.hourlyWage,
       };
       console.log("To be Added : ", data);
       await apiClient.post("/positions", data);
@@ -53,7 +53,7 @@ const PositionDashboard = () => {
               Position
             </button>
           </span>
-          
+
           {/* ADD POSITION */}
           <form
             onSubmit={handleSubmitPosition}

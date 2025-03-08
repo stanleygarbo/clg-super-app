@@ -1,16 +1,16 @@
 import { useSnapshot } from "valtio";
-import { studentData } from "../../../store/StudentData";
-import { Data } from "../../../store/Data";
+import { useState } from "react";
+import { studentPostData } from "../../../store/StudentData";
 
 const EFormStudent = () => {
-  const snap = useSnapshot(studentData);
-  const isOpen = useSnapshot(Data);
+  const snap = useSnapshot(studentPostData);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <div className="p-3">
       <div className="flex flex-col gap-3 pt-3 px-6 w-full">
         <section className="flex justify-between">
           <p className="font-bold">STUDENT'S INFORMATION</p>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               USN/LRN
             </p>
@@ -19,13 +19,13 @@ const EFormStudent = () => {
               type="text"
               value={snap.username}
               onChange={(e) => {
-                studentData.username = e.target.value;
+                studentPostData.username = e.target.value;
               }}
             />
           </span>
         </section>
         <div className="gap-3 grid grid-cols-3">
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Last Name
             </p>
@@ -34,11 +34,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.surname}
               onChange={(e) => {
-                studentData.surname = e.target.value;
+                studentPostData.surname = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               First Name
             </p>
@@ -47,11 +47,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.firstName}
               onChange={(e) => {
-                studentData.firstName = e.target.value;
+                studentPostData.firstName = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Middle Name
             </p>
@@ -60,13 +60,13 @@ const EFormStudent = () => {
               type="text"
               value={snap.middleName}
               onChange={(e) => {
-                studentData.middleName = e.target.value;
+                studentPostData.middleName = e.target.value;
               }}
             />
           </span>
         </div>
         <div className="grid grid-cols-3 gap-3">
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Telephone No.
             </p>
@@ -75,11 +75,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.telephone}
               onChange={(e) => {
-                studentData.telephone = e.target.value;
+                studentPostData.telephone = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Phone No.
             </p>
@@ -88,11 +88,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.phone}
               onChange={(e) => {
-                studentData.phone = e.target.value;
+                studentPostData.phone = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Email
             </p>
@@ -101,14 +101,14 @@ const EFormStudent = () => {
               type="text"
               value={snap.email}
               onChange={(e) => {
-                studentData.email = e.target.value;
+                studentPostData.email = e.target.value;
               }}
             />
           </span>
         </div>
         <h1 className="text-start font-semibold">BIRTH'S INFORMATION</h1>
         <div className="grid grid-cols-5 gap-3">
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Birthdate
             </p>
@@ -117,11 +117,11 @@ const EFormStudent = () => {
               type="date"
               value={snap.birth?.birthDate}
               onChange={(e) => {
-                studentData.birth.birthDate = e.target.value;
+                studentPostData.birth.birthDate = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Birthplace
             </p>
@@ -130,11 +130,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.birth?.birthPlace}
               onChange={(e) => {
-                studentData.birth.birthPlace = e.target.value;
+                studentPostData.birth.birthPlace = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Citizenship
             </p>
@@ -143,11 +143,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.birth?.citizenship}
               onChange={(e) => {
-                studentData.birth.citizenship = e.target.value;
+                studentPostData.birth.citizenship = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Sex
             </p>
@@ -155,15 +155,16 @@ const EFormStudent = () => {
               className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               value={snap.birth?.sex}
               onChange={(e) => {
-                studentData.birth.sex = e.target.value;
+                studentPostData.birth.sex = e.target.value;
               }}
             >
-              <option value=" "> </option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
+              <option value="male" selected>
+                MALE
+              </option>
+              <option value="female">FEMALE</option>
             </select>
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Religion
             </p>
@@ -172,7 +173,7 @@ const EFormStudent = () => {
               type="text"
               value={snap.birth.religion}
               onChange={(e) => {
-                studentData.birth.religion = e.target.value;
+                studentPostData.birth.religion = e.target.value;
               }}
             />
           </span>
@@ -185,7 +186,7 @@ const EFormStudent = () => {
         </h1>
 
         <div className="grid grid-cols-4 gap-3">
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Last Name
             </p>
@@ -194,11 +195,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.spouse?.lastName}
               onChange={(e) => {
-                studentData.spouse.lastName = e.target.value;
+                studentPostData.spouse.lastName = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               First Name
             </p>
@@ -207,11 +208,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.spouse?.firstName}
               onChange={(e) => {
-                studentData.spouse.firstName = e.target.value;
+                studentPostData.spouse.firstName = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Middle Name
             </p>
@@ -220,11 +221,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.spouse?.middleName}
               onChange={(e) => {
-                studentData.spouse.middleName = e.target.value;
+                studentPostData.spouse.middleName = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               No. of Child
             </p>
@@ -233,16 +234,14 @@ const EFormStudent = () => {
               type="number"
               value={snap.spouse?.children}
               onChange={(e) => {
-                studentData.spouse.children = Number(e.target.value);
+                studentPostData.spouse.children = Number(e.target.value);
               }}
             />
           </span>
         </div>
-        <h1 className="text-start font-semibold xs:text-center sm:text-center xs:py-5 sm:py-5 md:text-center md:py-5">
-          HOME ADDRESS
-        </h1>
-        <div className="grid grid-cols-5 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-5 ">
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+        <h1 className="text-start font-semibold">HOME ADDRESS</h1>
+        <div className="grid grid-cols-5 gap-3 ">
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               House No.
             </p>
@@ -251,11 +250,11 @@ const EFormStudent = () => {
               type="number"
               value={snap.homeAddress?.houseNum}
               onChange={(e) => {
-                studentData.homeAddress.houseNum = Number(e.target.value);
+                studentPostData.homeAddress.houseNum = Number(e.target.value);
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Street/Brgy.
             </p>
@@ -264,11 +263,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.homeAddress?.streetBrgy}
               onChange={(e) => {
-                studentData.homeAddress.streetBrgy = e.target.value;
+                studentPostData.homeAddress.streetBrgy = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               City
             </p>
@@ -277,11 +276,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.homeAddress.city}
               onChange={(e) => {
-                studentData.homeAddress.city = e.target.value;
+                studentPostData.homeAddress.city = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Province
             </p>
@@ -290,11 +289,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.homeAddress.province}
               onChange={(e) => {
-                studentData.homeAddress.province = e.target.value;
+                studentPostData.homeAddress.province = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               District
             </p>
@@ -303,16 +302,16 @@ const EFormStudent = () => {
               type="text"
               value={snap.homeAddress.district}
               onChange={(e) => {
-                studentData.homeAddress.district = e.target.value;
+                studentPostData.homeAddress.district = e.target.value;
               }}
             />
           </span>
         </div>
-        <h1 className="text-start xs:text-center sm:text-center xs:py-5 sm:py-5 md:text-center md:py-5 font-semibold">
+        <h1 className="text-start font-semibold">
           CITY ADRESS ( IF BOARDING )
         </h1>
-        <div className="grid grid-cols-4 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-5 ">
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+        <div className="grid grid-cols-4 gap-3 ">
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               House No.
             </p>
@@ -321,11 +320,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.boardAddress.houseNum}
               onChange={(e) => {
-                studentData.boardAddress.houseNum = Number(e.target.value);
+                studentPostData.boardAddress.houseNum = Number(e.target.value);
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               Street/Brgy.
             </p>
@@ -334,11 +333,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.boardAddress.streetBrgy}
               onChange={(e) => {
-                studentData.boardAddress.streetBrgy = e.target.value;
+                studentPostData.boardAddress.streetBrgy = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               City
             </p>
@@ -347,11 +346,11 @@ const EFormStudent = () => {
               type="text"
               value={snap.boardAddress.city}
               onChange={(e) => {
-                studentData.boardAddress.city = e.target.value;
+                studentPostData.boardAddress.city = e.target.value;
               }}
             />
           </span>
-          <span className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}>
+          <span className={`${isOpen ? "" : ""} relative`}>
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
               District
             </p>
@@ -360,7 +359,7 @@ const EFormStudent = () => {
               type="text"
               value={snap.boardAddress.district}
               onChange={(e) => {
-                studentData.boardAddress.district = e.target.value;
+                studentPostData.boardAddress.district = e.target.value;
               }}
             />
           </span>

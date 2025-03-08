@@ -1,8 +1,7 @@
 import { useSnapshot } from "valtio";
-import { studentData } from "../../../store/StudentData";
-import { Data } from "../../../store/Data";
 import { useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
+import { studentPostData } from "../../../store/StudentData";
 
 interface Sibling {
   fullName: string;
@@ -11,8 +10,8 @@ interface Sibling {
 }
 
 const EformSiblings = () => {
-  const snap = useSnapshot(studentData);
-  const isOpen = useSnapshot(Data);
+  const snap = useSnapshot(studentPostData);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [siblings, setSiblings] = useState<Sibling[]>([
     { fullName: "", age: "", occupationSchool: "" },
@@ -33,15 +32,13 @@ const EformSiblings = () => {
     setSiblings(updatedSiblings);
   };
 
-  studentData.siblings = siblings;
+  studentPostData.siblings = siblings;
   //   console.log(snap.siblings);
 
   return (
     <div className="p-3 duration-200">
       <section className="flex justify-between">
-        <p className="font-bold pb-2 xs:text-center xs:pb-5 sm:text-center sm:pb-5 md:pb-5 md:text-center">
-          SIBLING'S INFORMATION
-        </p>
+        <p className="font-bold pb-4 px-6">SIBLING'S INFORMATION</p>
       </section>
 
       <div className="flex flex-col gap-3 px-6">
@@ -51,11 +48,9 @@ const EformSiblings = () => {
               <div
                 className={`${
                   siblings.length > 1 ? "pr-10" : ""
-                } grid grid-cols-3 gap-3 py-5`}
+                } grid grid-cols-3 gap-3 pb-5`}
               >
-                <span
-                  className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}
-                >
+                <span className={`${isOpen ? "" : ""} relative`}>
                   <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                     Name
                   </p>
@@ -68,9 +63,7 @@ const EformSiblings = () => {
                     }}
                   />
                 </span>
-                <span
-                  className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}
-                >
+                <span className={`${isOpen ? "" : ""} relative`}>
                   <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                     Age
                   </p>
@@ -83,9 +76,7 @@ const EformSiblings = () => {
                     }}
                   />
                 </span>
-                <span
-                  className={`${isOpen ? "xs:-z-50 sm:-z-50" : ""} relative`}
-                >
+                <span className={`${isOpen ? "" : ""} relative`}>
                   <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                     Occupation/School
                   </p>
@@ -102,7 +93,7 @@ const EformSiblings = () => {
                   <button
                     type="button"
                     onClick={() => removeSibling(index)}
-                    className="text-white text-xl shadow-sm shadow-red-600/50 my-1 rounded-md bg-red-600 p-1 absolute transform -translate-x-1 -translate-y-5 top-1/2 right-0 hover:scale-105 active:scale-95 duration-200"
+                    className="text-white text-xl shadow-sm shadow-red-600/50 my-1 rounded-md bg-red-600 p-1 absolute transform -translate-x-1 -translate-y-5 top-4 right-0 hover:scale-105 active:scale-95 duration-200"
                   >
                     <MdDeleteForever />
                   </button>
@@ -113,7 +104,7 @@ const EformSiblings = () => {
           <button
             type="button"
             onClick={addSibling}
-            className="py-2 bg-slate-200 w-52 text-black font-bold rounded-md shadow-sm hover:shadow-slate-200/50 hover:shadow-md hover:scale-105 active:scale-95 duration-200"
+            className="py-2 bg-slate-200 w-52 text-black font-bold rounded-md shadow hover:shadow-lg active:shadow  duration-200"
           >
             Add Another Sibling
           </button>

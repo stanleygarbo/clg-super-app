@@ -1,26 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import { RiSidebarFoldFill } from "react-icons/ri";
 import SidebarItems, { ISidebarItem } from "./SidebarItems";
-import { useSnapshot } from "valtio";
-import { Data } from "../../store/Data";
+import { useState } from "react";
 
 const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
   const navigate = useNavigate();
-  const isOpen = useSnapshot(Data);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <aside>
       <div
         className={` ${
           isOpen
-            ? "xs:w-[400px] sm:w-[400px] w-[250px] xl:w-[300px]"
-            : "w-[10px]"
+            ? "w-[10px]"
+            : "xs:w-[400px] sm:w-[400px] w-[250px] xl:w-[300px]"
         } duration-200 min-h-screen h-full bg-white xs:pr-4 sm:pr-4 fixed border-r p-5 flex flex-col justify-between overflow-y-scroll no-scrollbar`}
       >
         <button
           className={`absolute -right-3 top-9 w-7 text-xl md:hidden lg:hidden xl:hidden 2xl:hidden`}
           onClick={() => {
-            Data.isOpen = false;
+            setIsOpen(false);
           }}
         >
           <RiSidebarFoldFill />

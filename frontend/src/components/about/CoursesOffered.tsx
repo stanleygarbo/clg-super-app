@@ -17,18 +17,18 @@ const CoursesOffered = () => {
   ];
 
   return (
-    <div>
-      <div className=" pr-20">
-        <h1 className="font-bold pb-2 pt-10 text-xl text-start  ">College</h1>
-        <h1 className="font-bold pb-2 pt-10 text-xl text-start">Bachelor's</h1>
-        {courses.map((courses, index) => (
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <div className="mb-10">
+        <h1 className="font-bold text-3xl mb-8">Programs Offered</h1>
+        <h2 className="font-bold text-xl mb-6">College Programs</h2>
+        {courses.map((course, index) => (
           <div
-            className="flex group my-5 px-3 py-4 relative hover:bg-blue-50 transition-all duration-[.30s] rounded-tr-xl rounded-br-xl"
+            className="flex group mb-4 px-4 py-5 relative hover:bg-blue-50 transition-all duration-300 rounded-tr-xl rounded-br-xl shadow-sm"
             key={index}
           >
-            <div className="w-1 h-full rounded group-hover:bg-blue-500 transition-all duration-[.30s] absolute top-0 left-0"></div>
-            <div className="ml-2">
-              <p className="pr-5 font-bold">{courses.cName}</p>
+            <div className="w-1 h-full rounded group-hover:bg-blue-500 transition-all duration-300 absolute top-0 left-0"></div>
+            <div className="ml-3">
+              <p className="font-bold text-gray-800">{course.cName}</p>
             </div>
           </div>
         ))}

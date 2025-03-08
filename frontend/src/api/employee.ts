@@ -1,20 +1,44 @@
 import apiClient from "./apiClient";
-import { IEmployee } from "../interface/IEmployee";
+import { IEmployeeGet, IEmployeePost, Employee } from "../interface/IEmployee";
 
-type authResp = {};
-
-export const getEmployee = async ({
+export const getEmployeeById = async ({
   id,
 }: {
-    id?: string
-}): Promise<IEmployee> => {
-  const response = await apiClient.get<IEmployee>(`/employees/${id}`);
+  id?: string;
+}): Promise<IEmployeeGet> => {
+  const response = await apiClient.get<IEmployeeGet>(`/employees/${id}`);
   return response.data;
 };
 
-type Empoyees = (Omit<IEmployee, "department"> & Omit<IEmployee, "position"> & {position: {jobTitle:string; hourlyWage:number}, department:{departmentName:string}})[]
+// type Employees = (Omit<IEmployeeGet, "department"> & Omit<IEmployeeGet, "position"> & {position: {jobTitle:string; hourlyWage:number}, department:{departmentName:string}})[]
 
-export const getEmployees = async (): Promise<IEmployee[]> => {
-  const response = await apiClient.get(`/employees`);
+// export const getEmployees = async (): Promise<{results:Employees}> => {
+//   const response = await apiClient.get<{results:Employees}>(`/employees`);
+//   // console.log(response)
+//   return response.data;
+// };
+
+export const getEmployees = async (): Promise<IEmployeeGet> => {
+  const response = await apiClient.get("/employees");
   return response.data.results;
+};
+
+export const addEmployee = async (data: IEmployeePost) => {
+  const response = await apiClient.post("/employees", data);
+  return response.data;
+};
+
+export const updateEmployee = async ({
+  value,
+  id,
+}: {
+  value: IEmployeePost;
+  id: string;
+}) => {
+  try {
+    await apiClient.patch(`/employees/${id}`, value);
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
 };

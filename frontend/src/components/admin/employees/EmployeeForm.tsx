@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import { IPositionGet } from "../../../interface/IPosition";
 import { IDepartmentGet } from "../../../interface/IDepartment";
 import apiClient from "../../../api/apiClient";
-import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getEmployeeById, updateEmployee } from "../../../api/employee";
-import Select from "react-select";
-import { useForm } from "react-hook-form";
-import { IEmployeePost } from "../../../interface/IEmployee";
 import { toast } from "react-toastify";
+import { IEmployeePost } from "../../../interface/IEmployee";
+import { useMutation } from "@tanstack/react-query";
+import { Controller, useForm } from "react-hook-form";
+import { addEmployee } from "../../../api/employee";
+import Select from "react-select";
+import { useNavigate } from "react-router-dom";
 
-const UpdateEmployee = () => {
+const EmploymentForm = () => {
   const [position, setPosition] = useState<IPositionGet[]>([]);
   const [department, setDepartment] = useState<IDepartmentGet[]>([]);
-  let { id } = useParams<string>();
   const navigate = useNavigate();
 
   const roles = [
@@ -35,6 +34,7 @@ const UpdateEmployee = () => {
       const response = await apiClient.get("/departments");
       setDepartment(response.data.results);
     } catch {
+      toast.error("Error while getting the departments");
     } finally {
     }
   };
@@ -45,52 +45,86 @@ const UpdateEmployee = () => {
       const response = await apiClient.get("/positions");
       setPosition(response.data.results);
     } catch {
+      toast.error("Error while getting the departments");
     } finally {
     }
   };
 
-  const updateMutation = useMutation({
-    mutationFn: updateEmployee,
-    onSuccess: () => {
-      toast.success("Successfully updated employee");
-      navigate("/admin/employees");
-    },
-    onError: (error) => {
-      console.error("Error updating employee:", error);
-    },
-  });
-
-  const query = useQuery({
-    queryKey: ["employee", id],
-    queryFn: () => getEmployeeById({ id }),
-  });
-
-  const { handleSubmit, register, watch, setValue } = useForm<IEmployeePost>({
-    defaultValues: {
-      gender: query.data?.gender,
-    },
-  });
-  const gender = watch("gender");
+  // ADD EMPLOYEE
+  // const addEmployee = async (e: { preventDefault: () => void }) => {
+  //   try {
+  //     e.preventDefault();
+  //     setIsLoading(true);
+  //     employeePostData.hireDate = new Date().toISOString();
+  //     employeePostData.birthDate = new Date(
+  //       day + "-" + month + "-" + year
+  //     ).toISOString();
+  //     try {
+  //       const data = {
+  //         firstName: employeePostData.firstName,
+  //         surname: employeePostData.surname,
+  //         middleName: employeePostData.middleName,
+  //         username: employeePostData.username,
+  //         password: employeePostData.password,
+  //         department: employeePostData.department,
+  //         position: employeePostData.position,
+  //         hireDate: employeePostData.hireDate,
+  //         employmentType: employeePostData.employmentType,
+  //         roles: employeePostData.roles
+  //           ? JSON.parse(JSON.stringify(employeePostData.roles))
+  //           : [],
+  //       };
+  //       console.log("DATA :: ", data);
+  //       await apiClient.post("/employees", data);
+  //       toast.success("Employee added successfully!");
+  //     } catch (err) {
+  //       setError("Error adding employee");
+  //       toast.error(error);
+  //     } finally {
+  //       // fetchEmployee();
+  //       setIsLoading(false);
+  //       // setIsOpen(false);
+  //     }
+  //   } catch {}
+  // };
 
   useEffect(() => {
     getDepartments();
     getPositions();
-    if (query.data) {
-      setValue("surname", query.data.surname);
-      setValue("firstName", query.data.firstName);
-      setValue("middleName", query.data.middleName);
-      setValue("username", query.data.username);
-      setValue("employmentType", query.data.employmentType);
-      setValue("password", query.data.password);
-      setValue("gender", query.data.gender);
-      setValue("position", query.data?.position?._id);
-      setValue("department", query.data?.department?._id);
-    }
-  }, [query.data, setValue]);
+  }, []);
 
-  const defaultRoles = roles.filter((role) =>
-    query.data?.roles?.includes(role.value)
-  );
+  // const query = useQuery({
+  //   queryKey: ["employee"],
+  //   queryFn: () => getEmployees,
+  // });
+
+  const addMutation = useMutation({
+    mutationFn: (data: IEmployeePost) => addEmployee(data),
+    onSuccess: (data) => {
+      toast.success(`Employee ${data.firstName} added successfully!`);
+      navigate("/admin/employees");
+    },
+  });
+
+  const onSubmit = (data: IEmployeePost) => {
+    // addMutation.mutate(data);
+    const formattedData = {
+      ...data,
+      roles: Array.isArray(data.roles)
+        ? data.roles.map((role) => role.value)
+        : [],
+    };
+    console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
+
+    addMutation.mutate(formattedData);
+  };
+
+  const { handleSubmit, register, control } = useForm<IEmployeePost>({
+    defaultValues: {
+      gender: "male",
+      hireDate: new Date().toISOString().split("T")[0],
+    },
+  });
 
   return (
     <div className="m-10">
@@ -98,16 +132,8 @@ const UpdateEmployee = () => {
         <h1 className="font-bold text-2xl text-start mt-5 pt-5 px-12 text-blue-800">
           Employee Form
         </h1>
-        <form
-          onSubmit={handleSubmit((data) => {
-            if (!id) {
-              console.error("No employee ID found!");
-              return;
-            }
-            updateMutation.mutate({ id, value: { ...data, gender } });
-          })}
-          className="pt-6 p-5 grid gap-5"
-        >
+        <input type="text" {...register("hireDate")} className="hidden" />
+        <form onSubmit={handleSubmit(onSubmit)} className="pt-6 p-5 grid gap-5">
           {/* <img
             src="https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
             alt="IMG"
@@ -124,26 +150,40 @@ const UpdateEmployee = () => {
               type="text"
               placeholder="First Name"
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              defaultValue={query.data?.firstName}
               {...register("firstName")}
             />
             <input
               type="text"
               placeholder="Middle Name"
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              defaultValue={query.data?.middleName}
               {...register("middleName")}
             />
           </section>
-          <section className="grid grid-cols-[1fr_200px] gap-5 px-10">
+          <section className="grid grid-cols-3 gap-5 px-10">
+            <span className="flex flex-col gap-2">
+              <h1 className="text-sm font-semibold">Birthdate :</h1>
+              <input
+                type="date"
+                className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+                {...register("birthDate")}
+              />
+            </span>
             <span className="flex flex-col gap-2">
               <h1 className="text-sm font-semibold">Roles :</h1>
-              <Select
-                options={roles}
-                isMulti
-                defaultValue={defaultRoles}
-                // {...register("roles")}
-                className="h-[40px] w-[100%]"
+              <Controller
+                name="roles"
+                control={control}
+                defaultValue={[]} // Default value must be an array for isMulti
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    isMulti
+                    options={roles}
+                    className="w-full"
+                    onChange={(selected) => field.onChange(selected)}
+                    value={field.value || []} // Ensures value is never undefined
+                  />
+                )}
               />
             </span>
             <span className="px-5">
@@ -176,14 +216,9 @@ const UpdateEmployee = () => {
               <select
                 {...register("position")}
                 className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-                defaultValue={query.data?.position?._id}
               >
                 {position.map((pos, index) => (
-                  <option
-                    key={index}
-                    value={pos._id}
-                    selected={query.data?.position?._id == pos._id}
-                  >
+                  <option key={index} value={pos._id} selected={index == 1}>
                     {pos.jobTitle}
                   </option>
                 ))}
@@ -194,15 +229,10 @@ const UpdateEmployee = () => {
 
               <select
                 className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-                defaultValue={query.data?.department?._id}
                 {...register("department")}
               >
                 {department.map((dept, index) => (
-                  <option
-                    key={index}
-                    value={dept._id}
-                    selected={query.data?.department?._id == dept._id}
-                  >
+                  <option key={index} value={dept._id} selected={index == 0}>
                     {dept.departmentName}
                   </option>
                 ))}
@@ -212,21 +242,12 @@ const UpdateEmployee = () => {
               <h1 className="text-sm font-semibold">Employment Type :</h1>
               <select
                 className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-                defaultValue={query.data?.employmentType}
                 {...register("employmentType")}
               >
-                <option
-                  value="regular"
-                  selected={query.data?.employmentType == "regular"}
-                >
+                <option value="regular" selected>
                   regular
                 </option>
-                <option
-                  value="contractual"
-                  selected={query.data?.employmentType == "contractual"}
-                >
-                  contractual
-                </option>
+                <option value="contractual">contractual</option>
               </select>
             </span>
           </section>
@@ -235,14 +256,12 @@ const UpdateEmployee = () => {
               type="text"
               placeholder="Username"
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              defaultValue={query.data?.username}
               {...register("username")}
             />
             <input
               type="password"
               placeholder="Password"
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              defaultValue={query.data?.password}
               {...register("password")}
             />
             <input
@@ -263,4 +282,4 @@ const UpdateEmployee = () => {
   );
 };
 
-export default UpdateEmployee;
+export default EmploymentForm;
