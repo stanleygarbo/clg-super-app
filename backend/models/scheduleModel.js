@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Program = require("./programModel");
 
 const subjectScheduleSchema = new mongoose.Schema({
   courseID: {
@@ -30,6 +31,11 @@ const subjectScheduleSchema = new mongoose.Schema({
 
 const scheduleSchema = new mongoose.Schema(
   {
+    program: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Program",
+      required: true,
+    },
     schoolYear: {
       type: String,
       required: true,

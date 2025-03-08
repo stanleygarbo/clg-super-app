@@ -1,4 +1,4 @@
-interface SubjectSchedule {
+export interface ISubjectSchedule {
     courseID: string,
     timeStart: string,
     timeEnd: string,
@@ -10,5 +10,5 @@ interface SubjectSchedule {
 export interface ISchedule {
     schoolYear: string,
     semester: string,
-    subjectSchedules: [SubjectSchedule]
+    subjectSchedules: [ISubjectSchedule]
 }

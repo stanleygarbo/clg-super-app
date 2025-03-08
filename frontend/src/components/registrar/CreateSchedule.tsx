@@ -1,16 +1,311 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
+import { getPrograms } from "../../api/programs";
+import { IProgram } from "../../interface/IProgram";
+import { getCourses } from "../../api/course";
+import { ICourse } from "../../interface/ICourse";
+import { getEmployees } from "../../api/employee";
+import { IEmployee } from "../../interface/IEmployee";
+import { useForm, Controller } from "react-hook-form";
+import { ISubjectSchedule } from "../../interface/ISchedule";
+import { Slide, toast } from "react-toastify";
+import { addSchedule } from "../../api/schedule";
+
+interface IOption {
+  value: string;
+  label: string;
+}
+
+const semesterOptions = [
+  { value: "1st", label: "First semester" },
+  { value: "2nd", label: "Second semester" },
+  { value: "summer", label: "Summer" },
+];
+
+const dayOptions = [
+  { value: "sun", label: "Sunday" },
+  { value: "mon", label: "Monday" },
+  { value: "tue", label: "Tuesday" },
+  { value: "wed", label: "Wednesday" },
+  { value: "thu", label: "Thursday" },
+  { value: "fri", label: "Friday" },
+  { value: "sat", label: "Saturday" },
+];
+
+const roomOptions = [
+  { value: "slab1", label: "Slab 1" },
+  { value: "slab2", label: "Slab 2" },
+];
 
 function CreateSchedule() {
-  const [courses, setCourses] = useState([]);
+  const scheduleForm = useForm();
+  const subjectForm = useForm();
+  const [programOptions, setProgramOptions] = useState<IOption[]>([]);
+  const [courseOptions, setCourseOptions] = useState<IOption[]>([]);
+  const [instructorOptions, setInstructorOptions] = useState<IOption[]>([]);
+  const [subjectSchedules, setSubjectSchedules] = useState<ISubjectSchedule[]>(
+    []
+  );
+
+  const loadOptions = async () => {
+    const programs = await getPrograms();
+    const courses = await getCourses();
+    const employees = await getEmployees();
+
+    setProgramOptions(
+      programs.results.map((program: IProgram) => {
+        return { value: program._id, label: program.programName };
+      })
+    );
+    setCourseOptions(
+      courses.results.map((course: ICourse) => {
+        return { value: course._id, label: course.courseName };
+      })
+    );
+    setInstructorOptions(
+      employees.map((employee: IEmployee) => {
+        return {
+          value: employee._id,
+          label: `${employee.firstName} ${employee.surname}`,
+        };
+      })
+    );
+  };
+
+  const onSubjectSubmit = (data: any) => {
+    setSubjectSchedules((prevState) => [...prevState, data]);
+  };
+
+  const onScheduleSubmit = (data: any) => {
+    const date = new Date();
+
+    if (subjectSchedules.length == 0) {
+      toast.error("Invalid", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });
+      return;
+    }
+
+    data.schoolYear = `${date.getFullYear()}-${date.getFullYear() + 1}`;
+    data.subjectSchedules = subjectSchedules;
+    console.log(data);
+    addSchedule(data);
+  };
+
+  const convertMilitaryTo12Hour = (time: string): string => {
+    let [hours, minutes] = time.split(":").map(Number);
+    const period = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    return `${String(hours).padStart(2, "0")}:${minutes} ${period}`;
+  };
+
+  useEffect(() => {
+    loadOptions();
+  }, []);
 
   return (
-    <div className="w-full">
+    <div className="flex flex-col gap-8 w-full">
       <header className="flex justify-between items-center h-12">
         <p className="text-2xl font-bold">Schedule</p>
-        <div></div>
+        <form
+          className="flex gap-4"
+          onSubmit={scheduleForm.handleSubmit(onScheduleSubmit)}
+        >
+          <Controller
+            control={scheduleForm.control}
+            name="program"
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={programOptions}
+                value={programOptions.find(
+                  (option) => option.value === field.value
+                )}
+                onChange={(option) => field.onChange(option?.value)}
+                className="w-96"
+              />
+            )}
+          />
+          <Controller
+            control={scheduleForm.control}
+            name="semester"
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={semesterOptions}
+                value={semesterOptions.find(
+                  (option) => option.value === field.value
+                )}
+                onChange={(option) => field.onChange(option?.value)}
+                className="w-48"
+              />
+            )}
+          />
+          {/* <Select options={semesterOptions} className="w-48" /> */}
+          <button
+            type="submit"
+            className="px-4 rounded-md text-white bg-blue-600"
+          >
+            Submit schedule
+          </button>
+        </form>
       </header>
-      <section></section>
+      <table className="w-full">
+        <thead>
+          <tr className="grid grid-cols-scheduleCreate gap-2">
+            <th>Subject</th>
+            <th>Time Start</th>
+            <th>Time End</th>
+            <th>Days</th>
+            <th>Room</th>
+            <th>Instructor</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {subjectSchedules.map((subjectSchedule) => (
+            <tr className="grid grid-cols-scheduleCreate justify-center gap-2">
+              <td>
+                {
+                  courseOptions.find(
+                    (course) => course.value == subjectSchedule.courseID
+                  )?.label
+                }
+              </td>
+              <td className="text-center">
+                {convertMilitaryTo12Hour(subjectSchedule.timeStart)}
+              </td>
+              <td className="text-center">
+                {convertMilitaryTo12Hour(subjectSchedule.timeEnd)}
+              </td>
+              <td className="text-center">
+                {subjectSchedule.day
+                  .map((day) => dayOptions.find((d) => d.value == day)?.label)
+                  .join(" / ")}
+              </td>
+              <td className="text-center">
+                {
+                  roomOptions.find((room) => room.value == subjectSchedule.room)
+                    ?.label
+                }
+              </td>
+              <td className="text-center">
+                {
+                  instructorOptions.find(
+                    (instructor) =>
+                      instructor.value == subjectSchedule.instructorID
+                  )?.label
+                }
+              </td>
+              <td className="text-end">Edit / Delete</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <form
+        className="grid grid-cols-scheduleCreate gap-2 w-full"
+        onSubmit={subjectForm.handleSubmit(onSubjectSubmit)}
+      >
+        <Controller
+          control={subjectForm.control}
+          name="courseID"
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Select
+              {...field}
+              options={courseOptions}
+              value={courseOptions.find(
+                (option) => option.value === field.value
+              )}
+              onChange={(option) => field.onChange(option?.value)}
+            />
+          )}
+        />
+        <div>
+          <input
+            {...subjectForm.register("timeStart")}
+            type="time"
+            className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
+            required
+          />
+        </div>
+        <div>
+          <input
+            {...subjectForm.register("timeEnd")}
+            type="time"
+            className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
+            required
+          />
+        </div>
+        <Controller
+          control={subjectForm.control}
+          name="day"
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Select
+              {...field}
+              options={dayOptions}
+              isMulti={true}
+              value={dayOptions.filter((option) =>
+                field.value?.includes(option.value)
+              )}
+              onChange={(selectedOptions) =>
+                field.onChange(
+                  selectedOptions
+                    ? selectedOptions.map((option) => option.value)
+                    : []
+                )
+              }
+            />
+          )}
+        />
+        <Controller
+          control={subjectForm.control}
+          name="room"
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Select
+              {...field}
+              options={roomOptions}
+              value={courseOptions.find(
+                (option) => option.value === field.value
+              )}
+              onChange={(option) => field.onChange(option?.value)}
+            />
+          )}
+        />
+        <Controller
+          control={subjectForm.control}
+          name="instructorID"
+          rules={{ required: true }}
+          render={({ field }) => (
+            <Select
+              options={instructorOptions}
+              {...field}
+              value={courseOptions.find(
+                (option) => option.value === field.value
+              )}
+              onChange={(option) => field.onChange(option?.value)}
+            />
+          )}
+        />
+        <button
+          type="submit"
+          className="px-4 rounded-md text-white bg-blue-600"
+        >
+          Add subject
+        </button>
+      </form>
     </div>
   );
 }

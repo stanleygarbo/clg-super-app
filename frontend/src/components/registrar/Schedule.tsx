@@ -5,11 +5,13 @@ import { ISchedule } from "../../interface/ISchedule";
 import { ICourse } from "../../interface/ICourse";
 import { IEmployee } from "../../interface/IEmployee";
 import { getEmployees } from "../../api/employee";
+import { useNavigate } from "react-router-dom";
 
 function Schedule() {
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [schedules, setSchedules] = useState<ISchedule[]>([]);
   const [employees, setEmployees] = useState<IEmployee[]>([]);
+  const navigate = useNavigate();
 
   const fetchCourses = async () => {
     try {
@@ -24,6 +26,10 @@ function Schedule() {
     }
   };
 
+  const handleClick = () => {
+    navigate("create");
+  };
+
   useEffect(() => {
     fetchCourses();
   }, []);
@@ -32,7 +38,10 @@ function Schedule() {
     <main className="w-full">
       <header className="flex justify-between items-center h-12">
         <p className="text-2xl font-bold">Schedule</p>
-        <button className="px-3 py-2 text-white font-semibold rounded-md bg-blue-600">
+        <button
+          className="px-3 py-2 text-white font-semibold rounded-md bg-blue-600"
+          onClick={handleClick}
+        >
           Create schedule
         </button>
       </header>

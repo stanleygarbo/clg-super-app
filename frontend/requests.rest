@@ -42,9 +42,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlN
 
 POST http://localhost:3000/api/schedules HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTM0MzkyMywiZXhwIjoxNzQxMzcyNzIzfQ.kckcDtptevRY9wyCRkHFuEN2ecky8ulIKM-CbKz2thY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTQxNjgwOCwiZXhwIjoxNzQxNDQ1NjA4fQ.PEY2b87IcOuB8ySLNUWAXRwWkar97dsfnDHvLWqJ2BY
 
 {
+  "program": "67879364292391c7c3a3e73d",
   "schoolYear": "2024-2025",
   "semester": "1st",
   "subjectSchedules": [
