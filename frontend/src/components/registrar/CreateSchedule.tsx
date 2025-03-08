@@ -80,7 +80,7 @@ function CreateSchedule() {
     const date = new Date();
 
     if (subjectSchedules.length == 0) {
-      toast.error("Invalid", {
+      toast.error("Must have at least one subject", {
         position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: true,
@@ -97,7 +97,33 @@ function CreateSchedule() {
     data.schoolYear = `${date.getFullYear()}-${date.getFullYear() + 1}`;
     data.subjectSchedules = subjectSchedules;
     console.log(data);
-    addSchedule(data);
+
+    try {
+      addSchedule(data);
+      toast.success("Schedule added successfully", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });
+    } catch (error) {
+      toast.error("Something went wrong!", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Slide,
+      });
+    }
   };
 
   const convertMilitaryTo12Hour = (time: string): string => {
