@@ -1,6 +1,22 @@
 import { IDepartmentGet } from "./IDepartment";
 import { IPositionGet } from "./IPosition";
 
+export interface IEmployee {
+  _id: string;
+  firstName: string;
+  surname: string;
+  middleName: string;
+  username: string;
+  password: string;
+  department: IDepartmentGet;
+  position: IPositionGet;
+  hireDate: String;
+  employmentType: string;
+  roles: string[];
+  address: object;
+  gender: string;
+}
+
 export interface IEmployeeGet {
   includes: any;
   toLowerCase(): unknown;

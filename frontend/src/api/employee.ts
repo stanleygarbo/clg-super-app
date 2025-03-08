@@ -1,5 +1,5 @@
 import apiClient from "./apiClient";
-import { IEmployeeGet, IEmployeePost, Employee } from "../interface/IEmployee";
+import { IEmployeeGet, IEmployeePost } from "../interface/IEmployee";
 
 export const getEmployeeById = async ({
   id,
@@ -19,6 +19,11 @@ export const getEmployeeById = async ({
 // };
 
 export const getEmployees = async (): Promise<IEmployeeGet> => {
+  const response = await apiClient.get("/employees");
+  return response.data.results;
+};
+
+export const getEmployeees = async () => {
   const response = await apiClient.get("/employees");
   return response.data.results;
 };

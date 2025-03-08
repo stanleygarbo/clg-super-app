@@ -3,21 +3,21 @@ import { getCourses } from "../../api/course";
 import { getSchedules } from "../../api/schedule";
 import { ISchedule } from "../../interface/ISchedule";
 import { ICourse } from "../../interface/ICourse";
-import { IEmployee } from "../../interface/IEmployee";
-import { getEmployees } from "../../api/employee";
+import { IEmployeeGet } from "../../interface/IEmployee";
+import { getEmployeees } from "../../api/employee";
 import { useNavigate } from "react-router-dom";
 
 function Schedule() {
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [schedules, setSchedules] = useState<ISchedule[]>([]);
-  const [employees, setEmployees] = useState<IEmployee[]>([]);
+  const [employees, setEmployees] = useState<IEmployeeGet[]>([]);
   const navigate = useNavigate();
 
   const fetchCourses = async () => {
     try {
       const res = await getCourses();
       const sched = await getSchedules();
-      const emp = await getEmployees();
+      const emp = await getEmployeees();
       setCourses(res.results);
       setSchedules(sched);
       setEmployees(emp);

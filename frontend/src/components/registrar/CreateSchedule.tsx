@@ -4,8 +4,8 @@ import { getPrograms } from "../../api/programs";
 import { IProgram } from "../../interface/IProgram";
 import { getCourses } from "../../api/course";
 import { ICourse } from "../../interface/ICourse";
-import { getEmployees } from "../../api/employee";
-import { IEmployee } from "../../interface/IEmployee";
+import { getEmployeees } from "../../api/employee";
+import { IEmployeeGet } from "../../interface/IEmployee";
 import { useForm, Controller } from "react-hook-form";
 import { ISubjectSchedule } from "../../interface/ISchedule";
 import { Slide, toast } from "react-toastify";
@@ -50,7 +50,7 @@ function CreateSchedule() {
   const loadOptions = async () => {
     const programs = await getPrograms();
     const courses = await getCourses();
-    const employees = await getEmployees();
+    const employees = await getEmployeees();
 
     setProgramOptions(
       programs.results.map((program: IProgram) => {
@@ -62,8 +62,9 @@ function CreateSchedule() {
         return { value: course._id, label: course.courseName };
       })
     );
+
     setInstructorOptions(
-      employees.map((employee: IEmployee) => {
+      employees.map((employee: IEmployeeGet) => {
         return {
           value: employee._id,
           label: `${employee.firstName} ${employee.surname}`,
