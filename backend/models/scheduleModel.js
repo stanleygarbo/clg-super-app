@@ -19,7 +19,8 @@ const subjectScheduleSchema = new mongoose.Schema({
     required: true,
   },
   room: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Room",
     required: true,
   },
   instructorID: {

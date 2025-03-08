@@ -6,11 +6,14 @@ import { ICourse } from "../../interface/ICourse";
 import { IEmployeeGet } from "../../interface/IEmployee";
 import { getEmployeees } from "../../api/employee";
 import { useNavigate } from "react-router-dom";
+import { IRoom } from "../../interface/IRoom";
+import { getRooms } from "../../api/room";
 
 function Schedule() {
   const [courses, setCourses] = useState<ICourse[]>([]);
   const [schedules, setSchedules] = useState<ISchedule[]>([]);
   const [employees, setEmployees] = useState<IEmployeeGet[]>([]);
+  const [rooms, setRooms] = useState<IRoom[]>([]);
   const navigate = useNavigate();
 
   const fetchCourses = async () => {
@@ -18,9 +21,12 @@ function Schedule() {
       const res = await getCourses();
       const sched = await getSchedules();
       const emp = await getEmployeees();
+      const rms = await getRooms();
+
       setCourses(res.results);
       setSchedules(sched);
       setEmployees(emp);
+      setRooms(rms);
     } catch (error) {
       console.log("Error:", error);
     }
@@ -63,9 +69,11 @@ function Schedule() {
               const subjectSchedules = schedule.subjectSchedules;
               const courseID = subjectSchedules[0].courseID;
               const course = courses.find((course) => course._id == courseID);
-              console.log(employees);
               const instructor = employees.find(
                 (employee) => employee._id == subjectSchedules[0].instructorID
+              );
+              const room = rooms.find(
+                (rm) => rm._id == subjectSchedules[0].room
               );
 
               return (
@@ -78,7 +86,7 @@ function Schedule() {
                       subjectSchedules[0].timeEnd}
                   </td>
                   <td>{subjectSchedules[0].day.join(", ")}</td>
-                  <td>{subjectSchedules[0].room}</td>
+                  <td>{room ? room.building + room.room : ""}</td>
                   <td>{instructor?.firstName}</td>
                 </tr>
               );

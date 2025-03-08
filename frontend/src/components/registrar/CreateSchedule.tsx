@@ -10,6 +10,8 @@ import { useForm, Controller } from "react-hook-form";
 import { ISubjectSchedule } from "../../interface/ISchedule";
 import { Slide, toast } from "react-toastify";
 import { addSchedule } from "../../api/schedule";
+import { IRoom } from "../../interface/IRoom";
+import { getRooms } from "../../api/room";
 
 interface IOption {
   value: string;
@@ -32,17 +34,13 @@ const dayOptions = [
   { value: "sat", label: "Saturday" },
 ];
 
-const roomOptions = [
-  { value: "slab1", label: "Slab 1" },
-  { value: "slab2", label: "Slab 2" },
-];
-
 function CreateSchedule() {
   const scheduleForm = useForm();
   const subjectForm = useForm();
   const [programOptions, setProgramOptions] = useState<IOption[]>([]);
   const [courseOptions, setCourseOptions] = useState<IOption[]>([]);
   const [instructorOptions, setInstructorOptions] = useState<IOption[]>([]);
+  const [roomOptions, setRoomOptions] = useState<IOption[]>([]);
   const [subjectSchedules, setSubjectSchedules] = useState<ISubjectSchedule[]>(
     []
   );
@@ -51,6 +49,7 @@ function CreateSchedule() {
     const programs = await getPrograms();
     const courses = await getCourses();
     const employees = await getEmployeees();
+    const rooms = await getRooms();
 
     setProgramOptions(
       programs.results.map((program: IProgram) => {
@@ -68,6 +67,15 @@ function CreateSchedule() {
         return {
           value: employee._id,
           label: `${employee.firstName} ${employee.surname}`,
+        };
+      })
+    );
+
+    setRoomOptions(
+      rooms.map((room: IRoom) => {
+        return {
+          value: room._id,
+          label: room.building + room.room,
         };
       })
     );
