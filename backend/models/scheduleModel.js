@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Program = require("./programModel");
 
 const subjectScheduleSchema = new mongoose.Schema({
   courseID: {

@@ -1,19 +1,33 @@
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+// import { useMutation } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoListOutline } from "react-icons/io5";
-import { addRoom } from "../../../api/room";
+import { IRoom } from "../../../interface/IRoom";
+import { getRooms } from "../../../api/room";
+// import { addRoom } from "../../../api/room";
 
 const RoomList = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { handleSubmit, register } = useForm();
+  const [rooms, setRooms] = useState<IRoom[]>([]);
 
-  const addMutation = useMutation({
-    mutationFn: addRoom,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
+  // const addMutation = useMutation({
+  //   mutationFn: addRoom,
+  //   onSuccess: (data) => {
+  //     console.log(data);
+  //   },
+  // });
+
+  const loadRooms = async () => {
+    const rms = await getRooms();
+    setRooms(rms);
+    console.log(rms);
+  };
+
+  useEffect(() => {
+    loadRooms();
+  }, []);
+
   return (
     <div className="">
       <div className="w-[1000px] h-[650px] relative">
@@ -29,7 +43,7 @@ const RoomList = () => {
           </button>
         </section>
         <form
-          onSubmit={handleSubmit(() => addMutation.mutate)}
+          // onSubmit={handleSubmit(() => addMutation.mutate)}
           className={`${
             isOpen ? "w-[400px] opacity-100 right-1/2" : "w-0 opacity-0 right-0"
           } absolute tranform translate-x-1/2 translate-y-1/2  bottom-1/2 rounded-md bg-white flex flex-col shadow-md p-5 backdrop-blur-md duration-150`}
@@ -99,27 +113,29 @@ const RoomList = () => {
             <h1 className="w-[150px] font-bold">Floor</h1>
             <h1 className="w-[230px] font-bold text-center">Action</h1>
           </span>
-          <span className="flex gap-5 bg-slate-100 pl-3 py-3 text-sm items-center rounded-md border">
-            <h1 className="flex gap-2 items-center w-[240px] pl-4 font-semibold">
-              A601
-            </h1>
-            <h1 className="w-[150px] font-semibold">Building A</h1>
-            <h1 className="w-[150px] font-semibold">6th</h1>
-            <h1 className="w-[230px] font-semibold flex gap-5 justify-center">
-              <button
-                type="button"
-                className="bg-green-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-green-700 active:scale-95 duration-200"
-              >
-                Update
-              </button>
-              <button
-                type="button"
-                className="bg-red-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
-              >
-                Delete
-              </button>
-            </h1>
-          </span>
+          {rooms.map((room) => (
+            <span className="flex gap-5 bg-slate-100 pl-3 py-3 text-sm items-center rounded-md border">
+              <h1 className="flex gap-2 items-center w-[240px] pl-4 font-semibold">
+                {room.building + room.room}
+              </h1>
+              <h1 className="w-[150px] font-semibold">{`Building ${room.building}`}</h1>
+              <h1 className="w-[150px] font-semibold">{room.floor}</h1>
+              <h1 className="w-[230px] font-semibold flex gap-5 justify-center">
+                <button
+                  type="button"
+                  className="bg-green-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-green-700 active:scale-95 duration-200"
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  className="bg-red-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
+                >
+                  Delete
+                </button>
+              </h1>
+            </span>
+          ))}
         </section>
       </div>
     </div>
