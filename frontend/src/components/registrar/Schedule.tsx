@@ -48,12 +48,13 @@ function Schedule() {
       </header>
       <div>
         <div className="bg-slate-100"></div>
-        <table className="w-full">
-          <thead className="bg-gray-200">
-            <tr className="grid grid-cols-3">
+        <table className="w-full border-collapse">
+          <thead className="border-b-2">
+            <tr className="grid grid-cols-scheduleDisplay px-4 py-2 ">
               <th>Program</th>
               <th>Semester</th>
               <th>School Year</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -63,13 +64,18 @@ function Schedule() {
               );
 
               return (
-                <tr
-                  className="grid grid-cols-3"
-                  onClick={() => handleViewClick(schedule._id)}
-                >
+                <tr className="grid grid-cols-scheduleDisplay items-center px-4 py-2 even:bg-slate-100">
                   <td>{program?.programName}</td>
-                  <td>{schedule.semester}</td>
-                  <td>{schedule.schoolYear}</td>
+                  <td className="text-center">{schedule.semester}</td>
+                  <td className="text-center">{schedule.schoolYear}</td>
+                  <td className="text-center">
+                    <button
+                      onClick={() => handleViewClick(schedule._id)}
+                      className="px-4 py-2 rounded-md text-white bg-blue-600"
+                    >
+                      View
+                    </button>
+                  </td>
                 </tr>
               );
             })}
