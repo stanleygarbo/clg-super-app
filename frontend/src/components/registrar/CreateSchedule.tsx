@@ -12,6 +12,7 @@ import { Slide, toast } from "react-toastify";
 import { addSchedule } from "../../api/schedule";
 import { IRoom } from "../../interface/IRoom";
 import { getRooms } from "../../api/room";
+import { convertMilitaryTo12Hour } from "../../Helper";
 
 interface IOption {
   value: string;
@@ -133,13 +134,6 @@ function CreateSchedule() {
         transition: Slide,
       });
     }
-  };
-
-  const convertMilitaryTo12Hour = (time: string): string => {
-    let [hours, minutes] = time.split(":").map(Number);
-    const period = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12;
-    return `${String(hours).padStart(2, "0")}:${minutes} ${period}`;
   };
 
   useEffect(() => {
