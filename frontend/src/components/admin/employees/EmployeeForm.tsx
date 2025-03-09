@@ -50,44 +50,6 @@ const EmploymentForm = () => {
     }
   };
 
-  // ADD EMPLOYEE
-  // const addEmployee = async (e: { preventDefault: () => void }) => {
-  //   try {
-  //     e.preventDefault();
-  //     setIsLoading(true);
-  //     employeePostData.hireDate = new Date().toISOString();
-  //     employeePostData.birthDate = new Date(
-  //       day + "-" + month + "-" + year
-  //     ).toISOString();
-  //     try {
-  //       const data = {
-  //         firstName: employeePostData.firstName,
-  //         surname: employeePostData.surname,
-  //         middleName: employeePostData.middleName,
-  //         username: employeePostData.username,
-  //         password: employeePostData.password,
-  //         department: employeePostData.department,
-  //         position: employeePostData.position,
-  //         hireDate: employeePostData.hireDate,
-  //         employmentType: employeePostData.employmentType,
-  //         roles: employeePostData.roles
-  //           ? JSON.parse(JSON.stringify(employeePostData.roles))
-  //           : [],
-  //       };
-  //       console.log("DATA :: ", data);
-  //       await apiClient.post("/employees", data);
-  //       toast.success("Employee added successfully!");
-  //     } catch (err) {
-  //       setError("Error adding employee");
-  //       toast.error(error);
-  //     } finally {
-  //       // fetchEmployee();
-  //       setIsLoading(false);
-  //       // setIsOpen(false);
-  //     }
-  //   } catch {}
-  // };
-
   useEffect(() => {
     getDepartments();
     getPositions();
@@ -107,12 +69,9 @@ const EmploymentForm = () => {
   });
 
   const onSubmit = (data: IEmployeePost) => {
-    // addMutation.mutate(data);
     const formattedData = {
       ...data,
-      roles: Array.isArray(data.roles)
-        ? data.roles.map((role) => role.value)
-        : [],
+      roles: Array.isArray(data.roles) ? data.roles.map((role) => role) : [],
     };
     console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
 
