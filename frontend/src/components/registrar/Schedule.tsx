@@ -36,7 +36,7 @@ function Schedule() {
   }, []);
 
   return (
-    <main className="flex flex-col gap-8 w-full">
+    <main className="flex flex-col gap-8 w-full mx-16 my-8">
       <header className="flex justify-between items-center h-12">
         <p className="text-2xl font-bold">Schedules</p>
         <button

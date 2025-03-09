@@ -141,7 +141,7 @@ function CreateSchedule() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-8 w-full">
+    <main className="flex flex-col gap-8 w-full mx-16 my-8">
       <header className="flex justify-between items-center h-12">
         <p className="text-2xl font-bold">Schedule</p>
         <form
@@ -242,7 +242,7 @@ function CreateSchedule() {
         </tbody>
       </table>
       <form
-        className="grid grid-cols-scheduleCreate gap-2 w-full"
+        className="grid grid-cols-scheduleCreate gap-2"
         onSubmit={subjectForm.handleSubmit(onSubjectSubmit)}
       >
         <Controller
@@ -331,7 +331,7 @@ function CreateSchedule() {
           Add subject
         </button>
       </form>
-    </div>
+    </main>
   );
 }
 

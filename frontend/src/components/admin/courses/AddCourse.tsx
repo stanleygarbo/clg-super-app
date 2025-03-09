@@ -1,5 +1,5 @@
 import { useSnapshot } from "valtio";
-import { departmentData } from "../../../store/DepartmentData";
+// import { departmentData } from "../../../store/DepartmentData";
 import { courseData } from "../../../store/CourseData";
 
 const AddCourse = () => {

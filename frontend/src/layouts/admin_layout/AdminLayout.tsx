@@ -167,9 +167,9 @@ const sidebarItems = sidebarItemsConditional.filter((i) => {
 
 const AdminLayout = () => {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen box-border">
       <Sidebar sidebarItems={sidebarItems} />
-      <div className="flex justify-center w-full ml-64 2xl:px-20 xs:px-5 mt-10">
+      <div className="flex justify-center w-full xs:ml-[400px] sm:ml-[400px] ml-[250px] xl:ml-[300px]">
         <Outlet />
       </div>
     </div>
