@@ -27,6 +27,11 @@ const subjectScheduleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  idDeleted: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
 });
 
 const scheduleSchema = new mongoose.Schema(
@@ -47,6 +52,11 @@ const scheduleSchema = new mongoose.Schema(
     },
     subjectSchedules: {
       type: [subjectScheduleSchema],
+      required: true,
+    },
+    idDeleted: {
+      type: Boolean,
+      default: false,
       required: true,
     },
   },

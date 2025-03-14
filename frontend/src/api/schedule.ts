@@ -15,3 +15,13 @@ export const addSchedule = async (schedule: ISchedule) => {
   const response = await apiClient.post(`/schedules`, schedule);
   return response.data;
 }
+
+export const updateSchedule = async (id: string) => {
+  const response = await apiClient.patch(`/schedules/${id}`)
+  return response.data
+}
+
+export const deleteSchedule = async (id: string) => {
+  const response = await apiClient.delete(`/schedules/${id}`)
+  return response.data
+}

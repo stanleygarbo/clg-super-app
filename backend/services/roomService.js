@@ -20,7 +20,7 @@ const updateRoom = async ({ id, data }) => {
   const room = roomService.getRoom(id);
 
   if (!room) {
-    throw new Error("Department does not exist.");
+    throw new Error("Room does not exist.");
   }
 
   const res = await Room.updateOne({ _id: id }, data);

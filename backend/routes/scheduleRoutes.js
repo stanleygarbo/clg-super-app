@@ -39,6 +39,20 @@ router.get(
   scheduleController.getSchedule
 );
 
+router.patch(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  roleMiddleware(["admin", "super", "registrar"]),
+  scheduleController.updateSchedule
+);
+
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  roleMiddleware(["admin", "super", "registrar"]),
+  scheduleController.deleteSchedule
+);
+
 const scheduleRoutes = router;
 
 module.exports = scheduleRoutes;

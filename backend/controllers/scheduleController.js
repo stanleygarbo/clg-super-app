@@ -43,4 +43,43 @@ const getSchedule = async (req, res) => {
   }
 };
 
-module.exports = { addSchedule, getSchedules, getSchedule };
+const updateSchedule = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const schedule = await scheduleService.updateSchedule({
+      id: req.params.id,
+      data: req.body,
+    });
+    res.status(201).json(schedule);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const deleteSchedule = async (req, res) => {
+  try {
+    const schedule = await scheduleService.deleteSchedule(req.params.id);
+    if (!schedule) {
+      return res.status(404).json({
+        message: "Not Found",
+      });
+    }
+
+    res.status(200).json(schedule);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  addSchedule,
+  getSchedules,
+  getSchedule,
+  updateSchedule,
+  deleteSchedule,
+};
