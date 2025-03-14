@@ -16,10 +16,28 @@ const addRoom = async (data) => {
   return room;
 };
 
+const updateRoom = async ({ id, data }) => {
+  const room = roomService.getRoom(id);
+
+  if (!room) {
+    throw new Error("Room does not exist.");
+  }
+
+  const res = await Room.updateOne({ _id: id }, data);
+  return res;
+};
+
+const deleteRoom = async (id) => {
+  const res = await Room.updateOne({ _id: id }, { $set: { isDeleted: true } });
+  return res;
+};
+
 const roomService = {
   getRoom,
   getRooms,
   addRoom,
+  updateRoom,
+  deleteRoom,
 };
 
 module.exports = roomService;

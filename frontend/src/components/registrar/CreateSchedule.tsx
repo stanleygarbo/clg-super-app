@@ -12,6 +12,7 @@ import { Slide, toast } from "react-toastify";
 import { addSchedule } from "../../api/schedule";
 import { IRoom } from "../../interface/IRoom";
 import { getRooms } from "../../api/room";
+import { convertMilitaryTo12Hour } from "../../Helper";
 
 interface IOption {
   value: string;
@@ -135,19 +136,12 @@ function CreateSchedule() {
     }
   };
 
-  const convertMilitaryTo12Hour = (time: string): string => {
-    let [hours, minutes] = time.split(":").map(Number);
-    const period = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12;
-    return `${String(hours).padStart(2, "0")}:${minutes} ${period}`;
-  };
-
   useEffect(() => {
     loadOptions();
   }, []);
 
   return (
-    <div className="flex flex-col gap-8 w-full">
+    <main className="flex flex-col gap-8 w-full mx-16 my-8">
       <header className="flex justify-between items-center h-12">
         <p className="text-2xl font-bold">Schedule</p>
         <form
@@ -248,7 +242,7 @@ function CreateSchedule() {
         </tbody>
       </table>
       <form
-        className="grid grid-cols-scheduleCreate gap-2 w-full"
+        className="grid grid-cols-scheduleCreate gap-2"
         onSubmit={subjectForm.handleSubmit(onSubjectSubmit)}
       >
         <Controller
@@ -337,7 +331,7 @@ function CreateSchedule() {
           Add subject
         </button>
       </form>
-    </div>
+    </main>
   );
 }
 

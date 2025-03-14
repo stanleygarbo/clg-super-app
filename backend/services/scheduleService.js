@@ -16,10 +16,31 @@ const addSchedule = async (data) => {
   return schedule;
 };
 
+const updateSchedule = async ({ id, data }) => {
+  const schedule = scheduleService.getSchedule(id);
+
+  if (!schedule) {
+    throw new Error("Schedule does not exist.");
+  }
+
+  const res = await Schedule.updateOne({ _id: id }, data);
+  return res;
+};
+
+const deleteSchedule = async ({ id, data }) => {
+  const res = await Schedule.updateOne(
+    { _id: id },
+    { $set: { isDeleted: true } }
+  );
+  return res;
+};
+
 const scheduleService = {
   getSchedule,
   getSchedules,
   addSchedule,
+  updateSchedule,
+  deleteSchedule,
 };
 
 module.exports = scheduleService;

@@ -17,6 +17,20 @@ router.get(
   roomConreoller.getRooms
 );
 
+router.patch(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  roleMiddleware(["admin", "super", "registrar"]),
+  roomConreoller.updateRoom
+);
+
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  roleMiddleware(["admin", "super", "registrar"]),
+  roomConreoller.deleteRoom
+);
+
 const roomRoutes = router;
 
 module.exports = roomRoutes;
