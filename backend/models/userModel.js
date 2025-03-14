@@ -8,6 +8,7 @@ const { birthSchema } = require("./birthModel");
 const { cityAddressSchema, homeAddressSchema } = require("./addressModel");
 const { siblingSchema } = require("./siblingModel");
 const standing = require("../constants/studentStanding");
+const { scheduleSchema } = require("./scheduleModel");
 
 const userSchema = new mongoose.Schema(
   {
@@ -86,6 +87,7 @@ const studentSchema = new mongoose.Schema(
     guardian: guardianSchema,
     guardianSpouse: spouseSchema,
     siblings: [siblingSchema],
+    schedules: scheduleSchema,
   },
   { timestamps: true }
 );

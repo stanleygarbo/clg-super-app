@@ -71,7 +71,9 @@ const EmploymentForm = () => {
   const onSubmit = (data: IEmployeePost) => {
     const formattedData = {
       ...data,
-      roles: Array.isArray(data.roles) ? data.roles.map((role) => role) : [],
+      roles: Array.isArray(data.roles)
+        ? data.roles.map((role) => role.value)
+        : [],
     };
     console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
 

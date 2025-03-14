@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getStudents } from "../../../api/student";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
+import { IoListOutline } from "react-icons/io5";
+import { IStudentsGet } from "../../../interface/IStudents";
 
 const EnrolledStudents = () => {
   const navigate = useNavigate();
@@ -13,15 +15,16 @@ const EnrolledStudents = () => {
     queryFn: getStudents,
   });
 
-  console.log(query.data);
+  // console.log(query.data);
 
-  const getFullName = (student: any) => {
-    return `${student.surname}, ${student.firstName} ${student.middleName}`;
-  };
+  // const getFullName = (student: any) => {
+  //   return `${student.surname}, ${student.firstName} ${student.middleName}`;
+  // };
 
   const archiveStudents = async () => {
     try {
       await apiClient.delete("/students/" + id);
+      query.refetch();
       toast.success("Successfully archived student");
     } catch {
       toast.error("Failed to delete students");
@@ -31,74 +34,91 @@ const EnrolledStudents = () => {
 
   return (
     <div className="">
-      <div className="">
-        <h1 className="text-center py-5 text-2xl font-bold bg-blue-600 text-white border-t border-r border-l rounded-t-md shadow-sm">
-          All Students
-        </h1>
-        <table className="w-full h-[570px] border flex flex-col rounded-b-md shadow-md bg-white duration-200 py-10 px-12">
-          <thead className="grid grid-cols-4 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%]">
-            <td className="w-[500px] text-start">Name</td>
-            <td className="w-[200px] text-center">Course</td>
-            <td className="w-[200px text-center">Standing</td>
-            <td className="w-[200px text-center">
-              <button
-                onClick={() => {
-                  navigate("/admission/eform");
-                }}
-                className="text-white bg-blue-600 p-2 rounded-md shadow-sm shadow-blue-500/50 hover:scale-105 active:scale-95 duration-200"
-              >
-                Enroll Student
-              </button>
-            </td>
-          </thead>
-          {query.isError && (
-            <div className="flex justify-center items-center">
-              Failed to fetch data
-            </div>
-          )}
-          {query.isPending && (
-            <div className="flex justify-center items-center">Loading...</div>
-          )}
-          <tbody className="overflow-hidden overflow-y-auto no-scrollbar flex flex-col">
-            {query.data?.results.map((student: any, index: number) => (
-              <tr
-                key={index}
-                className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-4 px-2 items-center py-2 rounded-sm group bg-slate-50 shadow-sm border hover:bg-slate-200 hover:border-slate-200"
-              >
-                <td className="w-[500px] text-start">{getFullName(student)}</td>
-                <td className="w-[200px] text-center">
-                  {student.program?.programAcronym}
-                </td>
-                <td className="w-[200px text-center">{student.standing}</td>
-                <td className="flex gap-3 justify-center">
-                  <button
-                    onClick={() => {
-                      id = student._id;
-                      console.log(id);
-                      archiveStudents();
-                    }}
-                    type="button"
-                    className="bg-red-600 text-white opacity-0 group-hover:opacity-100 p-2 font-bold rounded-md shadow-sm shadow-blue-red/50 active:scale-95 hover:scale-105 duration-200"
-                  >
-                    Archive
-                  </button>
-                  <button
-                    onClick={() => {
-                      navigate(`/admission/studentInfo/${student._id}`);
-                      id = student._id;
-                      console.log(id);
-                      // archiveStudents();
-                    }}
-                    type="button"
-                    className="bg-blue-600 text-white opacity-0 group-hover:opacity-100 p-2 font-bold rounded-md shadow-sm shadow-blue-600/50 active:scale-95 hover:scale-105 duration-200"
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="w-[1000px] h-[650px] relative">
+        <section className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold">Student's List</h1>
+          <button
+            onClick={() => {
+              navigate("/admission/eform");
+            }}
+            className="bg-blue-500 px-3 py-2 text-white font-bold font-sans rounded-md hover:bg-blue-700 active:scale-95 duration-200"
+          >
+            Enroll Student
+          </button>
+        </section>
+        <section className="mt-5 bg-slate-100 px-5 py-3 rounded-t-md flex justify-between">
+          <span className="flex gap-3">
+            <button
+              className={`bg-blue-600 text-white flex items-center gap-1 px-2 py-2 rounded-md shadow border-t`}
+            >
+              <p className="font-bold text-lg">
+                <IoListOutline />
+              </p>
+              <p className="text-sm font-semibold">LIST</p>
+            </button>
+          </span>
+          <span className="flex gap-3 ">
+            <input
+              type="text"
+              className="border border-slate-500 rounded-sm px-5"
+              placeholder="Q Search..."
+            />
+          </span>
+        </section>
+        <section className="py-3">
+          <span className="flex gap-5 mb-3">
+            <h1 className="w-[130px] font-bold pl-3">Last Name</h1>
+            <h1 className="w-[130px] font-bold pl-3">First Name</h1>
+            <h1 className="w-[130px] font-bold pl-3">Middle I.</h1>
+            <h1 className="w-[130px] font-bold">Course</h1>
+            <h1 className="w-[130px] font-bold">Standing</h1>
+            <h1 className="w-[230px] font-bold text-center">Action</h1>
+          </span>
+          {query.data?.results.map((student: IStudentsGet, index: number) => (
+            <span
+              key={index}
+              className={`${
+                index == 0 ? "rounded-t-md" : ""
+              } flex gap-5 bg-slate-50 pl-3 py-[5px] text-sm items-center border-b-2 hover:bg-slate-100 duration-200 ${
+                index == query.data?.results.length - 1 ? "rounded-b-md" : ""
+              }`}
+            >
+              <h1 className="flex gap-2 items-center w-[130px] font-semibold">
+                {student.surname}
+              </h1>
+              <h1 className="w-[130px] font-semibold">{student.firstName}</h1>
+              <h1 className="w-[130px] font-semibold pl-5">
+                {student.middleName[0]}.
+              </h1>
+              <h1 className="w-[120px] font-semibold ">
+                {student.program?.programAcronym}
+              </h1>
+              <h1 className="w-[120px] font-semibold ">{student.standing}</h1>
+              <h1 className="w-[230px] font-semibold flex gap-2 justify-center">
+                <button
+                  onClick={() => {
+                    id = student._id;
+                    navigate(`/admission/studentInfo/${id}`);
+                  }}
+                  type="button"
+                  className="bg-green-500 px-3 py-2 rounded-md text-white font-semibold hover:bg-green-700 active:scale-95 duration-200"
+                >
+                  View
+                </button>
+                <button
+                  onClick={() => {
+                    id = student._id;
+                    archiveStudents();
+                  }}
+                  type="button"
+                  className="bg-red-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
+                >
+                  Delete
+                </button>
+              </h1>
+            </span>
+          ))}
+        </section>
       </div>
     </div>
   );

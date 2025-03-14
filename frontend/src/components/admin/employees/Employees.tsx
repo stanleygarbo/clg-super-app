@@ -14,6 +14,7 @@ const Employees = () => {
   const navigate = useNavigate();
 
   const query = useQuery({ queryKey: ["employee"], queryFn: getEmployees });
+
   // DELETE EMPLOYEE
   const deleteEmployee = async () => {
     try {
@@ -110,8 +111,10 @@ const Employees = () => {
               <h1 className="w-[100px]">
                 {employee.department?.departmentName}
               </h1>
-              <h1 className="w-[140px]">{employee.employmentType}</h1>
-              <h1 className="w-[100px]">{employee.roles}</h1>
+              <h1 className="w-[140px] text-center">
+                {employee.employmentType}
+              </h1>
+              <h1 className="w-[100px]">{employee.roles.join(", ")}</h1>
               <h1 className="w-[70px] text-green-500 font-semibold flex items-center gap-1">
                 <div className="w-2 mt-1 aspect-square bg-green-500 rounded-full"></div>{" "}
                 Active

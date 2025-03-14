@@ -159,9 +159,9 @@ const EFormStudent = () => {
               }}
             >
               <option value="male" selected>
-                MALE
+                Male
               </option>
-              <option value="female">FEMALE</option>
+              <option value="female">Female</option>
             </select>
           </span>
           <span className={`${isOpen ? "" : ""} relative`}>

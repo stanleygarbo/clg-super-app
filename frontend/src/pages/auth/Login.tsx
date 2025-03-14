@@ -30,7 +30,7 @@ const Login = () => {
 
       navigate("/dashboard");
     },
-    onError: (err) => {
+    onError: () => {
       toast.error("Invalid credentials", { type: "error" });
     },
   });
@@ -46,7 +46,7 @@ const Login = () => {
     <div id="loginPopUp" className="h-screen py-20">
       <form
         onSubmit={proceedLogin}
-        className="flex flex-col m-auto shadow-md gap-2 mt-28 p-10 mx-5 md:mx-36 lg:mx-60 xl:mx-[550px] rounded-lg border "
+        className="flex flex-col m-auto shadow-md gap-2 mt-28 p-10 w-[450px] rounded-lg border"
       >
         <h1 className="text-2xl text-black font-bold mb-6 flex items-center justify-center">
           <img
@@ -88,7 +88,7 @@ const Login = () => {
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="mt-4 flex items-center justify-center pr-3 pl-3 bg-blue-600 shadow-sm shadow-blue-500/50 rounded-md text-white hover:scale-105 py-2 active:scale-95 font-bold duration-200"
+          className="mt-4 flex items-center justify-center pr-3 pl-3 bg-blue-500 rounded-md text-white hover:bg-blue-700 py-2 active:scale-95 font-bold duration-200"
         >
           {mutation.isPending ? (
             <img src="/loading.svg" className="invert" alt="" />

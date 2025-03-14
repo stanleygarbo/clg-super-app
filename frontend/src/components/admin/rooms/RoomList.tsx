@@ -1,40 +1,61 @@
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+// import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { IoListOutline } from "react-icons/io5";
+import { IRoomGet, IRoomPost } from "../../../interface/IRoom";
+import { deleteRoom, getRooms } from "../../../api/room";
 import { addRoom } from "../../../api/room";
-
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { AiFillDelete } from "react-icons/ai";
+import { useParams } from "react-router-dom";
 const RoomList = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, setValue } = useForm<IRoomPost>();
 
-  const addMutation = useMutation({
+  const addRoomMutation = useMutation({
     mutationFn: addRoom,
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
+      toast.success("Added Successfully");
+      query.refetch();
+      setValue("room", "");
+      setValue("building", "");
+      setValue("floor", 0);
     },
   });
+
+  const deleteRoomMutation = useMutation({
+    mutationFn: (id: string) => deleteRoom(id),
+    onSuccess: () => {
+      toast.success("Deleted Successfully");
+      query.refetch();
+    },
+    onError: () => {
+      toast.error("Error while deleting");
+    },
+  });
+
+  const query = useQuery({
+    queryKey: ["rooms"],
+    queryFn: getRooms,
+  });
+
+  // const loadRooms = async () => {
+  //   const rms = await getRooms();
+  //   setRooms(rms);
+  //   console.log(rms);
+  // };
+
+  // useEffect(() => {
+  //   loadRooms();
+  // }, []);
+
   return (
     <div className="">
-      <div className="w-[1000px] h-[650px] relative">
-        <section className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Room's List</h1>
-          <button
-            onClick={() => {
-              isOpen ? setIsOpen(false) : setIsOpen(true);
-            }}
-            className="bg-blue-700 px-3 py-2 text-white font-semibold rounded-md text-sm"
-          >
-            Add Room
-          </button>
-        </section>
+      <div className="w-[1000px] h-[650px]">
         <form
-          onSubmit={handleSubmit(() => addMutation.mutate)}
-          className={`${
-            isOpen ? "w-[400px] opacity-100 right-1/2" : "w-0 opacity-0 right-0"
-          } absolute tranform translate-x-1/2 translate-y-1/2  bottom-1/2 rounded-md bg-white flex flex-col shadow-md p-5 backdrop-blur-md duration-150`}
+          onSubmit={handleSubmit((data) => addRoomMutation.mutate(data))}
+          className={`rounded-md bg-white flex flex-col gap-3 px-4 py-2 duration-150`}
         >
-          <section className="flex items-center justify-between mb-5 pl-2">
+          <h1 className="pl-10 text-lg font-bold">Add Room :</h1>
+          {/* <section className="flex items-center justify-between mb-5 pl-2">
             <h1 className="font-bold">Add Room</h1>
             <button
               type="button"
@@ -45,44 +66,38 @@ const RoomList = () => {
             >
               X
             </button>
-          </section>
-          <section className="flex flex-col gap-5">
+          </section> */}
+          <section className="flex gap-5">
             <input
               type="text"
-              className="text-center outline-none border-0 p-2 bg-white rounded-t-md font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              placeholder="Room No."
-              {...register("roomNum")}
+              className="text-center outline-none border-0 p-2 bg-white font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+              placeholder="Room Name"
+              {...register("room")}
             />
             <input
               type="text"
-              className="text-center outline-none border-0 p-2 bg-white rounded-t-md font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+              className="text-center outline-none border-0 p-2 bg-white font-semibold border-b-2 focus:border-b-blue-800 duration-200"
               placeholder="Room Building"
-              {...register("roomBuilding")}
+              {...register("building")}
             />
             <input
-              type="text"
-              className="text-center outline-none border-0 p-2 bg-white rounded-t-md font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+              type="number"
+              className="text-center outline-none border-0 p-2 bg-white font-semibold border-b-2 focus:border-b-blue-800 duration-200"
               placeholder="Room Floor"
-              {...register("roomFloor")}
+              {...register("floor")}
             />
             <button
               type="submit"
-              className="bg-blue-600 mx-20 mt-3 py-1 text-white font-bold rounded-md hover:bg-blue-700 active:scale-95 duration-200"
+              className="bg-blue-700 px-5 py-2 text-white font-semibold rounded-md text-base ml-10"
             >
-              Add
+              Add Room
             </button>
           </section>
         </form>
-        <section className="mt-5 bg-slate-100 px-5 py-3 rounded-t-md flex justify-between">
+        <section className="flex justify-between items-center"></section>
+        <section className="mt-5 bg-slate-100 px-5 py-3 rounded-md flex justify-between">
           <span className="flex gap-3">
-            <button
-              className={`bg-blue-600 text-white flex items-center gap-1 px-2 py-2 rounded-md shadow border-t`}
-            >
-              <p className="font-bold text-lg">
-                <IoListOutline />
-              </p>
-              <p className="text-sm font-semibold">LIST</p>
-            </button>
+            <h1 className="text-2xl font-bold text-blue-700">Room's List</h1>
           </span>
           <span className="flex gap-3 ">
             <input
@@ -99,27 +114,57 @@ const RoomList = () => {
             <h1 className="w-[150px] font-bold">Floor</h1>
             <h1 className="w-[230px] font-bold text-center">Action</h1>
           </span>
-          <span className="flex gap-5 bg-slate-100 pl-3 py-3 text-sm items-center rounded-md border">
-            <h1 className="flex gap-2 items-center w-[240px] pl-4 font-semibold">
-              A601
-            </h1>
-            <h1 className="w-[150px] font-semibold">Building A</h1>
-            <h1 className="w-[150px] font-semibold">6th</h1>
-            <h1 className="w-[230px] font-semibold flex gap-5 justify-center">
-              <button
-                type="button"
-                className="bg-green-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-green-700 active:scale-95 duration-200"
-              >
-                Update
-              </button>
-              <button
-                type="button"
-                className="bg-red-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
-              >
-                Delete
-              </button>
-            </h1>
-          </span>
+          {query.data?.map((room: IRoomGet, index: number) => (
+            <span
+              key={index}
+              className={`${
+                index == query.data?.length - 1
+                  ? "rounded-b-md"
+                  : index == 0
+                  ? "rounded-t-md"
+                  : ""
+              } ${
+                index % 2 == 0
+                  ? "bg-blue-100 hover:bg-blue-500 hover:text-white"
+                  : "bg-slate-50 hover:bg-slate-500 hover:text-white"
+              } flex gap-5 pl-3 py-2 text-sm items-center duration-200`}
+            >
+              <h1 className="flex gap-2 items-center w-[240px] pl-1 font-semibold">
+                {room.room}
+              </h1>
+              <h1 className="w-[150px] font-semibold pl-5">{`${room.building}`}</h1>
+              <h1 className="w-[150px] font-semibold pl-1">
+                {room.floor}
+                {room.floor == 2 ? (
+                  <sup>nd</sup>
+                ) : room.floor == 3 ? (
+                  <sup>rd</sup>
+                ) : room.floor == 4 || 5 || 6 ? (
+                  <sup>th</sup>
+                ) : (
+                  ""
+                )}
+              </h1>
+              <h1 className="w-[230px] font-semibold flex gap-5 justify-center">
+                {/* <button
+                  type="button"
+                  className="bg-green-500 px-3 py-2 rounded-md text-lg text-white font-semibold hover:bg-green-700 active:scale-95 duration-200"
+                >
+                  <RiEdit2Fill />
+                </button> */}
+                <button
+                  onClick={() => {
+                    console.log("ID :: ", room._id);
+                    deleteRoomMutation.mutate(room._id);
+                  }}
+                  type="button"
+                  className="bg-red-500 px-3 py-2 rounded-md text-lg text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
+                >
+                  <AiFillDelete />
+                </button>
+              </h1>
+            </span>
+          ))}
         </section>
       </div>
     </div>

@@ -89,7 +89,7 @@ const UpdateEmployee = () => {
   }, [query.data, setValue]);
 
   const defaultRoles = roles.filter((role) =>
-    query.data?.roles?.includes(role.value)
+    (query.data?.roles ?? []).includes(role.value)
   );
 
   return (
@@ -142,7 +142,6 @@ const UpdateEmployee = () => {
                 options={roles}
                 isMulti
                 defaultValue={defaultRoles}
-                // {...register("roles")}
                 className="h-[40px] w-[100%]"
               />
             </span>
@@ -253,7 +252,7 @@ const UpdateEmployee = () => {
           </section>
           <button
             type="submit"
-            className="bg-blue-600 py-1 px-6 rounded-md font-bold text-lg text-white mt-5 hover:bg-blue-800 active:scale-95 duration-200"
+            className="mx-80 bg-blue-600 py-1 px-6 rounded-md font-bold text-lg text-white mt-5 hover:bg-blue-800 active:scale-95 duration-200"
           >
             Submit
           </button>

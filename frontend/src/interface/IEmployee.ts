@@ -1,9 +1,7 @@
 import { IDepartmentGet } from "./IDepartment";
 import { IPositionGet } from "./IPosition";
 
-export interface IEmployeeGet {
-  includes: any;
-  toLowerCase(): unknown;
+export interface IEmployee {
   _id: string;
   firstName: string;
   surname: string;
@@ -19,6 +17,24 @@ export interface IEmployeeGet {
   gender: string;
 }
 
+export interface IEmployeeGet {
+  includes: any;
+  toLowerCase(): unknown;
+  _id: string;
+  firstName: string;
+  surname: string;
+  middleName: string;
+  username: string;
+  password: string;
+  department: IDepartmentGet;
+  position: IPositionGet;
+  hireDate: String;
+  employmentType: string;
+  roles: [{ value: string }];
+  address: object;
+  gender: string;
+}
+
 export interface IEmployeePost {
   firstName: string;
   surname: string;
@@ -30,7 +46,7 @@ export interface IEmployeePost {
   position: string;
   hireDate: String;
   employmentType: string;
-  roles: string[];
+  roles: [{ value: string }];
   address: object;
   gender: string;
 }

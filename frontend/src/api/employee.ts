@@ -23,6 +23,11 @@ export const getEmployees = async (): Promise<IEmployeeGet> => {
   return response.data.results;
 };
 
+export const getEmployeees = async () => {
+  const response = await apiClient.get("/employees");
+  return response.data.results;
+};
+
 export const addEmployee = async (data: IEmployeePost) => {
   const response = await apiClient.post("/employees", data);
   return response.data;

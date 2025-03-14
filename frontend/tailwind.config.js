@@ -33,6 +33,8 @@ module.exports = {
       gridTemplateColumns: {
         grades: "40% repeat(2, 25%) 10%",
         gradeRow: "10% 30% 10% 10% 20% 20%",
+        scheduleCol: "10% 30% 15% 15% 10% 20%",
+        scheduleCreate: "25% 1fr 1fr 22% 8% 20% 10%",
       },
     },
   },

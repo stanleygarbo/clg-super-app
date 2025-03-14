@@ -11,8 +11,7 @@ import StudentsInfo from "./components/admission/enrolled_students/StudentsInfo"
 import SSC from "./components/ssc/SSC";
 import Clinic from "./components/clinic/Clinic";
 import Faculty from "./components/faculty/Faculty";
-import StudentGrade from "./components/registrar/StudentGrade";
-import Grades from "./components/registrar/Grades";
+import Schedule from "./components/registrar/Schedule";
 import AccountingDashboard from "./components/accounting/AccountingDashboard";
 import StudentFees from "./components/accounting/StudentFees";
 import { ToastContainer } from "react-toastify";
@@ -30,6 +29,8 @@ import Test from "./components/admin/employees/Test";
 import RoomList from "./components/admin/rooms/RoomList";
 import SubjectLoad from "./components/admin/subject-load/SubjectLoad";
 import SubjectLoadDetails from "./components/admin/subject-load/SubjectLoadDetails";
+import CreateSchedule from "./components/registrar/CreateSchedule";
+import ViewSchedule from "./components/registrar/ViewSchedule";
 
 const router = createBrowserRouter([
   {
@@ -177,12 +178,16 @@ const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       {
-        path: "grades",
-        element: <Grades />,
+        path: "schedule",
+        element: <Schedule />,
       },
       {
-        path: "grades/:usn",
-        element: <StudentGrade />,
+        path: "schedule/create",
+        element: <CreateSchedule />,
+      },
+      {
+        path: "schedule/:id",
+        element: <ViewSchedule />,
       },
     ],
   },
