@@ -33,9 +33,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmNiZDk3M
 # Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTI2NDk5OSwiZXhwIjoxNzQxMjkzNzk5fQ.d7KPzls3EIbqEjv-rXyhJ_pqf_1tnT-iNCA4ggkrvoU
 
 
-GET http://localhost:3000/api/schedules HTTP/1.1
+DELETE http://localhost:3000/api/rooms/67cc2f2503e697561e750acc HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTIyNjk1OCwiZXhwIjoxNzQxMjU1NzU4fQ.PZ4HtpKXIkLAIbGtd-X5Bb7gPTVsICUN23jN3A6jw_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTk1OTEyOCwiZXhwIjoxNzQxOTg3OTI4fQ.G6LaprXzczUJBYvNAtDgLEokThsL9XK1k0lAJjIDuSM
 
 
 ###
@@ -62,7 +62,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlN
 
 ###
 
-GET http://localhost:3000/api/schedules HTTP/1.1
+GET http://localhost:3000/api/rooms HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTM0MzkyMywiZXhwIjoxNzQxMzcyNzIzfQ.kckcDtptevRY9wyCRkHFuEN2ecky8ulIKM-CbKz2thY
 

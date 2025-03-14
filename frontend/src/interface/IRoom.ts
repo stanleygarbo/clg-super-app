@@ -1,7 +1,7 @@
 export interface IRoomPost {
   building: string;
   room: string;
-  floor: number;
+  floor: string;
 }
 export interface IRoomGet {
   _id: string;

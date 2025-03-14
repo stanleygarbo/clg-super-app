@@ -55,24 +55,18 @@ const PositionDashboard = () => {
               addPostMutation.mutate(data)
             )}
           >
-            <section className="flex items-center gap-2">
-              <h1 className="font-semibold text-sm">Job Title:</h1>
-              <input
-                type="text"
-                {...register("jobTitle")}
-                placeholder="Department"
-                className="outline-none w-[200px] border-0 py-1 px-2 text-lg text-blue-900 font-semibold text-center border-b-2 border-b-blue-800"
-              />
-            </section>
-            <section className="flex items-center gap-3">
-              <h1 className="font-semibold text-sm">Hourly Wage:</h1>
-              <input
-                type="number"
-                {...register("hourlyWage")}
-                placeholder="Department"
-                className="outline-none w-[200px] border-0 py-1 px-2 text-lg text-blue-900 font-semibold text-center border-b-2 border-b-blue-800"
-              />
-            </section>
+            <input
+              type="text"
+              {...register("jobTitle")}
+              placeholder="Job Title"
+              className="outline-none w-[200px] border-0 py-1 px-2 text-lg text-blue-900 font-semibold text-center border-b-2 border-b-blue-800"
+            />
+            <input
+              type="number"
+              {...register("hourlyWage")}
+              placeholder="Hourly Wage"
+              className="outline-none w-[200px] border-0 py-1 px-2 text-lg text-blue-900 font-semibold text-center border-b-2 border-b-blue-800"
+            />
             <button
               type="submit"
               className="bg-blue-600 w-[190px] flex justify-center py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
@@ -132,7 +126,9 @@ const PositionDashboard = () => {
                 >
                   <h1 className="w-[240px] pl-3">{post._id}</h1>
                   <h1 className="w-[120px] text-center">{post.jobTitle}</h1>
-                  <h1 className="w-[120px] text-center">{post.hourlyWage}</h1>
+                  <h1 className="w-[120px] text-center">
+                    ₱ {post.hourlyWage}.00
+                  </h1>
                   <h1 className="w-[200px] flex justify-center">
                     <button
                       onClick={() => {

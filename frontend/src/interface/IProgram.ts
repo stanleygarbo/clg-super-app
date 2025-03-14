@@ -10,5 +10,5 @@ export interface IProgramGet {
 export interface IProgramPost {
   programName: string;
   programAcronym: string;
-  department: string;
+  departmentId: string;
 }

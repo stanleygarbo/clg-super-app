@@ -73,7 +73,7 @@ const ProgramDashboard = () => {
               className="outline-none w-[200px] border-0 py-1 px-2 text-lg text-blue-900 font-semibold text-center border-b-2 border-b-blue-800"
             />
             <select
-              {...register("department")}
+              {...register("departmentId")}
               className="outline-none border-0 border-b-2 border-blue-900 w-[200px] text-center"
             >
               {queryDept.data?.results?.map(
