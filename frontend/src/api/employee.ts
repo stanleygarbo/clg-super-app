@@ -18,14 +18,14 @@ export const getEmployeeById = async ({
 //   return response.data;
 // };
 
-export const getEmployees = async (): Promise<IEmployeeGet> => {
+export const getEmployees = async () => {
   const response = await apiClient.get("/employees");
-  return response.data.results;
+  return response.data;
 };
 
 export const getEmployeees = async () => {
   const response = await apiClient.get("/employees");
-  return response.data.results;
+  return response.data;
 };
 
 export const addEmployee = async (data: IEmployeePost) => {

@@ -9,6 +9,7 @@ import Select from "react-select";
 import { useForm } from "react-hook-form";
 import { IEmployeePost } from "../../../interface/IEmployee";
 import { toast } from "react-toastify";
+import { IRoles } from "../../../interface/IRoles";
 
 const UpdateEmployee = () => {
   const [position, setPosition] = useState<IPositionGet[]>([]);
@@ -65,12 +66,11 @@ const UpdateEmployee = () => {
     queryFn: () => getEmployeeById({ id }),
   });
 
-  const { handleSubmit, register, watch, setValue } = useForm<IEmployeePost>({
+  const { handleSubmit, register, setValue } = useForm<IEmployeePost>({
     defaultValues: {
       gender: query.data?.gender,
     },
   });
-  const gender = watch("gender");
 
   useEffect(() => {
     getDepartments();
@@ -88,7 +88,7 @@ const UpdateEmployee = () => {
     }
   }, [query.data, setValue]);
 
-  const defaultRoles = roles.filter((role) =>
+  const defaultRoles = roles.filter((role: IRoles) =>
     (query.data?.roles ?? []).includes(role.value)
   );
 
@@ -104,7 +104,7 @@ const UpdateEmployee = () => {
               console.error("No employee ID found!");
               return;
             }
-            updateMutation.mutate({ id, value: { ...data, gender } });
+            updateMutation.mutate({ id, value: { ...data, ...roles } });
           })}
           className="pt-6 p-5 grid gap-5"
         >

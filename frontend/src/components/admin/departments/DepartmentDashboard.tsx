@@ -3,162 +3,144 @@ import AddDepartment from "./AddDepartment";
 import { useEffect, useState } from "react";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
-import { IDepartmentGet } from "../../../interface/IDepartment";
+import {
+  IDepartmentGet,
+  IDepartmentPost,
+} from "../../../interface/IDepartment";
 import { departmentPostData } from "../../../store/DepartmentData";
-import DepartmentList from "./DepartmentList";
-import { MdDelete } from "react-icons/md";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  addDepartment,
+  deleteDepartment,
+  getDepartments,
+} from "../../../api/department";
+import { AiFillDelete } from "react-icons/ai";
+import { useForm } from "react-hook-form";
 
 const DepartmentDashboard = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [departments, setDepartments] = useState<IDepartmentGet[]>([]);
-  let id: string;
-  // const navigate = useNavigate();
+  const { handleSubmit, register, setValue } = useForm<IDepartmentPost>();
+  const [search, setSearch] = useState<string>("");
 
-  // FETCH DEPARTMENT
-  const fetchDepartment = async () => {
-    try {
-      setIsLoading(true);
-      const response = await apiClient.get("/departments");
-      setDepartments(response.data.results);
-    } catch {
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const query = useQuery({
+    queryKey: ["departments"],
+    queryFn: getDepartments,
+  });
 
-  // ADD DEPARTMENT
-  const handleSubmitDepartment = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    setIsLoading(true);
-    let departmentName = departmentPostData.departmentName;
+  const addDeptMutation = useMutation({
+    mutationFn: addDepartment,
+    onSuccess: () => {
+      toast.success("Added Successfully");
+      query.refetch();
+      setValue("departmentName", "");
+    },
+    onError: () => {
+      toast.error("Error while adding data");
+    },
+  });
 
-    try {
-      await apiClient.post("/departments", {
-        departmentName,
-      });
-      console.log("To be added :: ", departmentName);
-      setIsOpen(true);
-      toast.success("Department added successfully!");
-    } catch (err) {
-      console.log(departmentPostData.departmentName);
-      toast.error("Error adding department");
-    } finally {
-      setIsLoading(false);
-      setIsOpen(false);
-      departmentPostData.departmentName = "";
-      fetchDepartment();
-    }
-  };
+  const deleteDeptMutation = useMutation({
+    mutationFn: deleteDepartment,
+    onSuccess: () => {
+      toast.success("Deleted Successfully");
+      query.refetch();
+    },
+  });
 
-  // DELETE DEPARTMENT
-  const deleteDepartment = async () => {
-    try {
-      await apiClient.delete("/departments/" + id);
-      toast.success("Successfully deleted department");
-    } catch {
-      toast.error("Error in deleting department");
-    } finally {
-      fetchDepartment();
-    }
-  };
-
-  useEffect(() => {
-    fetchDepartment();
-  }, []);
+  const filteredData = query.data?.results?.filter((dept: IDepartmentGet) =>
+    dept.departmentName.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div>
-      <div className="w-[1000px] h-[650px] relative">
-        <section className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Department List</h1>
-          <button
-            onClick={() => {
-              isOpen ? setIsOpen(false) : setIsOpen(true);
-            }}
-            className="bg-blue-500 px-3 py-2 text-white rounded-md text-lg font-semibold shadow hover:bg-blue-700 active:scale-95 duration-200"
+      <div className="w-[1100px] h-[650px]">
+        {/* ADD DEPARTMENT */}
+        <section className={`p-5 flex items-center justify-between gap-10`}>
+          <h1 className="text-xl font-bold text-blue-800">Add Department</h1>
+          <form
+            className="flex gap-10"
+            onSubmit={handleSubmit((data: IDepartmentPost) =>
+              addDeptMutation.mutate(data)
+            )}
           >
-            Add Department
-          </button>
+            <section className="flex items-center gap-3">
+              <h1 className="font-semibold text-sm">Department Name :</h1>
+              <input
+                type="text"
+                {...register("departmentName")}
+                placeholder="Department"
+                className="outline-none h-[40px] px-2 text-lg text-blue-900 font-semibold text-center border-2 border-blue-800 rounded-md"
+              />
+            </section>
+            <button
+              type="submit"
+              className="bg-blue-600 px-2 w-[200px] py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 text-center duration-200"
+            >
+              {addDeptMutation.isPending ? (
+                <img src="/loading.svg" className="invert" alt="" />
+              ) : (
+                "Add Department"
+              )}
+            </button>
+          </form>
         </section>
 
-        {/* ADD DEPARTMENT */}
-        <form
-          onSubmit={handleSubmitDepartment}
-          className={`${
-            isOpen ? "w-[400px] opacity-100 left-1/2" : "w-0 opacity-0 left-0"
-          } absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 bg-white p-5 rounded-md shadow border-t flex flex-col duration-150`}
-        >
-          <section className="flex justify-between mb-5">
-            <h1 className="font-bold text-lg">Add Department</h1>
-            <button
-              type="button"
-              onClick={() => {
-                isOpen ? setIsOpen(false) : setIsOpen(true);
-              }}
-              className="font-bold text-red-500 hover:text-black hover:bg-red-500 px-2 rounded duration-200"
-            >
-              X
-            </button>
-          </section>
-          <AddDepartment />
-          <button
-            type="submit"
-            className="bg-blue-500 mt-5 p-1 py-2 text-white font-bold rounded-md hover:bg-blue-700 active:scale-95 duration-200"
-          >
-            Add Department
-          </button>
-        </form>
-
-        <section className="mt-5 bg-slate-100 px-5 py-3 rounded-t-md flex justify-between mb-3">
+        <section className="bg-slate-200 px-5 py-2 rounded-md flex items-center justify-between">
           <span className="flex gap-3">
-            <h1
-              className={`bg-white text-blue-700 flex items-center gap-1 px-2 py-2 rounded-md hover:cursor-default`}
-            >
-              <p className="font-bold text-lg">
-                <IoListOutline />
-              </p>
-              <p className="text-sm font-semibold">LIST</p>
-            </h1>
+            <h1 className="text-xl font-bold text-blue-800">Department List</h1>
           </span>
           <span className="flex gap-3 ">
-            {/* <input
+            <input
               type="text"
-              className="border border-slate-500 rounded-sm px-5"
+              className="border-0 rounded-md px-5 py-2 outline-none text-center"
               placeholder="Q Search..."
-            /> */}
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
           </span>
         </section>
         <section>
-          <span className="flex flex-col flex-wrap gap- h-[550px] overflow-scroll no-scrollbar">
-            <span className="flex gap-5 mb-3 mt-2">
+          <span className="flex flex-col">
+            <span className="flex gap-5 mb-3 mt-2 text-lg">
               <h1 className="w-[240px] font-bold text-start px-3">
                 Department ID
               </h1>
               <h1 className="w-[400px] font-bold">Department Name</h1>
-              <h1 className="w-[200px] font-bold text-start pl-5">Action</h1>
+              <h1 className="w-[200px] font-bold text-center">Action</h1>
             </span>
-            {departments.map((dept) => (
-              <section
-                key={dept._id}
-                className="flex gap-5 bg-slate-100 py-2 border"
-              >
-                <h1 className="w-[240px] px-3">{dept._id}</h1>
-                <h1 className="w-[400px]">{dept.departmentName}</h1>
-                <button
-                  onClick={() => {
-                    id = dept._id;
-                    deleteDepartment();
-                  }}
-                  className="bg-red-500 p-1 px-5 font-semibold text-white rounded-md hover:bg-red-700 active:scale-95 duration-200"
+            <span className="h-[470px] overflow-scroll no-scrollbar">
+              {filteredData?.map((dept: IDepartmentGet, index: number) => (
+                <section
+                  key={dept._id}
+                  className={`${
+                    index == 0
+                      ? "rounded-t-md"
+                      : index == query.data?.results?.length - 1
+                      ? "rounded-b-md"
+                      : ""
+                  } ${
+                    index % 2 == 0
+                      ? "bg-blue-100 hover:bg-blue-600 hover:text-white"
+                      : "bg-slate-100 hover:bg-slate-400 hover:text-white"
+                  } flex items-center gap-5 py-2 text-sm font-semibold duration-200`}
                 >
-                  Delete
-                </button>
-              </section>
-            ))}
+                  <h1 className="w-[240px] px-3">{dept._id}</h1>
+                  <h1 className="w-[400px]">{dept.departmentName}</h1>
+                  <h1 className="w-[200px] flex justify-center">
+                    <button
+                      onClick={() => {
+                        deleteDeptMutation.mutate(dept._id);
+                      }}
+                      className="bg-red-500 py-2 px-3 font-semibold text-xl text-white rounded-md hover:bg-red-700 active:scale-95 duration-200"
+                    >
+                      <AiFillDelete />
+                    </button>
+                  </h1>
+                </section>
+              ))}
+            </span>
           </span>
-          {/* <DepartmentList /> */}
         </section>
       </div>
     </div>
