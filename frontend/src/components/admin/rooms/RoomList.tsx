@@ -49,10 +49,10 @@ const RoomList = () => {
 
   return (
     <div className="">
-      <div className="w-[1000px] h-[650px]">
+      <div className="w-[1100px] h-[650px]">
         <form
           onSubmit={handleSubmit((data) => addRoomMutation.mutate(data))}
-          className={`rounded-md bg-white flex flex-col gap-3 px-4 py-2 duration-150`}
+          className={`rounded-md bg-white flex items-center gap-3 px-4 py-2 duration-150`}
         >
           <h1 className="pl-10 text-lg font-bold">Add Room :</h1>
           {/* <section className="flex items-center justify-between mb-5 pl-2">
@@ -70,46 +70,49 @@ const RoomList = () => {
           <section className="flex gap-5">
             <input
               type="text"
+              required
               className="text-center outline-none border-0 p-2 bg-white font-semibold border-b-2 focus:border-b-blue-800 duration-200"
               placeholder="Room Name"
               {...register("room")}
             />
             <input
               type="text"
+              required
               className="text-center outline-none border-0 p-2 bg-white font-semibold border-b-2 focus:border-b-blue-800 duration-200"
               placeholder="Room Building"
               {...register("building")}
             />
             <input
               type="number"
+              required
               className="text-center outline-none border-0 p-2 bg-white font-semibold border-b-2 focus:border-b-blue-800 duration-200"
               placeholder="Room Floor"
               {...register("floor")}
             />
             <button
               type="submit"
-              className="bg-blue-700 px-5 py-2 text-white font-semibold rounded-md text-base ml-10"
+              className="bg-blue-600 px-5 py-2 text-white font-semibold rounded-md text-base ml-10 hover:bg-blue-800 active:scale-95 duration-200"
             >
               Add Room
             </button>
           </section>
         </form>
         <section className="flex justify-between items-center"></section>
-        <section className="mt-5 bg-slate-100 px-5 py-3 rounded-md flex justify-between">
-          <span className="flex gap-3">
-            <h1 className="text-2xl font-bold text-blue-700">Room's List</h1>
+        <section className="bg-slate-100 px-5 py-2 rounded-md flex justify-between">
+          <span className="flex gap-3 items-center">
+            <h1 className="text-xl font-bold text-blue-700">Room's List</h1>
           </span>
           <span className="flex gap-3 ">
             <input
               type="text"
-              className="border border-slate-500 rounded-sm px-5"
+              className="border-0 rounded-md px-5 text-center py-2 outline-none"
               placeholder="Q Search..."
             />
           </span>
         </section>
         <section className="py-3">
           <span className="flex gap-5 mb-3">
-            <h1 className="w-[250px] font-bold">Room Name</h1>
+            <h1 className="w-[250px] font-bold pl-2">Room</h1>
             <h1 className="w-[150px] font-bold">Building</h1>
             <h1 className="w-[150px] font-bold">Floor</h1>
             <h1 className="w-[230px] font-bold text-center">Action</h1>

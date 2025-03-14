@@ -1,8 +1,14 @@
 import { IDepartmentGet } from "./IDepartment";
 
-export interface IProgram {
+export interface IProgramGet {
+  _id: string;
   programName: string;
   programAcronym: string;
   department: IDepartmentGet;
-  _id: string;
+}
+
+export interface IProgramPost {
+  programName: string;
+  programAcronym: string;
+  department: string;
 }

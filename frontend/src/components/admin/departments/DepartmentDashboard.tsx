@@ -1,13 +1,9 @@
-import { IoListOutline } from "react-icons/io5";
-import AddDepartment from "./AddDepartment";
-import { useEffect, useState } from "react";
-import apiClient from "../../../api/apiClient";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import {
   IDepartmentGet,
   IDepartmentPost,
 } from "../../../interface/IDepartment";
-import { departmentPostData } from "../../../store/DepartmentData";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   addDepartment,
@@ -68,12 +64,12 @@ const DepartmentDashboard = () => {
                 type="text"
                 {...register("departmentName")}
                 placeholder="Department"
-                className="outline-none h-[40px] px-2 text-lg text-blue-900 font-semibold text-center border-2 border-blue-800 rounded-md"
+                className="outline-none border-0 py-1 px-2 text-lg text-blue-900 font-semibold text-center border-b-2 border-b-blue-800"
               />
             </section>
             <button
               type="submit"
-              className="bg-blue-600 px-2 w-[200px] py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 text-center duration-200"
+              className="bg-blue-600 w-[190px] flex justify-center py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
             >
               {addDeptMutation.isPending ? (
                 <img src="/loading.svg" className="invert" alt="" />
