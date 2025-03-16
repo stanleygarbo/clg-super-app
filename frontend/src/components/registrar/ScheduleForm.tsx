@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { getPrograms } from "../../api/programs";
-import { IProgram } from "../../interface/IProgram";
-import { getCourses } from "../../api/course";
-import { ICourse } from "../../interface/ICourse";
-import { getEmployeees } from "../../api/employee";
-import { IEmployeeGet } from "../../interface/IEmployee";
 import { useForm, Controller } from "react-hook-form";
-import { ISubjectSchedule } from "../../interface/ISchedule";
 import { Slide, toast } from "react-toastify";
-import { addSchedule } from "../../api/schedule";
-import { IRoom } from "../../interface/IRoom";
-import { getRooms } from "../../api/room";
 import { convertMilitaryTo12Hour } from "../../Helper";
+
+// API
+import { getPrograms } from "../../api/programs";
+import { getCourses } from "../../api/course";
+import { getEmployeees } from "../../api/employee";
+import { addSchedule } from "../../api/schedule";
+import { getRooms } from "../../api/room";
+// Interface
+import { IProgram } from "../../interface/IProgram";
+import { ICourse } from "../../interface/ICourse";
+import { IEmployeeGet } from "../../interface/IEmployee";
+import { ISubjectSchedule } from "../../interface/ISchedule";
+import { IRoom } from "../../interface/IRoom";
 
 interface IOption {
   value: string;
@@ -35,7 +38,7 @@ const dayOptions = [
   { value: "sat", label: "Saturday" },
 ];
 
-function CreateSchedule() {
+function ScheduleForm() {
   const scheduleForm = useForm();
   const subjectForm = useForm();
   const [programOptions, setProgramOptions] = useState<IOption[]>([]);
@@ -335,4 +338,4 @@ function CreateSchedule() {
   );
 }
 
-export default CreateSchedule;
+export default ScheduleForm;

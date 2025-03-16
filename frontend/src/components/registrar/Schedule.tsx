@@ -23,7 +23,7 @@ function Schedule() {
   };
 
   const handleCreateClick = () => {
-    navigate("create");
+    navigate("form");
   };
 
   const handleViewClick = (id: string) => {
