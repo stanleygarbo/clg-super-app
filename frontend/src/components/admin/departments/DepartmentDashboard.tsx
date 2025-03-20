@@ -14,7 +14,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 
 const DepartmentDashboard = () => {
-  const { handleSubmit, register, setValue } = useForm<IDepartmentPost>();
+  const { handleSubmit, register, setValue, formState: { errors } } = useForm<IDepartmentPost>();
   const [search, setSearch] = useState<string>("");
 
   const query = useQuery({
@@ -53,19 +53,26 @@ const DepartmentDashboard = () => {
         <section className={`p-5 flex items-center justify-between gap-10`}>
           <h1 className="text-xl font-bold text-blue-800">Add Department</h1>
           <form
-            className="flex gap-10"
+            className="flex items-start gap-10"
             onSubmit={handleSubmit((data: IDepartmentPost) =>
               addDeptMutation.mutate(data)
             )}
           >
-            <section className="flex items-center gap-3">
-              <h1 className="font-semibold text-sm">Department Name :</h1>
-              <input
-                type="text"
-                {...register("departmentName")}
-                placeholder="Department"
-                className="outline-none border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
-              />
+            <section className="flex flex-col min-h-[50px]">
+              <section className="flex items-center gap-3">
+                <h1 className="font-semibold text-sm">Department Name :</h1>
+                <input
+                  type="text"
+                  {...register("departmentName", { 
+                    required: "Department name is required" 
+                  })}
+                  placeholder="Department"
+                  className={`outline-none border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 ${errors.departmentName ? 'border-b-red-500' : 'border-b-blue-800'}`}
+                />
+              </section>
+              {errors.departmentName && (
+                <p className="text-red-500 text-xs absolute translate-y-[40px] translate-x-[175px]">{errors.departmentName.message}</p>
+              )}
             </section>
             <button
               type="submit"
