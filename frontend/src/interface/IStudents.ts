@@ -1,4 +1,4 @@
-import { IProgram } from "./IProgram";
+import { IProgramGet } from "./IProgram";
 
 export interface IStudentsPost {
   schoolYear: string;
@@ -111,7 +111,7 @@ export interface IStudentsGet {
     firstName: string;
     children: number;
   };
-  program: IProgram;
+  program: IProgramGet;
   standing: string;
   birth: {
     birthDate: string;

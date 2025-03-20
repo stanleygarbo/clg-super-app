@@ -25,7 +25,6 @@ import ProgramDashboard from "./components/admin/programs/ProgramDashboard";
 import CourseDashboard from "./components/admin/courses/CourseDashboard";
 import EmploymentForm from "./components/admin/employees/EmployeeForm";
 import UpdateEmployee from "./components/admin/employees/UpdateEmployee";
-import Test from "./components/admin/employees/Test";
 import RoomList from "./components/admin/rooms/RoomList";
 import SubjectLoad from "./components/admin/subject-load/SubjectLoad";
 import SubjectLoadDetails from "./components/admin/subject-load/SubjectLoadDetails";
@@ -40,10 +39,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-      },
-      {
-        path: "/test",
-        element: <Test />,
       },
       {
         path: "/login",

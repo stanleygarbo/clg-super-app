@@ -23,13 +23,18 @@ export const getEmployees = async () => {
   return response.data;
 };
 
-export const getEmployeees = async () => {
-  const response = await apiClient.get("/employees");
-  return response.data;
-};
+// export const getEmployeees = async () => {
+//   const response = await apiClient.get("/employees");
+//   return response.data;
+// };
 
 export const addEmployee = async (data: IEmployeePost) => {
   const response = await apiClient.post("/employees", data);
+  return response.data;
+};
+
+export const deleteEmployee = async (id: string) => {
+  const response = await apiClient.delete("/employees/" + id);
   return response.data;
 };
 

@@ -1,39 +1,52 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import apiClient from "../../../api/apiClient";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { IEmployeeGet } from "../../../interface/IEmployee";
 import { MdArchive, MdPageview } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { useQuery } from "@tanstack/react-query";
-import { getEmployees } from "../../../api/employee";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { deleteEmployee, getEmployees } from "../../../api/employee";
+import { IEmployeeGet } from "../../../interface/IEmployee";
 
 const Employees = () => {
-  let { id } = useParams<string>();
+  // let { id } = useParams<string>();
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
 
   const query = useQuery({ queryKey: ["employee"], queryFn: getEmployees });
 
   // DELETE EMPLOYEE
-  const deleteEmployee = async () => {
-    try {
-      await apiClient.delete("/employees/" + id);
-      toast.success("Successfully deleted employee");
-    } catch {
-      toast.error("Error in deleting employee");
-    } finally {
-      query.refetch;
-    }
-  };
+  const deleteMutation = useMutation({
+    mutationFn: deleteEmployee,
+    onSuccess: () => {
+      toast.success("Deleted Successfully");
+      query.refetch();
+    },
+    onError: (err: any) => {
+      toast.error(err.response.data.message);
+    },
+  });
 
-  const [search, setSearch] = useState("");
+  // const deleteEmployee = async () => {
+  //   try {
+  //     await apiClient.delete("/employees/" + id);
+  //     toast.success("Successfully deleted employee");
+  //   } catch {
+  //     toast.error("Error in deleting employee");
+  //   } finally {
+  //     query.refetch;
+  //   }
+  // };
 
   const filteredEmployees = query.data?.results?.length
-    ? query.data.results.filter((employee: IEmployeeGet) =>
-        `${employee.surname} ${employee.firstName} ${employee.middleName}`
-          .toLowerCase()
-          .includes(search.toLowerCase())
-      )
+    ? query.data.results
+        .filter((employee: IEmployeeGet) =>
+          `${employee.surname} ${employee.firstName} ${employee.middleName}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
+        )
+        .sort((a: IEmployeeGet, b: IEmployeeGet) =>
+          a.surname.localeCompare(b.surname)
+        )
     : [];
 
   return (
@@ -69,14 +82,14 @@ const Employees = () => {
           </span>
         </section>
         <section className="py-3">
-          <span className="flex gap-5 mb-3 text-blue-900">
-            <h1 className="w-[250px] font-bold pl-5">Name</h1>
-            <h1 className="w-[120px] font-bold">Position</h1>
-            <h1 className="w-[120px] font-bold">Department</h1>
-            <h1 className="w-[150px] font-bold">Employment Type</h1>
-            <h1 className="w-[100px] font-bold">Roles</h1>
-            <h1 className="w-[100px] font-bold">Status</h1>
-            <h1 className="w-[220px] font-bold pl-10">Action</h1>
+          <span className="flex mb-3 text-lg">
+            <h1 className="w-[300px] font-bold text-center">Name</h1>
+            <h1 className="w-[100px] font-bold text-center">Position</h1>
+            <h1 className="w-[120px] font-bold text-center">Department</h1>
+            <h1 className="w-[200px] font-bold text-center">Gender</h1>
+            <h1 className="w-[180px] font-bold text-center">Roles</h1>
+            <h1 className="w-[100px] font-bold text-center">Status</h1>
+            <h1 className="w-[200px] font-bold text-center">Action</h1>
           </span>
           {/* {query.isLoading ? (
             <div className="text-center mt-10">Loading...</div>
@@ -90,44 +103,45 @@ const Employees = () => {
             <span
               key={index}
               className={`${
-                index == 0
+                index === 0
                   ? "rounded-t-md"
-                  : index == filteredEmployees?.length - 1
+                  : index === filteredEmployees?.length - 1
                   ? "rounded-b-md"
                   : ""
               } ${
-                index % 2 == 0
-                  ? "bg-blue-100 hover:bg-blue-500 hover:text-white"
-                  : "bg-slate-100 hover:bg-slate-400 hover:text-white"
-              } flex gap-5 pl-3 py-2 text-sm font-semibold items-center rounded-m  duration-500`}
+                index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
+              } flex hover:bg-slate-300 py-2 text-sm font-semibold group items-center w-[1100px] duration-200`}
             >
-              <h1 className="flex gap-2 items-center w-[240px]">
+              <h1 className="flex items-center pl-3 w-[300px]">
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6LXNJFTmLzCoExghcATlCWG85kI8dsnhJng&s"
                   alt="."
-                  className="bg-blue-600 w-7 aspect-square rounded-full"
+                  className="bg-blue-600 w-6 mr-2 aspect-square rounded-full"
                 />
                 <p>
-                  {employee.surname}, {employee.firstName} {employee.middleName}
+                  {employee.surname}, {employee.firstName}{" "}
+                  {employee.middleName[0]}.
                 </p>
               </h1>
-              <h1 className="w-[90px]">{employee.position?.jobTitle}</h1>
-              <h1 className="w-[100px]">
+              <h1 className="w-[100px] text-center">
+                {employee.position?.jobTitle}
+              </h1>
+              <h1 className="w-[120px] text-center">
                 {employee.department?.departmentName}
               </h1>
-              <h1 className="w-[140px] text-center">
-                {employee.employmentType}
+              <h1 className="w-[200px] text-center">{employee?.birth?.sex}</h1>
+              <h1 className="w-[180px] text-center">
+                {employee.roles.join(", ")}
               </h1>
-              <h1 className="w-[100px]">{employee.roles.join(", ")}</h1>
-              <h1 className="w-[70px] text-green-500 font-semibold flex items-center gap-1">
-                <div className="w-2 mt-1 aspect-square bg-green-500 rounded-full"></div>{" "}
+              <h1 className="w-[100px] justify-center text-green-700 font-semibold flex items-center gap-1">
+                <div className="w-[9px] aspect-square bg-green-700 rounded-full"></div>{" "}
                 Active
               </h1>
-              <h1 className="w-[220px] flex gap-2">
+              <h1 className="w-[200px] flex gap-2 items-center justify-center opacity-0 group-hover:opacity-100">
                 <button
                   onClick={() => {
-                    id = employee._id;
-                    navigate("/" + id + "/profile");
+                    // id = employee._id;
+                    navigate("/" + employee._id + "/profile");
                   }}
                   type="button"
                   className="bg-blue-600 text-xl py-2 px-3 rounded-md font-semibold text-white hover:bg-blue-800 active:scale-95 duration-200"
@@ -136,21 +150,21 @@ const Employees = () => {
                 </button>
                 <button
                   onClick={() => {
-                    id = employee._id;
-                    navigate("/admin/update-employee/" + id);
+                    // id = employee._id;
+                    navigate("/admin/update-employee/" + employee._id);
                   }}
                   type="button"
-                  className="bg-green-500 text-lg px-3 rounded-md font-semibold text-white hover:bg-green-700 active:scale-95 duration-200"
+                  className="bg-blue-600 text-xl py-2 px-3 rounded-md font-semibold text-white hover:bg-blue-800 active:scale-95 duration-200"
                 >
                   <FaEdit />
                 </button>
                 <button
                   onClick={() => {
-                    id = employee._id;
-                    deleteEmployee();
+                    // id = employee._id;
+                    deleteMutation.mutate(employee._id);
                   }}
                   type="button"
-                  className="bg-red-500 px-3 rounded-md text-xl font-semibold text-white hover:bg-red-700 active:scale-95 duration-200"
+                  className="bg-red-600 py-2 px-3 rounded-md text-xl font-semibold text-white hover:bg-red-800 active:scale-95 duration-200"
                 >
                   <MdArchive />
                 </button>

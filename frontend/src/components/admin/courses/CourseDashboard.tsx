@@ -53,19 +53,19 @@ const CourseDashboard = () => {
               type="text"
               {...register("courseCode")}
               placeholder="Course Code"
-              className="outline-none border-0 py-1 px-2 text-lg text-blue-900 font-semibold text-center border-b-2 border-b-blue-800"
+              className="outline-none border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
             />
             <input
               type="text"
               {...register("courseName")}
               placeholder="Course Name"
-              className="outline-none border-0 py-1 px-2 text-lg text-blue-900 font-semibold text-center border-b-2 border-b-blue-800"
+              className="outline-none border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
             />
             <input
               type="number"
               {...register("units")}
               placeholder="Units"
-              className="outline-none border-0 py-1 px-2 text-lg text-blue-900 font-semibold text-center border-b-2 border-b-blue-800"
+              className="outline-none border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
             />
             <button
               type="submit"
@@ -80,7 +80,7 @@ const CourseDashboard = () => {
           </form>
         </section>
 
-        <section className="bg-slate-200 px-5 py-2 rounded-md flex items-center justify-between">
+        <section className="bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
           <span className="flex gap-3">
             <h1 className="text-xl font-bold text-blue-800">Course's List</h1>
           </span>
@@ -98,10 +98,10 @@ const CourseDashboard = () => {
         </section>
         <section>
           <span className="flex flex-col">
-            <span className="flex gap-5 mb-3 mt-2 text-lg">
-              <h1 className="w-[150px] font-bold">Course Code</h1>
-              <h1 className="w-[400px] font-bold text-center">Course</h1>
-              <h1 className="w-[100px] font-bold">Units</h1>
+            <span className="flex mb-3 mt-2 text-lg">
+              <h1 className="w-[150px] font-bold pl-3">Course Code</h1>
+              <h1 className="w-[300px] font-bold text-center">Course</h1>
+              <h1 className="w-[150px] font-bold text-center">Units</h1>
               <h1 className="w-[200px] font-bold text-center">Action</h1>
             </span>
             <span className="overflow-scroll no-scrollbar">
@@ -115,15 +115,13 @@ const CourseDashboard = () => {
                       ? "rounded-b-md"
                       : ""
                   } ${
-                    index % 2 == 0
-                      ? "bg-blue-100 hover:bg-blue-600 hover:text-white"
-                      : "bg-slate-100 hover:bg-slate-400 hover:text-white"
-                  } flex items-center gap-5 py-2 text-sm font-semibold duration-200`}
+                    index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
+                  } hover:bg-slate-300 group flex items-center py-2 text-sm font-semibold duration-200`}
                 >
                   <h1 className="w-[150px] pl-3">{cour.courseCode}</h1>
-                  <h1 className="w-[400px] text-center">{cour.courseName}</h1>
-                  <h1 className="w-[100px]">{cour.units} units</h1>
-                  <h1 className="w-[200px] flex justify-center">
+                  <h1 className="w-[300px] text-center">{cour.courseName}</h1>
+                  <h1 className="w-[150px] text-center">{cour.units} units</h1>
+                  <h1 className="w-[200px] flex justify-center opacity-0 group-hover:opacity-100">
                     <button
                       onClick={() => {
                         deleteCourMutation.mutate(cour._id);

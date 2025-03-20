@@ -64,7 +64,7 @@ const DepartmentDashboard = () => {
                 type="text"
                 {...register("departmentName")}
                 placeholder="Department"
-                className="outline-none border-0 py-1 px-2 text-lg text-blue-900 font-semibold text-center border-b-2 border-b-blue-800"
+                className="outline-none border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
               />
             </section>
             <button
@@ -80,7 +80,7 @@ const DepartmentDashboard = () => {
           </form>
         </section>
 
-        <section className="bg-slate-200 px-5 py-2 rounded-md flex items-center justify-between">
+        <section className="bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
           <span className="flex gap-3">
             <h1 className="text-xl font-bold text-blue-800">Department List</h1>
           </span>
@@ -98,14 +98,16 @@ const DepartmentDashboard = () => {
         </section>
         <section>
           <span className="flex flex-col">
-            <span className="flex gap-5 mb-3 mt-2 text-lg">
-              <h1 className="w-[240px] font-bold text-start px-3">
+            <span className="flex mb-3 mt-2 text-lg">
+              <h1 className="w-[300px] font-bold text-start pl-3">
                 Department ID
               </h1>
-              <h1 className="w-[400px] font-bold">Department Name</h1>
+              <h1 className="w-[200px] font-bold text-center">
+                Department Name
+              </h1>
               <h1 className="w-[200px] font-bold text-center">Action</h1>
             </span>
-            <span className="h-[470px] overflow-scroll no-scrollbar">
+            <span className="h-[470px] rounded-md overflow-scroll no-scrollbar">
               {filteredData?.map((dept: IDepartmentGet, index: number) => (
                 <section
                   key={dept._id}
@@ -116,14 +118,14 @@ const DepartmentDashboard = () => {
                       ? "rounded-b-md"
                       : ""
                   } ${
-                    index % 2 == 0
-                      ? "bg-blue-100 hover:bg-blue-600 hover:text-white"
-                      : "bg-slate-100 hover:bg-slate-400 hover:text-white"
-                  } flex items-center gap-5 py-2 text-sm font-semibold duration-200`}
+                    index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
+                  } hover:bg-slate-300 group flex items-center py-2 text-sm font-semibold duration-200`}
                 >
-                  <h1 className="w-[240px] px-3">{dept._id}</h1>
-                  <h1 className="w-[400px]">{dept.departmentName}</h1>
-                  <h1 className="w-[200px] flex justify-center">
+                  <h1 className="w-[300px] pl-3">{dept._id}</h1>
+                  <h1 className="w-[200px] text-center">
+                    {dept.departmentName}
+                  </h1>
+                  <h1 className="w-[200px] flex justify-center items-center opacity-0 group-hover:opacity-100">
                     <button
                       onClick={() => {
                         deleteDeptMutation.mutate(dept._id);

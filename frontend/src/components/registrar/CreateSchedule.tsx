@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import { getPrograms } from "../../api/programs";
-import { IProgram } from "../../interface/IProgram";
 import { getCourses } from "../../api/course";
-import { ICourse } from "../../interface/ICourse";
-import { getEmployeees } from "../../api/employee";
+import { ICourseGet } from "../../interface/ICourse";
+import { getEmployeees, getEmployees } from "../../api/employee";
 import { IEmployeeGet } from "../../interface/IEmployee";
 import { useForm, Controller } from "react-hook-form";
 import { ISubjectSchedule } from "../../interface/ISchedule";
 import { Slide, toast } from "react-toastify";
 import { addSchedule } from "../../api/schedule";
-import { IRoom } from "../../interface/IRoom";
+import { IRoomGet } from "../../interface/IRoom";
 import { getRooms } from "../../api/room";
 import { convertMilitaryTo12Hour } from "../../Helper";
+import { IPositionGet } from "../../interface/IPosition";
+import { useQuery } from "@tanstack/react-query";
+import { IProgramGet } from "../../interface/IProgram";
 
 interface IOption {
   value: string;
@@ -38,46 +40,65 @@ const dayOptions = [
 function CreateSchedule() {
   const scheduleForm = useForm();
   const subjectForm = useForm();
-  const [programOptions, setProgramOptions] = useState<IOption[]>([]);
+  // const [programOptions, setProgramOptions] = useState<IOption[]>([]);
   const [courseOptions, setCourseOptions] = useState<IOption[]>([]);
-  const [instructorOptions, setInstructorOptions] = useState<IOption[]>([]);
-  const [roomOptions, setRoomOptions] = useState<IOption[]>([]);
+  // const [instructorOptions, setInstructorOptions] = useState<IOption[]>([]);
   const [subjectSchedules, setSubjectSchedules] = useState<ISubjectSchedule[]>(
     []
   );
 
+  const intructor = useQuery({
+    queryKey: ["employees"],
+    queryFn: getEmployees,
+  });
+
+  const room = useQuery({
+    queryKey: ["rooms"],
+    queryFn: getRooms,
+  });
+
+  const programs = useQuery({
+    queryKey: ["programs"],
+    queryFn: getPrograms,
+  });
+
+  const roomOptions: IOption[] = room.data?.map((room: IRoomGet) => {
+    return {
+      value: room._id,
+      label: room.building + room.room,
+    };
+  });
+
+  const instructorOptions: IOption[] = intructor.data?.results.map(
+    (ins: IEmployeeGet) => {
+      return {
+        value: ins._id,
+        label: `${ins.surname}, ${ins.firstName[0]}`,
+      };
+    }
+  );
+
+  const programOptions: IOption[] = programs.data?.results.map(
+    (prog: IProgramGet) => {
+      return {
+        value: prog._id,
+        label: prog.programAcronym,
+      };
+    }
+  );
+
   const loadOptions = async () => {
-    const programs = await getPrograms();
+    // const programs = await getPrograms();
     const courses = await getCourses();
-    const employees = await getEmployeees();
-    const rooms = await getRooms();
 
-    setProgramOptions(
-      programs.results.map((program: IProgram) => {
-        return { value: program._id, label: program.programName };
-      })
-    );
+    // setProgramOptions(
+    //   programs.results.map((program: IPositionGet) => {
+    //     return { value: program._id, label: program.jobTitle };
+    //   })
+    // );
     setCourseOptions(
-      courses.results.map((course: ICourse) => {
+      courses.results.map((course: ICourseGet) => {
         return { value: course._id, label: course.courseName };
-      })
-    );
-
-    setInstructorOptions(
-      employees.map((employee: IEmployeeGet) => {
-        return {
-          value: employee._id,
-          label: `${employee.firstName} ${employee.surname}`,
-        };
-      })
-    );
-
-    setRoomOptions(
-      rooms.map((room: IRoom) => {
-        return {
-          value: room._id,
-          label: room.building + room.room,
-        };
       })
     );
   };
@@ -118,7 +139,7 @@ function CreateSchedule() {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        // theme: "light",
         transition: Slide,
       });
     } catch (error) {
@@ -224,8 +245,9 @@ function CreateSchedule() {
               </td>
               <td className="text-center">
                 {
-                  roomOptions.find((room) => room.value == subjectSchedule.room)
-                    ?.label
+                  roomOptions.find(
+                    (room: IOption) => room.value == subjectSchedule.room
+                  )?.label
                 }
               </td>
               <td className="text-center">

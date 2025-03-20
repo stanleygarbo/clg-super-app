@@ -4,15 +4,17 @@ import { IDepartmentGet } from "../../../interface/IDepartment";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
 import { IEmployeePost } from "../../../interface/IEmployee";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { addEmployee } from "../../../api/employee";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import { getDepartments } from "../../../api/department";
+import { getPositions } from "../../../api/position";
 
 const EmploymentForm = () => {
-  const [position, setPosition] = useState<IPositionGet[]>([]);
-  const [department, setDepartment] = useState<IDepartmentGet[]>([]);
+  // const [position, setPosition] = useState<IPositionGet[]>([]);
+  // const [department, setDepartment] = useState<IDepartmentGet[]>([]);
   const navigate = useNavigate();
 
   const roles = [
@@ -29,29 +31,38 @@ const EmploymentForm = () => {
   ];
 
   // FETCH DEPARTMENT
-  const getDepartments = async () => {
-    try {
-      const response = await apiClient.get("/departments");
-      setDepartment(response.data.results);
-    } catch {
-      toast.error("Error while getting the departments");
-    } finally {
-    }
-  };
+  const department = useQuery({
+    queryKey: ["departments"],
+    queryFn: getDepartments,
+  });
+
+  // const getDepartments = async () => {
+  //   try {
+  //     const response = await apiClient.get("/departments");
+  //     setDepartment(response.data.results);
+  //   } catch {
+  //     toast.error("Error while getting the departments");
+  //   } finally {
+  //   }
+  // };
 
   //  FETCH POSITION
-  const getPositions = async () => {
-    try {
-      const response = await apiClient.get("/positions");
-      setPosition(response.data.results);
-    } catch {
-      toast.error("Error while getting the departments");
-    } finally {
-    }
-  };
+  const position = useQuery({
+    queryKey: ["positions"],
+    queryFn: getPositions,
+  });
+  // const getPositions = async () => {
+  //   try {
+  //     const response = await apiClient.get("/positions");
+  //     setPosition(response.data.results);
+  //   } catch {
+  //     toast.error("Error while getting the departments");
+  //   } finally {
+  //   }
+  // };
 
   useEffect(() => {
-    getDepartments();
+    // getDepartments();
     getPositions();
   }, []);
 
@@ -65,6 +76,9 @@ const EmploymentForm = () => {
     onSuccess: (data) => {
       toast.success(`Employee ${data.firstName} added successfully!`);
       navigate("/admin/employees");
+    },
+    onError: (err: any) => {
+      toast.error(err.message);
     },
   });
 
@@ -82,7 +96,7 @@ const EmploymentForm = () => {
 
   const { handleSubmit, register, control } = useForm<IEmployeePost>({
     defaultValues: {
-      gender: "male",
+      // gender: "male",
       hireDate: new Date().toISOString().split("T")[0],
     },
   });
@@ -126,7 +140,7 @@ const EmploymentForm = () => {
               <input
                 type="date"
                 className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-                {...register("birthDate")}
+                {...register("birth.birthDate")}
               />
             </span>
             <span className="flex flex-col gap-2">
@@ -134,7 +148,7 @@ const EmploymentForm = () => {
               <Controller
                 name="roles"
                 control={control}
-                defaultValue={[]} // Default value must be an array for isMulti
+                defaultValue={[roles[0]]} // Default value must be an array for isMulti
                 render={({ field }) => (
                   <Select
                     {...field}
@@ -150,24 +164,15 @@ const EmploymentForm = () => {
             <span className="px-5">
               <h1 className="text-sm font-semibold pb-3">Gender:</h1>
               <div className="flex gap-5">
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="male"
-                    {...register("gender")}
-                    className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-gray-700">Male</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="female"
-                    {...register("gender")}
-                    className="w-5 h-5 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
-                  />
-                  <span className="text-gray-700">Female</span>
-                </label>
+                <select
+                  {...register("birth.sex")}
+                  className="text-center w-[100%] outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+                >
+                  <option value="male" selected>
+                    Male
+                  </option>
+                  <option value="female">Female</option>
+                </select>
               </div>
             </span>
           </section>
@@ -176,33 +181,37 @@ const EmploymentForm = () => {
               <h1 className="text-sm font-semibold">Position :</h1>
               <select
                 {...register("position")}
-                className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
+                className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
               >
-                {position.map((pos, index) => (
-                  <option key={index} value={pos._id} selected={index == 1}>
-                    {pos.jobTitle}
-                  </option>
-                ))}
+                {position.data?.results?.map(
+                  (pos: IPositionGet, index: number) => (
+                    <option key={index} value={pos._id} selected={index === 0}>
+                      {pos.jobTitle}
+                    </option>
+                  )
+                )}
               </select>
             </span>
             <span className="flex flex-col gap-2">
               <h1 className="text-sm font-semibold">Department :</h1>
 
               <select
-                className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
+                className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
                 {...register("department")}
               >
-                {department.map((dept, index) => (
-                  <option key={index} value={dept._id} selected={index == 0}>
-                    {dept.departmentName}
-                  </option>
-                ))}
+                {department?.data?.results?.map(
+                  (dept: IDepartmentGet, index: number) => (
+                    <option key={index} value={dept._id} selected={index === 0}>
+                      {dept.departmentName}
+                    </option>
+                  )
+                )}
               </select>
             </span>
             <span className="flex flex-col gap-2">
               <h1 className="text-sm font-semibold">Employment Type :</h1>
               <select
-                className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
+                className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
                 {...register("employmentType")}
               >
                 <option value="regular" selected>
@@ -225,11 +234,11 @@ const EmploymentForm = () => {
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
               {...register("password")}
             />
-            <input
+            {/* <input
               type="password"
               placeholder="Confirm Password"
               className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-            />
+            /> */}
           </section>
           <button
             type="submit"

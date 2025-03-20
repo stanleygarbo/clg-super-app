@@ -169,7 +169,7 @@ const AdminLayout = () => {
   return (
     <div className="flex min-h-screen box-border">
       <Sidebar sidebarItems={sidebarItems} />
-      <div className="flex justify-center w-full xs:ml-[400px] sm:ml-[400px] ml-[250px] xl:ml-[300px]">
+      <div className="flex justify-center w-full ml-[300px] mt-10">
         <Outlet />
       </div>
     </div>

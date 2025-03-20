@@ -2,35 +2,42 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSchedule } from "../../api/schedule";
 import { ISchedule } from "../../interface/ISchedule";
-import { ICourse } from "../../interface/ICourse";
+import { ICourseGet } from "../../interface/ICourse";
 import { getCourses } from "../../api/course";
-import { IRoom } from "../../interface/IRoom";
+import { IRoomGet } from "../../interface/IRoom";
 import { getRooms } from "../../api/room";
-import { IEmployee } from "../../interface/IEmployee";
-import { getEmployeees } from "../../api/employee";
+import { IEmployeeGet } from "../../interface/IEmployee";
+import { getEmployees } from "../../api/employee";
 import { capitalizeFirstLetter, convertMilitaryTo12Hour } from "../../Helper";
+import { useQuery } from "@tanstack/react-query";
 
 function ViewSchedule() {
-  const params = useParams();
+  const { id } = useParams();
   const [schedule, setSchedule] = useState<ISchedule>();
-  const [courses, setCourses] = useState<ICourse[]>([]);
-  const [rooms, setRooms] = useState<IRoom[]>([]);
-  const [instructors, setInstructors] = useState<IEmployee[]>([]);
 
   const loadData = async (id: string) => {
     const schedule = await getSchedule(id);
-    const course = await getCourses();
-    const room = await getRooms();
-    const employee = await getEmployeees();
 
     setSchedule(schedule);
-    setCourses(course.results);
-    setRooms(room);
-    setInstructors(employee);
   };
 
+  const instructors = useQuery({
+    queryKey: ["employees"],
+    queryFn: getEmployees,
+  });
+
+  const rooms = useQuery({
+    queryKey: ["rooms"],
+    queryFn: getRooms,
+  });
+
+  const courses = useQuery({
+    queryKey: ["courses"],
+    queryFn: getCourses,
+  });
+
   useEffect(() => {
-    loadData(params.id || "");
+    loadData(id || "");
   }, []);
 
   return (
@@ -45,22 +52,26 @@ function ViewSchedule() {
       <main>
         <table className="w-full border-collapse">
           <thead>
-            <tr className="grid grid-cols-scheduleView w-full px-4 py-2 border-b-2">
+            <tr className="grid grid-cols-scheduleView w-full  py-2 border-b-2">
               <th>Course Code</th>
               <th>Course Name</th>
               <th>Units</th>
               <th>Time</th>
               <th>Days</th>
               <th>Room</th>
-              <th>Instructor</th>
+              <th className="pr-2">Instructor</th>
             </tr>
           </thead>
           <tbody>
             {schedule?.subjectSchedules.map((schedule) => {
-              const course = courses.find((c) => c._id == schedule.courseID);
-              const room = rooms.find((t) => t._id == schedule.room);
-              const instructor = instructors.find(
-                (i) => i._id == schedule.instructorID
+              const course = courses.data?.results.find(
+                (c: ICourseGet) => c._id == schedule.courseID
+              );
+              const room = rooms.data?.find(
+                (t: IRoomGet) => t._id == schedule.room
+              );
+              const instructor = instructors.data?.results?.find(
+                (i: IEmployeeGet) => i._id == schedule.instructorID
               );
               const formattedDay = schedule.day.map((day) =>
                 capitalizeFirstLetter(day)
@@ -75,8 +86,8 @@ function ViewSchedule() {
                     schedule.timeStart
                   )} - ${convertMilitaryTo12Hour(schedule.timeEnd)}`}</td>
                   <td className="text-center">{formattedDay.join(" / ")}</td>
-                  <td className="text-center">{`${room?.building} ${room?.room}`}</td>
-                  <td className="text-center">{`${instructor?.firstName} ${instructor?.surname}`}</td>
+                  <td className="text-center">{`${room?.building}${room?.room}`}</td>
+                  <td className="text-center">{`${instructor?.surname} ${instructor?.firstName[0]}. `}</td>
                 </tr>
               );
             })}

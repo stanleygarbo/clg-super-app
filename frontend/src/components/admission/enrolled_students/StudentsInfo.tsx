@@ -1,18 +1,25 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import { useState } from "react";
-import { getStudentById } from "../../../api/student";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useSnapshot } from "valtio";
-import apiClient from "../../../api/apiClient";
+import { getStudentById, updateStudent } from "../../../api/student";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import { ISibling } from "../../../store/SiblingData";
-import { IProgram } from "../../../store/ProgramData";
-import { studentGetData } from "../../../store/StudentData";
+import { getPrograms } from "../../../api/programs";
+import { IProgramGet } from "../../../interface/IProgram";
+import { IStudentsPost } from "../../../interface/IStudents";
+import { useForm } from "react-hook-form";
 
 const StudentsInfo = () => {
+  const [isUpdate, setIsUpdate] = useState<boolean>(true);
+  const [type, setType] = useState<"button" | "submit" | "reset" | undefined>(
+    "button"
+  );
+  // const [loading, setLoading] = useState(true);
+  // const snapStudent = useSnapshot(studentGetData);
+  const navigate = useNavigate();
+  // const [sibling, setSibling] = useState<ISibling[]>([]);
   const { id } = useParams();
-  // const [student, setStudent] = useState<any>();
+  const { handleSubmit, register } = useForm<IStudentsPost>();
 
   if (!id) return;
 
@@ -20,96 +27,38 @@ const StudentsInfo = () => {
     queryKey: ["student", id],
     queryFn: () => getStudentById({ id }),
     enabled: !!id,
-    // onSuccess: (data) => {
-
-    // },
   });
 
-  // Mao nani ang pag set sa data, pero mag conflict ang interface ug ang sa backend``
+  const programs = useQuery({
+    queryKey: ["departments"],
+    queryFn: getPrograms,
+  });
 
-  const [isUpdate, setIsUpdate] = useState<boolean>(true);
-  const [type, setType] = useState<"button" | "submit" | "reset" | undefined>(
-    "button"
-  );
-  // const [select, setSelect] = useState<"on" | "off" | undefined>("off");
-  const [loading, setLoading] = useState(true);
-  const snapStudent = useSnapshot(studentGetData);
-  const [sibling, setSibling] = useState<ISibling[]>([]);
-  const [programs, setPrograms] = useState<IProgram[]>([]);
-
-  const updateStudent = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    try {
-      const updatedStudent = {
-        username: snapStudent?.username,
-        firstName: snapStudent?.firstName,
-        surname: snapStudent?.surname,
-        middleName: snapStudent?.middleName,
-        email: snapStudent?.email,
-        telephone: snapStudent?.telephone,
-        phone: snapStudent?.phone,
-        program: snapStudent.program,
-        birth: {
-          birthDate: snapStudent?.birth?.birthDate,
-          birthPlace: snapStudent?.birth?.birthPlace,
-          citizenship: snapStudent?.birth?.citizenship,
-          sex: snapStudent?.birth?.sex,
-          religion: snapStudent?.birth?.religion,
-        },
-        homeAddress: {
-          houseNum: snapStudent?.homeAddress.houseNum,
-          streetBrgy: snapStudent?.homeAddress.streetBrgy,
-          city: snapStudent?.homeAddress.city,
-          district: snapStudent?.homeAddress.district,
-          province: snapStudent?.homeAddress.province,
-        },
-      };
-
-      await apiClient.patch("/students/" + id, updatedStudent);
-      toast.success("Successfully updated student");
-    } catch {
-      toast.error("Error in updating student");
-    } finally {
-      isUpdate ? setLoading(false) : setLoading(true);
-      setIsUpdate(true);
-    }
-  };
-
-  const fetchPrograms = async () => {
-    try {
-      const response = await apiClient.get("/programs");
-      setPrograms(response.data.results);
-    } catch {
-    } finally {
-    }
-  };
-
-  useEffect(() => {
-    if (query.data) {
-      studentGetData.surname = query.data.surname;
-      studentGetData.firstName = query.data.firstName;
-      studentGetData.middleName = query.data.middleName;
-      studentGetData.username = query.data.username;
-      studentGetData.telephone = query.data.telephone;
-      studentGetData.phone = query.data.phone;
-      studentGetData.email = query.data.email;
-      studentGetData.birth = query.data.birth;
-      studentGetData.program = query.data.program;
-
-      setSibling(query.data.siblings);
-    }
-
-    // console.log(studentGetData.program.)
-    fetchPrograms();
-  }, [query.data]);
+  const updateStudMutation = useMutation({
+    mutationFn: updateStudent,
+    onSuccess: () => {
+      toast.success("Updated Successfully");
+      query.refetch();
+      navigate("/admission/enroll-student");
+    },
+    onError: (err: any) => {
+      toast.error(err.response.data.message);
+    },
+  });
 
   return (
     <form
-      onSubmit={updateStudent}
+      onSubmit={handleSubmit((data) => {
+        if (!id) {
+          toast.error("No employee ID found!");
+          return;
+        }
+        updateStudMutation.mutate({ data, id });
+      })}
       className="mb-10 mt-5 flex flex-col border rounded-lg w-[1100px] shadow-md gap-5"
     >
-      <h1 className="text-xl font-bold mb-10 rounded-t-lg border-b text-center bg-slate-50 py-5">
-        Information
+      <h1 className="text-2xl font-bold mb-10 rounded-t-lg text-blue-800 border-b text-center bg-slate-100 py-4">
+        Update Student
       </h1>
       <div className="flex flex-col gap-5 px-10 pb-10">
         <section className="flex gap-3 justify-end">
@@ -128,22 +77,21 @@ const StudentsInfo = () => {
             Cancel
           </button>
           <button
+            disabled={isUpdate && !query.data}
             type={type}
             onClick={() => {
               isUpdate ? setType("button") : setType("submit");
-              isUpdate ? setLoading(false) : setLoading(true);
               setIsUpdate(false);
             }}
-            // disabled={isUpdate}
             className={`${
               isUpdate
-                ? "bg-blue-600 shadow-blue-500/50"
-                : "bg-green-600 shadow-green-500/50"
+                ? "bg-blue-600 shadow-blue-500/50 disabled:opacity-50"
+                : "bg-green-600 shadow-green-500/50 "
             } p-1 px-4 text-white font-bold text-xl rounded-md shadow-sm  hover:scale-105 active:scale-95 duration-200`}
           >
             {isUpdate ? (
               "Edit"
-            ) : loading ? (
+            ) : updateStudMutation.isPending ? (
               <img src="/loading.svg" className="invert px-5" alt="" />
             ) : (
               "Update"
@@ -151,52 +99,47 @@ const StudentsInfo = () => {
           </button>
         </section>
         <section className="flex justify-between">
-          <h1 className="text-md font-bold text-red-500">
-            Student Information :{" "}
-          </h1>
+          <h1 className="text-lg font-bold">Student Information : </h1>
         </section>
 
         <span className="grid grid-cols-5 gap-2">
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+          <section className="relative">
+            <p className="text-[11px] px-1 font-bold absolute text-blue-700 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               Last Name
             </p>
             <input
-              onChange={(e) => {
-                studentGetData.surname = e.target.value;
-              }}
               type="text"
               readOnly={isUpdate}
-              value={snapStudent.surname}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+              // value={snapStudent.surname}
+              defaultValue={query.data?.surname}
+              {...register("surname")}
+              className="border focus:border-2 border-blue-700 outline-none h-[35px] w-[100%] py-1 rounded-md font-semibold text-center overflow-hidden px-1"
             />
           </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+          <section className="relative">
+            <p className="text-[11px] px-1 font-bold absolute text-blue-700 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               First Name
             </p>
             <input
-              onChange={(e) => {
-                studentGetData.firstName = e.target.value;
-              }}
               type="text"
               readOnly={isUpdate}
-              value={snapStudent.firstName}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+              // value={snapStudent.firstName}
+              defaultValue={query.data?.firstName}
+              {...register("firstName")}
+              className="border border-blue-700 focus:border-2 outline-none h-[35px] w-[100%] py-1 rounded-md font-semibold text-center overflow-hidden px-1"
             />
           </section>
           <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+            <p className="text-[11px] px-1 font-bold absolute text-blue-700 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               Middle Name
             </p>
             <input
-              onChange={(e) => {
-                studentGetData.middleName = e.target.value;
-              }}
-              value={snapStudent.middleName}
+              // value={snapStudent.middleName}
+              defaultValue={query.data?.middleName}
+              {...register("middleName")}
               type="text"
               readOnly={isUpdate}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+              className="border border-blue-700 focus:border-2 outline-none h-[35px] w-[100%] py-1 rounded-md font-semibold text-center overflow-hidden px-1"
             />
           </section>
           <section className="relative rounded-lg">
@@ -205,30 +148,21 @@ const StudentsInfo = () => {
             </p>
             <select
               disabled={isUpdate}
-              onChange={(e) => {
-                studentGetData.program = e.target.value;
-              }}
+              {...register("program")}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             >
-              {/* <option value={snapStudent.program?._id}>
-                {snapStudent.program?.programAcronym}
-              </option> */}
-              {programs.map((prog, index) => (
-                <option
-                  selected={prog.programAcronym === snapStudent.program}
-                  key={index}
-                  value={prog._id}
-                >
-                  {prog.programAcronym}
-                </option>
-              ))}
+              {programs.data?.results.map(
+                (prog: IProgramGet, index: number) => (
+                  <option
+                    selected={prog._id == query.data?.program._id}
+                    key={index}
+                    value={prog._id}
+                  >
+                    {prog.programAcronym}
+                  </option>
+                )
+              )}
             </select>
-            {/* <input
-              type="text"
-              readOnly
-              value={query.data?.program}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            /> */}
           </section>
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 z-50 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -236,16 +170,14 @@ const StudentsInfo = () => {
             </p>
             <select
               disabled={isUpdate}
-              onChange={(e) => {
-                studentGetData.standing = e.target.value;
-              }}
+              {...register("standing")}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             >
               {["freshman", "sophomore", "junior", "senoir", "graduate"].map(
                 (standing, index) => {
                   return (
                     <option
-                      selected={standing === snapStudent.standing}
+                      selected={standing == query.data?.standing}
                       key={index}
                       value={standing}
                     >
@@ -255,12 +187,6 @@ const StudentsInfo = () => {
                 }
               )}
             </select>
-            {/* <input
-              readOnly
-              type="text"
-              value={query.data?.standing}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            /> */}
           </section>
         </span>
         <span className="grid grid-cols-5 gap-2">
@@ -271,10 +197,8 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              onChange={(e) => {
-                studentGetData.schoolYear = e.target.value;
-              }}
-              value={snapStudent.schoolYear}
+              defaultValue={query.data?.schoolYear}
+              {...register("schoolYear")}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -285,10 +209,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              onChange={(e) => {
-                studentGetData.username = e.target.value;
-              }}
-              value={snapStudent.username}
+              defaultValue={query.data?.username}
+              {...register("username")}
+              // value={snapStudent.username}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -299,10 +222,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              onChange={(e) => {
-                studentGetData.telephone = e.target.value;
-              }}
-              value={snapStudent.telephone}
+              defaultValue={query.data?.telephone}
+              {...register("telephone")}
+              // value={snapStudent.telephone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -313,10 +235,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              onChange={(e) => {
-                studentGetData.phone = e.target.value;
-              }}
-              value={snapStudent.phone}
+              defaultValue={query.data?.phone}
+              {...register("phone")}
+              // value={snapStudent.phone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -327,10 +248,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              onChange={(e) => {
-                studentGetData.email = e.target.value;
-              }}
-              value={snapStudent.email}
+              defaultValue={query.data?.email}
+              {...register("email")}
+              // value={snapStudent.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -343,10 +263,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              onChange={(e) => {
-                studentGetData.birth.birthDate = e.target.value;
-              }}
-              value={snapStudent.birth.birthDate}
+              defaultValue={query.data?.birth.birthDate}
+              {...register("birth.birthDate")}
+              // value={snapStudent.birth.birthDate}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -357,10 +276,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              onChange={(e) => {
-                studentGetData.birth.birthPlace = e.target.value;
-              }}
-              value={snapStudent.birth.birthPlace}
+              defaultValue={query.data?.birth.birthPlace}
+              {...register("birth.birthPlace")}
+              // value={snapStudent.birth.birthPlace}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -371,10 +289,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              onChange={(e) => {
-                studentGetData.birth.citizenship = e.target.value;
-              }}
-              value={snapStudent.birth.citizenship}
+              defaultValue={query.data?.birth.citizenship}
+              {...register("birth.citizenship")}
+              // value={snapStudent.birth.citizenship}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -384,27 +301,23 @@ const StudentsInfo = () => {
             </p>
             <select
               disabled={isUpdate}
-              onChange={(e) => {
-                studentGetData.birth.sex = e.target.value;
-              }}
-              value={snapStudent.birth.sex}
+              {...register("birth.sex")}
+              // value={snapStudent.birth.sex}
               className={`border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1`}
             >
-              <option value={snapStudent.birth.sex}>
-                {snapStudent.birth.sex}
-              </option>
-              <option value="male">male</option>
-              <option value="female">female</option>
+              {[
+                { value: "male", label: "Male" },
+                { value: "female", label: "Female" },
+              ].map((gender, index) => (
+                <option
+                  key={index}
+                  value={gender.value}
+                  selected={gender.value == query.data?.birth?.sex}
+                >
+                  {gender.label}
+                </option>
+              ))}
             </select>
-            {/* <input
-              type="text"
-              readOnly={isUpdate}
-              onChange={(e) => {
-                studentGetData.birth.sex = e.target.value;
-              }}
-              value={snapStudent.birth.sex}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            /> */}
           </section>
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -413,17 +326,14 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              onChange={(e) => {
-                studentGetData.birth.religion = e.target.value;
-              }}
-              value={snapStudent.birth.religion}
+              defaultValue={query.data?.birth.religion}
+              {...register("birth.religion")}
+              // value={snapStudent.birth.religion}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
         </span>
-        <h1 className="text-sm font-bold text-red-500">
-          Student Spouse Information :{" "}
-        </h1>
+        <h1 className="text-sm font-bold">Student Spouse Information : </h1>
         <span className="grid grid-cols-4 gap-2">
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -432,7 +342,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.spouse?.lastName}
+              defaultValue={query.data?.spouse?.lastName}
+              {...register("spouse.lastName")}
+              // value={query.data?.spouse?.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -443,7 +355,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.spouse?.firstName}
+              defaultValue={query.data?.spouse?.firstName}
+              {...register("spouse.firstName")}
+              // value={query.data?.spouse?.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -454,7 +368,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.spouse?.middleName}
+              defaultValue={query.data?.spouse?.middleName}
+              {...register("spouse.middleName")}
+              // value={query.data?.spouse?.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -465,12 +381,14 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.spouse?.numChildren || "0"}
+              defaultValue={query.data?.spouse?.children}
+              {...register("spouse.children")}
+              // value={query.data?.spouse?.children}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
         </span>
-        <h1 className="text-md font-bold text-red-500">Home Address : </h1>
+        <h1 className="text-sm font-bold">Home Address : </h1>
         <span className="grid grid-cols-5 gap-2">
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -479,7 +397,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.homeAddress?.houseNum}
+              defaultValue={query.data?.homeAddress?.houseNum}
+              {...register("homeAddress.houseNum")}
+              // value={query.data?.homeAddress?.houseNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -490,7 +410,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.homeAddress?.street}
+              defaultValue={query.data?.homeAddress?.streetBrgy}
+              {...register("homeAddress.streetBrgy")}
+              // value={query.data?.homeAddress?.streetBrgy}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -501,7 +423,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.homeAddress?.city}
+              defaultValue={query.data?.homeAddress?.city}
+              {...register("homeAddress.city")}
+              // value={query.data?.homeAddress?.city}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -512,7 +436,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.homeAddress?.province}
+              defaultValue={query.data?.homeAddress?.province}
+              {...register("homeAddress.province")}
+              // value={query.data?.homeAddress?.province}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -523,14 +449,14 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.homeAddress?.district}
+              defaultValue={query.data?.homeAddress?.province}
+              {...register("homeAddress.province")}
+              // value={query.data?.homeAddress?.district}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
         </span>
-        <h1 className="text-md font-bold text-red-500">
-          Address ( if Boarding ) :{" "}
-        </h1>
+        <h1 className="text-sm font-bold">Address ( if Boarding ) : </h1>
         <span className="grid grid-cols-4 gap-2">
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -539,7 +465,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.boardAddress?.houseNum}
+              defaultValue={query.data?.boardAddress?.houseNum}
+              {...register("boardAddress.houseNum")}
+              // value={query.data?.boardAddress?.houseNum}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -550,7 +478,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.boardAddress?.street}
+              defaultValue={query.data?.boardAddress?.streetBrgy}
+              {...register("boardAddress.streetBrgy")}
+              // value={query.data?.boardAddress?.streetBrgy}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -561,7 +491,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.boardAddress?.city}
+              defaultValue={query.data?.boardAddress?.city}
+              {...register("boardAddress.city")}
+              // value={query.data?.boardAddress?.city}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -572,14 +504,14 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.boardAddress?.city}
+              defaultValue={query.data?.boardAddress?.district}
+              {...register("boardAddress.district")}
+              // value={query.data?.boardAddress?.district}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
         </span>
-        <h1 className="text-md font-bold text-red-500">
-          Father Information :{" "}
-        </h1>
+        <h1 className="text-sm font-bold">Father Information : </h1>
         <span className="grid grid-cols-4 gap-2">
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -588,7 +520,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.father?.lastName}
+              defaultValue={query.data?.father?.lastName}
+              {...register("father.lastName")}
+              // value={query.data?.father?.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -599,7 +533,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.father?.firstName}
+              defaultValue={query.data?.father?.firstName}
+              {...register("father.firstName")}
+              // value={query.data?.father?.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -610,7 +546,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.father?.middleName}
+              defaultValue={query.data?.father?.middleName}
+              {...register("father.middleName")}
+              // value={query.data?.father?.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -621,7 +559,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.father?.occupation}
+              defaultValue={query.data?.father?.occupation}
+              {...register("father.occupation")}
+              // value={query.data?.father?.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -634,7 +574,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.father?.companyName}
+              defaultValue={query.data?.father?.companyName}
+              {...register("father.companyName")}
+              // value={query.data?.father?.companyName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -645,7 +587,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.father?.companyAddress}
+              defaultValue={query.data?.father?.companyAddress}
+              {...register("father.companyAddress")}
+              // value={query.data?.father?.companyAddress}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -656,7 +600,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.father?.telephone}
+              defaultValue={query.data?.father?.telephone}
+              {...register("father.telephone")}
+              // value={query.data?.father?.telephone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -667,7 +613,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.father?.phone}
+              defaultValue={query.data?.father?.phone}
+              {...register("father.phone")}
+              // value={query.data?.father?.phone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -678,14 +626,14 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.father?.email}
+              defaultValue={query.data?.father?.email}
+              {...register("father.email")}
+              // value={query.data?.father?.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
         </span>
-        <h1 className="text-md font-bold text-red-500">
-          Mother Information :{" "}
-        </h1>
+        <h1 className="text-sm font-bold">Mother Information : </h1>
         <span className="grid grid-cols-4 gap-2">
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -694,7 +642,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.mother?.lastName}
+              defaultValue={query.data?.mother?.lastName}
+              {...register("mother.lastName")}
+              // value={query.data?.mother?.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -705,7 +655,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.mother?.firstName}
+              defaultValue={query.data?.mother?.firstName}
+              {...register("mother.firstName")}
+              // value={query.data?.mother?.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -716,7 +668,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.mother?.middleName}
+              defaultValue={query.data?.mother?.middleName}
+              {...register("mother.middleName")}
+              // value={query.data?.mother?.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -727,7 +681,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.mother?.occupation}
+              defaultValue={query.data?.mother?.occupation}
+              {...register("mother.occupation")}
+              // value={query.data?.mother?.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -740,7 +696,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.mother?.companyName}
+              defaultValue={query.data?.mother?.companyName}
+              {...register("mother.companyName")}
+              // value={query.data?.mother?.companyName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -751,7 +709,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.mother?.companyAddress}
+              defaultValue={query.data?.mother?.companyAddress}
+              {...register("mother.companyAddress")}
+              // value={query.data?.mother?.companyAddress}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -762,7 +722,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.mother?.telephone}
+              defaultValue={query.data?.mother?.telephone}
+              {...register("mother.telephone")}
+              // value={query.data?.mother?.telephone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -773,7 +735,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.mother?.phone}
+              defaultValue={query.data?.mother?.phone}
+              {...register("mother.phone")}
+              // value={query.data?.mother?.phone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -784,14 +748,14 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.mother?.email}
+              defaultValue={query.data?.mother?.email}
+              {...register("mother.email")}
+              // value={query.data?.mother?.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
         </span>
-        <h1 className="text-md font-bold text-red-500">
-          Guardian Information :{" "}
-        </h1>
+        <h1 className="text-sm font-bold">Guardian Information : </h1>
         <span className="grid grid-cols-5 gap-2">
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -800,7 +764,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.lastName}
+              defaultValue={query.data?.guardian?.lastName}
+              {...register("guardian.lastName")}
+              // value={query.data?.guardian?.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -811,7 +777,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.firstName}
+              defaultValue={query.data?.guardian?.firstName}
+              {...register("guardian.firstName")}
+              // value={query.data?.guardian?.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -822,7 +790,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.middleName}
+              defaultValue={query.data?.guardian?.middleName}
+              {...register("guardian.middleName")}
+              // value={query.data?.guardian?.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -833,7 +803,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.occupation}
+              defaultValue={query.data?.guardian?.occupation}
+              {...register("guardian.occupation")}
+              // value={query.data?.guardian?.occupation}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -844,7 +816,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.relationship}
+              defaultValue={query.data?.guardian?.relationship}
+              {...register("guardian.relationship")}
+              // value={query.data?.guardian?.relationship}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -857,7 +831,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.company}
+              defaultValue={query.data?.guardian?.companyName}
+              {...register("guardian.companyName")}
+              // value={query.data?.guardian?.companyName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -868,7 +844,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.companyAddress}
+              defaultValue={query.data?.guardian?.companyAddress}
+              {...register("guardian.companyAddress")}
+              // value={query.data?.guardian?.companyAddress}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -879,7 +857,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.contact?.telnum}
+              defaultValue={query.data?.guardian?.telephone}
+              {...register("guardian.telephone")}
+              // value={query.data?.guardian?.telephone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -890,7 +870,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.contact?.phoneNum}
+              defaultValue={query.data?.guardian?.phone}
+              {...register("guardian.phone")}
+              // value={query.data?.guardian?.phone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -901,14 +883,14 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.contact?.email}
+              defaultValue={query.data?.guardian?.email}
+              {...register("guardian.email")}
+              // value={query.data?.guardian?.email}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
         </span>
-        <h1 className="text-sm font-bold text-red-500">
-          Guardian Spouse Information :{" "}
-        </h1>
+        <h1 className="text-sm font-bold">Guardian Spouse Information : </h1>
 
         <span className="grid grid-cols-3 gap-2">
           <section className="relative rounded-lg">
@@ -918,7 +900,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.spouse?.lastName}
+              defaultValue={query.data?.guardianSpouse?.lastName}
+              {...register("guardianSpouse.lastName")}
+              // value={query.data?.guardianSpouse.lastName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -929,7 +913,9 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.spouse?.firstName}
+              defaultValue={query.data?.guardianSpouse?.firstName}
+              {...register("guardianSpouse.firstName")}
+              // value={query.data?.guardianSpouse?.firstName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -940,15 +926,15 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              value={query.data?.guardian?.spouse?.middleName}
+              defaultValue={query.data?.guardianSpouse?.middleName}
+              {...register("guardianSpouse.middleName")}
+              // value={query.data?.guardianSpouse?.middleName}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
         </span>
-        <h1 className="text-md font-bold text-red-500">
-          Sibling Information :{" "}
-        </h1>
-        {snapStudent.siblings.length > 0 ? (
+        <h1 className="text-sm font-bold">Sibling Information : </h1>
+        {/* {snapStudent.siblings &&
           sibling.map((sib, index) => (
             <span key={index} className="grid grid-cols-3 gap-2">
               <section className="relative rounded-lg">
@@ -985,44 +971,7 @@ const StudentsInfo = () => {
                 />
               </section>
             </span>
-          ))
-        ) : (
-          <span className="grid grid-cols-3 gap-2">
-            <section className="relative rounded-lg">
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Full Name
-              </p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                value={query.data?.siblings?.name}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-              />
-            </section>
-            <section className="relative rounded-lg">
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Age
-              </p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                value={query.data?.siblings[0]?.age}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-              />
-            </section>
-            <section className="relative rounded-lg">
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                School/Occupation
-              </p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                value={query.data?.siblings[0]?.occupation}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-              />
-            </section>
-          </span>
-        )}
+          ))} */}
       </div>
     </form>
   );
