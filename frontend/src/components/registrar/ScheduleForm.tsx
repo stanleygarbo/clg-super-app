@@ -8,7 +8,7 @@ import { convertMilitaryTo12Hour } from "../../Helper";
 import { getPrograms } from "../../api/programs";
 import { getCourses } from "../../api/course";
 import { getEmployeees } from "../../api/employee";
-import { addSchedule } from "../../api/schedule";
+import { addSchedule, getSchedule } from "../../api/schedule";
 import { getRooms } from "../../api/room";
 // Interface
 import { IProgram } from "../../interface/IProgram";
@@ -16,6 +16,7 @@ import { ICourse } from "../../interface/ICourse";
 import { IEmployeeGet } from "../../interface/IEmployee";
 import { ISubjectSchedule } from "../../interface/ISchedule";
 import { IRoom } from "../../interface/IRoom";
+import { useParams } from "react-router-dom";
 
 interface IOption {
   value: string;
@@ -39,6 +40,9 @@ const dayOptions = [
 ];
 
 function ScheduleForm() {
+  const { scheduleId } = useParams();
+  const isEditing = !!scheduleId;
+
   const scheduleForm = useForm();
   const subjectForm = useForm();
   const [programOptions, setProgramOptions] = useState<IOption[]>([]);
@@ -139,8 +143,15 @@ function ScheduleForm() {
     }
   };
 
+  const loadScheduleData = async () => {
+    const schedules = await getSchedule(scheduleId || "");
+    console.log(schedules);
+  };
+
   useEffect(() => {
     loadOptions();
+
+    if (isEditing) loadScheduleData();
   }, []);
 
   return (

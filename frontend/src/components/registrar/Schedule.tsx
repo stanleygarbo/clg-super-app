@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { getSchedules } from "../../api/schedule";
-import { ISchedule } from "../../interface/ISchedule";
 import { useNavigate } from "react-router-dom";
-import { IProgram } from "../../interface/IProgram";
+
+// API
+import { getSchedules } from "../../api/schedule";
 import { getPrograms } from "../../api/programs";
+// Interface
+import { ISchedule } from "../../interface/ISchedule";
+import { IProgram } from "../../interface/IProgram";
 
 function Schedule() {
   const [programs, setPrograms] = useState<IProgram[]>([]);
@@ -24,11 +27,6 @@ function Schedule() {
 
   const handleCreateClick = () => {
     navigate("form");
-  };
-
-  const handleViewClick = (id: string) => {
-    navigate(`${id}`);
-    console.log("click");
   };
 
   useEffect(() => {
@@ -68,12 +66,18 @@ function Schedule() {
                   <td>{program?.programName}</td>
                   <td className="text-center">{schedule.semester}</td>
                   <td className="text-center">{schedule.schoolYear}</td>
-                  <td className="text-center">
+                  <td className="flex justify-end gap-2">
                     <button
-                      onClick={() => handleViewClick(schedule._id)}
+                      onClick={() => navigate(`${schedule._id}`)}
                       className="px-4 py-2 rounded-md text-white bg-blue-600"
                     >
                       View
+                    </button>
+                    <button
+                      onClick={() => navigate(`form/${schedule._id}`)}
+                      className="px-4 py-2 rounded-md text-white bg-green-600"
+                    >
+                      Edit
                     </button>
                   </td>
                 </tr>

@@ -34,7 +34,7 @@ module.exports = {
         grades: "40% repeat(2, 25%) 10%",
         gradeRow: "10% 30% 10% 10% 20% 20%",
         scheduleCol: "10% 30% 15% 15% 10% 20%",
-        scheduleDisplay: "1fr 10rem 20rem 10rem",
+        scheduleDisplay: "1fr 10rem 20rem 15rem",
         scheduleCreate: "4fr 8rem 8rem 20rem 8rem 2fr 8rem",
         scheduleView: "10rem 2fr 4rem 15rem 10rem 5rem 1fr",
       },

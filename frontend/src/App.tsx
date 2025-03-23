@@ -186,7 +186,7 @@ const router = createBrowserRouter([
         element: <ScheduleForm />,
       },
       {
-        path: "schedule/form/:id",
+        path: "schedule/form/:scheduleId",
         element: <ScheduleForm />,
       },
       {

@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { capitalizeFirstLetter, convertMilitaryTo12Hour } from "../../Helper";
+
+// API
 import { getSchedule } from "../../api/schedule";
+import { getCourses } from "../../api/course";
+import { getRooms } from "../../api/room";
+import { getEmployeees } from "../../api/employee";
+// Interface
 import { ISchedule } from "../../interface/ISchedule";
 import { ICourse } from "../../interface/ICourse";
-import { getCourses } from "../../api/course";
 import { IRoom } from "../../interface/IRoom";
-import { getRooms } from "../../api/room";
 import { IEmployee } from "../../interface/IEmployee";
-import { getEmployeees } from "../../api/employee";
-import { capitalizeFirstLetter, convertMilitaryTo12Hour } from "../../Helper";
 
 function ViewSchedule() {
   const params = useParams();
