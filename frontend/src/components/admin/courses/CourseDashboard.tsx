@@ -5,13 +5,16 @@ import { ICourseGet, ICoursePost } from "../../../interface/ICourse";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { addCourse, deleteCourse, getCourses } from "../../../api/course";
 import { useForm } from "react-hook-form";
+import { MdEditSquare } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const CourseDashboard = () => {
   const [search, setSearch] = useState<string>("");
-  const { handleSubmit, register, setValue } = useForm<ICoursePost>();
+  const { handleSubmit, register } = useForm<ICoursePost>();
+  const navigate = useNavigate();
 
   const query = useQuery({
-    queryKey: ["course"],
+    queryKey: ["courses"],
     queryFn: getCourses,
   });
 
@@ -21,6 +24,9 @@ const CourseDashboard = () => {
       toast.success("Added Successfully");
       query.refetch();
     },
+    onError: (err: any) => {
+      toast.error(err.message);
+    },
   });
 
   const deleteCourMutation = useMutation({
@@ -28,6 +34,9 @@ const CourseDashboard = () => {
     onSuccess: () => {
       toast.success("Deleted Successfully");
       query.refetch();
+    },
+    onError: (err: any) => {
+      toast.error(err.message);
     },
   });
 
@@ -79,6 +88,7 @@ const CourseDashboard = () => {
             </button>
           </form>
         </section>
+        {/* Update Course */}
 
         <section className="bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
           <span className="flex gap-3">
@@ -121,7 +131,7 @@ const CourseDashboard = () => {
                   <h1 className="w-[150px] pl-3">{cour.courseCode}</h1>
                   <h1 className="w-[300px] text-center">{cour.courseName}</h1>
                   <h1 className="w-[150px] text-center">{cour.units} units</h1>
-                  <h1 className="w-[200px] flex justify-center opacity-0 group-hover:opacity-100">
+                  <h1 className="w-[200px] flex justify-center gap-2 opacity-0 group-hover:opacity-100">
                     <button
                       onClick={() => {
                         deleteCourMutation.mutate(cour._id);
@@ -129,6 +139,18 @@ const CourseDashboard = () => {
                       className="bg-red-500 py-2 px-3 font-semibold text-xl text-white rounded-md hover:bg-red-700 active:scale-95 duration-200"
                     >
                       <AiFillDelete />
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate("/admin/update-course/" + cour._id);
+                        // deleteCourMutation.mutate(cour._id);
+                        // id = cour._id;
+                        // courseQuery.refetch();
+                        // console.log(courseQuery.data);
+                      }}
+                      className="bg-blue-500 py-2 px-3 font-semibold text-xl text-white rounded-md hover:bg-blue-700 active:scale-95 duration-200"
+                    >
+                      <MdEditSquare />
                     </button>
                   </h1>
                 </section>

@@ -75,12 +75,12 @@ const UpdateEmployee = () => {
     queryKey: ["employee", id],
     queryFn: () => getEmployeeById({ id }),
   });
-  const [dRole, setDRole] = useState<any>();
+  // const [dRole, setDRole] = useState<any>();
 
-  useEffect(() => {
-    const roles: any = [];
-    setDRole(query.data);
-  }, [query.data]);
+  // useEffect(() => {
+  //   const roles: any = [];
+  //   setDRole(query.data);
+  // }, [query.data]);
 
   const { handleSubmit, register, control } = useForm<IEmployeePost>();
 
@@ -217,7 +217,7 @@ const UpdateEmployee = () => {
                     <option
                       key={index}
                       value={pos._id}
-                      selected={query.data?.position?._id == pos._id}
+                      selected={query.data?.position?._id === pos._id}
                     >
                       {pos.jobTitle}
                     </option>
@@ -230,7 +230,7 @@ const UpdateEmployee = () => {
 
               <select
                 className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-                defaultValue={query.data?.department?._id}
+                // defaultValue={query.data?.department?._id}
                 {...register("department")}
               >
                 {department.data?.results.map(
@@ -238,7 +238,7 @@ const UpdateEmployee = () => {
                     <option
                       key={index}
                       value={dept._id}
-                      selected={query.data?.department?._id == dept._id}
+                      selected={query.data?.department?._id === dept._id}
                     >
                       {dept.departmentName}
                     </option>
@@ -250,18 +250,18 @@ const UpdateEmployee = () => {
               <h1 className="text-sm font-semibold">Employment Type :</h1>
               <select
                 className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-                defaultValue={query.data?.employmentType}
+                // defaultValue={query.data?.employmentType}
                 {...register("employmentType")}
               >
                 <option
                   value="regular"
-                  selected={query.data?.employmentType == "regular"}
+                  selected={query.data?.employmentType === "regular"}
                 >
                   regular
                 </option>
                 <option
                   value="contractual"
-                  selected={query.data?.employmentType == "contractual"}
+                  selected={query.data?.employmentType === "contractual"}
                 >
                   contractual
                 </option>

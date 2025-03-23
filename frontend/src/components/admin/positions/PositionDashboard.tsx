@@ -28,6 +28,9 @@ const PositionDashboard = () => {
       setValue("jobTitle", "");
       setValue("hourlyWage", 0);
     },
+    onError: (err: any) => {
+      toast.error(err.message);
+    },
   });
 
   const deletePostMutation = useMutation({
@@ -35,6 +38,9 @@ const PositionDashboard = () => {
     onSuccess: () => {
       toast.success("Deleted Successfully");
       query.refetch();
+    },
+    onError: (err: any) => {
+      toast.error(err.message);
     },
   });
 

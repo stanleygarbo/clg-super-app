@@ -34,8 +34,8 @@ const ProgramDashboard = () => {
       toast.success("Added Successfully");
       query.refetch();
     },
-    onError: (err) => {
-      console.log(err);
+    onError: (err: any) => {
+      console.log(err.message);
     },
   });
 
@@ -44,6 +44,9 @@ const ProgramDashboard = () => {
     onSuccess: () => {
       toast.success("Deleted Successfully");
       query.refetch();
+    },
+    onError: (err: any) => {
+      console.log(err.message);
     },
   });
 

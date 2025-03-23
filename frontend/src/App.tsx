@@ -30,6 +30,7 @@ import SubjectLoad from "./components/admin/subject-load/SubjectLoad";
 import SubjectLoadDetails from "./components/admin/subject-load/SubjectLoadDetails";
 import CreateSchedule from "./components/registrar/CreateSchedule";
 import ViewSchedule from "./components/registrar/ViewSchedule";
+import UpdateCourse from "./components/admin/courses/UpdateCourse";
 
 const router = createBrowserRouter([
   {
@@ -113,6 +114,10 @@ const router = createBrowserRouter([
       {
         path: "coursedashboard",
         element: <CourseDashboard />,
+      },
+      {
+        path: "update-course/:id",
+        element: <UpdateCourse />,
       },
       {
         path: "employees",

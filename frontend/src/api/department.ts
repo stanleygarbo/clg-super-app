@@ -10,12 +10,18 @@ export const getDepartments = async () => {
   return response.data;
 };
 
-export const getDepartment = async (id: string) => {
+export const getDepartment = async ({ id }: { id?: string }) => {
   const response = await apiClient.get("/departments/" + id);
   return response.data;
 };
 
-export const updateDepartment = async (data: IDepartmentPost, id: string) => {
+export const updateDepartment = async ({
+  data,
+  id,
+}: {
+  data: IDepartmentPost;
+  id: string;
+}) => {
   const response = await apiClient.patch("/departments/" + id, data);
   return response.data;
 };

@@ -63,7 +63,7 @@ const EmploymentForm = () => {
 
   useEffect(() => {
     // getDepartments();
-    getPositions();
+    // getPositions();
   }, []);
 
   // const query = useQuery({

@@ -19,6 +19,9 @@ const RoomList = () => {
       setValue("building", "");
       setValue("floor", "");
     },
+    onError: (err: any) => {
+      console.log(err.message);
+    },
   });
 
   const deleteRoomMutation = useMutation({
