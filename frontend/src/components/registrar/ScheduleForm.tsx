@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
 import { getPrograms } from "../../api/programs";
 import { getCourses } from "../../api/course";
-import { ICourseGet } from "../../interface/ICourse";
-import { getEmployeees, getEmployees } from "../../api/employee";
+import { ICourse } from "../../interface/ICourse";
+import { getEmployees } from "../../api/employee";
 import { IEmployeeGet } from "../../interface/IEmployee";
 import { useForm, Controller } from "react-hook-form";
 import { ISubjectSchedule } from "../../interface/ISchedule";
@@ -12,7 +12,6 @@ import { addSchedule } from "../../api/schedule";
 import { IRoomGet } from "../../interface/IRoom";
 import { getRooms } from "../../api/room";
 import { convertMilitaryTo12Hour } from "../../Helper";
-import { IPositionGet } from "../../interface/IPosition";
 import { useQuery } from "@tanstack/react-query";
 import { IProgramGet } from "../../interface/IProgram";
 
@@ -40,9 +39,6 @@ const dayOptions = [
 function CreateSchedule() {
   const scheduleForm = useForm();
   const subjectForm = useForm();
-  // const [programOptions, setProgramOptions] = useState<IOption[]>([]);
-  const [courseOptions, setCourseOptions] = useState<IOption[]>([]);
-  // const [instructorOptions, setInstructorOptions] = useState<IOption[]>([]);
   const [subjectSchedules, setSubjectSchedules] = useState<ISubjectSchedule[]>(
     []
   );
@@ -60,6 +56,11 @@ function CreateSchedule() {
   const programs = useQuery({
     queryKey: ["programs"],
     queryFn: getPrograms,
+  });
+
+  const courses = useQuery({
+    queryKey: ["courses"],
+    queryFn: getCourses,
   });
 
   const roomOptions: IOption[] = room.data?.map((room: IRoomGet) => {
@@ -87,21 +88,12 @@ function CreateSchedule() {
     }
   );
 
-  const loadOptions = async () => {
-    // const programs = await getPrograms();
-    const courses = await getCourses();
-
-    // setProgramOptions(
-    //   programs.results.map((program: IPositionGet) => {
-    //     return { value: program._id, label: program.jobTitle };
-    //   })
-    // );
-    setCourseOptions(
-      courses.results.map((course: ICourseGet) => {
-        return { value: course._id, label: course.courseName };
-      })
-    );
-  };
+  const courseOptions: IOption[] = courses.data?.results.map(
+    (course: ICourse) => ({
+      value: course._id,
+      label: course.courseName,
+    })
+  );
 
   const onSubjectSubmit = (data: any) => {
     setSubjectSchedules((prevState) => [...prevState, data]);
@@ -157,10 +149,6 @@ function CreateSchedule() {
     }
   };
 
-  useEffect(() => {
-    loadOptions();
-  }, []);
-
   return (
     <main className="flex flex-col gap-8 w-full mx-16 my-8">
       <header className="flex justify-between items-center h-12">
@@ -177,7 +165,7 @@ function CreateSchedule() {
               <Select
                 {...field}
                 options={programOptions}
-                value={programOptions.find(
+                value={programOptions?.find(
                   (option) => option.value === field.value
                 )}
                 onChange={(option) => field.onChange(option?.value)}
@@ -193,7 +181,7 @@ function CreateSchedule() {
               <Select
                 {...field}
                 options={semesterOptions}
-                value={semesterOptions.find(
+                value={semesterOptions?.find(
                   (option) => option.value === field.value
                 )}
                 onChange={(option) => field.onChange(option?.value)}
@@ -201,7 +189,6 @@ function CreateSchedule() {
               />
             )}
           />
-          {/* <Select options={semesterOptions} className="w-48" /> */}
           <button
             type="submit"
             className="px-4 rounded-md text-white bg-blue-600"
@@ -275,7 +262,7 @@ function CreateSchedule() {
             <Select
               {...field}
               options={courseOptions}
-              value={courseOptions.find(
+              value={courseOptions?.find(
                 (option) => option.value === field.value
               )}
               onChange={(option) => field.onChange(option?.value)}
@@ -324,7 +311,7 @@ function CreateSchedule() {
             <Select
               {...field}
               options={roomOptions}
-              value={courseOptions.find(
+              value={courseOptions?.find(
                 (option) => option.value === field.value
               )}
               onChange={(option) => field.onChange(option?.value)}
@@ -339,7 +326,7 @@ function CreateSchedule() {
             <Select
               options={instructorOptions}
               {...field}
-              value={courseOptions.find(
+              value={courseOptions?.find(
                 (option) => option.value === field.value
               )}
               onChange={(option) => field.onChange(option?.value)}
