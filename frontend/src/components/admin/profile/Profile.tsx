@@ -4,15 +4,15 @@ import { useState } from "react";
 import ProfileInfo from "./ProfileInfo";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getEmployee } from "../../../api/employee";
-import { IEmployee } from "../../../interface/IEmployee";
+import { IEmployeeGet } from "../../../interface/IEmployee";
+import { getEmployeeById } from "../../../api/employee";
 
 const Profile = () => {
   const [pfp, setPfp] = useState(
     "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
   );
   const [infoOpacity, setInfoOpacity] = useState("opacity-0 w-0");
-  const [employee, setEmployee] = useState<IEmployee>();
+  const [employee, setEmployee] = useState<IEmployeeGet>();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const Profile = () => {
   if (id) {
     const query = useQuery({
       queryKey: ["employee", id],
-      queryFn: () => getEmployee({ id }),
+      queryFn: () => getEmployeeById({ id }),
       enabled: !!id,
     });
 

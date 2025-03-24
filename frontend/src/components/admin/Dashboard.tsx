@@ -4,74 +4,44 @@ import { useNavigate } from "react-router-dom";
 import { userData } from "../../store/UserData";
 import { studentData } from "../../store/StudentData";
 import { employeeData } from "../../store/EmployeeData";
+import apiClient from "../../api/apiClient";
+import { IEmployee } from "../../interface/IEmployee";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
-  const [users, setUsers] = useState<(typeof userData)[]>();
-  const [students, setStudents] = useState<(typeof studentData)[]>();
-  const [employees, setEmployees] = useState<(typeof employeeData)[]>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const user = userData;
-  const student = studentData;
-  const employee = employeeData;
+  const [employees, setEmployees] = useState<IEmployee[]>([]);
+  const [students, setStudents] = useState<(typeof studentData)[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/users");
-      if (!response.ok) {
-        throw new Error("Failed to fetch users");
-      }
-
-      const data: (typeof user)[] = await response.json();
-      // console.log(data);
-      setUsers(data);
-      // console.log(users);
-      loading;
-    } catch (err) {
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchStudents = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/students");
-      if (!response.ok) {
-        throw new Error("Failed to fetch student");
-      }
-
-      const data: (typeof student)[] = await response.json();
-      // console.log(data);
-      setStudents(data);
-      // console.log(users);
-      loading;
-    } catch (err) {
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // Fetch Employees
   const fetchEmployees = async () => {
     try {
-      const response = await fetch("http://localhost:8000/employee");
-      if (!response.ok) {
-        throw new Error("Failed to fetch employee");
-      }
-
-      const data: (typeof employee)[] = await response.json();
-      // console.log(data);
-      setEmployees(data);
-      // console.log(users);
-      loading;
-    } catch (err) {
+      setIsLoading(true);
+      const response = await apiClient.get("/employees");
+      setEmployees(response.data.results);
+    } catch {
+      toast.error("Error");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch Students
+  const fetchStudents = async () => {
+    try {
+      setIsLoading(true);
+      const response = await apiClient.get("/students");
+      setStudents(response.data.results);
+    } catch {
+      toast.error("Error");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUsers();
-    fetchStudents();
     fetchEmployees();
+    fetchStudents();
   }, []);
 
   const navigate = useNavigate();
@@ -89,7 +59,9 @@ const Dashboard = () => {
             </p>
             <p className=" ">
               <h1 className="text-sm text-slate-500">Total Users</h1>
-              <h1 className="text-center text-xl font-bold">{users?.length}</h1>
+              <h1 className="text-center text-xl font-bold">
+                {employees?.length + students.length}
+              </h1>
             </p>
           </h1>
           <h1 className="shadow-md border rounded-md px-10 py-5 flex items-center gap-3">

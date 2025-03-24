@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from "axios";
 import { authState } from "../store/auth";
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: "https://clg-super-app.onrender.com/api", // Replace with your API base URL
+  baseURL: "http://localhost:3000/api", // Replace with your API base URL
   timeout: 10000, // Request timeout in milliseconds
   headers: { "Content-Type": "application/json" },
 });

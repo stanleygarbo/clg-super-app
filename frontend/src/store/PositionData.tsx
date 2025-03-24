@@ -1,11 +1,13 @@
 import { proxy } from "valtio";
+import { IPositionGet, IPositionPost } from "../interface/IPosition";
 
-interface AppState {
-  jobTitle: string;
-  hourlyWage: number;
-}
+export const positionPostData = proxy<IPositionPost>({
+  jobTitle: "",
+  hourlyWage: 0,
+});
 
-export const positionData = proxy<AppState>({
+export const positionGetData = proxy<IPositionGet>({
+  _id: "",
   jobTitle: "",
   hourlyWage: 0,
 });

@@ -1,14 +1,19 @@
 const express = require("express");
 const connectDB = require("./config/db.js");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+require("./config/passport")(passport);
+
+// Routes
+const studentRoutes = require("./routes/studentRoutes.js");
+const scheduleRoutes = require("./routes/scheduleRoutes.js");
 const authRoutes = require("./routes/authRoutes.js");
 const positionRoutes = require("./routes/positionRoutes.js");
 const departmentRoutes = require("./routes/departmentRoutes.js");
 const employeeRoutes = require("./routes/employeeRoutes.js");
 const programRoutes = require("./routes/programRoutes.js");
 const courseRoutes = require("./routes/courseRoutes.js");
-const bodyParser = require("body-parser");
-const passport = require("passport");
-require("./config/passport")(passport);
+const roomRoutes = require("./routes/roomRoutes.js");
 
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
@@ -17,7 +22,6 @@ const swaggerSchemas = require("./utils/swaggerSchemas.js");
 const { User } = require("./models/userModel");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
-const studentRoutes = require("./routes/studentRoutes.js");
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -62,6 +66,8 @@ app.use("/api/employees", employeeRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/programs", programRoutes);
 app.use("/api/courses", courseRoutes);
+app.use("/api/schedules", scheduleRoutes);
+app.use("/api/rooms", roomRoutes);
 
 app.get("/", (req, res) => {
   res.json({

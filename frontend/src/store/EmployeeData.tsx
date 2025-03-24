@@ -1,33 +1,34 @@
 import { proxy } from "valtio";
+import { IEmployeeGet, IEmployeePost } from "../interface/IEmployee";
 
-interface AppState {
-  _id: string;
-  firstName: string;
-  surname: string;
-  middleName: string;
-  username: string;
-  password: string;
-  departmentId: string;
-  department: string;
-  positionId: string;
-  position: string;
-  hireDate: string;
-  employmentType: string;
-  roles: string[];
-}
+export const employeePostData = proxy<IEmployeePost>({
+  firstName: "",
+  surname: "",
+  middleName: "",
+  birthDate: "",
+  username: "",
+  password: "",
+  department: "",
+  position: "",
+  hireDate: "",
+  employmentType: "",
+  roles: [],
+  address: { houseNum: "", streetBrgy: "", city: "", district: "" },
+  gender: "",
+});
 
-export const employeeData = proxy<AppState>({
+export const employeeGetData = proxy<IEmployeeGet>({
   _id: "",
   firstName: "",
   surname: "",
   middleName: "",
   username: "",
   password: "",
-  departmentId: "",
-  department: "",
-  positionId: "",
-  position: "",
+  department: { _id: "", departmentName: "" },
+  position: { _id: "", jobTitle: "", hourlyWage: 0 },
   hireDate: "",
   employmentType: "",
   roles: [],
+  address: { houseNum: "", streetBrgy: "", city: "", district: "" },
+  gender: "",
 });

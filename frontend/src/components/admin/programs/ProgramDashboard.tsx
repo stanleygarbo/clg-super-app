@@ -1,94 +1,168 @@
-import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { programData } from "../../../store/ProgramData";
-import apiClient from "../../../api/apiClient";
-import AddProgram from "./AddProgram";
-import ProgramList from "./ProgramList";
+import { AiFillDelete } from "react-icons/ai";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { addProgram, deleteProgram, getPrograms } from "../../../api/programs";
+import { IProgramGet, IProgramPost } from "../../../interface/IProgram";
+import { useForm } from "react-hook-form";
+import { getDepartments } from "../../../api/department";
+import { IDepartmentGet } from "../../../interface/IDepartment";
 
 const ProgramDashboard = () => {
-  const [isOpenProg, setIsOpenProg] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
+  const { register, handleSubmit } = useForm<IProgramPost>();
 
-  //   ADD PROGRAM
-  const handleSubmitProgram = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+  const query = useQuery({
+    queryKey: ["programs"],
+    queryFn: getPrograms,
+  });
 
-    try {
-      const data = {
-        programName: programData.programName,
-        programAcronym: programData.programAcronym,
-        departmentId: programData.departmentId,
-      };
-      console.log("To be Added : ", data);
-      await apiClient.post("/programs", data);
-      setIsOpenProg(true);
-      toast.success("Program added successfully!");
-    } catch (err) {
-      setError("Error adding Program");
-      toast.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const queryDept = useQuery({
+    queryKey: ["department"],
+    queryFn: getDepartments,
+  });
+
+  const filteredData = query.data?.results?.filter((dept: IProgramGet) =>
+    `${dept.programName} ${dept.programAcronym}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
+  const addProgMutation = useMutation({
+    mutationFn: addProgram,
+    onSuccess() {
+      toast.success("Added Successfully");
+      query.refetch();
+    },
+    onError: (err: any) => {
+      console.log(err.message);
+    },
+  });
+
+  const deleteProgMutation = useMutation({
+    mutationFn: deleteProgram,
+    onSuccess: () => {
+      toast.success("Deleted Successfully");
+      query.refetch();
+    },
+    onError: (err: any) => {
+      console.log(err.message);
+    },
+  });
 
   return (
     <div>
-      <div className="flex flex-col w-[1000px] h-[600px] mt-10">
-        <h1 className="bg-blue-600 font-bold text-2xl text-white py-5 text-center rounded-t-md">
-          Programs
-        </h1>
-        <section className="shadow-md border relative h-[100%] overflow-hidden">
-          <span className="flex items-center justify-evenly pt-10 pb-2 px-10">
-            <button
-              type="button"
-              onClick={() => {
-                isOpenProg ? setIsOpenProg(false) : setIsOpenProg(true);
-              }}
-              className="flex items-center gap-2 rounded-md px-2 bg-blue-600 shadow-sm shadow-blue-600/50 text-white text-lg py-1 hover:scale-105 active:scale-100 duration-200"
-            >
-              <MdOutlinePlaylistAdd />
-              Program
-            </button>
-          </span>
-          
-          {/* ADD PROGRAM */}
+      <div className="w-[1100px] h-[650px]">
+        {/* ADD PROGRAM */}
+        <section className={`p-5 flex items-center gap-5`}>
+          <h1 className="text-xl font-bold text-blue-800 w-[200px]">
+            Add Program
+          </h1>
           <form
-            onSubmit={handleSubmitProgram}
-            className={`${
-              isOpenProg
-                ? "opacity-0 w-0 left-0"
-                : "w-[400px] opacity-100 left-1/2 z-50"
-            } absolute top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md border rounded-md duration-150 overflow-hidden p-5 flex flex-col justify-center`}
+            className="grid grid-cols-4 gap-10"
+            onSubmit={handleSubmit((data: IProgramPost) => {
+              addProgMutation.mutate(data);
+            })}
           >
-            <h2 className="text-2xl font-semibold mb-4 flex justify-between">
-              Add Position{" "}
-              <button
-                type="button"
-                onClick={() => {
-                  isOpenProg ? setIsOpenProg(false) : setIsOpenProg(true);
-                }}
-                className="mr-3 bg-red-600 py- px-3 text-lg text-white rounded-md shadow-md font-bold hover:scale-105 duration-200"
-              >
-                X
-              </button>
-            </h2>
-            <AddProgram />
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <input
+              type="text"
+              {...register("programName")}
+              placeholder="Program"
+              className="outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
+            />
+            <input
+              type="text"
+              {...register("programAcronym")}
+              placeholder="Acronym"
+              className="outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
+            />
+            <select
+              {...register("departmentId")}
+              className="outline-none border-0 border-b-2 border-blue-900 w-[200px] text-center"
+            >
+              {queryDept.data?.results?.map(
+                (dept: IDepartmentGet, index: number) => (
+                  <option value={dept._id} selected={index == 0}>
+                    {dept.departmentName}
+                  </option>
+                )
+              )}
+            </select>
             <button
               type="submit"
-              className="bg-blue-600 mx-5 py-2 text-white font-bold rounded-md shadow-md hover:scale-105 active:scale-95 duration-200"
-              disabled={loading}
+              className="bg-blue-600 w-[190px] flex justify-center py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
             >
-              {loading ? "Adding..." : "Add Program"}
+              {addProgMutation.isPending ? (
+                <img src="/loading.svg" className="invert" alt="" />
+              ) : (
+                "Add Department"
+              )}
             </button>
           </form>
+        </section>
 
-          <span className="flex justify-evenly w-[100%] h-[100%] px-10">
-            <ProgramList />
+        <section className="bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
+          <span className="flex gap-3">
+            <h1 className="text-xl font-bold text-blue-800 py-1">
+              Program's List
+            </h1>
+          </span>
+          <span className="flex gap-3 ">
+            <input
+              type="text"
+              className="border-0 rounded-md px-5 py-2 outline-none text-center"
+              placeholder="Q Search..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
+          </span>
+        </section>
+        <section>
+          <span className="flex flex-col">
+            <span className="flex mb-3 mt-2 font-bold text-lg">
+              <h1 className="w-[250px] pl-3">Position ID</h1>
+              <h1 className="w-[350px] text-center">Program</h1>
+              <h1 className="w-[150px] text-center">Acronym</h1>
+              <h1 className="w-[150px] text-center">Department</h1>
+              <h1 className="w-[200px] text-center">Action</h1>
+            </span>
+            <span className="h-[470px] overflow-scroll no-scrollbar">
+              {filteredData?.map((prog: IProgramGet, index: number) => (
+                <section
+                  key={prog._id}
+                  className={`${
+                    index == 0
+                      ? "rounded-t-md"
+                      : index == filteredData.length - 1
+                      ? "rounded-b-md"
+                      : ""
+                  } ${
+                    index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
+                  } hover:bg-slate-300 group flex items-center py-2 text-sm font-semibold duration-200`}
+                >
+                  <h1 className="w-[250px] pl-3">{prog._id}</h1>
+                  <h1 className="w-[350px] text-center">{prog.programName}</h1>
+                  <h1 className="w-[150px] text-center">
+                    {prog.programAcronym}
+                  </h1>
+                  <h1 className="w-[150px] text-center">
+                    {prog.department?.departmentName}
+                  </h1>
+                  <h1 className="w-[200px] flex justify-center opacity-0 group-hover:opacity-100">
+                    <button
+                      onClick={() => {
+                        deleteProgMutation.mutate(prog._id);
+                      }}
+                      className="bg-red-500 py-2 px-3 font-semibold text-xl text-white rounded-md hover:bg-red-700 active:scale-95 duration-200"
+                    >
+                      <AiFillDelete />
+                    </button>
+                  </h1>
+                </section>
+              ))}
+            </span>
           </span>
         </section>
       </div>

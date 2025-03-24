@@ -11,8 +11,7 @@ import StudentsInfo from "./components/admission/enrolled_students/StudentsInfo"
 import SSC from "./components/ssc/SSC";
 import Clinic from "./components/clinic/Clinic";
 import Faculty from "./components/faculty/Faculty";
-import StudentGrade from "./components/registrar/StudentGrade";
-import Grades from "./components/registrar/Grades";
+import Schedule from "./components/registrar/Schedule";
 import AccountingDashboard from "./components/accounting/AccountingDashboard";
 import StudentFees from "./components/accounting/StudentFees";
 import { ToastContainer } from "react-toastify";
@@ -24,6 +23,14 @@ import DepartmentDashboard from "./components/admin/departments/DepartmentDashbo
 import PositionDashboard from "./components/admin/positions/PositionDashboard";
 import ProgramDashboard from "./components/admin/programs/ProgramDashboard";
 import CourseDashboard from "./components/admin/courses/CourseDashboard";
+import EmploymentForm from "./components/admin/employees/EmployeeForm";
+import UpdateEmployee from "./components/admin/employees/UpdateEmployee";
+import RoomList from "./components/admin/rooms/RoomList";
+import SubjectLoad from "./components/admin/subject-load/SubjectLoad";
+import SubjectLoadDetails from "./components/admin/subject-load/SubjectLoadDetails";
+import CreateSchedule from "./components/registrar/CreateSchedule";
+import ViewSchedule from "./components/registrar/ViewSchedule";
+import UpdateCourse from "./components/admin/courses/UpdateCourse";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +72,16 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "update-employee/:id",
+        element: <UpdateEmployee />,
+      },
+    ],
+  },
+  {
     path: "/:id/profile",
     element: <AdminLayout />,
     children: [
@@ -99,8 +116,28 @@ const router = createBrowserRouter([
         element: <CourseDashboard />,
       },
       {
+        path: "update-course/:id",
+        element: <UpdateCourse />,
+      },
+      {
         path: "employees",
         element: <Employees />,
+      },
+      {
+        path: "add-employee",
+        element: <EmploymentForm />,
+      },
+      {
+        path: "room-list",
+        element: <RoomList />,
+      },
+      {
+        path: "subject-load",
+        element: <SubjectLoad />,
+      },
+      {
+        path: "subject-load-details",
+        element: <SubjectLoadDetails />,
       },
     ],
   },
@@ -141,12 +178,16 @@ const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       {
-        path: "grades",
-        element: <Grades />,
+        path: "schedule",
+        element: <Schedule />,
       },
       {
-        path: "grades/:usn",
-        element: <StudentGrade />,
+        path: "schedule/create",
+        element: <CreateSchedule />,
+      },
+      {
+        path: "schedule/:id",
+        element: <ViewSchedule />,
       },
     ],
   },

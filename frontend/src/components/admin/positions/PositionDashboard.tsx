@@ -1,93 +1,149 @@
-import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { positionData } from "../../../store/PositionData";
-import apiClient from "../../../api/apiClient";
-import AddPosition from "./AddPosition";
-import PositionList from "./PositionList";
+import { useForm } from "react-hook-form";
+import { IPositionGet, IPositionPost } from "../../../interface/IPosition";
+import { AiFillDelete } from "react-icons/ai";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  addPosition,
+  deletePosition,
+  getPositions,
+} from "../../../api/position";
 
 const PositionDashboard = () => {
-  const [isOpenPost, setIsOpenPost] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
 
-  //   ADD POSITION
-  const handleSubmitPosition = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+  const { handleSubmit, register, setValue } = useForm<IPositionPost>();
 
-    try {
-      const data = {
-        jobTitle: positionData?.jobTitle,
-        hourlyWage: positionData?.hourlyWage,
-      };
-      console.log("To be Added : ", data);
-      await apiClient.post("/positions", data);
-      setIsOpenPost(true);
-      toast.success("Position added successfully!");
-    } catch (err) {
-      setError("Error adding Position");
-      toast.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const query = useQuery({
+    queryKey: ["/positions"],
+    queryFn: getPositions,
+  });
 
+  const addPostMutation = useMutation({
+    mutationFn: addPosition,
+    onSuccess: () => {
+      toast.success("Added Successfully");
+      query.refetch();
+      setValue("jobTitle", "");
+      setValue("hourlyWage", 0);
+    },
+    onError: (err: any) => {
+      toast.error(err.message);
+    },
+  });
+
+  const deletePostMutation = useMutation({
+    mutationFn: deletePosition,
+    onSuccess: () => {
+      toast.success("Deleted Successfully");
+      query.refetch();
+    },
+    onError: (err: any) => {
+      toast.error(err.message);
+    },
+  });
+
+  const filteredData = query.data?.results?.filter((post: IPositionGet) =>
+    post.jobTitle.toLowerCase().includes(search.toLowerCase())
+  );
   return (
     <div>
-      <div className="flex flex-col w-[1000px] h-[600px] mt-10">
-        <h1 className="bg-blue-600 font-bold text-2xl text-white py-5 text-center rounded-t-md">
-          Positions
-        </h1>
-        <section className="shadow-md border relative h-[100%] overflow-hidden">
-          <span className="flex items-center justify-evenly pt-10 pb-2 px-10">
-            <button
-              type="button"
-              onClick={() => {
-                isOpenPost ? setIsOpenPost(false) : setIsOpenPost(true);
-              }}
-              className="flex items-center gap-2 rounded-md px-2 bg-blue-600 shadow-sm shadow-blue-600/50 text-white text-lg py-1 hover:scale-105 active:scale-100 duration-200"
-            >
-              <MdOutlinePlaylistAdd />
-              Position
-            </button>
-          </span>
-          
-          {/* ADD POSITION */}
+      <div className="w-[1100px] h-[650px]">
+        {/* ADD POSITION */}
+        <section className={`p-5 flex items-center gap-5`}>
+          <h1 className="text-xl font-bold text-blue-800 w-[200px]">
+            Add Position
+          </h1>
           <form
-            onSubmit={handleSubmitPosition}
-            className={`${
-              isOpenPost
-                ? "opacity-0 w-0 left-0"
-                : "w-[400px] opacity-100 left-1/2 z-50"
-            } absolute top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md border rounded-md duration-150 overflow-hidden p-5 flex flex-col justify-center`}
+            className="grid grid-cols-3 gap-10"
+            onSubmit={handleSubmit((data: IPositionPost) =>
+              addPostMutation.mutate(data)
+            )}
           >
-            <h2 className="text-2xl font-semibold mb-4 flex justify-between">
-              Add Position{" "}
-              <button
-                type="button"
-                onClick={() => {
-                  isOpenPost ? setIsOpenPost(false) : setIsOpenPost(true);
-                }}
-                className="mr-3 bg-red-600 py- px-3 text-lg text-white rounded-md shadow-md font-bold hover:scale-105 duration-200"
-              >
-                X
-              </button>
-            </h2>
-            <AddPosition />
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <input
+              type="text"
+              {...register("jobTitle")}
+              placeholder="Job Title"
+              className="outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
+            />
+            <input
+              type="number"
+              {...register("hourlyWage")}
+              placeholder="Hourly Wage"
+              className="outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
+            />
             <button
               type="submit"
-              className="bg-blue-600 mx-5 py-2 text-white font-bold rounded-md shadow-md hover:scale-105 active:scale-95 duration-200"
-              disabled={loading}
+              className="bg-blue-600 w-[190px] flex justify-center py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
             >
-              {loading ? "Adding..." : "Add Position"}
+              {addPostMutation.isPending ? (
+                <img src="/loading.svg" className="invert" alt="" />
+              ) : (
+                "Add Department"
+              )}
             </button>
           </form>
+        </section>
 
-          <span className="flex justify-evenly w-[100%] h-[100%] px-10">
-            <PositionList />
+        <section className="bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
+          <span className="flex gap-3">
+            <h1 className="text-xl font-bold text-blue-800 py-1">
+              Positions List
+            </h1>
+          </span>
+          <span className="flex gap-3 ">
+            <input
+              type="text"
+              className="border-0 rounded-md px-5 py-2 outline-none text-center"
+              placeholder="Q Search..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
+          </span>
+        </section>
+        <section>
+          <span className="flex flex-col">
+            <span className="flex mb-3 mt-2 text-lg">
+              <h1 className="w-[250px] font-bold pl-3">Position ID</h1>
+              <h1 className="w-[150px] font-bold text-center">Job Title</h1>
+              <h1 className="w-[150px] font-bold text-center">Hourly Wage</h1>
+              <h1 className="w-[200px] font-bold text-center">Action</h1>
+            </span>
+            <span className="h-[470px] overflow-scroll no-scrollbar">
+              {filteredData?.map((post: IPositionGet, index: number) => (
+                <section
+                  key={post._id}
+                  className={`${
+                    index == 0
+                      ? "rounded-t-md"
+                      : index == filteredData.length - 1
+                      ? "rounded-b-md"
+                      : ""
+                  } ${
+                    index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
+                  } hover:bg-slate-300 group flex items-center py-2 text-sm font-semibold duration-200`}
+                >
+                  <h1 className="w-[250px] pl-3">{post._id}</h1>
+                  <h1 className="w-[150px] text-center">{post.jobTitle}</h1>
+                  <h1 className="w-[150px] text-center">
+                    ₱ {post.hourlyWage}.00
+                  </h1>
+                  <h1 className="w-[200px] flex justify-center opacity-0 group-hover:opacity-100">
+                    <button
+                      onClick={() => {
+                        deletePostMutation.mutate(post._id);
+                      }}
+                      className="bg-red-500 py-2 px-3 font-semibold text-xl text-white rounded-md hover:bg-red-700 active:scale-95 duration-200"
+                    >
+                      <AiFillDelete />
+                    </button>
+                  </h1>
+                </section>
+              ))}
+            </span>
           </span>
         </section>
       </div>

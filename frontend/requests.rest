@@ -15,7 +15,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmNiZDk3M
 
 ###
 
-POST https://clg-super-app.onrender.com/api/auth/login HTTP/1.1
+POST http://localhost:3000/api/auth/login HTTP/1.1
 content-type: application/json
 
 {
@@ -29,18 +29,42 @@ POST http://localhost:3000/api/employees/add HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmNiZDk3MjRlYjIwNzdlNDE0YTlkZiIsInVzZXJuYW1lIjoiMTk4Mzg5Iiwicm9sZSI6WyJhZG1pbiJdLCJpYXQiOjE3MzYxMzU2NTksImV4cCI6MTczNjE2NDQ1OX0.K23qOk6GcNr0cbGe9SNI3FfXafZ77d7SEYfT92vUUq4
 
+###
+# Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTI2NDk5OSwiZXhwIjoxNzQxMjkzNzk5fQ.d7KPzls3EIbqEjv-rXyhJ_pqf_1tnT-iNCA4ggkrvoU
+
+
+DELETE http://localhost:3000/api/rooms/67cc2f2503e697561e750acc HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTk1OTEyOCwiZXhwIjoxNzQxOTg3OTI4fQ.G6LaprXzczUJBYvNAtDgLEokThsL9XK1k0lAJjIDuSM
+
+
+###
+
+POST http://localhost:3000/api/schedules HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTQxNjgwOCwiZXhwIjoxNzQxNDQ1NjA4fQ.PEY2b87IcOuB8ySLNUWAXRwWkar97dsfnDHvLWqJ2BY
+
 {
-  
+  "program": "67879364292391c7c3a3e73d",
+  "schoolYear": "2024-2025",
+  "semester": "1st",
+  "subjectSchedules": [
+    {
+      "courseID": "678625a887792f18812e1372",
+      "timeStart": "8:00",
+      "timeEnd": "9:00",
+      "day": ["mon", "wed"],
+      "room": "A301",
+      "instructorID": "67ac0f63b1c33b64568215f2"
+    }
+  ]
 }
 
 ###
 
-GET https://clg-super-app.onrender.com/api/employees HTTP/1.1
+GET http://localhost:3000/api/rooms HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTczOTQxNTg4MywiZXhwIjoxNzM5NDQ0NjgzfQ._rZwkWEwtGg6p08kq25srSMceCPPoh4mPXCe065olAA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTc0MTM0MzkyMywiZXhwIjoxNzQxMzcyNzIzfQ.kckcDtptevRY9wyCRkHFuEN2ecky8ulIKM-CbKz2thY
+
 
 ###
-
-GET https://clg-super-app.onrender.com/api/employees/678b4e6024a3e046c80324a3 HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3N2UzYjFlNDVkODEzNTZmOTA3ZDRhMyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjpbInN1cGVyIl0sImlhdCI6MTczOTQxNTg4MywiZXhwIjoxNzM5NDQ0NjgzfQ._rZwkWEwtGg6p08kq25srSMceCPPoh4mPXCe065olAA

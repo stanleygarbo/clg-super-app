@@ -8,7 +8,7 @@ const getProgram = async (id) => {
 };
 
 const getPrograms = async () => {
-  const program = await Program.find();
+  const program = await Program.find().populate({ path: "department" });
 
   return program;
 };
