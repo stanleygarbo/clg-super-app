@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost:3000",
+  "proxy": "https://clg-super-app.onrender.com/api",
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
@@ -11,19 +11,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.62.16",
+    "axios": "^1.7.9",
     "json-server": "^1.0.0-beta.3",
     "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.5",
-    "react-hook-form": "^7.53.0",
+    "react-hook-form": "^7.54.2",
     "react-icons": "^5.3.0",
+    "react-loading-indicators": "^1.0.0",
     "react-router-dom": "^6.26.2",
+    "react-select": "^5.10.1",
+    "react-toastify": "^11.0.2",
     "tailwind-merge": "^2.5.3",
     "valtio": "^2.1.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@types/node": "^22.13.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

@@ -1,17 +1,19 @@
 const OfficeChairmanVice = () => {
   return (
-    <div>
-      <div className=" flex flex-col items-center py-20">
-        <img
-          src="/chair_03.png"
-          alt=""
-          className=" rounded-full drop-shadow-md hover:scale-[1.05] duration-200"
-        />
-        <p className="pb-10 pt-6 opacity-60 font-bold">
-          Dr. Amable R. Aguiluz V, Chairman
-        </p>
-
-        <article className="px-20 xs:px-5 sm:px-2">
+    <div className="max-w-6xl mx-auto px-4 py-16">
+      <div className="mb-20">
+        <div className="flex flex-col items-center mb-8">
+          <img
+            src="/chair_03.png"
+            alt="Dr. Amable R. Aguiluz V"
+            className="w-48 h-48 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+          />
+          <h2 className="mt-6 text-xl font-bold text-gray-700">
+            Dr. Amable R. Aguiluz V
+          </h2>
+          <p className="text-gray-600 font-medium">Chairman</p>
+        </div>
+        <article className="max-w-4xl mx-auto text-gray-700 leading-relaxed space-y-6">
           We live in this period of human history where the whole world is right
           at our fingertips. The advent of computers has changed our lives and
           keeps changing the way we live. We now find ourselves in this
@@ -20,7 +22,7 @@ const OfficeChairmanVice = () => {
           This is the Age of Information. This is the Age of Technology. This is
           the Age of Knowledge. <br /> <br /> In the years to come, the shift
           from traditional modes of learning to what we may tentatively call
-          “blended learning” will become more pronounced. All our campuses and
+          "blended learning" will become more pronounced. All our campuses and
           branches have started utilizing online instruction or e-learning,
           making education more accessible anytime, anywhere. As the pioneer of
           online education, we shall soon venture into the establishment of the
@@ -36,20 +38,23 @@ const OfficeChairmanVice = () => {
           2002, 6:30 pm, PICC Reception Hall)
         </article>
       </div>
-      <div className=" flex flex-col m-auto items-center py-10">
-        <img
-          src="/pres_03.png"
-          alt=""
-          className=" rounded-full drop-shadow-md hover:scale-[1.05] duration-200"
-        />
-        <p className="pb-10 pt-6 opacity-60 font-bold">
-          Dr. Amable C. Aguiluz IX, Vice Chairman
-        </p>
 
-        <article className="px-20 pb-20 xs:px-5 sm:px-2">
+      <div className="mb-20">
+        <div className="flex flex-col items-center mb-8">
+          <img
+            src="/pres_03.png"
+            alt="Dr. Amable C. Aguiluz IX"
+            className="w-48 h-48 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+          />
+          <h2 className="mt-6 text-xl font-bold text-gray-700">
+            Dr. Amable C. Aguiluz IX
+          </h2>
+          <p className="text-gray-600 font-medium">Vice Chairman</p>
+        </div>
+        <article className="max-w-4xl mx-auto text-gray-700 leading-relaxed space-y-6">
           One of the many challenges that we at AMAES is constantly faced with
           is competition. Global changes put pressure on how we develop and
-          produce graduates who are relevant and in demand in today’s workforce.
+          produce graduates who are relevant and in demand in today's workforce.
           I am proud to say that we have been able to stay true to our
           commitment and more so, we have able to prepare and plan for the
           changes that come our way. We not only remain confident of what we
@@ -63,12 +68,12 @@ const OfficeChairmanVice = () => {
           into results. They are pushed to become innovators who can embrace
           learning and create new ways to achieve sustainable growth and
           superiority. Our passion and vision for the organization are matched
-          with our officers, staff and faculty members’ dedication and
+          with our officers, staff and faculty members' dedication and
           willingness to take on our goals at heart and to carry out our
           objectives that will trickle down to all our stakeholders --- our
           students. <br /> <br /> We at AMA Education System all share the same
           vision of remaining the largest pioneer in IT-based education with
-          campuses not only throughout the country’s archipelago but continue to
+          campuses not only throughout the country's archipelago but continue to
           make our presence in other regions as well. We are AMA Education
           System and we shall stay strong in doing what we do best --- providing
           quality education to all.

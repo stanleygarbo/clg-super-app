@@ -1,5 +1,7 @@
 import { proxy } from "valtio";
+import { IEmployeeGet, IEmployeePost } from "../interface/IEmployee";
 
+<<<<<<< HEAD
 interface AppState {
   firstName: string;
   middleName: string;
@@ -16,10 +18,18 @@ interface AppState {
 }
 
 export const employeeData = proxy<AppState>({
+=======
+export const employeePostData = proxy<IEmployeePost>({
+>>>>>>> 810c4096926684268a5e4adf8163a3b58ef04638
   firstName: "",
+  surname: "",
   middleName: "",
-  lastName: "",
+  birthDate: "",
+  username: "",
+  password: "",
+  department: "",
   position: "",
+<<<<<<< HEAD
   department: "",
   dateHired: "",
   userName: "",
@@ -28,4 +38,27 @@ export const employeeData = proxy<AppState>({
   philhealthNum: "",
   pagibigID: "",
   tinNum: "",
+=======
+  hireDate: "",
+  employmentType: "",
+  roles: [],
+  address: { houseNum: "", streetBrgy: "", city: "", district: "" },
+  gender: "",
+});
+
+export const employeeGetData = proxy<IEmployeeGet>({
+  _id: "",
+  firstName: "",
+  surname: "",
+  middleName: "",
+  username: "",
+  password: "",
+  department: { _id: "", departmentName: "" },
+  position: { _id: "", jobTitle: "", hourlyWage: 0 },
+  hireDate: "",
+  employmentType: "",
+  roles: [],
+  address: { houseNum: "", streetBrgy: "", city: "", district: "" },
+  gender: "",
+>>>>>>> 810c4096926684268a5e4adf8163a3b58ef04638
 });

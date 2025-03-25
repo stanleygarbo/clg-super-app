@@ -1,54 +1,97 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { FaDatabase, FaRegUser } from "react-icons/fa";
 import { LuClipboard, LuDoorOpen, LuSchool } from "react-icons/lu";
 import { ISidebarItem } from "../../components/sidebar/SidebarItems";
 import { MdOutlineDashboard } from "react-icons/md";
 import { BiClinic } from "react-icons/bi";
+import { RiAdminFill } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
 
-const sidebarItems: ISidebarItem[] = [
+// const adminItems: ISidebarItem = {
+//   name: "Admin",
+//   icon: RiAdminFill,
+//   type: "drawer",
+//   path: "admin",
+//   subItems: [
+//     {
+//       name: "Users",
+//       path: "/admin/users",
+//     },
+//     {
+//       name: "Positions & Departments",
+//       path: "/admin/list-all",
+//     },
+//     {
+//       name: "Employees",
+//       path: "/admin/employees",
+//     },
+//   ],
+// };
+
+const sidebarItemsConditional = [
   {
     name: "Dashboard",
     icon: MdOutlineDashboard,
     path: "/dashboard",
   },
   {
+    name: "Profile",
+    icon: FaUser,
+    path: "/profile",
+  },
+  {
     name: "Admin",
-    icon: FaRegUser,
+    icon: RiAdminFill,
     type: "drawer",
     path: "admin",
     subItems: [
-      {
-        name: "Profile",
-        path: "/admin/profile",
-      },
       {
         name: "Users",
         path: "/admin/users",
       },
       {
-        name: "Department",
-        path: "/admin/department",
+        name: "Departments",
+        path: "/admin/departmentdashboard",
+      },
+      {
+        name: "Room List",
+        path: "/admin/room-list",
+      },
+      {
+        name: "Positions",
+        path: "/admin/positiondashboard",
+      },
+      {
+        name: "Programs",
+        path: "/admin/programdashboard",
+      },
+      {
+        name: "Courses",
+        path: "/admin/coursedashboard",
+      },
+      {
+        name: "Employees",
+        path: "/admin/employees",
+      },
+      {
+        name: "Subject Load",
+        path: "/admin/subject-load",
       },
     ],
   },
   {
-    name: "Addmission",
+    name: "Admission",
     icon: LuSchool,
     type: "drawer",
     path: "admission",
     subItems: [
       {
-        name: "Enroll",
+        name: "Enroll Student",
         path: "/admission/eform",
       },
       {
         name: "Students",
         path: "/admission/enroll-student",
-      },
-      {
-        name: "Employees",
-        path: "/admission/employees",
       },
     ],
   },
@@ -75,8 +118,8 @@ const sidebarItems: ISidebarItem[] = [
     path: "registrar",
     subItems: [
       {
-        name: "Grades",
-        path: "/registrar/grades",
+        name: "Schedules",
+        path: "/registrar/schedule",
       },
     ],
   },
@@ -118,11 +161,15 @@ const sidebarItems: ISidebarItem[] = [
   },
 ];
 
+const sidebarItems = sidebarItemsConditional.filter((i) => {
+  return i != null;
+}) as ISidebarItem[];
+
 const AdminLayout = () => {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen box-border">
       <Sidebar sidebarItems={sidebarItems} />
-      <div className="flex justify-center w-full px-20 xs:px-5 mt-10">
+      <div className="flex justify-center w-full ml-[300px] mt-10">
         <Outlet />
       </div>
     </div>

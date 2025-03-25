@@ -12,12 +12,7 @@
 
 body {
   /* overflow-y: hidden; */
-  overflow-x: hidden;
-}
-
-input {
-  border-color: rgb(41, 40, 40);
-  border: 1px solid;
+  /* overflow-x: hidden; */
 }
 
 .gradient1 {

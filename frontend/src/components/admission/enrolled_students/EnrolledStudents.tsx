@@ -1,81 +1,143 @@
-import { useEffect, useState } from "react";
-import { studentData } from "../../../store/StudentData";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getStudents } from "../../../api/student";
+import apiClient from "../../../api/apiClient";
+import { toast } from "react-toastify";
+import { IoListOutline } from "react-icons/io5";
+import { IStudentsGet } from "../../../interface/IStudents";
+import { FaArchive, FaEdit } from "react-icons/fa";
+import { MdPageview } from "react-icons/md";
+import { useState } from "react";
 
 const EnrolledStudents = () => {
-  const [students, setStudents] = useState<(typeof studentData)[]>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const { id } = useParams();
-  const datas = { id, studentData };
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+  let { id } = useParams();
 
-  const fetchStudents = async () => {
+  const query = useQuery({
+    queryKey: ["students"],
+    queryFn: getStudents,
+  });
+
+  // const filteredStudents = query.data?.results?.length
+  //   ? query.data.results.filter((stud: IStudentsGet) =>
+  //       `${stud.surname} ${stud.firstName} ${stud.middleName}`
+  //         .toLowerCase()
+  //         .includes(search.toLowerCase())
+  //     )
+  //   : [];
+
+  const filteredStudents = query.data?.results?.length
+    ? query.data.results
+        .filter((stud: IStudentsGet) =>
+          `${stud.surname} ${stud.firstName} ${stud.middleName}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
+        )
+        .sort((a: IStudentsGet, b: IStudentsGet) =>
+          a.surname.localeCompare(b.surname)
+        )
+    : [];
+
+  // console.log(query.data);
+
+  // const getFullName = (student: any) => {
+  //   return `${student.surname}, ${student.firstName} ${student.middleName}`;
+  // };
+
+  const archiveStudents = async () => {
     try {
-      const response = await fetch("http://localhost:8000/students");
-      if (!response.ok) {
-        throw new Error("Failed to fetch students");
-      }
-      setError("");
-
-      const data: (typeof datas)[] = await response.json();
-      setStudents(data?.map(({ id: string, ...rest }) => rest.studentData));
-      loading;
-      console.log(students);
-    } catch (err) {
-      setError("Error fetching students");
+      await apiClient.delete("/students/" + id);
+      query.refetch();
+      toast.success("Successfully archived student");
+    } catch {
+      toast.error("Failed to delete students");
     } finally {
-      setLoading(false);
     }
   };
 
-  const getFullName = (student: typeof studentData) =>
-    `${student.personalInfo.lastName}, ${student.personalInfo.firstName} ${student.personalInfo.middleName}`;
-
-  useEffect(() => {
-    fetchStudents();
-  }, []);
-
-  useEffect(() => {
-    console.log(students);
-  }, [students]);
-
   return (
     <div className="">
-      <div className="">
-        <h1 className="text-center py-5 text-2xl font-bold bg-blue-600 text-white border-t border-r border-l rounded-t-md shadow-sm">
-          All Students
-        </h1>
-        <table className="w-full h-[570px] border flex flex-col rounded-b-md shadow-md bg-white duration-200 py-10 px-12">
-          <th className="grid grid-cols-3 text-lg font-bold gap-3 p-2 border-b mb-5 text-slate-800 border-slate-300 items-center w-[100%]">
-            <td className="w-[500px] text-start">Name</td>
-            <td className="w-[200px] text-center">Course</td>
-            <td className="w-[200px text-center">Year</td>
-          </th>
-          {error && (
-            <div className="flex justify-center items-center">
-              Failed to fetch data
-            </div>
-          )}
-          {loading && (
-            <div className="flex justify-center items-center">Loading...</div>
-          )}
-          <section className="overflow-hidden overflow-y-auto no-scrollbar flex flex-col">
-            {students?.map((student, index) => (
-              <Link to={`/admission/studentInfo/${student.usn}`}>
-                <tr
-                  key={index}
-                  className="duration-200 hover:cursor-pointer font-semibold gap-3 text-sm grid grid-cols-3 px-2 py-4 rounded-sm hover:text-white bg-slate-50 shadow-sm border hover:bg-blue-600 hover:border-blue-600 active:scale-95"
+      <div className="w-[1100px] h-[650px] relative">
+        <section className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold opacity-0">Student's List</h1>
+          <button
+            onClick={() => {
+              navigate("/admission/eform");
+            }}
+            className="bg-blue-600 px-3 py-2 text-white font-bold font-sans rounded-md hover:bg-blue-800 active:scale-95 duration-200"
+          >
+            Enroll Student
+          </button>
+        </section>
+        <section className="mt-5 bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-blue-800">Student's List</h1>
+          <input
+            type="text"
+            className="border-0 rounded-md py-2 px-5 outline-none"
+            placeholder="Q Search..."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+        </section>
+        <section className="py-3">
+          <span className="flex mb-3 text-lg">
+            <h1 className="w-[150px] font-bold pl-3">Last Name</h1>
+            <h1 className="w-[150px] font-bold">First Name</h1>
+            <h1 className="w-[150px] font-bold">Middle Name</h1>
+            <h1 className="w-[150px] font-bold text-center">Gender</h1>
+            <h1 className="w-[150px] font-bold text-center">Course</h1>
+            <h1 className="w-[150px] font-bold text-center">Standing</h1>
+            <h1 className="w-[200px] font-bold text-center">Action</h1>
+          </span>
+          {filteredStudents.map((student: IStudentsGet, index: number) => (
+            <span
+              key={index}
+              className={`${
+                index == 0
+                  ? "rounded-t-md"
+                  : index == query.data?.results.length - 1
+                  ? "rounded-b-md"
+                  : ""
+              } ${
+                index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
+              } flex py-2 text-sm items-center hover:bg-slate-300 group duration-200`}
+            >
+              <h1 className="w-[150px] pl-3">{student.surname}</h1>
+              <h1 className="w-[150px]">{student.firstName}</h1>
+              <h1 className="w-[150px]">{student.middleName}</h1>
+              <h1 className="w-[150px] text-center">{student.birth.sex}</h1>
+              <h1 className="w-[150px] text-center">
+                {student.program?.programAcronym}
+              </h1>
+              <h1 className="w-[150px] text-center">{student.standing}</h1>
+              <h1 className="w-[200px] flex gap-2 text-lg justify-center opacity-0 group-hover:opacity-100">
+                <button
+                  onClick={() => {
+                    id = student._id;
+                    navigate(`/admission/studentInfo/${id}`);
+                  }}
+                  type="button"
+                  className="bg-blue-600 px-3 py-2 rounded-md text-white font-semibold hover:bg-blue-800 active:scale-95 duration-200"
                 >
-                  <td className="w-[500px] text-start">
-                    {getFullName(student)}
-                  </td>
-                  <td className="w-[200px] text-center">{student.course}</td>
-                  <td className="w-[200px text-center">{student.year}</td>
-                </tr>
-              </Link>
-            ))}
-          </section>
-        </table>
+                  <MdPageview />
+                </button>
+                <button
+                  onClick={() => {
+                    id = student._id;
+                    archiveStudents();
+                  }}
+                  type="button"
+                  className="bg-red-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
+                >
+                  <FaArchive />
+                </button>
+              </h1>
+            </span>
+          ))}
+        </section>
       </div>
     </div>
   );

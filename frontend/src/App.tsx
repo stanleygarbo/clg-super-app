@@ -5,20 +5,30 @@ import AdminLayout from "./layouts/admin_layout/AdminLayout";
 import Home from "./pages/Home";
 import HomeLayout from "./layouts/home_layout/HomeLayout";
 import EForm from "./components/admission/enrollment_form/EForm";
-import Profile from "./components/profile/Profile";
+import Profile from "./components/admin/profile/Profile";
 import EnrolledStudents from "./components/admission/enrolled_students/EnrolledStudents";
 import StudentsInfo from "./components/admission/enrolled_students/StudentsInfo";
-import Users from "./components/new_components/Users";
-import Employees from "./components/new_components/Employees";
-import Dashboard from "./components/new_components/Dashboard";
 import SSC from "./components/ssc/SSC";
 import Clinic from "./components/clinic/Clinic";
 import Faculty from "./components/faculty/Faculty";
-import StudentGrade from "./components/registrar/StudentGrade";
-import Grades from "./components/registrar/Grades";
-import AccountingDashboard from "./components/accounting/AccountingDashboard";
-import StudentFees from "./components/accounting/StudentFees";
-import TestUpload from "./components/new_components/TestUpload";
+import Schedule from "./components/registrar/Schedule";
+import { ToastContainer } from "react-toastify";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Dashboard from "./components/admin/Dashboard";
+import Users from "./components/admin/users/Users";
+import Employees from "./components/admin/employees/Employees";
+import DepartmentDashboard from "./components/admin/departments/DepartmentDashboard";
+import PositionDashboard from "./components/admin/positions/PositionDashboard";
+import ProgramDashboard from "./components/admin/programs/ProgramDashboard";
+import CourseDashboard from "./components/admin/courses/CourseDashboard";
+import EmploymentForm from "./components/admin/employees/EmployeeForm";
+import UpdateEmployee from "./components/admin/employees/UpdateEmployee";
+import RoomList from "./components/admin/rooms/RoomList";
+import SubjectLoad from "./components/admin/subject-load/SubjectLoad";
+import SubjectLoadDetails from "./components/admin/subject-load/SubjectLoadDetails";
+import CreateSchedule from "./components/registrar/CreateSchedule";
+import ViewSchedule from "./components/registrar/ViewSchedule";
+import UpdateCourse from "./components/admin/courses/UpdateCourse";
 
 const router = createBrowserRouter([
   {
@@ -37,10 +47,6 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
-      {
-        path: "/test",
-        element: <TestUpload />,
-      },
     ],
   },
   {
@@ -54,6 +60,36 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/profile",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+    ],
+  },
+  {
+    path: "admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "update-employee/:id",
+        element: <UpdateEmployee />,
+      },
+    ],
+  },
+  {
+    path: "/:id/profile",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/:id/profile",
+        element: <Profile />,
+      },
+    ],
+  },
+  {
     path: "/admin",
     element: <AdminLayout />,
     children: [
@@ -62,8 +98,44 @@ const router = createBrowserRouter([
         element: <Users />,
       },
       {
-        path: "profile",
-        element: <Profile />,
+        path: "departmentdashboard",
+        element: <DepartmentDashboard />,
+      },
+      {
+        path: "positiondashboard",
+        element: <PositionDashboard />,
+      },
+      {
+        path: "programdashboard",
+        element: <ProgramDashboard />,
+      },
+      {
+        path: "coursedashboard",
+        element: <CourseDashboard />,
+      },
+      {
+        path: "update-course/:id",
+        element: <UpdateCourse />,
+      },
+      {
+        path: "employees",
+        element: <Employees />,
+      },
+      {
+        path: "add-employee",
+        element: <EmploymentForm />,
+      },
+      {
+        path: "room-list",
+        element: <RoomList />,
+      },
+      {
+        path: "subject-load",
+        element: <SubjectLoad />,
+      },
+      {
+        path: "subject-load-details",
+        element: <SubjectLoadDetails />,
       },
     ],
   },
@@ -83,24 +155,20 @@ const router = createBrowserRouter([
         path: "studentInfo/:id",
         element: <StudentsInfo />,
       },
-      {
-        path: "employees",
-        element: <Employees />,
-      },
     ],
   },
   {
     path: "/registrar",
     element: <AdminLayout />,
     children: [
-      {
-        path: "grades",
-        element: <Grades />,
-      },
-      {
-        path: "grades/:usn",
-        element: <StudentGrade />,
-      },
+      // {
+      //   path: "grades",
+      //   element: <Grades />,
+      // },
+      // {
+      //   path: "grades/:usn",
+      //   element: <StudentGrade />,
+      // },
     ],
   },
   {
@@ -138,12 +206,16 @@ const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       {
-        path: "grades",
-        element: <Grades />,
+        path: "schedule",
+        element: <Schedule />,
       },
       {
-        path: "grades/:usn",
-        element: <StudentGrade />,
+        path: "schedule/create",
+        element: <CreateSchedule />,
+      },
+      {
+        path: "schedule/:id",
+        element: <ViewSchedule />,
       },
     ],
   },
@@ -179,10 +251,14 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <ToastContainer />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </>
   );
 }
