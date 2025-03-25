@@ -5,6 +5,8 @@ import { getCourse, updateCourse } from "../../../api/course";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { getPrograms } from "../../../api/programs";
+import { IProgramGet } from "../../../interface/IProgram";
 
 const UpdateCourse = () => {
   const navigate = useNavigate();
@@ -13,6 +15,11 @@ const UpdateCourse = () => {
   const courseQuery = useQuery({
     queryKey: ["course", id],
     queryFn: () => getCourse({ id }),
+  });
+
+  const programs = useQuery({
+    queryKey: ["programs"],
+    queryFn: getPrograms,
   });
 
   const { handleSubmit, register, reset } = useForm<ICoursePost>({
@@ -79,6 +86,21 @@ const UpdateCourse = () => {
             placeholder="Units"
             className="outline-none border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
           />
+          <section className="relative grid gird-cols-1">
+            <p className="absolute text-xs font-bold top-[-5px]">Program :</p>
+            <select
+              {...register("program")}
+              className="outline-none border-0 h-[40px] border-b-2 focus:border-blue-900 border-b-black w-[100px text-center"
+            >
+              {programs.data?.results.map(
+                (prog: IProgramGet, index: number) => (
+                  <option key={index} value={prog._id} selected={index === 0}>
+                    {prog.programAcronym}
+                  </option>
+                )
+              )}
+            </select>
+          </section>
           <button
             type="submit"
             className="bg-blue-600 w-[140px] flex justify-center py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
