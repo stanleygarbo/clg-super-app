@@ -6,9 +6,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { AiFillDelete } from "react-icons/ai";
 import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 const RoomList = () => {
-  const { handleSubmit, register, setValue } = useForm<IRoomPost>();
+  const { handleSubmit, register, setValue, formState } = useForm<IRoomPost>();
   const [search, setSearch] = useState<string>("");
+  const { errors } = formState;
 
   const addRoomMutation = useMutation({
     mutationFn: addRoom,
@@ -53,36 +55,52 @@ const RoomList = () => {
         >
           <h1 className="pr-20 text-xl font-bold text-blue-800">Add Room </h1>
           <section className="flex gap-5">
-            <input
-              type="text"
-              required
-              className="text-center outline-none border-0 p-2 bg-white font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              placeholder="Room Name"
-              {...register("room")}
-            />
-            <select
-              {...register("building")}
-              className="text-center w-[200px] outline-none border-0 p-2 bg-white font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-            >
-              <option value="" selected>
-                Building
-              </option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-            </select>
-            <select
-              {...register("floor")}
-              className="text-center w-[200px] outline-none border-0 p-2 bg-white font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-            >
-              <option value="" selected>
-                Floor
-              </option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-            </select>
+            <section className="relative">
+              <input
+                type="text"
+                className={twMerge(
+                  "text-center outline-none border-0 p-2 border-black bg-white font-semibold border-b-2 focus:border-b-blue-800 duration-200",
+                  errors.room?.message &&
+                    "focus:border-b-red-500 border-b-red-500"
+                )}
+                placeholder="Room Name"
+                {...register("room", { required: "Room Name is required" })}
+              />
+              <p className="text-[11px] text-red-500 font-semibold absolute transform -translate-x-[-45px] -translate-y-1/2 top-[51px]">
+                {errors.room?.message}
+              </p>
+            </section>
+            <section className="relative">
+              <p className="absolute text-sm font-semibold top-[-10px]">
+                Building :
+              </p>
+              <select
+                {...register("building")}
+                className="text-center w-[200px] outline-none border-0 p-2 bg-white font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
+              >
+                <option value="A" selected>
+                  A
+                </option>
+                <option value="B">B</option>
+              </select>
+            </section>
+            <section className="relative">
+              <p className="text-sm font-semibold absolute top-[-10px]">
+                Floor :
+              </p>
+              <select
+                {...register("floor")}
+                className="text-center w-[200px] outline-none border-0 p-2 bg-white font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
+              >
+                <option value={2} selected>
+                  2
+                </option>
+                <option value={3}>3</option>
+                <option value={4}>4</option>
+                <option value={5}>5</option>
+                <option value={6}>6</option>
+              </select>
+            </section>
             <button
               type="submit"
               className="bg-blue-600 px-5 py-2 text-white font-semibold rounded-md text-base ml-10 hover:bg-blue-800 active:scale-95 duration-200"

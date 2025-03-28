@@ -6,7 +6,7 @@ const departmentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    programs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Program" }],
+    programs: { type: mongoose.Schema.Types.ObjectId, ref: "Program" },
     isDeleted: {
       type: Boolean,
       default: false,

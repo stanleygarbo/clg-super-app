@@ -15,9 +15,12 @@ import {
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import { MdClose } from "react-icons/md";
+import { twMerge } from "tailwind-merge";
 
 const DepartmentDashboard = () => {
-  const methods = useForm<IDepartmentPost>();
+  const { register, handleSubmit, reset, formState } =
+    useForm<IDepartmentPost>();
+  const { errors } = formState;
   const update = useForm<IDepartmentPost>();
   const [search, setSearch] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -39,7 +42,7 @@ const DepartmentDashboard = () => {
     onSuccess: () => {
       toast.success("Added Successfully");
       query.refetch();
-      methods.reset();
+      reset();
     },
     onError: (err: any) => {
       toast.error(err.message);
@@ -135,22 +138,33 @@ const DepartmentDashboard = () => {
           {/* ADD DEPARTMENT */}
           <form
             className="flex gap-10"
-            onSubmit={methods.handleSubmit((data: IDepartmentPost) =>
+            onSubmit={handleSubmit((data: IDepartmentPost) =>
               addDeptMutation.mutate(data)
             )}
           >
-            <section className="flex items-center gap-3">
-              <h1 className="font-semibold text-sm">Department Name :</h1>
-              <input
-                type="text"
-                {...methods.register("departmentName")}
-                placeholder="Department"
-                className="outline-none border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
-              />
+            <section className="flex flex-col items-center gap-2 relative">
+              <section className="flex items-center gap-3">
+                <h1 className="font-semibold text-sm">Department Name :</h1>
+                <input
+                  type="text"
+                  {...register("departmentName", {
+                    required: "Department Name is required",
+                  })}
+                  placeholder="Department"
+                  className={twMerge(
+                    "outline-none border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-black focus:border-b-blue-800",
+                    errors.departmentName &&
+                      "focus:border-b-red-500 border-b-red-500"
+                  )}
+                />
+              </section>
+              <p className="text-red-600 text-[11px] font-semibold absolute transform -translate-x-[-70px] -translate-y-1/2 top-12 duration-200">
+                {errors.departmentName?.message}
+              </p>
             </section>
             <button
               type="submit"
-              className="bg-blue-600 w-[190px] flex justify-center py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
+              className="bg-blue-600 w-[190px] h-[40px] flex justify-center py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
             >
               {addDeptMutation.isPending ? (
                 <img src="/loading.svg" className="invert" alt="" />
