@@ -2,6 +2,7 @@ export interface ICourse {
   _id: string;
   courseCode: string;
   courseName: string;
+  program: string;
   units: number;
 }
 

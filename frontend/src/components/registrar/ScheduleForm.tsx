@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import { getPrograms } from "../../api/programs";
 import { getCourses } from "../../api/course";
@@ -14,6 +14,7 @@ import { getRooms } from "../../api/room";
 import { convertMilitaryTo12Hour } from "../../Helper";
 import { useQuery } from "@tanstack/react-query";
 import { IProgramGet } from "../../interface/IProgram";
+import SubjectForm from "./SubjectForm";
 
 interface IOption {
   value: string;
@@ -36,12 +37,14 @@ const dayOptions = [
   { value: "sat", label: "Saturday" },
 ];
 
-function CreateSchedule() {
+function ScheduleForm() {
   const scheduleForm = useForm();
-  const subjectForm = useForm();
+  const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);
+  const [selectedProgram, setSelectedProgram] = useState<string>();
   const [subjectSchedules, setSubjectSchedules] = useState<ISubjectSchedule[]>(
     []
   );
+  const [submittedCourses, setSubmittedCourses] = useState<string[]>([]);
 
   const intructor = useQuery({
     queryKey: ["employees"],
@@ -97,6 +100,7 @@ function CreateSchedule() {
 
   const onSubjectSubmit = (data: any) => {
     setSubjectSchedules((prevState) => [...prevState, data]);
+    setSubmittedCourses((prevState) => [...prevState, data.courseID]);
   };
 
   const onScheduleSubmit = (data: any) => {
@@ -149,6 +153,18 @@ function CreateSchedule() {
     }
   };
 
+  const loadProgramCourses = async () => {
+    if (!selectedProgram) return;
+    const filtered = courses.data?.results.filter((course: ICourse) =>
+      course.program.includes(selectedProgram)
+    );
+    setFilteredCourses(filtered);
+  };
+
+  useEffect(() => {
+    loadProgramCourses();
+  }, [selectedProgram]);
+
   return (
     <main className="flex flex-col gap-8 w-full mx-16 my-8">
       <header className="flex justify-between items-center h-12">
@@ -168,8 +184,11 @@ function CreateSchedule() {
                 value={programOptions?.find(
                   (option) => option.value === field.value
                 )}
-                onChange={(option) => field.onChange(option?.value)}
-                className="w-96"
+                onChange={(option) => {
+                  field.onChange(option?.value);
+                  setSelectedProgram(option?.value);
+                }}
+                className="w-32"
               />
             )}
           />
@@ -250,98 +269,17 @@ function CreateSchedule() {
           ))}
         </tbody>
       </table>
-      <form
-        className="grid grid-cols-scheduleCreate gap-2"
-        onSubmit={subjectForm.handleSubmit(onSubjectSubmit)}
-      >
-        <Controller
-          control={subjectForm.control}
-          name="courseID"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={courseOptions}
-              value={courseOptions?.find(
-                (option) => option.value === field.value
-              )}
-              onChange={(option) => field.onChange(option?.value)}
-            />
-          )}
-        />
-        <input
-          {...subjectForm.register("timeStart")}
-          type="time"
-          className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
-          required
-        />
-        <input
-          {...subjectForm.register("timeEnd")}
-          type="time"
-          className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
-          required
-        />
-        <Controller
-          control={subjectForm.control}
-          name="day"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={dayOptions}
-              isMulti={true}
-              value={dayOptions.filter((option) =>
-                field.value?.includes(option.value)
-              )}
-              onChange={(selectedOptions) =>
-                field.onChange(
-                  selectedOptions
-                    ? selectedOptions.map((option) => option.value)
-                    : []
-                )
-              }
-            />
-          )}
-        />
-        <Controller
-          control={subjectForm.control}
-          name="room"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={roomOptions}
-              value={courseOptions?.find(
-                (option) => option.value === field.value
-              )}
-              onChange={(option) => field.onChange(option?.value)}
-            />
-          )}
-        />
-        <Controller
-          control={subjectForm.control}
-          name="instructorID"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <Select
-              options={instructorOptions}
-              {...field}
-              value={courseOptions?.find(
-                (option) => option.value === field.value
-              )}
-              onChange={(option) => field.onChange(option?.value)}
-            />
-          )}
-        />
-        <button
-          type="submit"
-          className="px-4 rounded-md text-white bg-blue-600"
-        >
-          Add subject
-        </button>
-      </form>
+      {filteredCourses
+        .filter((course) => !submittedCourses.includes(course._id)) // Hide submitted courses
+        .map((course) => (
+          <SubjectForm
+            key={course._id}
+            submitCallback={onSubjectSubmit}
+            course={course}
+          />
+        ))}
     </main>
   );
 }
 
-export default CreateSchedule;
+export default ScheduleForm;

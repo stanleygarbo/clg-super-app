@@ -28,7 +28,7 @@ import UpdateEmployee from "./components/admin/employees/UpdateEmployee";
 import RoomList from "./components/admin/rooms/RoomList";
 import SubjectLoad from "./components/admin/subject-load/SubjectLoad";
 import SubjectLoadDetails from "./components/admin/subject-load/SubjectLoadDetails";
-import CreateSchedule from "./components/registrar/CreateSchedule";
+import ScheduleForm from "./components/registrar/ScheduleForm";
 import ViewSchedule from "./components/registrar/ViewSchedule";
 import UpdateCourse from "./components/admin/courses/UpdateCourse";
 
@@ -183,7 +183,7 @@ const router = createBrowserRouter([
       },
       {
         path: "schedule/create",
-        element: <CreateSchedule />,
+        element: <ScheduleForm />,
       },
       {
         path: "schedule/:id",
