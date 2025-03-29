@@ -158,6 +158,7 @@ function ScheduleForm() {
     const filtered = courses.data?.results.filter((course: ICourse) =>
       course.program.includes(selectedProgram)
     );
+    console.log(courses.data.results[0].program, selectedProgram);
     setFilteredCourses(filtered);
   };
 

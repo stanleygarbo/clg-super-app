@@ -2,13 +2,13 @@ const Course = require("../models/courseModel");
 const programService = require("./programService");
 
 const getCourse = async (id) => {
-  const course = await Course.findById(id).populate([{ path: "program" }]);
+  const course = await Course.findById(id);
 
   return course;
 };
 
 const getCourses = async () => {
-  const course = await Course.find().populate([{ path: "program" }]);
+  const course = await Course.find();
 
   return course;
 };
