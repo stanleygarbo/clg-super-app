@@ -71,7 +71,7 @@ const EmploymentForm = () => {
   // });
 
   const addMutation = useMutation({
-    mutationFn: (data: IEmployeePost) => addEmployee(data),
+    mutationFn: addEmployee,
     onSuccess: (data) => {
       toast.success(`Employee ${data.firstName} added successfully!`);
       navigate("/admin/employees");

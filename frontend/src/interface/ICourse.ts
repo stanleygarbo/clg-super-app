@@ -33,7 +33,7 @@ export interface ICoursePost {
   year: number;
   semester: number;
   units: number;
-  program: [{ value: string; label: string }];
+  program: { value: string; label: string }[];
 }
 
 export interface ICourseSub {

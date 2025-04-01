@@ -99,13 +99,9 @@ const UpdateEmployee = () => {
   // }, [query.data, setValue]);
 
   const defaultRoles = roles.filter((role: IRoles) =>
-    (
-      query.data?.roles.map((role) => {
-        return role;
-      }) ?? []
-    ).includes(role.value)
+    (query.data?.roles.map((role) => role) ?? []).includes(role.value)
   );
-
+  // console.log("Deaf :: ", defaultRoles);
   const onSubmit = (data: IEmployeePost) => {
     if (!id) {
       toast.error("No employee ID found!");
@@ -176,9 +172,8 @@ const UpdateEmployee = () => {
                     {...field}
                     isMulti
                     options={roles}
-                    className="w-full"
                     onChange={(selected) => field.onChange(selected)}
-                    value={field.value || []} // Ensures value is never undefined
+                    value={field.value || defaultRoles} // Ensures value is never undefined
                   />
                 )}
               />

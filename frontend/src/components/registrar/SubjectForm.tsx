@@ -54,20 +54,16 @@ function SubjectForm({ submitCallback, course }: Props) {
   });
 
   const instructorOptions: IOption[] = intructor.data?.results.map(
-    (ins: IEmployeeGet) => {
-      return {
-        value: ins._id,
-        label: `${ins.surname}, ${ins.firstName[0]}`,
-      };
-    }
+    (ins: IEmployeeGet) => ({
+      value: ins._id,
+      label: `${ins.surname}, ${ins.firstName[0]}`,
+    })
   );
 
-  const roomOptions: IOption[] = room.data?.map((room: IRoomGet) => {
-    return {
-      value: room._id,
-      label: room.building + room.room,
-    };
-  });
+  const roomOptions: IOption[] = room.data?.map((room: IRoomGet) => ({
+    value: room._id,
+    label: room.building + room.room,
+  }));
 
   const courseOptions: IOption[] = courses.data?.results.map(
     (course: ICourse) => ({

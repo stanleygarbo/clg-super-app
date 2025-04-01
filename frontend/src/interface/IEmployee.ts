@@ -65,7 +65,41 @@ export interface IEmployeePost {
   position: string;
   hireDate: String;
   employmentType: string;
-  roles: [{ value: string }];
+  roles: { value: string; label: string }[];
+  birth: {
+    birthDate: string;
+    birthPlace: string;
+    citizenship: string;
+    sex: string;
+    religion: string;
+  };
+  homeAddress: {
+    houseNum: number;
+    streetBrgy: string;
+    city: string;
+    district: string;
+    province: string;
+  };
+  boardAddress: {
+    houseNum: number;
+    streetBrgy: string;
+    city: string;
+    district: string;
+    province: string;
+  };
+}
+
+export interface IEmployeeSub {
+  firstName: string;
+  surname: string;
+  middleName: string;
+  username: string;
+  password: string;
+  department: string;
+  position: string;
+  hireDate: String;
+  employmentType: string;
+  roles: string[];
   birth: {
     birthDate: string;
     birthPlace: string;

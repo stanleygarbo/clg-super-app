@@ -17,52 +17,55 @@ import { IProgramGet } from "../../../interface/IProgram";
 import { twMerge } from "tailwind-merge";
 import Select from "react-select";
 
-const CourseDashboard = () => {
-  const customStyles = {
-    control: (provided: any, state: any) => ({
-      ...provided,
-      // width: 100, // Set the width of the dropdown input field
-      height: 40, // Set the height of the dropdown input field
-      borderRadius: "6px", // Add border-radius to the control (select box)
-      overflow: "hidden", // Hide overflowed content in the control area
-      border: 0,
-      outline: "none",
-      borderBottom: state.isFocused ? "2px solid blue" : "2px solid black", // Change border color on focus
-      boxShadow: state.isFocused ? "none" : provided.boxShadow, // Remove the box shadow on focus
-    }),
-    multiValue: (provided: any) => ({
-      ...provided,
-      maxWidth: 90, // Set max width for the selected value
-      height: "28px", // Set height for each selected value
-      alignItems: "center",
-      borderRadius: "6px",
-      // overflow: "hidden", // Hide overflowed content for selected values
-      textOverflow: "ellipsis", // Add ellipsis when the selected value overflows
-    }),
-    multiValueRemove: (provided: any) => ({
-      ...provided,
-      cursor: "pointer",
-      padding: "0 5px", // Adjust padding for remove button
-      height: "28px", // Set height for remove button
-      display: "flex",
-      alignItems: "center", // Vertically center the remove icon
-    }),
-    menu: (provided: any) => ({
-      ...provided,
-      height: 80,
-      overflowY: "auto", // Allow scrolling if the menu overflows
-    }),
-    option: (provided: any, state: { isSelected: any }) => ({
-      ...provided,
-      height: 40, // Set height of each dropdown option
-      backgroundColor: state.isSelected ? "#d3d3d3" : "white", // Highlight selected option
-    }),
-    singleValue: (provided: any) => ({
-      ...provided,
-      height: 30, // Set height for single selected value
-    }),
-  };
+const customStyles = {
+  control: (provided: any, state: any) => ({
+    ...provided,
+    height: 40,
+    borderRadius: "6px",
+    overflow: "hidden",
+    border: 0,
+    outline: "none",
+    borderBottom: state.isFocused ? "2px solid blue" : "2px solid black",
+    boxShadow: state.isFocused ? "none" : provided.boxShadow,
+  }),
+  multiValue: (provided: any) => ({
+    ...provided,
+    maxWidth: 90,
+    height: "28px",
+    alignItems: "center",
+    borderRadius: "6px",
+    textOverflow: "ellipsis",
+  }),
+  multiValueRemove: (provided: any) => ({
+    ...provided,
+    cursor: "pointer",
+    padding: "0 5px",
+    height: "28px",
+    display: "flex",
+    alignItems: "center",
+  }),
+  menu: (provided: any) => ({
+    ...provided,
+    height: 80,
+    overflowY: "auto",
+  }),
+  option: (provided: any, state: { isSelected: any }) => ({
+    ...provided,
+    height: 40,
+    backgroundColor: state.isSelected ? "#d3d3d3" : "white",
+  }),
+  singleValue: (provided: any) => ({
+    ...provided,
+    height: 30,
+  }),
+};
 
+interface IOption {
+  value: string;
+  label: string;
+}
+
+const CourseDashboard = () => {
   const [search, setSearch] = useState<string>("");
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [updateOpen, setUpdateOpen] = useState<boolean>(false);
@@ -76,7 +79,6 @@ const CourseDashboard = () => {
     control,
     formState: { errors },
   } = useForm<ICoursePost>();
-  // const navigate = useNavigate();
 
   // get course by id
   const courseById = useQuery<ICourseGet>({
@@ -91,6 +93,8 @@ const CourseDashboard = () => {
       courseCode: courseById.data?.courseCode,
       courseName: courseById.data?.courseName,
       units: courseById.data?.units,
+      semester: courseById.data?.semester,
+      year: courseById.data?.year,
     },
   });
 
@@ -146,15 +150,17 @@ const CourseDashboard = () => {
     },
   });
 
+  // search data
   const filteredData = query.data?.results?.filter((cour: ICourseGet) =>
     cour.courseName.toLowerCase().includes(search.toLowerCase())
   );
 
-  const programOption: { value: string; label: string }[] =
-    programs.data?.results?.map((prog: IProgramGet) => {
-      return { value: prog._id, label: prog.programAcronym };
-    });
+  // program options
+  const programOption: IOption[] = programs.data?.results?.map(
+    (prog: IProgramGet) => ({ value: prog._id, label: prog.programAcronym })
+  );
 
+  // add submit
   const onSubmit = (data: ICoursePost) => {
     const formattedData = {
       ...data,
@@ -162,11 +168,12 @@ const CourseDashboard = () => {
         ? data?.program?.map((prog) => prog?.value)
         : [],
     };
-    console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
+    // console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
 
-    // addCourMutation.mutate(formattedData);
+    addCourMutation.mutate(formattedData);
   };
 
+  // update submit
   const upSubmit = (data: ICoursePost) => {
     const formattedData = {
       ...data,
@@ -175,23 +182,21 @@ const CourseDashboard = () => {
         : [],
     };
 
-    console.log(data);
-    console.log("Formatted Data:", formattedData.program); // Check if the data is correct before sending
+    // console.log("Formatted Data:", formattedData.program); // Check if the data is correct before sending
 
     if (id) {
       updateCourMutation.mutate({ id, data: formattedData });
     }
   };
 
+  // default update react-select value
   const deaf = programOption?.filter((prog) =>
     (
       courseById.data?.program?.map((prog: IProgramGet) => prog._id) ?? []
     ).includes(prog.value)
   );
 
-  console.log(deaf);
-  // console.log(courseById.data);
-
+  // set default value for update
   useEffect(() => {
     if (courseById.data) {
       update.reset({
@@ -204,7 +209,7 @@ const CourseDashboard = () => {
 
   return (
     <div>
-      <div className="w-[1200px] h-[750px] relative">
+      <div className="w-[100%] h-[95%] relative">
         <section className="flex justify-end gap-3">
           <button
             type="button"
@@ -216,7 +221,9 @@ const CourseDashboard = () => {
             Add Course
           </button>
         </section>
-        {/* Update Course */}
+
+        {/* Update Course Form*/}
+
         <section
           className={`${
             updateOpen ? "w-[600px] z-50" : "w-0 left-[-200px] opacity-0"
@@ -241,7 +248,7 @@ const CourseDashboard = () => {
             className={`flex flex-col gap-5`}
             onSubmit={update.handleSubmit(upSubmit)}
           >
-            <span className="grid grid-cols-2 gap-2">
+            <span className="grid grid-cols-[1fr,2fr] gap-2">
               <section className="relative grid grid-cols-1">
                 <input
                   type="text"
@@ -264,10 +271,10 @@ const CourseDashboard = () => {
                 className="outline-none border-0 h-[40px] rounded-md border-b-2 focus:border-blue-900 border-b-black text-center"
                 {...update.register("semester")}
               >
-                <option value={1} selected>
+                <option value={1} selected={courseById.data?.semester === 1}>
                   1<sup>st</sup> sem
                 </option>
-                <option value={2}>
+                <option value={2} selected={courseById.data?.semester === 2}>
                   2<sup>nd</sup> sem
                 </option>
               </select>
@@ -275,16 +282,16 @@ const CourseDashboard = () => {
                 className="outline-none border-0 h-[40px] rounded-md border-b-2 focus:border-blue-900 border-b-black text-center"
                 {...update.register("year")}
               >
-                <option value={1} selected>
+                <option value={1} selected={courseById.data?.year === 1}>
                   1<sup>st</sup> year
                 </option>
-                <option value={2}>
+                <option value={2} selected={courseById.data?.year === 2}>
                   2<sup>nd</sup> year
                 </option>
-                <option value={3}>
+                <option value={3} selected={courseById.data?.year === 3}>
                   3<sup>rd</sup> year
                 </option>
-                <option value={4}>
+                <option value={4} selected={courseById.data?.year === 4}>
                   4<sup>th</sup> year
                 </option>
               </select>
@@ -304,18 +311,19 @@ const CourseDashboard = () => {
               <Controller
                 name="program"
                 control={update.control}
-                defaultValue={[deaf]} // Make sure 'deaf' is an array of objects with { value, label }
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    isMulti
-                    options={programOption} // Options to choose from
-                    styles={customStyles}
-                    className="w-full"
-                    onChange={(selected) => field.onChange(selected)} // Update field when selection changes
-                    value={field?.value || []} // Ensures value is never undefined, ensures multi-select works
-                  />
-                )}
+                defaultValue={deaf}
+                render={({ field }) => {
+                  return (
+                    <Select
+                      {...field}
+                      isMulti
+                      options={programOption} // Options to choose from
+                      styles={customStyles}
+                      onChange={(selected) => field.onChange(selected)} // Update field when selection changes
+                      value={field?.value || deaf} // Ensures value is never undefined, ensures multi-select works
+                    />
+                  );
+                }}
               />
             </section>
             <button
@@ -331,7 +339,8 @@ const CourseDashboard = () => {
           </form>
         </section>
 
-        {/* Add Course */}
+        {/* Add Course Form*/}
+
         <section
           className={`${
             addOpen ? "w-[600px] z-50" : "w-0 -z-0 left-[-200px] opacity-0"
@@ -472,6 +481,8 @@ const CourseDashboard = () => {
           </form>
         </section>
 
+        {/* Display Courses */}
+
         <section className="bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
           <span className="flex gap-3">
             <h1 className="text-xl font-bold text-blue-800">Course's List</h1>
@@ -488,21 +499,21 @@ const CourseDashboard = () => {
             />
           </span>
         </section>
-        <section>
+        <section className="w-[100%] h-[100%] ">
           <span className="flex flex-col">
-            <span className="flex mb-3 mt-2 text-lg">
-              <h1 className="w-[150px] font-bold pl-3">Course Code</h1>
-              <h1 className="w-[300px] font-bold text-center">Course</h1>
-              <h1 className="w-[150px] font-bold text-center">Units</h1>
-              <h1 className="w-[100px] font-bold text-center">Year</h1>
-              <h1 className="w-[100px] font-bold text-center">Sem</h1>
-              <h1 className="w-[200px] font-bold text-center">Program</h1>
-              <h1 className="w-[200px] font-bold text-center">Action</h1>
+            <span className="flex mb-3 mt-2 text-lg text-center font-bold">
+              <h1 className="w-[10%] pl-2 text-start">Course Code</h1>
+              <h1 className="w-[25%]">Course</h1>
+              <h1 className="w-[10%]">Units</h1>
+              <h1 className="w-[5%]">Year</h1>
+              <h1 className="w-[5%]">Sem</h1>
+              <h1 className="w-[25%]">Program</h1>
+              <h1 className="w-[20%]">Action</h1>
             </span>
-            <span className="overflow-scroll no-scrollbar h-[550px]">
+            <span className="overflow-scroll no-scrollbar w-[1200px] h-[90%]">
               {query.isLoading && (
-                <div className="flex justify-center w-[1100px] h-[550px] border rounded-md p-52">
-                  <img src="/loading.svg" className=" px-5" alt="" />
+                <div className="flex justify-center w-[1200px] bg-slate-100 h-[90%] rounded-md p-52">
+                  <img src="/loading.svg" className="px-5" alt="" />
                 </div>
               )}
               {filteredData?.map((cour: ICourseGet, index: number) => (
@@ -516,12 +527,14 @@ const CourseDashboard = () => {
                       : ""
                   } ${
                     index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
-                  } hover:bg-slate-300 group flex items-center py-2 text-sm font-semibold duration-200`}
+                  } hover:bg-slate-300 group flex w-[100%] text-center items-center py-2 font-semibold duration-200`}
                 >
-                  <h1 className="w-[150px] pl-3">{cour?.courseCode} </h1>
-                  <h1 className="w-[300px] text-center">{cour?.courseName}</h1>
-                  <h1 className="w-[150px] text-center">{cour?.units} units</h1>
-                  <h1 className="w-[100px] text-center">
+                  <h1 className="w-[10%] text-start pl-2">
+                    {cour?.courseCode}{" "}
+                  </h1>
+                  <h1 className="w-[25%] ">{cour?.courseName}</h1>
+                  <h1 className="w-[10%] ">{cour?.units} units</h1>
+                  <h1 className="w-[5%] ">
                     {cour?.year ? (
                       cour.year === 1 ? (
                         <p>
@@ -550,7 +563,7 @@ const CourseDashboard = () => {
                       ""
                     )}
                   </h1>
-                  <h1 className="w-[100px] text-center">
+                  <h1 className="w-[5%] ">
                     {cour?.semester ? (
                       cour.semester === 1 ? (
                         <p>
@@ -569,19 +582,17 @@ const CourseDashboard = () => {
                       ""
                     )}
                   </h1>
-                  <h1 className="flex flex-wrap w-[200px] justify-center gap-2">
+                  <h1 className="flex flex-wrap w-[25%] justify-center gap-2">
                     {cour.program?.length > 0 ? (
                       cour.program?.map((prog: IProgramGet, index: number) => (
-                        <h1 key={index} className="">
-                          {prog.programAcronym}
-                        </h1>
+                        <h1 key={index}>{prog.programAcronym}</h1>
                       ))
                     ) : (
-                      <h1 className="w-[200px] text-center">n/a</h1>
+                      <h1 className="w-[25%] ">n/a</h1>
                     )}
                   </h1>
 
-                  <h1 className="w-[200px] flex justify-center gap-2 opacity-0 group-hover:opacity-100">
+                  <h1 className="w-[20%] flex justify-center gap-2 opacity-0 group-hover:opacity-100">
                     <button
                       onClick={() => {
                         deleteCourMutation.mutate(cour._id);
@@ -592,12 +603,8 @@ const CourseDashboard = () => {
                     </button>
                     <button
                       onClick={() => {
-                        // navigate("/admin/update-course/" + cour._id);
-                        // deleteCourMutation.mutate(cour._id);
                         setId(cour._id);
                         setUpdateOpen(true);
-                        // courseQuery.refetch();
-                        // console.log(courseQuery.data);
                       }}
                       className="bg-blue-500 py-2 px-3 font-semibold text-xl text-white rounded-md hover:bg-blue-700 active:scale-95 duration-200"
                     >
