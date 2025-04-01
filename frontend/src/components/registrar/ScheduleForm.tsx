@@ -162,6 +162,7 @@ function ScheduleForm() {
         })
         .includes(selectedProgram)
     );
+    console.log(courses.data.results[0].program, selectedProgram);
     setFilteredCourses(filtered);
   };
 
