@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { IPositionGet } from "../../../interface/IPosition";
 import { IDepartmentGet } from "../../../interface/IDepartment";
-import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
 import { IEmployeePost } from "../../../interface/IEmployee";
 import { useMutation, useQuery } from "@tanstack/react-query";

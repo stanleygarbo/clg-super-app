@@ -10,6 +10,14 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    semester: {
+      type: Number,
+      required: true,
+    },
+    year: {
+      type: Number,
+      required: true,
+    },
     units: {
       type: Number,
       required: true,

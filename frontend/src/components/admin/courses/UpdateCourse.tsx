@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { ICourseGet, ICoursePost } from "../../../interface/ICourse";
+import { ICoursePost } from "../../../interface/ICourse";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getCourse, updateCourse } from "../../../api/course";
 import { toast } from "react-toastify";

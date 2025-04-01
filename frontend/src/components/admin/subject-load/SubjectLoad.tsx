@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { IoListOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const SubjectLoad = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  // const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
   return (

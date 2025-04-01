@@ -3,9 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getStudents } from "../../../api/student";
 import apiClient from "../../../api/apiClient";
 import { toast } from "react-toastify";
-import { IoListOutline } from "react-icons/io5";
 import { IStudentsGet } from "../../../interface/IStudents";
-import { FaArchive, FaEdit } from "react-icons/fa";
+import { FaArchive } from "react-icons/fa";
 import { MdPageview } from "react-icons/md";
 import { useState } from "react";
 

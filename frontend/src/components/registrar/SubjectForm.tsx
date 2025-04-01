@@ -171,7 +171,10 @@ function SubjectForm({ submitCallback, course }: Props) {
           />
         )}
       />
-      <button type="submit" className="px-4 rounded-md text-white bg-blue-600">
+      <button
+        type="submit"
+        className="px-4 rounded-md text-white font-semibold bg-blue-700 hover:bg-blue-600 active:scale-90 duration-200"
+      >
         Add subject
       </button>
     </form>

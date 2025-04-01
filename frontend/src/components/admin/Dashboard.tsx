@@ -1,41 +1,39 @@
 import { useEffect, useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { userData } from "../../store/UserData";
-import { studentData } from "../../store/StudentData";
-import { employeeData } from "../../store/EmployeeData";
 import apiClient from "../../api/apiClient";
-import { IEmployee } from "../../interface/IEmployee";
 import { toast } from "react-toastify";
+import { IEmployeeGet } from "../../interface/IEmployee";
+import { IStudentsGet } from "../../interface/IStudents";
 
 const Dashboard = () => {
-  const [employees, setEmployees] = useState<IEmployee[]>([]);
-  const [students, setStudents] = useState<(typeof studentData)[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [employees, setEmployees] = useState<IEmployeeGet[]>([]);
+  const [students, setStudents] = useState<IStudentsGet[]>([]);
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Fetch Employees
   const fetchEmployees = async () => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       const response = await apiClient.get("/employees");
       setEmployees(response.data.results);
     } catch {
       toast.error("Error");
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
   // Fetch Students
   const fetchStudents = async () => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       const response = await apiClient.get("/students");
       setStudents(response.data.results);
     } catch {
       toast.error("Error");
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 

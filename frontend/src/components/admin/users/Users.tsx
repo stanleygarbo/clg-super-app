@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { CiGrid41 } from "react-icons/ci";
 import { IoListOutline } from "react-icons/io5";
-import AddUser from "./AddUser";
 
 const Users = () => {
   // const [listActive, setListActive] = useState<boolean>(false);
@@ -39,7 +37,6 @@ const Users = () => {
               X
             </button>
           </section>
-          <AddUser />
           <button className="bg-blue-600 mt-3 py-1 text-white font-bold rounded-md hover:bg-blue-700 active:scale-95 duration-200">
             Add
           </button>
