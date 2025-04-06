@@ -6,6 +6,8 @@ import { IStudentsPost } from "../../../interface/IStudents";
 import { addStudent } from "../../../api/student";
 import { getPrograms } from "../../../api/programs";
 import { IProgramGet } from "../../../interface/IProgram";
+import { useState } from "react";
+import { MdDeleteForever } from "react-icons/md";
 
 export interface Sibling {
   fullName: string;
@@ -16,24 +18,24 @@ export interface Sibling {
 function EForm() {
   const navigate = useNavigate();
 
-  // const [siblings, setSiblings] = useState<Sibling[]>([
-  //   { fullName: "", age: "", occupationSchool: "" },
-  // ]);
+  const [siblings, setSiblings] = useState<Sibling[]>([
+    { fullName: "", age: "", occupationSchool: "" },
+  ]);
 
-  // const handleChange = (index: number, field: keyof Sibling, value: string) => {
-  //   const updatedSiblings = [...siblings];
-  //   updatedSiblings[index][field] = value;
-  //   setSiblings(updatedSiblings);
-  // };
+  const handleChange = (index: number, field: keyof Sibling, value: string) => {
+    const updatedSiblings = [...siblings];
+    updatedSiblings[index][field] = value;
+    setSiblings(updatedSiblings);
+  };
 
-  // const addSibling = () => {
-  //   setSiblings([...siblings, { fullName: "", age: "", occupationSchool: "" }]);
-  // };
+  const addSibling = () => {
+    setSiblings([...siblings, { fullName: "", age: "", occupationSchool: "" }]);
+  };
 
-  // const removeSibling = (index: number) => {
-  //   const updatedSiblings = siblings.filter((_, i) => i !== index);
-  //   setSiblings(updatedSiblings);
-  // };
+  const removeSibling = (index: number) => {
+    const updatedSiblings = siblings.filter((_, i) => i !== index);
+    setSiblings(updatedSiblings);
+  };
 
   const { handleSubmit, register } = useForm<IStudentsPost>();
 
@@ -53,9 +55,11 @@ function EForm() {
     },
   });
 
+  const [maritalStatus, setMaritalStatus] = useState<string>("");
+
   return (
     <form
-      onSubmit={handleSubmit((data) => addMutation.mutate(data))}
+      onSubmit={handleSubmit((data) => console.log({ ...data, siblings }))}
       className="p-10 w-[1100px]"
     >
       <div className="bg-black p-2 text-white rounded-t-md">
@@ -275,29 +279,31 @@ function EForm() {
                   {...register("birth.birthDate")}
                 />
               </span>
+              <section className="grid grid-cols-2 gap-3">
+                <span className={` relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    Birthplace
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    {...register("birth.birthPlace")}
+                  />
+                </span>
+                <span className={` relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    Citizenship
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    {...register("birth.citizenship")}
+                  />
+                </span>
+              </section>
               <span className={` relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Birthplace
-                </p>
-                <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  {...register("birth.birthPlace")}
-                />
-              </span>
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Citizenship
-                </p>
-                <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  {...register("birth.citizenship")}
-                />
-              </span>
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Sex
+                  Gender
                 </p>
                 <select
                   className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
@@ -307,6 +313,24 @@ function EForm() {
                     Male
                   </option>
                   <option value="female">Female</option>
+                </select>
+              </span>
+
+              <span className={` relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Marital Status
+                </p>
+                <select
+                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  // {...register("birth.sex")}
+                  onChange={(e) => {
+                    setMaritalStatus(e.target.value);
+                  }}
+                >
+                  <option value="single" selected>
+                    Single
+                  </option>
+                  <option value="married">Married</option>
                 </select>
               </span>
               <span className={` relative`}>
@@ -323,52 +347,56 @@ function EForm() {
           </div>
           {/* Spouse */}
           <div className="px-6 flex flex-col gap-3 pt-3">
-            <h1 className="text-start font-semibold">
-              SPOUSE'S INFORMATION ( IF MARRIED )
-            </h1>
+            <section
+              className={`${
+                maritalStatus === "married" ? "" : "hidden"
+              } flex flex-col gap-3`}
+            >
+              <h1 className="text-start font-semibold">SPOUSE'S INFORMATION</h1>
 
-            <div className="grid grid-cols-4 gap-3">
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Last Name
-                </p>
-                <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  {...register("spouse.lastName")}
-                />
-              </span>
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  First Name
-                </p>
-                <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  {...register("spouse.firstName")}
-                />
-              </span>
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Middle Name
-                </p>
-                <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  {...register("spouse.middleName")}
-                />
-              </span>
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  No. of Child
-                </p>
-                <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="number"
-                  {...register("spouse.children")}
-                />
-              </span>
-            </div>
+              <div className="grid grid-cols-4 gap-3">
+                <span className={` relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    Last Name
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    {...register("spouse.lastName")}
+                  />
+                </span>
+                <span className={` relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    First Name
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    {...register("spouse.firstName")}
+                  />
+                </span>
+                <span className={` relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    Middle Name
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    {...register("spouse.middleName")}
+                  />
+                </span>
+                <span className={` relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    No. of Child
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="number"
+                    {...register("spouse.children")}
+                  />
+                </span>
+              </div>
+            </section>
             {/* Home */}
             <h1 className="text-start font-semibold">HOME ADDRESS</h1>
             <div className="grid grid-cols-5 gap-3 ">
@@ -484,7 +512,7 @@ function EForm() {
           <p className="font-bold px-6">PARENT'S & GUARDIAN'S INFORMATION</p>
           <div className="flex flex-col gap-3 pt-3 px-6 w-full ">
             {/* Father */}
-            <h1 className="text-start font-semibold">FATHER'S INFORMATION</h1>
+            {/* <h1 className="text-start font-semibold">FATHER'S INFORMATION</h1>
             <div className="gap-3 grid grid-cols-3">
               <span className={` relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
@@ -589,12 +617,12 @@ function EForm() {
                   {...register("father.email")}
                 />
               </span>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex flex-col gap-3 pt-3 px-6 w-full">
             {/* Mother */}
-            <h1 className="text-start font-semibold">MOTHER'S INFORMATION</h1>
+            {/* <h1 className="text-start font-semibold">MOTHER'S INFORMATION</h1>
             <div className="gap-3 grid grid-cols-3">
               <span className={` relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
@@ -699,7 +727,7 @@ function EForm() {
                   {...register("mother.email")}
                 />
               </span>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex w-full px-6 pt-3 flex-col gap-5">
@@ -821,7 +849,7 @@ function EForm() {
                 />
               </span>
             </div>
-            <h1 className="text-start font-semibold">
+            {/* <h1 className="text-start font-semibold">
               SPOUSE'S INFORMATION ( IF MARRIED )
             </h1>
             <div className="grid grid-cols-4 gap-3">
@@ -869,11 +897,11 @@ function EForm() {
                   {...register("guardianSpouse.children")}
                 />
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
         {/* <EFormParents /> */}
-        {/* <div className="p-3 duration-200">
+        <div className="p-3 duration-200">
           <section className="flex justify-between">
             <p className="font-bold pb-4 px-6">SIBLING'S INFORMATION</p>
           </section>
@@ -895,9 +923,9 @@ function EForm() {
                         className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                         type="text"
                         value={sibling?.fullName}
-                        // onChange={(e) => {
-                        //   handleChange(index, "fullName", e.target.value);
-                        // }}
+                        onChange={(e) => {
+                          handleChange(index, "fullName", e.target.value);
+                        }}
                       />
                     </span>
                     <span className={` relative`}>
@@ -908,9 +936,9 @@ function EForm() {
                         className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                         type="number"
                         value={sibling?.age}
-                        // onChange={(e) => {
-                        //   handleChange(index, "age", e.target.value);
-                        // }}
+                        onChange={(e) => {
+                          handleChange(index, "age", e.target.value);
+                        }}
                       />
                     </span>
                     <span className={` relative`}>
@@ -921,44 +949,44 @@ function EForm() {
                         className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                         type="text"
                         value={sibling?.occupationSchool}
-                        // onChange={(e) => {
-                        //   handleChange(
-                        //     index,
-                        //     "occupationSchool",
-                        //     e.target.value
-                        //   );
-                        // }}
+                        onChange={(e) => {
+                          handleChange(
+                            index,
+                            "occupationSchool",
+                            e.target.value
+                          );
+                        }}
                       />
                     </span>
-                     {siblings.length > 1 && (
+                    {siblings.length > 1 && (
                       <button
                         type="button"
-                        // onClick={() => removeSibling(index)}
+                        onClick={() => removeSibling(index)}
                         className="text-white text-xl shadow-sm shadow-red-600/50 my-1 rounded-md bg-red-600 p-1 absolute transform -translate-x-1 -translate-y-5 top-4 right-0 hover:scale-105 active:scale-95 duration-200"
                       >
                         <MdDeleteForever />
                       </button>
-                    )} 
+                    )}
                   </div>
                 </div>
               ))}
               <button
                 type="button"
-                // onClick={addSibling}
+                onClick={addSibling}
                 className="py-2 bg-slate-200 w-52 text-black font-bold rounded-md shadow hover:shadow-lg active:shadow  duration-200"
               >
                 Add Another Sibling
               </button>
 
-               <button
-            type="submit"
-            className="w-full py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700"
-          >
-            Submit
-          </button>
+              {/* <button
+                type="submit"
+                className="w-full py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700"
+              >
+                Submit
+              </button> */}
             </section>
           </div>
-        </div> */}
+        </div>
         {/* <EformSiblings /> */}
         <section className="flex justify-center px-7 mx-2">
           <button

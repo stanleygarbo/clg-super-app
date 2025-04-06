@@ -102,7 +102,7 @@ const EnrolledStudents = () => {
                   : ""
               } ${
                 index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
-              } flex py-2 text-sm items-center hover:bg-slate-300 group duration-200`}
+              } flex py-3 text-sm items-center hover:bg-slate-300 group duration-200`}
             >
               <h1 className="w-[150px] pl-3">{student.surname}</h1>
               <h1 className="w-[150px]">{student.firstName}</h1>
@@ -112,14 +112,14 @@ const EnrolledStudents = () => {
                 {student.program?.programAcronym}
               </h1>
               <h1 className="w-[150px] text-center">{student.standing}</h1>
-              <h1 className="w-[200px] flex gap-2 text-lg justify-center opacity-0 group-hover:opacity-100">
+              <h1 className="w-[200px] flex gap-2 text-base justify-center">
                 <button
                   onClick={() => {
                     id = student._id;
                     navigate(`/admission/studentInfo/${id}`);
                   }}
                   type="button"
-                  className="bg-blue-600 px-3 py-2 rounded-md text-white font-semibold hover:bg-blue-800 active:scale-95 duration-200"
+                  className="bg-blue-600 px-3 py-2 rounded-md text-white font-semibold hover:bg-blue-800 active:scale-90 opacity-50 group-hover:opacity-100 duration-200"
                 >
                   <MdPageview />
                 </button>
@@ -129,7 +129,7 @@ const EnrolledStudents = () => {
                     archiveStudents();
                   }}
                   type="button"
-                  className="bg-red-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
+                  className="bg-red-500 px-3 py-2 rounded-md text-white font-semibold hover:bg-red-700 active:scale-90 opacity-50 group-hover:opacity-100 duration-200"
                 >
                   <FaArchive />
                 </button>

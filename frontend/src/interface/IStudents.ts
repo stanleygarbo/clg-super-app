@@ -1,3 +1,4 @@
+import { Sibling } from "../components/admission/enrollment_form/EForm";
 import { IProgramGet } from "./IProgram";
 
 export interface IStudentsPost {
@@ -82,13 +83,7 @@ export interface IStudentsPost {
     firstName: string;
     children: number;
   };
-  siblings: [
-    {
-      fullName: string;
-      age: string;
-      occupationSchool: string;
-    }
-  ];
+  siblings: Sibling[];
 }
 
 export interface IStudentsGet {
