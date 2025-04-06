@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { IPositionGet } from "../../../interface/IPosition";
 import { IDepartmentGet } from "../../../interface/IDepartment";
-import apiClient from "../../../api/apiClient";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getEmployeeById, updateEmployee } from "../../../api/employee";
@@ -101,9 +99,9 @@ const UpdateEmployee = () => {
   // }, [query.data, setValue]);
 
   const defaultRoles = roles.filter((role: IRoles) =>
-    (query.data?.roles ?? []).includes(role.value)
+    (query.data?.roles.map((role) => role) ?? []).includes(role.value)
   );
-
+  // console.log("Deaf :: ", defaultRoles);
   const onSubmit = (data: IEmployeePost) => {
     if (!id) {
       toast.error("No employee ID found!");
@@ -174,9 +172,8 @@ const UpdateEmployee = () => {
                     {...field}
                     isMulti
                     options={roles}
-                    className="w-full"
                     onChange={(selected) => field.onChange(selected)}
-                    value={field.value || []} // Ensures value is never undefined
+                    value={field.value || defaultRoles} // Ensures value is never undefined
                   />
                 )}
               />

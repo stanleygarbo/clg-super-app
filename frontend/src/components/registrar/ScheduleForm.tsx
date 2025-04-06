@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import { getPrograms } from "../../api/programs";
 import { getCourses } from "../../api/course";
-import { ICourse } from "../../interface/ICourse";
+import { ICourse, ICourseGet } from "../../interface/ICourse";
 import { getEmployees } from "../../api/employee";
 import { IEmployeeGet } from "../../interface/IEmployee";
 import { useForm, Controller } from "react-hook-form";
@@ -135,7 +135,7 @@ function ScheduleForm() {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        // theme: "light",
+        theme: "light",
         transition: Slide,
       });
     } catch (error) {
@@ -155,8 +155,12 @@ function ScheduleForm() {
 
   const loadProgramCourses = async () => {
     if (!selectedProgram) return;
-    const filtered = courses.data?.results.filter((course: ICourse) =>
-      course.program.includes(selectedProgram)
+    const filtered = courses.data?.results.filter((course: ICourseGet) =>
+      course.program
+        ?.map((prog: IProgramGet) => {
+          return prog?._id;
+        })
+        .includes(selectedProgram)
     );
     console.log(courses.data.results[0].program, selectedProgram);
     setFilteredCourses(filtered);
@@ -164,6 +168,7 @@ function ScheduleForm() {
 
   useEffect(() => {
     loadProgramCourses();
+    // toast("Loaded");
   }, [selectedProgram]);
 
   return (
@@ -188,6 +193,7 @@ function ScheduleForm() {
                 onChange={(option) => {
                   field.onChange(option?.value);
                   setSelectedProgram(option?.value);
+                  // toast(selectedProgram);
                 }}
                 className="w-32"
               />
@@ -211,7 +217,7 @@ function ScheduleForm() {
           />
           <button
             type="submit"
-            className="px-4 rounded-md text-white bg-blue-600"
+            className="px-4 rounded-md text-white font-semibold bg-blue-700 hover:bg-blue-600 active:scale-90 duration-200"
           >
             Submit schedule
           </button>

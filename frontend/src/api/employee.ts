@@ -1,5 +1,5 @@
 import apiClient from "./apiClient";
-import { IEmployeeGet, IEmployeePost } from "../interface/IEmployee";
+import { IEmployeeGet, IEmployeeSub } from "../interface/IEmployee";
 
 export const getEmployeeById = async ({
   id,
@@ -28,7 +28,7 @@ export const getEmployees = async () => {
 //   return response.data;
 // };
 
-export const addEmployee = async (data: IEmployeePost) => {
+export const addEmployee = async (data: IEmployeeSub) => {
   const response = await apiClient.post("/employees", data);
   return response.data;
 };
@@ -42,7 +42,7 @@ export const updateEmployee = async ({
   value,
   id,
 }: {
-  value: IEmployeePost;
+  value: IEmployeeSub;
   id: string;
 }) => {
   try {

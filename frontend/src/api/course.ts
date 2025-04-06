@@ -1,4 +1,4 @@
-import { ICoursePost } from "../interface/ICourse";
+import { ICourseSub } from "../interface/ICourse";
 import apiClient from "./apiClient";
 
 export const getCourses = async () => {
@@ -11,7 +11,7 @@ export const getCourse = async ({ id }: { id?: string }) => {
   return response.data;
 };
 
-export const addCourse = async (data: ICoursePost) => {
+export const addCourse = async (data: ICourseSub) => {
   await apiClient.post("/courses", data);
 };
 
@@ -20,7 +20,7 @@ export const updateCourse = async ({
   data,
 }: {
   id: string;
-  data: ICoursePost;
+  data: ICourseSub;
 }) => {
   const response = await apiClient.patch("/courses/" + id, data);
   return response.data;

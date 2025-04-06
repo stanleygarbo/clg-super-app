@@ -54,20 +54,16 @@ function SubjectForm({ submitCallback, course }: Props) {
   });
 
   const instructorOptions: IOption[] = intructor.data?.results.map(
-    (ins: IEmployeeGet) => {
-      return {
-        value: ins._id,
-        label: `${ins.surname}, ${ins.firstName[0]}`,
-      };
-    }
+    (ins: IEmployeeGet) => ({
+      value: ins._id,
+      label: `${ins.surname}, ${ins.firstName[0]}`,
+    })
   );
 
-  const roomOptions: IOption[] = room.data?.map((room: IRoomGet) => {
-    return {
-      value: room._id,
-      label: room.building + room.room,
-    };
-  });
+  const roomOptions: IOption[] = room.data?.map((room: IRoomGet) => ({
+    value: room._id,
+    label: room.building + room.room,
+  }));
 
   const courseOptions: IOption[] = courses.data?.results.map(
     (course: ICourse) => ({
@@ -171,7 +167,10 @@ function SubjectForm({ submitCallback, course }: Props) {
           />
         )}
       />
-      <button type="submit" className="px-4 rounded-md text-white bg-blue-600">
+      <button
+        type="submit"
+        className="px-4 rounded-md text-white font-semibold bg-blue-700 hover:bg-blue-600 active:scale-90 duration-200"
+      >
         Add subject
       </button>
     </form>
