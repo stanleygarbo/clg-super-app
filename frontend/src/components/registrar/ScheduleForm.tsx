@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { getPrograms } from "../../api/programs";
-import { getCourses } from "../../api/course";
 import { ICourse, ICourseGet } from "../../interface/ICourse";
 import { getEmployees } from "../../api/employee";
 import { IEmployeeGet } from "../../interface/IEmployee";
 import { useForm, Controller } from "react-hook-form";
-import { ISubjectSchedule } from "../../interface/ISchedule";
 import { Slide, toast } from "react-toastify";
 import { addSchedule } from "../../api/schedule";
 import { IRoomGet } from "../../interface/IRoom";
@@ -15,6 +12,9 @@ import { convertMilitaryTo12Hour } from "../../Helper";
 import { useQuery } from "@tanstack/react-query";
 import { IProgramGet } from "../../interface/IProgram";
 import SubjectForm from "./SubjectForm";
+import { getPrograms } from "../../api/programs";
+import { getCourses } from "../../api/course";
+import { ISubjectSchedule } from "../../interface/ISchedule";
 
 interface IOption {
   value: string;
