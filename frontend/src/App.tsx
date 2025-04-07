@@ -29,7 +29,6 @@ import RoomList from "./components/admin/rooms/RoomList";
 import SubjectLoad from "./components/admin/subject-load/SubjectLoad";
 import SubjectLoadDetails from "./components/admin/subject-load/SubjectLoadDetails";
 import ScheduleForm from "./components/registrar/ScheduleForm";
-import ScheduleForm from "./components/registrar/ScheduleForm";
 import ViewSchedule from "./components/registrar/ViewSchedule";
 
 const router = createBrowserRouter([
