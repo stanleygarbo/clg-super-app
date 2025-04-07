@@ -38,6 +38,7 @@ const dayOptions = [
 ];
 
 function ScheduleForm() {
+  const date = new Date();
   const scheduleForm = useForm();
   const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);
   const [selectedProgram, setSelectedProgram] = useState<string>();
@@ -104,8 +105,6 @@ function ScheduleForm() {
   };
 
   const onScheduleSubmit = (data: any) => {
-    const date = new Date();
-
     if (subjectSchedules.length == 0) {
       toast.error("Must have at least one subject", {
         position: "bottom-right",
@@ -121,7 +120,7 @@ function ScheduleForm() {
       return;
     }
 
-    data.schoolYear = `${date.getFullYear()}-${date.getFullYear() + 1}`;
+    data.schoolYear = `${data.schoolYear}-${data.schoolYear + 1}`;
     data.subjectSchedules = subjectSchedules;
     console.log(data);
 
@@ -179,6 +178,22 @@ function ScheduleForm() {
           className="flex gap-4"
           onSubmit={scheduleForm.handleSubmit(onScheduleSubmit)}
         >
+          <input
+            {...scheduleForm.register("schoolYear", {
+              required: true,
+              min: 1980,
+              max: date.getFullYear(),
+              valueAsNumber: true,
+              validate: (value) =>
+                (value >= 1980 && value <= date.getFullYear()) ||
+                "Enter a valid year",
+            })}
+            type="number"
+            className="px-2 border-[#cccccc] border-[1px] rounded-[4px]"
+            placeholder="School Year"
+            defaultValue={date.getFullYear()}
+            required
+          />
           <Controller
             control={scheduleForm.control}
             name="program"
@@ -195,6 +210,7 @@ function ScheduleForm() {
                   setSelectedProgram(option?.value);
                   // toast(selectedProgram);
                 }}
+                placeholder="Program"
                 className="w-32"
               />
             )}
@@ -211,6 +227,7 @@ function ScheduleForm() {
                   (option) => option.value === field.value
                 )}
                 onChange={(option) => field.onChange(option?.value)}
+                placeholder="Semester"
                 className="w-48"
               />
             )}
