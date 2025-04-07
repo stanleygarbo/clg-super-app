@@ -7,17 +7,22 @@ import Select from "react-select";
 import { Controller, useForm } from "react-hook-form";
 import { IEmployeePost } from "../../../interface/IEmployee";
 import { toast } from "react-toastify";
-import { IRoles } from "../../../interface/IRoles";
 import { getDepartments } from "../../../api/department";
 import { getPositions } from "../../../api/position";
+import { useEffect } from "react";
+
+export interface IOption {
+  label: string;
+  value: string;
+}
 
 const UpdateEmployee = () => {
   // const [position, setPosition] = useState<IPositionGet[]>([]);
   // const [department, setDepartment] = useState<IDepartmentGet[]>([]);
-  let { id } = useParams<string>();
+  const { id } = useParams<string>();
   const navigate = useNavigate();
 
-  const roles = [
+  const roles: IOption[] = [
     { value: "user", label: "user" },
     { value: "student", label: "student" },
     { value: "admin", label: "admin" },
@@ -35,28 +40,12 @@ const UpdateEmployee = () => {
     queryKey: ["departments"],
     queryFn: getDepartments,
   });
-  // const getDepartments = async () => {
-  //   try {
-  //     const response = await apiClient.get("/departments");
-  //     setDepartment(response.data.results);
-  //   } catch {
-  //   } finally {
-  //   }
-  // };
 
   //  FETCH POSITION
   const position = useQuery({
     queryKey: ["positions"],
     queryFn: getPositions,
   });
-  // const getPositions = async () => {
-  //   try {
-  //     const response = await apiClient.get("/positions");
-  //     setPosition(response.data.results);
-  //   } catch {
-  //   } finally {
-  //   }
-  // };
 
   const updateMutation = useMutation({
     mutationFn: updateEmployee,
@@ -72,36 +61,19 @@ const UpdateEmployee = () => {
   const query = useQuery({
     queryKey: ["employee", id],
     queryFn: () => getEmployeeById({ id }),
+    enabled: !!id,
   });
-  // const [dRole, setDRole] = useState<any>();
 
-  // useEffect(() => {
-  //   const roles: any = [];
-  //   setDRole(query.data);
-  // }, [query.data]);
+  const { handleSubmit, register, control, reset } = useForm<IEmployeePost>({
+    defaultValues: {},
+  });
 
-  const { handleSubmit, register, control } = useForm<IEmployeePost>();
-
-  // useEffect(() => {
-  // getDepartments();
-  // getPositions();
-  // if (query.data) {
-  //   setValue("surname", query.data?.surname);
-  //   setValue("firstName", query.data?.firstName);
-  //   setValue("middleName", query.data?.middleName);
-  //   setValue("username", query.data?.username);
-  //   setValue("employmentType", query.data?.employmentType);
-  //   setValue("password", query.data?.password);
-  //   setValue("birth.sex", query.data?.birth?.sex);
-  //   setValue("position", query.data?.position?._id);
-  //   setValue("department", query.data?.department?._id);
-  // }
-  // }, [query.data, setValue]);
-
-  const defaultRoles = roles.filter((role: IRoles) =>
-    (query.data?.roles.map((role) => role) ?? []).includes(role.value)
+  const deaf = roles?.filter((prog) =>
+    (query.data?.roles?.map((role: string) => role) ?? []).includes(prog.value)
   );
-  // console.log("Deaf :: ", defaultRoles);
+
+  console.log("Deaf :: ", deaf);
+
   const onSubmit = (data: IEmployeePost) => {
     if (!id) {
       toast.error("No employee ID found!");
@@ -113,10 +85,22 @@ const UpdateEmployee = () => {
         ? data.roles.map((role) => role.value)
         : [],
     };
-    console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
+    // console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
 
     updateMutation.mutate({ id, value: { ...formattedData } });
   };
+
+  // set default value for update
+  useEffect(() => {
+    if (query.data) {
+      reset({
+        firstName: query.data?.firstName,
+        surname: query.data?.surname,
+        middleName: query.data?.middleName,
+        roles: deaf,
+      });
+    }
+  }, [query.data, reset]);
 
   return (
     <div className="m-10">
@@ -166,16 +150,18 @@ const UpdateEmployee = () => {
               <Controller
                 name="roles"
                 control={control}
-                defaultValue={defaultRoles} // Default value must be an array for isMulti
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    isMulti
-                    options={roles}
-                    onChange={(selected) => field.onChange(selected)}
-                    value={field.value || defaultRoles} // Ensures value is never undefined
-                  />
-                )}
+                // defaultValue={deaf} // Default value must be an array for isMulti
+                render={({ field }) => {
+                  return (
+                    <Select
+                      {...field}
+                      isMulti
+                      options={roles}
+                      onChange={(selected) => field.onChange(selected)}
+                      value={field.value} // Ensures value is never undefined
+                    />
+                  );
+                }}
               />
             </span>
             <span className="px-5">

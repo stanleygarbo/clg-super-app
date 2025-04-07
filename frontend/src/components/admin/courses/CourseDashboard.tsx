@@ -209,6 +209,14 @@ const CourseDashboard = () => {
 
   return (
     <div>
+      <div
+        onClick={() => {
+          setAddOpen(false);
+        }}
+        className={`${
+          addOpen ? "z-50 left-0" : "left-[2000px]"
+        } bg-black opacity-20 w-full h-full right-0 top-0 bottom-0 fixed`}
+      ></div>
       <div className="w-[100%] h-[95%] relative">
         <section className="flex justify-end gap-3">
           <button
@@ -344,7 +352,7 @@ const CourseDashboard = () => {
         <section
           className={`${
             addOpen ? "w-[600px] z-50" : "w-0 -z-0 left-[-200px] opacity-0"
-          } absolute p-10 rounded-md transform translate-x-1/2 translate-y-10 flex flex-col items-center justify-between gap-5 border border-blue-200 backdrop-blur-md overflow-hidden duration-200`}
+          } absolute p-10 rounded-md transform translate-x-1/2 translate-y-10 flex flex-col items-center justify-between gap-5 border border-blue-20 bg-white overflow-hidden duration-200`}
         >
           <section className="flex justify-between w-[500px]">
             <h1 className="text-xl font-bold text-blue-700 w-[150px]">

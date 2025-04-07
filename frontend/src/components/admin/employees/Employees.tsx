@@ -26,17 +26,6 @@ const Employees = () => {
     },
   });
 
-  // const deleteEmployee = async () => {
-  //   try {
-  //     await apiClient.delete("/employees/" + id);
-  //     toast.success("Successfully deleted employee");
-  //   } catch {
-  //     toast.error("Error in deleting employee");
-  //   } finally {
-  //     query.refetch;
-  //   }
-  // };
-
   const filteredEmployees = query.data?.results?.length
     ? query.data.results
         .filter((employee: IEmployeeGet) =>
@@ -137,7 +126,7 @@ const Employees = () => {
                 <div className="w-[9px] aspect-square bg-green-700 rounded-full"></div>{" "}
                 Active
               </h1>
-              <h1 className="w-[200px] flex gap-2 items-center justify-center opacity-0 group-hover:opacity-100">
+              <h1 className="w-[200px] flex gap-2 items-center justify-center opacity-50 group-hover:opacity-100">
                 <button
                   onClick={() => {
                     // id = employee._id;

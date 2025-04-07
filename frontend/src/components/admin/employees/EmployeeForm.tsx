@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { IPositionGet } from "../../../interface/IPosition";
 import { IDepartmentGet } from "../../../interface/IDepartment";
 import { toast } from "react-toastify";
@@ -10,10 +9,47 @@ import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import { getDepartments } from "../../../api/department";
 import { getPositions } from "../../../api/position";
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+const customStyles = {
+  control: (base: any, state: any) => ({
+    ...base,
+    height: "40px",
+    width: "100%",
+    padding: "0.25rem",
+    borderRadius: "0.375rem", // rounded-md
+    // borderColor: "#64748b", // border-slate-500
+    fontWeight: "700", // font-bold
+    fontSize: "0.875rem", // text-sm
+    textAlign: "center",
+    borderColor: state.isFocused ? "#2563eb" : "#64748b", // border-blue-600 when focused, border-slate-500 when not focused
+
+    overflow: "hidden",
+    transition: "border-color 0.3s",
+    "&:hover": {
+      borderColor: state.isFocused ? "#2563eb" : "#64748b", // no change on hover
+    },
+  }),
+  singleValue: (base: any) => ({
+    ...base,
+    textAlign: "center", // center the selected value text
+  }),
+  option: (base: any) => ({
+    ...base,
+    textAlign: "center", // center the option text
+  }),
+  menu: (base: any) => ({
+    ...base,
+    textAlign: "center", // center the dropdown menu
+  }),
+  placeholder: (base: any) => ({
+    ...base,
+    textAlign: "center", // center the placeholder
+  }),
+};
 
 const EmploymentForm = () => {
-  // const [position, setPosition] = useState<IPositionGet[]>([]);
-  // const [department, setDepartment] = useState<IDepartmentGet[]>([]);
   const navigate = useNavigate();
 
   const roles = [
@@ -35,40 +71,11 @@ const EmploymentForm = () => {
     queryFn: getDepartments,
   });
 
-  // const getDepartments = async () => {
-  //   try {
-  //     const response = await apiClient.get("/departments");
-  //     setDepartment(response.data.results);
-  //   } catch {
-  //     toast.error("Error while getting the departments");
-  //   } finally {
-  //   }
-  // };
-
   //  FETCH POSITION
   const position = useQuery({
     queryKey: ["positions"],
     queryFn: getPositions,
   });
-  // const getPositions = async () => {
-  //   try {
-  //     const response = await apiClient.get("/positions");
-  //     setPosition(response.data.results);
-  //   } catch {
-  //     toast.error("Error while getting the departments");
-  //   } finally {
-  //   }
-  // };
-
-  useEffect(() => {
-    // getDepartments();
-    // getPositions();
-  }, []);
-
-  // const query = useQuery({
-  //   queryKey: ["employee"],
-  //   queryFn: () => getEmployees,
-  // });
 
   const addMutation = useMutation({
     mutationFn: addEmployee,
@@ -100,10 +107,55 @@ const EmploymentForm = () => {
     },
   });
 
+  const [password, setPassword] = useState("");
+  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const minLength = 8;
+  const hasUppercase = /[A-Z]/;
+  const hasLowercase = /[a-z]/;
+  const hasNumber = /[0-9]/;
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const validatePassword = (password: string) => {
+    if (password.length < minLength) {
+      setErrorMessage(
+        `Password must be at least ${minLength} characters long.`
+      );
+      setIsPasswordValid(false);
+    } else if (!hasUppercase.test(password)) {
+      setErrorMessage("Password must contain at least one uppercase letter.");
+      setIsPasswordValid(false);
+    } else if (!hasLowercase.test(password)) {
+      setErrorMessage("Password must contain at least one lowercase letter.");
+      setIsPasswordValid(false);
+    } else if (!hasNumber.test(password)) {
+      setErrorMessage("Password must contain at least one number.");
+      setIsPasswordValid(false);
+    } else if (!hasSpecialChar.test(password)) {
+      setErrorMessage("Password must contain at least one special character.");
+      setIsPasswordValid(false);
+    } else {
+      setErrorMessage("");
+      setIsPasswordValid(true);
+    }
+  };
+
+  // Handle password change event
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+    validatePassword(newPassword);
+  };
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prevState) => !prevState); // Toggle the state
+  };
+
   return (
     <div className="m-10">
       <div className="w-[900px]">
-        <h1 className="font-bold text-2xl text-start mt-5 pt-5 px-12 text-blue-800">
+        <h1 className="font-bold text-2xl text-start mt-5 pt-5 px-12 text-blue-800 mb-10">
           Employee Form
         </h1>
         <input type="text" {...register("hireDate")} className="hidden" />
@@ -114,36 +166,52 @@ const EmploymentForm = () => {
             className="w-24 aspect-square rounded-full shadow-md mx-5 mb-5"
           /> */}
           <section className="grid grid-cols-3 gap-5 px-10">
-            <input
-              type="text"
-              placeholder="Last Name"
-              className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              {...register("surname")}
-            />
-            <input
-              type="text"
-              placeholder="First Name"
-              className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              {...register("firstName")}
-            />
-            <input
-              type="text"
-              placeholder="Middle Name"
-              className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              {...register("middleName")}
-            />
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Last Name
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("surname")}
+              />
+            </span>
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                First Name
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("firstName")}
+              />
+            </span>
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Middle Name
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("middleName")}
+              />
+            </span>
           </section>
           <section className="grid grid-cols-3 gap-5 px-10">
-            <span className="flex flex-col gap-2">
-              <h1 className="text-sm font-semibold">Birthdate :</h1>
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                BirthDate
+              </p>
               <input
-                type="date"
-                className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
                 {...register("birth.birthDate")}
               />
             </span>
-            <span className="flex flex-col gap-2">
-              <h1 className="text-sm font-semibold">Roles :</h1>
+            <span className="relative">
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 duration-200 text-xs z-50">
+                Roles
+              </p>
               <Controller
                 name="roles"
                 control={control}
@@ -152,6 +220,7 @@ const EmploymentForm = () => {
                   <Select
                     {...field}
                     isMulti
+                    styles={customStyles}
                     options={roles}
                     className="w-full"
                     onChange={(selected) => field.onChange(selected)}
@@ -160,12 +229,14 @@ const EmploymentForm = () => {
                 )}
               />
             </span>
-            <span className="px-5">
-              <h1 className="text-sm font-semibold pb-3">Gender:</h1>
+            <span className="relative">
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Gender
+              </p>
               <div className="flex gap-5">
                 <select
                   {...register("birth.sex")}
-                  className="text-center w-[100%] outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
                   <option value="male" selected>
                     Male
@@ -176,11 +247,13 @@ const EmploymentForm = () => {
             </span>
           </section>
           <section className="grid grid-cols-3 gap-5 px-10">
-            <span className="flex flex-col gap-2">
-              <h1 className="text-sm font-semibold">Position :</h1>
+            <span className="relative">
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Position
+              </p>
               <select
                 {...register("position")}
-                className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               >
                 {position.data?.results?.map(
                   (pos: IPositionGet, index: number) => (
@@ -191,11 +264,12 @@ const EmploymentForm = () => {
                 )}
               </select>
             </span>
-            <span className="flex flex-col gap-2">
-              <h1 className="text-sm font-semibold">Department :</h1>
-
+            <span className="relative">
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Department
+              </p>
               <select
-                className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 {...register("department")}
               >
                 {department?.data?.results?.map(
@@ -207,32 +281,70 @@ const EmploymentForm = () => {
                 )}
               </select>
             </span>
-            <span className="flex flex-col gap-2">
-              <h1 className="text-sm font-semibold">Employment Type :</h1>
+            <span className="relative">
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Employment Type
+              </p>
               <select
-                className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 {...register("employmentType")}
               >
                 <option value="regular" selected>
-                  regular
+                  Regular
                 </option>
-                <option value="contractual">contractual</option>
+                <option value="contractual">Contractual</option>
               </select>
             </span>
           </section>
           <section className="grid grid-cols-3 gap-5 px-10">
-            <input
-              type="text"
-              placeholder="Username"
-              className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              {...register("username")}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-              {...register("password")}
-            />
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Username
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("username")}
+              />
+            </span>
+            <span className={` relative group`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Password
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type={isPasswordVisible ? "text" : "password"}
+                {...register("password")}
+                value={password}
+                onChange={handlePasswordChange}
+              />
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer opacity-0 group-hover:opacity-100 duration-200"
+              >
+                {isPasswordVisible ? (
+                  <FaEye size={20} />
+                ) : (
+                  <FaEyeSlash size={20} />
+                )}
+              </span>
+              {errorMessage && (
+                <p
+                  style={{ color: "red" }}
+                  className="absolute text-xs right-1 text-center"
+                >
+                  {errorMessage}
+                </p>
+              )}
+              {isPasswordValid && (
+                <p
+                  style={{ color: "green" }}
+                  className="absolute text-xs right-20 text-center"
+                >
+                  Password is valid!
+                </p>
+              )}
+            </span>
             {/* <input
               type="password"
               placeholder="Confirm Password"
@@ -241,7 +353,7 @@ const EmploymentForm = () => {
           </section>
           <button
             type="submit"
-            className="bg-blue-600 py-1 px-6 rounded-md font-bold text-lg text-white mt-5 hover:bg-blue-800 active:scale-95 duration-200"
+            className="bg-blue-600 py-1 mx-64 px-6 rounded-md font-bold text-lg text-white mt-5 hover:bg-blue-800 active:scale-90 duration-200"
           >
             Submit
           </button>
