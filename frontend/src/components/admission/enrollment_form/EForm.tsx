@@ -56,6 +56,8 @@ function EForm() {
   });
 
   const [maritalStatus, setMaritalStatus] = useState<string>("");
+  const [boarding, setBoarding] = useState<boolean>(false);
+  const date = new Date();
 
   return (
     <form
@@ -83,8 +85,17 @@ function EForm() {
                   {...register("schoolYear")}
                   className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
-                  <option value="2024-2025" selected>
-                    2024-2025
+                  <option
+                    value={`${date.getFullYear() - 1} - ${date.getFullYear()}`}
+                    selected
+                  >
+                    {date.getFullYear() - 1} - {date.getFullYear()}
+                  </option>
+                  <option
+                    value={`${date.getFullYear()} - ${date.getFullYear() + 1}`}
+                    selected
+                  >
+                    {date.getFullYear()} - {date.getFullYear() + 1}
                   </option>
                 </select>
               </span>
@@ -234,8 +245,8 @@ function EForm() {
                 />
               </span>
             </div>
-            <div className="grid grid-cols-3 gap-3">
-              <span className={` relative`}>
+            <div className="grid grid-cols-[1fr_2fr] gap-3">
+              {/* <span className={` relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Telephone No.
                 </p>
@@ -244,7 +255,7 @@ function EForm() {
                   type="text"
                   {...register("telephone")}
                 />
-              </span>
+              </span> */}
               <span className={` relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Phone No.
@@ -398,7 +409,26 @@ function EForm() {
               </div>
             </section>
             {/* Home */}
-            <h1 className="text-start font-semibold">HOME ADDRESS</h1>
+            <section className="flex gap-10">
+              <h1 className="text-start font-semibold">HOME ADDRESS</h1>
+              <span className="flex gap-2 items-center justify-center">
+                <input
+                  type="checkbox"
+                  checked={boarding}
+                  onChange={() => {
+                    boarding ? setBoarding(false) : setBoarding(true);
+                  }}
+                  id="boarding"
+                  className="hover:cursor-pointer duration-200 mt-1"
+                />
+                <label
+                  htmlFor="boarding"
+                  className="hover:cursor-pointer font-semibold hover:text-blue-600 duration-200"
+                >
+                  ( check if boarding )
+                </label>
+              </span>
+            </section>
             <div className="grid grid-cols-5 gap-3 ">
               <span className={` relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
@@ -456,55 +486,59 @@ function EForm() {
               </span>
             </div>
             {/* Boarding */}
-            <h1 className="text-start font-semibold">
-              CITY ADRESS ( IF BOARDING )
-            </h1>
-            <div className="grid grid-cols-4 gap-3 ">
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  House No.
-                </p>
-                <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  // value={snap.boardAddress.houseNum}
-                  {...register("boardAddress.houseNum")}
-                />
-              </span>
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Street/Brgy.
-                </p>
-                <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  // value={snap.boardAddress.streetBrgy}
-                  {...register("boardAddress.streetBrgy")}
-                />
-              </span>
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  City
-                </p>
-                <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  // value={snap.boardAddress.city}
-                  {...register("boardAddress.city")}
-                />
-              </span>
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  District
-                </p>
-                <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  // value={snap.boardAddress.district}
-                  {...register("boardAddress.district")}
-                />
-              </span>
-            </div>
+            <section
+              className={`${boarding ? "" : "hidden"} flex flex-col gap-3`}
+            >
+              <h1 className="text-start font-semibold">
+                CITY ADRESS ( IF BOARDING )
+              </h1>
+              <div className="grid grid-cols-4 gap-3 ">
+                <span className={` relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    House No.
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    // value={snap.boardAddress.houseNum}
+                    {...register("boardAddress.houseNum")}
+                  />
+                </span>
+                <span className={` relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    Street/Brgy.
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    // value={snap.boardAddress.streetBrgy}
+                    {...register("boardAddress.streetBrgy")}
+                  />
+                </span>
+                <span className={` relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    City
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    // value={snap.boardAddress.city}
+                    {...register("boardAddress.city")}
+                  />
+                </span>
+                <span className={` relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    District
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    // value={snap.boardAddress.district}
+                    {...register("boardAddress.district")}
+                  />
+                </span>
+              </div>
+            </section>
           </div>
         </div>
         {/* <EFormStudent /> */}
@@ -814,8 +848,8 @@ function EForm() {
                 />
               </span>
             </div>
-            <div className="grid grid-cols-3 gap-3">
-              <span className={` relative`}>
+            <div className="grid grid-cols-[1fr_2fr] gap-3">
+              {/* <span className={` relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Telephon No.
                 </p>
@@ -825,7 +859,7 @@ function EForm() {
                   // value={snap.guardian.telephone}
                   {...register("guardian.telephone")}
                 />
-              </span>
+              </span> */}
               <span className={` relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Phone No.

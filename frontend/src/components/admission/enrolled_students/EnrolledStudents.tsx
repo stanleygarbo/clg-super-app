@@ -16,7 +16,7 @@ const EnrolledStudents = () => {
   const navigate = useNavigate();
   // Paginate
   const [search, setSearch] = useState("");
-  const itemsPerPage = 2;
+  const itemsPerPage = 10;
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + itemsPerPage;
 
@@ -118,7 +118,7 @@ const EnrolledStudents = () => {
               renderOnZeroPageCount={null}
               className="flex items-center gap-4 font-bold"
               //pageClassName="text-orange-400" // para ni sa tanan numbers pero ma override ang activeClassName
-              activeClassName="bg-blue-400 text-white" // para ni sa number nga active
+              activeClassName="bg-blue-600 px-2 font-semibold rounded-md text-white" // para ni sa number nga active
               previousClassName="text-red-400" // Previous button #note icon ako gamit dili text
               nextClassName="text-green-400" // Next button #note icon ako gamit dili text
             />
