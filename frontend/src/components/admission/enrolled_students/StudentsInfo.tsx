@@ -6,8 +6,9 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { getPrograms } from "../../../api/programs";
 import { IProgramGet } from "../../../interface/IProgram";
-import { IStudentsPost } from "../../../interface/IStudents";
+import { IStudentsGet, IStudentsPost } from "../../../interface/IStudents";
 import { useForm } from "react-hook-form";
+import { Sibling } from "../enrollment_form/EForm";
 
 const StudentsInfo = () => {
   const [isUpdate, setIsUpdate] = useState<boolean>(true);
@@ -23,7 +24,7 @@ const StudentsInfo = () => {
 
   if (!id) return;
 
-  const query = useQuery({
+  const query = useQuery<IStudentsGet>({
     queryKey: ["student", id],
     queryFn: () => getStudentById({ id }),
     enabled: !!id,
@@ -189,7 +190,7 @@ const StudentsInfo = () => {
             </select>
           </section>
         </span>
-        <span className="grid grid-cols-5 gap-2">
+        <span className="grid grid-cols-[1fr_1fr_1fr_2fr] gap-2">
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               School Year
@@ -215,19 +216,7 @@ const StudentsInfo = () => {
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Telelphone No.
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.telephone}
-              {...register("telephone")}
-              // value={snapStudent.telephone}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
+
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               Phone No.
@@ -333,61 +322,65 @@ const StudentsInfo = () => {
             />
           </section>
         </span>
-        <h1 className="text-sm font-bold">Student Spouse Information : </h1>
-        <span className="grid grid-cols-4 gap-2">
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Last Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.spouse?.lastName}
-              {...register("spouse.lastName")}
-              // value={query.data?.spouse?.lastName}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              First Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.spouse?.firstName}
-              {...register("spouse.firstName")}
-              // value={query.data?.spouse?.firstName}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Middle Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.spouse?.middleName}
-              {...register("spouse.middleName")}
-              // value={query.data?.spouse?.middleName}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              No. of Children
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.spouse?.children}
-              {...register("spouse.children")}
-              // value={query.data?.spouse?.children}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-        </span>
+        {query.data?.spouse.lastName && (
+          <div className="flex flex-col gap-5">
+            <h1 className="text-sm font-bold">Student Spouse Information : </h1>
+            <span className="grid grid-cols-4 gap-2">
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  Last Name
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.spouse?.lastName}
+                  {...register("spouse.lastName")}
+                  // value={query.data?.spouse?.lastName}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  First Name
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.spouse?.firstName}
+                  {...register("spouse.firstName")}
+                  // value={query.data?.spouse?.firstName}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  Middle Name
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.spouse?.middleName}
+                  {...register("spouse.middleName")}
+                  // value={query.data?.spouse?.middleName}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  No. of Children
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.spouse?.children}
+                  {...register("spouse.children")}
+                  // value={query.data?.spouse?.children}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+            </span>
+          </div>
+        )}
         <h1 className="text-sm font-bold">Home Address : </h1>
         <span className="grid grid-cols-5 gap-2">
           <section className="relative rounded-lg">
@@ -456,62 +449,66 @@ const StudentsInfo = () => {
             />
           </section>
         </span>
-        <h1 className="text-sm font-bold">Address ( if Boarding ) : </h1>
-        <span className="grid grid-cols-4 gap-2">
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              House No.
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.boardAddress?.houseNum}
-              {...register("boardAddress.houseNum")}
-              // value={query.data?.boardAddress?.houseNum}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Brgy./Street
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.boardAddress?.streetBrgy}
-              {...register("boardAddress.streetBrgy")}
-              // value={query.data?.boardAddress?.streetBrgy}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              City
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.boardAddress?.city}
-              {...register("boardAddress.city")}
-              // value={query.data?.boardAddress?.city}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              District
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.boardAddress?.district}
-              {...register("boardAddress.district")}
-              // value={query.data?.boardAddress?.district}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-        </span>
-        <h1 className="text-sm font-bold">Father Information : </h1>
+        {query.data?.boardAddress?.houseNum && (
+          <div>
+            <h1 className="text-sm font-bold">Address ( if Boarding ) : </h1>
+            <span className="grid grid-cols-4 gap-2">
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  House No.
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.boardAddress?.houseNum}
+                  {...register("boardAddress.houseNum")}
+                  // value={query.data?.boardAddress?.houseNum}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  Brgy./Street
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.boardAddress?.streetBrgy}
+                  {...register("boardAddress.streetBrgy")}
+                  // value={query.data?.boardAddress?.streetBrgy}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  City
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.boardAddress?.city}
+                  {...register("boardAddress.city")}
+                  // value={query.data?.boardAddress?.city}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  District
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.boardAddress?.district}
+                  {...register("boardAddress.district")}
+                  // value={query.data?.boardAddress?.district}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+            </span>
+          </div>
+        )}
+        {/* <h1 className="text-sm font-bold">Father Information : </h1>
         <span className="grid grid-cols-4 gap-2">
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -754,7 +751,7 @@ const StudentsInfo = () => {
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
-        </span>
+        </span> */}
         <h1 className="text-sm font-bold">Guardian Information : </h1>
         <span className="grid grid-cols-5 gap-2">
           <section className="relative rounded-lg">
@@ -823,7 +820,7 @@ const StudentsInfo = () => {
             />
           </section>
         </span>
-        <span className="grid grid-cols-5 gap-2">
+        <span className="grid grid-cols-[1fr_1fr_1fr_2fr] gap-2">
           <section className="relative rounded-lg">
             <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
               Company Name
@@ -847,19 +844,6 @@ const StudentsInfo = () => {
               defaultValue={query.data?.guardian?.companyAddress}
               {...register("guardian.companyAddress")}
               // value={query.data?.guardian?.companyAddress}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Telephone No.
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.guardian?.telephone}
-              {...register("guardian.telephone")}
-              // value={query.data?.guardian?.telephone}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
           </section>
@@ -890,52 +874,59 @@ const StudentsInfo = () => {
             />
           </section>
         </span>
-        <h1 className="text-sm font-bold">Guardian Spouse Information : </h1>
-
-        <span className="grid grid-cols-3 gap-2">
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Last Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.guardianSpouse?.lastName}
-              {...register("guardianSpouse.lastName")}
-              // value={query.data?.guardianSpouse.lastName}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              First Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.guardianSpouse?.firstName}
-              {...register("guardianSpouse.firstName")}
-              // value={query.data?.guardianSpouse?.firstName}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-          <section className="relative rounded-lg">
-            <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-              Middle Name
-            </p>
-            <input
-              type="text"
-              readOnly={isUpdate}
-              defaultValue={query.data?.guardianSpouse?.middleName}
-              {...register("guardianSpouse.middleName")}
-              // value={query.data?.guardianSpouse?.middleName}
-              className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-            />
-          </section>
-        </span>
-        <h1 className="text-sm font-bold">Sibling Information : </h1>
-        {/* {snapStudent.siblings &&
-          sibling.map((sib, index) => (
+        {query.data?.guardianSpouse?.lastName && (
+          <div>
+            <h1 className="text-sm font-bold">
+              Guardian Spouse Information :{" "}
+            </h1>
+            <span className="grid grid-cols-3 gap-2">
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  Last Name
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.guardianSpouse?.lastName}
+                  {...register("guardianSpouse.lastName")}
+                  // value={query.data?.guardianSpouse.lastName}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  First Name
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.guardianSpouse?.firstName}
+                  {...register("guardianSpouse.firstName")}
+                  // value={query.data?.guardianSpouse?.firstName}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+              <section className="relative rounded-lg">
+                <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  Middle Name
+                </p>
+                <input
+                  type="text"
+                  readOnly={isUpdate}
+                  defaultValue={query.data?.guardianSpouse?.middleName}
+                  {...register("guardianSpouse.middleName")}
+                  // value={query.data?.guardianSpouse?.middleName}
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                />
+              </section>
+            </span>
+          </div>
+        )}
+        {query.data?.siblings && (
+          <h1 className="text-sm font-bold">Sibling Information : </h1>
+        )}
+        {query.data?.siblings &&
+          query.data?.siblings.map((sib: Sibling, index: number) => (
             <span key={index} className="grid grid-cols-3 gap-2">
               <section className="relative rounded-lg">
                 <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
@@ -943,7 +934,7 @@ const StudentsInfo = () => {
                 </p>
                 <input
                   type="text"
-                  readOnly={isUpdate}
+                  readOnly
                   value={sib.fullName}
                   className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
                 />
@@ -954,7 +945,7 @@ const StudentsInfo = () => {
                 </p>
                 <input
                   type="text"
-                  readOnly={isUpdate}
+                  readOnly
                   value={sib.age}
                   className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
                 />
@@ -965,13 +956,13 @@ const StudentsInfo = () => {
                 </p>
                 <input
                   type="text"
-                  readOnly={isUpdate}
+                  readOnly
                   value={sib.occupationSchool}
                   className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
                 />
               </section>
             </span>
-          ))} */}
+          ))}
       </div>
     </form>
   );

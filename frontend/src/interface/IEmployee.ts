@@ -6,8 +6,16 @@ export interface IEmployeeGet {
   firstName: string;
   surname: string;
   middleName: string;
-  birthDate: string;
+  email: string;
+  governmentId: {
+    tin: string;
+    sss: string;
+    pagibig: string;
+    philhealth: string;
+  };
   username: string;
+  maritalStatus: string;
+  phone: string;
   password: string;
   department: IDepartmentGet;
   position: IPositionGet;
@@ -55,12 +63,57 @@ export interface IEmployeeGet {
 //   gender: string;
 // }
 
+export const customStyles = {
+  control: (base: any, state: any) => ({
+    ...base,
+    height: "40px",
+    width: "100%",
+    borderRadius: "0.375rem", // rounded-md
+    // borderColor: "#64748b", // border-slate-500
+    fontWeight: "700", // font-bold
+    fontSize: "0.875rem", // text-sm
+    textAlign: "center",
+    borderColor: state.isFocused ? "#2563eb" : "#64748b", // border-blue-600 when focused, border-slate-500 when not focused
+
+    overflow: "hidden",
+    transition: "border-color 0.3s",
+    "&:hover": {
+      borderColor: state.isFocused ? "#2563eb" : "#64748b", // no change on hover
+    },
+  }),
+  singleValue: (base: any) => ({
+    ...base,
+    textAlign: "center", // center the selected value text
+  }),
+  option: (base: any) => ({
+    ...base,
+    textAlign: "center", // center the option text
+  }),
+  menu: (base: any) => ({
+    ...base,
+    textAlign: "center", // center the dropdown menu
+  }),
+  placeholder: (base: any) => ({
+    ...base,
+    textAlign: "center", // center the placeholder
+  }),
+};
+
 export interface IEmployeePost {
   firstName: string;
   surname: string;
   middleName: string;
   username: string;
+  phone: string;
+  email: string;
+  maritalStatus: string;
   password: string;
+  governmentId: {
+    tin: string;
+    sss: string;
+    pagibig: string;
+    philhealth: string;
+  };
   department: string;
   position: string;
   hireDate: String;
@@ -95,6 +148,8 @@ export interface IEmployeeSub {
   middleName: string;
   username: string;
   password: string;
+  phone: string;
+  email: string;
   department: string;
   position: string;
   hireDate: String;

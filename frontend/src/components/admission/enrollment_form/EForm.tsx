@@ -37,7 +37,12 @@ function EForm() {
     setSiblings(updatedSiblings);
   };
 
-  const { handleSubmit, register } = useForm<IStudentsPost>();
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm<IStudentsPost>();
 
   const programs = useQuery({
     queryKey: ["programs"],
@@ -59,9 +64,25 @@ function EForm() {
   const [boarding, setBoarding] = useState<boolean>(false);
   const date = new Date();
 
+  const handleInput1 = (e: React.FormEvent<HTMLInputElement>) => {
+    let input = e.currentTarget.value;
+    input = input.replace(/\D/g, ""); // Remove non-digits
+    if (input.length > 11) input = input.slice(0, 11); // Limit to 6 digits
+    setValue("phone", input); // Set clean value
+  };
+
+  const handleInput2 = (e: React.FormEvent<HTMLInputElement>) => {
+    let input = e.currentTarget.value;
+    input = input.replace(/\D/g, ""); // Remove non-digits
+    if (input.length > 11) input = input.slice(0, 11); // Limit to 6 digits
+    setValue("guardian.phone", input); // Set clean value
+  };
+
   return (
     <form
-      onSubmit={handleSubmit((data) => console.log({ ...data, siblings }))}
+      onSubmit={handleSubmit((data) =>
+        addMutation.mutate({ ...data, siblings })
+      )}
       className="p-10 w-[1100px]"
     >
       <div className="bg-black p-2 text-white rounded-t-md">
@@ -83,7 +104,7 @@ function EForm() {
                 <select
                   required
                   {...register("schoolYear")}
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
                   <option
                     value={`${date.getFullYear() - 1} - ${date.getFullYear()}`}
@@ -93,7 +114,6 @@ function EForm() {
                   </option>
                   <option
                     value={`${date.getFullYear()} - ${date.getFullYear() + 1}`}
-                    selected
                   >
                     {date.getFullYear()} - {date.getFullYear() + 1}
                   </option>
@@ -106,7 +126,7 @@ function EForm() {
                 <select
                   required
                   {...register("standing")}
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
                   {[
                     "freshman",
@@ -130,13 +150,13 @@ function EForm() {
                 <select
                   required
                   {...register("program")}
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
                   {programs.data?.results.map(
                     (prog: IProgramGet, index: number) => (
                       <option
                         key={index}
-                        selected={index === 0}
+                        selected={prog.programAcronym === "BSCS"}
                         value={prog._id}
                       >
                         {prog.programAcronym}
@@ -152,7 +172,7 @@ function EForm() {
                 <select
                   required
                   {...register("semester")}
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
                   <option value="1st" selected>
                     1st
@@ -169,7 +189,7 @@ function EForm() {
                 </p>
                 <input
                   readOnly
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="date"
                 />
               </span>
@@ -179,7 +199,7 @@ function EForm() {
                 </p>
                 <input
                   readOnly
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                 />
               </span>
@@ -189,7 +209,7 @@ function EForm() {
                 </p>
                 <input
                   readOnly
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                 />
               </span>
@@ -207,7 +227,7 @@ function EForm() {
                   USN/LRN
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("username")}
                 />
@@ -219,7 +239,7 @@ function EForm() {
                   Last Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("surname")}
                 />
@@ -229,7 +249,7 @@ function EForm() {
                   First Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("firstName")}
                 />
@@ -239,7 +259,7 @@ function EForm() {
                   Middle Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("middleName")}
                 />
@@ -251,7 +271,7 @@ function EForm() {
                   Telephone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("telephone")}
                 />
@@ -261,20 +281,50 @@ function EForm() {
                   Phone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
-                  {...register("phone")}
+                  placeholder="e.g. 09*********"
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  inputMode="numeric"
+                  {...register("phone", {
+                    pattern: {
+                      value: /^0\d{0,11}$/, // Must start with 0, max 11 digits
+                      message: "Must start with 0 with 11 digits",
+                    },
+                  })}
+                  onInput={handleInput1}
                 />
+                {errors.phone && (
+                  <p
+                    style={{ color: "red" }}
+                    className="absolute font-bold text-xs left-14"
+                  >
+                    {errors.phone.message}
+                  </p>
+                )}
               </span>
               <span className={` relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Email
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
-                  {...register("email")}
+                  {...register("email", {
+                    // required: "Email is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Enter a valid email address",
+                    },
+                  })}
                 />
+                {errors.email && (
+                  <p
+                    style={{ color: "red" }}
+                    className="absolute text-xs top-10 font-bold right-[190px]"
+                  >
+                    {errors.email.message}
+                  </p>
+                )}
               </span>
             </div>
             {/* Birthdate */}
@@ -285,7 +335,7 @@ function EForm() {
                   Birthdate
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="date"
                   {...register("birth.birthDate")}
                 />
@@ -296,7 +346,7 @@ function EForm() {
                     Birthplace
                   </p>
                   <input
-                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     {...register("birth.birthPlace")}
                   />
@@ -306,7 +356,7 @@ function EForm() {
                     Citizenship
                   </p>
                   <input
-                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     {...register("birth.citizenship")}
                   />
@@ -317,7 +367,7 @@ function EForm() {
                   Gender
                 </p>
                 <select
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   {...register("birth.sex")}
                 >
                   <option value="male" selected>
@@ -332,7 +382,7 @@ function EForm() {
                   Marital Status
                 </p>
                 <select
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   // {...register("birth.sex")}
                   onChange={(e) => {
                     setMaritalStatus(e.target.value);
@@ -349,7 +399,7 @@ function EForm() {
                   Religion
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("birth.religion")}
                 />
@@ -371,7 +421,7 @@ function EForm() {
                     Last Name
                   </p>
                   <input
-                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     {...register("spouse.lastName")}
                   />
@@ -381,7 +431,7 @@ function EForm() {
                     First Name
                   </p>
                   <input
-                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     {...register("spouse.firstName")}
                   />
@@ -391,7 +441,7 @@ function EForm() {
                     Middle Name
                   </p>
                   <input
-                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     {...register("spouse.middleName")}
                   />
@@ -401,7 +451,7 @@ function EForm() {
                     No. of Child
                   </p>
                   <input
-                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="number"
                     {...register("spouse.children")}
                   />
@@ -435,7 +485,7 @@ function EForm() {
                   House No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="number"
                   {...register("homeAddress.houseNum")}
                 />
@@ -445,7 +495,7 @@ function EForm() {
                   Street/Brgy.
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.homeAddress?.streetBrgy}
                   {...register("homeAddress.streetBrgy")}
@@ -456,7 +506,7 @@ function EForm() {
                   City
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.homeAddress.city}
                   {...register("homeAddress.city")}
@@ -467,7 +517,7 @@ function EForm() {
                   Province
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.homeAddress.province}
                   {...register("homeAddress.province")}
@@ -478,7 +528,7 @@ function EForm() {
                   District
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.homeAddress.district}
                   {...register("homeAddress.district")}
@@ -498,7 +548,7 @@ function EForm() {
                     House No.
                   </p>
                   <input
-                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     // value={snap.boardAddress.houseNum}
                     {...register("boardAddress.houseNum")}
@@ -509,7 +559,7 @@ function EForm() {
                     Street/Brgy.
                   </p>
                   <input
-                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     // value={snap.boardAddress.streetBrgy}
                     {...register("boardAddress.streetBrgy")}
@@ -520,7 +570,7 @@ function EForm() {
                     City
                   </p>
                   <input
-                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     // value={snap.boardAddress.city}
                     {...register("boardAddress.city")}
@@ -531,7 +581,7 @@ function EForm() {
                     District
                   </p>
                   <input
-                    className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     // value={snap.boardAddress.district}
                     {...register("boardAddress.district")}
@@ -543,8 +593,8 @@ function EForm() {
         </div>
         {/* <EFormStudent /> */}
         <div className="p-3">
-          <p className="font-bold px-6">PARENT'S & GUARDIAN'S INFORMATION</p>
-          <div className="flex flex-col gap-3 pt-3 px-6 w-full ">
+          {/* <p className="font-bold px-6">PARENT'S & GUARDIAN'S INFORMATION</p> */}
+          <div className="flex flex-col px-6 w-full ">
             {/* Father */}
             {/* <h1 className="text-start font-semibold">FATHER'S INFORMATION</h1>
             <div className="gap-3 grid grid-cols-3">
@@ -553,7 +603,7 @@ function EForm() {
                   Last Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.father.lastName}
                   {...register("father.lastName")}
@@ -564,7 +614,7 @@ function EForm() {
                   First Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.father.firstName}
                   {...register("father.firstName")}
@@ -575,7 +625,7 @@ function EForm() {
                   Middle Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.father.middleName}
                   {...register("father.middleName")}
@@ -588,7 +638,7 @@ function EForm() {
                   Occupation
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.father.occupation}
                   {...register("father.occupation")}
@@ -599,7 +649,7 @@ function EForm() {
                   Company Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.father.companyName}
                   {...register("father.companyName")}
@@ -610,7 +660,7 @@ function EForm() {
                   Company Address
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.father.companyAddress}
                   {...register("father.companyAddress")}
@@ -623,7 +673,7 @@ function EForm() {
                   Telephone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.father.telephone}
                   {...register("father.telephone")}
@@ -634,7 +684,7 @@ function EForm() {
                   Phone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.father.phone}
                   {...register("father.phone")}
@@ -645,7 +695,7 @@ function EForm() {
                   Email
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.father.email}
                   {...register("father.email")}
@@ -654,7 +704,7 @@ function EForm() {
             </div> */}
           </div>
 
-          <div className="flex flex-col gap-3 pt-3 px-6 w-full">
+          <div className="flex flex-col px-6 w-full">
             {/* Mother */}
             {/* <h1 className="text-start font-semibold">MOTHER'S INFORMATION</h1>
             <div className="gap-3 grid grid-cols-3">
@@ -663,7 +713,7 @@ function EForm() {
                   Last Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.mother.lastName}
                   {...register("mother.lastName")}
@@ -674,7 +724,7 @@ function EForm() {
                   First Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.mother.firstName}
                   {...register("mother.firstName")}
@@ -685,7 +735,7 @@ function EForm() {
                   Middle Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.mother.middleName}
                   {...register("mother.middleName")}
@@ -698,7 +748,7 @@ function EForm() {
                   Occupation
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.mother.occupation}
                   {...register("mother.occupation")}
@@ -709,7 +759,7 @@ function EForm() {
                   Company Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.mother.companyName}
                   {...register("mother.companyName")}
@@ -720,7 +770,7 @@ function EForm() {
                   Company Address
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.mother.companyAddress}
                   {...register("mother.companyAddress")}
@@ -733,7 +783,7 @@ function EForm() {
                   Telephone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.mother.telephone}
                   {...register("mother.telephone")}
@@ -744,7 +794,7 @@ function EForm() {
                   Phone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.mother.phone}
                   {...register("mother.phone")}
@@ -755,7 +805,7 @@ function EForm() {
                   Email
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.mother.email}
                   {...register("mother.email")}
@@ -764,7 +814,7 @@ function EForm() {
             </div> */}
           </div>
 
-          <div className="flex w-full px-6 pt-3 flex-col gap-5">
+          <div className="flex w-full px-6 flex-col gap-5">
             {/* Guardian */}
             <h1 className="text-start font-semibold">GUARDIAN'S INFORMATION</h1>
             <div className="grid grid-cols-4 gap-3">
@@ -773,7 +823,7 @@ function EForm() {
                   Last Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardian.lastName}
                   {...register("guardian.lastName")}
@@ -784,7 +834,7 @@ function EForm() {
                   First Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardian.firstName}
                   {...register("guardian.firstName")}
@@ -795,7 +845,7 @@ function EForm() {
                   Middle Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardian.middleName}
                   {...register("guardian.middleName")}
@@ -806,7 +856,7 @@ function EForm() {
                   Relationship
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardian.relationship}
                   {...register("guardian.relationship")}
@@ -819,7 +869,7 @@ function EForm() {
                   Occupation
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardian.occupation}
                   {...register("guardian.occupation")}
@@ -830,7 +880,7 @@ function EForm() {
                   Company Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardian.companyName}
                   {...register("guardian.companyName")}
@@ -841,7 +891,7 @@ function EForm() {
                   Company Address
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardian.companyAddress}
                   {...register("guardian.companyAddress")}
@@ -854,7 +904,7 @@ function EForm() {
                   Telephon No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardian.telephone}
                   {...register("guardian.telephone")}
@@ -865,22 +915,50 @@ function EForm() {
                   Phone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="number"
-                  // value={snap.guardian.phone}
-                  {...register("guardian.phone")}
+                  type="text"
+                  placeholder="e.g. 09*********"
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  inputMode="numeric"
+                  {...register("guardian.phone", {
+                    pattern: {
+                      value: /^0\d{0,11}$/, // Must start with 0, max 11 digits
+                      message: "Must start with 0 with 11 digits",
+                    },
+                  })}
+                  onInput={handleInput2}
                 />
+                {errors.guardian?.phone && (
+                  <p
+                    style={{ color: "red" }}
+                    className="absolute font-bold text-xs left-14"
+                  >
+                    {errors.guardian?.phone.message}
+                  </p>
+                )}
               </span>
               <span className={` relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Email
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
-                  // value={snap.guardian.email}
-                  {...register("guardian.email")}
+                  {...register("guardian.email", {
+                    // required: "Email is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Enter a valid email address",
+                    },
+                  })}
                 />
+                {errors.guardian?.email && (
+                  <p
+                    style={{ color: "red" }}
+                    className="absolute text-xs top-10 font-bold right-[190px]"
+                  >
+                    {errors.guardian?.email.message}
+                  </p>
+                )}
               </span>
             </div>
             {/* <h1 className="text-start font-semibold">
@@ -892,7 +970,7 @@ function EForm() {
                   Last Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardianSpouse.lastName}
                   {...register("guardianSpouse.lastName")}
@@ -903,7 +981,7 @@ function EForm() {
                   First Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardianSpouse.firstName}
                   {...register("guardianSpouse.firstName")}
@@ -914,7 +992,7 @@ function EForm() {
                   Middle Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   // value={snap.guardianSpouse.middleName}
                   {...register("guardianSpouse.middleName")}
@@ -925,7 +1003,7 @@ function EForm() {
                   No. of Children
                 </p>
                 <input
-                  className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="number"
                   // value={snap.guardianSpouse.children}
                   {...register("guardianSpouse.children")}
@@ -954,7 +1032,7 @@ function EForm() {
                         Name
                       </p>
                       <input
-                        className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                         type="text"
                         value={sibling?.fullName}
                         onChange={(e) => {
@@ -967,7 +1045,7 @@ function EForm() {
                         Age
                       </p>
                       <input
-                        className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                         type="number"
                         value={sibling?.age}
                         onChange={(e) => {
@@ -980,7 +1058,7 @@ function EForm() {
                         Occupation/School
                       </p>
                       <input
-                        className="border border-slate-500 h-[30px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                         type="text"
                         value={sibling?.occupationSchool}
                         onChange={(e) => {

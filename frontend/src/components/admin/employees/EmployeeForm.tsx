@@ -1,7 +1,7 @@
 import { IPositionGet } from "../../../interface/IPosition";
 import { IDepartmentGet } from "../../../interface/IDepartment";
 import { toast } from "react-toastify";
-import { IEmployeePost } from "../../../interface/IEmployee";
+import { customStyles, IEmployeePost } from "../../../interface/IEmployee";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { addEmployee } from "../../../api/employee";
@@ -11,43 +11,6 @@ import { getDepartments } from "../../../api/department";
 import { getPositions } from "../../../api/position";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
-const customStyles = {
-  control: (base: any, state: any) => ({
-    ...base,
-    height: "40px",
-    width: "100%",
-    padding: "0.25rem",
-    borderRadius: "0.375rem", // rounded-md
-    // borderColor: "#64748b", // border-slate-500
-    fontWeight: "700", // font-bold
-    fontSize: "0.875rem", // text-sm
-    textAlign: "center",
-    borderColor: state.isFocused ? "#2563eb" : "#64748b", // border-blue-600 when focused, border-slate-500 when not focused
-
-    overflow: "hidden",
-    transition: "border-color 0.3s",
-    "&:hover": {
-      borderColor: state.isFocused ? "#2563eb" : "#64748b", // no change on hover
-    },
-  }),
-  singleValue: (base: any) => ({
-    ...base,
-    textAlign: "center", // center the selected value text
-  }),
-  option: (base: any) => ({
-    ...base,
-    textAlign: "center", // center the option text
-  }),
-  menu: (base: any) => ({
-    ...base,
-    textAlign: "center", // center the dropdown menu
-  }),
-  placeholder: (base: any) => ({
-    ...base,
-    textAlign: "center", // center the placeholder
-  }),
-};
 
 const EmploymentForm = () => {
   const navigate = useNavigate();
@@ -89,6 +52,9 @@ const EmploymentForm = () => {
   });
 
   const onSubmit = (data: IEmployeePost) => {
+    if (!(password === conPass)) {
+      return toast.error("password dont match");
+    }
     const formattedData = {
       ...data,
       roles: Array.isArray(data.roles)
@@ -100,7 +66,13 @@ const EmploymentForm = () => {
     addMutation.mutate(formattedData);
   };
 
-  const { handleSubmit, register, control } = useForm<IEmployeePost>({
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+    setValue,
+  } = useForm<IEmployeePost>({
     defaultValues: {
       // gender: "male",
       hireDate: new Date().toISOString().split("T")[0],
@@ -108,6 +80,7 @@ const EmploymentForm = () => {
   });
 
   const [password, setPassword] = useState("");
+  const [conPass, setConPass] = useState<string>("");
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const minLength = 8;
@@ -152,62 +125,250 @@ const EmploymentForm = () => {
     setIsPasswordVisible((prevState) => !prevState); // Toggle the state
   };
 
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    let input = e.currentTarget.value;
+    input = input.replace(/\D/g, ""); // Remove non-digits
+    if (input.length > 11) input = input.slice(0, 11); // Limit to 6 digits
+    setValue("phone", input); // Set clean value
+  };
+
   return (
-    <div className="m-10">
-      <div className="w-[900px]">
+    <div className="">
+      <div className="w-[1000px]">
         <h1 className="font-bold text-2xl text-start mt-5 pt-5 px-12 text-blue-800 mb-10">
           Employee Form
         </h1>
         <input type="text" {...register("hireDate")} className="hidden" />
-        <form onSubmit={handleSubmit(onSubmit)} className="pt-6 p-5 grid gap-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="pt-6 p-5 grid gap-7">
           {/* <img
             src="https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
             alt="IMG"
             className="w-24 aspect-square rounded-full shadow-md mx-5 mb-5"
           /> */}
-          <section className="grid grid-cols-3 gap-5 px-10">
+          <div className="flex flex-col gap-5">
+            <h1 className="font-bold text-lg mb-3">Personal Information</h1>
+            <section className="grid grid-cols-3 gap-3 px-10">
+              <span className={` relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Last Name
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("surname")}
+                />
+              </span>
+              <span className={` relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  First Name
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("firstName")}
+                />
+              </span>
+              <span className={` relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Middle Name
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("middleName")}
+                />
+              </span>
+              {/* <span className={` relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Gender
+                </p>
+                <select
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  {...register("birth.sex")}
+                >
+                  <option value="male" selected>
+                    Male
+                  </option>
+                  <option value="female">Female</option>
+                </select>
+              </span> */}
+            </section>
+          </div>
+          <section className="px-10 grid grid-cols-[1fr_1fr_2fr] gap-3">
             <span className={` relative`}>
               <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Last Name
+                Phone No.
               </p>
               <input
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 type="text"
-                {...register("surname")}
+                placeholder="e.g. 09*********"
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                inputMode="numeric"
+                {...register("phone", {
+                  pattern: {
+                    value: /^0\d{0,11}$/, // Must start with 0, max 11 digits
+                    message: "Must start with 0",
+                  },
+                })}
+                onInput={handleInput}
               />
+              {errors.phone && (
+                <p
+                  style={{ color: "red" }}
+                  className="absolute font-bold text-xs left-16"
+                >
+                  {errors.phone.message}
+                </p>
+              )}
             </span>
             <span className={` relative`}>
               <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                First Name
+                Marital Status
               </p>
-              <input
+              <select
+                {...register("maritalStatus")}
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+              >
+                <option value="single" selected>
+                  Single
+                </option>
+                <option value="married">Married</option>
+                <option value="widow">Widow</option>
+              </select>
+              {/* <input
                 className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 type="text"
-                {...register("firstName")}
-              />
+                
+              /> */}
             </span>
             <span className={` relative`}>
               <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Middle Name
+                Email
               </p>
               <input
                 className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 type="text"
-                {...register("middleName")}
+                {...register("email", {
+                  // required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Enter a valid email address",
+                  },
+                })}
               />
+              {errors.email && (
+                <p
+                  style={{ color: "red" }}
+                  className="absolute text-xs top-10 font-bold right-[129px]"
+                >
+                  {errors.email.message}
+                </p>
+              )}
             </span>
           </section>
-          <section className="grid grid-cols-3 gap-5 px-10">
+          <section className="grid grid-cols-5 gap-3 px-10">
             <span className={` relative`}>
               <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                 BirthDate
               </p>
               <input
                 className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
+                type="date"
                 {...register("birth.birthDate")}
               />
             </span>
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                BirthPlace
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("birth.birthPlace")}
+              />
+            </span>
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Religion
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("birth.religion")}
+              />
+            </span>
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Citizzenship
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("birth.citizenship")}
+              />
+            </span>
+            <span className="relative">
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Gender
+              </p>
+              <div className="flex gap-3">
+                <select
+                  {...register("birth.sex")}
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                >
+                  <option value="male" selected>
+                    Male
+                  </option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+            </span>
+          </section>
+
+          <section className="grid grid-cols-4 gap-3 px-10">
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                SSS
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("governmentId.sss")}
+              />
+            </span>
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                TIN
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("governmentId.tin")}
+              />
+            </span>
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Pag-Ibig
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("governmentId.pagibig")}
+              />
+            </span>
+            <span className={` relative`}>
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Philhealth
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type="text"
+                {...register("governmentId.philhealth")}
+              />
+            </span>
+          </section>
+
+          <section className="grid grid-cols-[2fr_1fr_1fr_1fr] gap-3 px-10">
             <span className="relative">
               <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 duration-200 text-xs z-50">
                 Roles
@@ -229,24 +390,6 @@ const EmploymentForm = () => {
                 )}
               />
             </span>
-            <span className="relative">
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Gender
-              </p>
-              <div className="flex gap-5">
-                <select
-                  {...register("birth.sex")}
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                >
-                  <option value="male" selected>
-                    Male
-                  </option>
-                  <option value="female">Female</option>
-                </select>
-              </div>
-            </span>
-          </section>
-          <section className="grid grid-cols-3 gap-5 px-10">
             <span className="relative">
               <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                 Position
@@ -282,7 +425,7 @@ const EmploymentForm = () => {
               </select>
             </span>
             <span className="relative">
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <p className="absolute w-[102px] left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                 Employment Type
               </p>
               <select
@@ -296,7 +439,7 @@ const EmploymentForm = () => {
               </select>
             </span>
           </section>
-          <section className="grid grid-cols-3 gap-5 px-10">
+          <section className="grid grid-cols-3 gap-3 px-10">
             <span className={` relative`}>
               <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                 Username
@@ -345,11 +488,29 @@ const EmploymentForm = () => {
                 </p>
               )}
             </span>
-            {/* <input
-              type="password"
-              placeholder="Confirm Password"
-              className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-            /> */}
+            <span className="relative group">
+              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                Confirm Password
+              </p>
+              <input
+                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                type={isPasswordVisible ? "text" : "password"}
+                value={conPass}
+                onChange={(e) => {
+                  setConPass(e.target.value);
+                }}
+              />
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer opacity-0 group-hover:opacity-100 duration-200"
+              >
+                {isPasswordVisible ? (
+                  <FaEye size={20} />
+                ) : (
+                  <FaEyeSlash size={20} />
+                )}
+              </span>
+            </span>
           </section>
           <button
             type="submit"

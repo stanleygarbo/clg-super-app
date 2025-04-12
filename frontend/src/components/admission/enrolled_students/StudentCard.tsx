@@ -52,7 +52,7 @@ function StudentCard({ student, index }: Params) {
         {student.program?.programAcronym}
       </h1>
       <h1 className="w-[150px] text-center">{student.standing}</h1>
-      <h1 className="w-[200px] flex gap-2 text-lg justify-center opacity-0 group-hover:opacity-100">
+      <h1 className="w-[200px] flex gap-2 text-lg justify-center opacity-50 group-hover:opacity-100">
         <button
           onClick={() => navigate(`/admission/studentInfo/${student._id}`)}
           type="button"
