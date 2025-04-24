@@ -173,7 +173,7 @@ function ScheduleForm() {
   return (
     <main className="flex flex-col gap-8 w-full mx-16 my-8">
       <header className="flex justify-between items-center h-12">
-        <p className="text-2xl font-bold">Schedule</p>
+        <p className="text-2xl font-bold">NANI?</p>
         <form
           className="flex gap-4"
           onSubmit={scheduleForm.handleSubmit(onScheduleSubmit)}
