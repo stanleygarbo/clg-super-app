@@ -1,4 +1,5 @@
 import { IDepartmentGet } from "./IDepartment";
+import { IEmployeeDocs } from "./IDocuments";
 import { IPositionGet } from "./IPosition";
 
 export interface IEmployeeGet {
@@ -43,6 +44,7 @@ export interface IEmployeeGet {
     district: string;
     province: string;
   };
+  documents: IEmployeeDocs;
 }
 
 // export interface IEmployeeGet {
@@ -140,6 +142,7 @@ export interface IEmployeePost {
     district: string;
     province: string;
   };
+  documents: IEmployeeDocs;
 }
 
 export interface IEmployeeSub {
@@ -176,4 +179,5 @@ export interface IEmployeeSub {
     district: string;
     province: string;
   };
+  documents: IEmployeeDocs;
 }

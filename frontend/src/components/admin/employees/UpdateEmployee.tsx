@@ -79,7 +79,7 @@ const UpdateEmployee = () => {
     (query.data?.roles?.map((role: string) => role) ?? []).includes(prog.value)
   );
 
-  console.log("Deaf :: ", deaf);
+  // console.log("Deaf :: ", deaf);
 
   const onSubmit = (data: IEmployeePost) => {
     if (!id) {
@@ -92,9 +92,9 @@ const UpdateEmployee = () => {
         ? data.roles.map((role) => role.value)
         : [],
     };
-    // console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
+    console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
 
-    updateMutation.mutate({ id, value: { ...formattedData } });
+    // updateMutation.mutate({ id, value: { ...formattedData } });
   };
 
   // set default value for update
@@ -131,12 +131,34 @@ const UpdateEmployee = () => {
     setValue("phone", input); // Set clean value
   };
 
+  console.log(query.data);
+
   return (
     <div className="">
       <div className="w-[1000px]">
         <h1 className="font-bold text-2xl text-start mt-5 pt-5 px-12 text-blue-800 mb-10">
           Employee Update Form
         </h1>
+        <section className="absolute bg-slate-200 top-20 right-96">
+          <span className="flex gap-1 items-center p-1">
+            <input
+              type="checkbox"
+              id="nso"
+              {...register("documents.birthCertificate")}
+              checked={query.data?.documents?.birthCertificate}
+            />
+            <label htmlFor="nso">NSO</label>
+          </span>
+          <span className="flex gap-1 items-center p-1">
+            <input
+              type="checkbox"
+              id="tin"
+              {...register("documents.tin")}
+              checked={query.data?.documents?.tin}
+            />
+            <label htmlFor="tin">TIN</label>
+          </span>
+        </section>
         <input type="text" {...register("hireDate")} className="hidden" />
         <form onSubmit={handleSubmit(onSubmit)} className="pt-6 p-5 grid gap-7">
           {/* <img
