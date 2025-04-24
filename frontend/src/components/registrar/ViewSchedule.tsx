@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { capitalizeFirstLetter, convertMilitaryTo12Hour } from "../../Helper";
+
+// API
 import { getSchedule } from "../../api/schedule";
+import { getCourses } from "../../api/course";
+import { getRooms } from "../../api/room";
+// Interface
 import { ISchedule } from "../../interface/ISchedule";
 import { ICourseGet } from "../../interface/ICourse";
-import { getCourses } from "../../api/course";
 import { IRoomGet } from "../../interface/IRoom";
-import { getRooms } from "../../api/room";
 import { IEmployeeGet } from "../../interface/IEmployee";
 import { getEmployees } from "../../api/employee";
-import { capitalizeFirstLetter, convertMilitaryTo12Hour } from "../../Helper";
 import { useQuery } from "@tanstack/react-query";
 
 function ViewSchedule() {
