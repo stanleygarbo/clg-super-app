@@ -35,12 +35,6 @@ function StudentCard({ student, index }: Params) {
     <span
       key={index}
       className={`${
-        index == 0
-          ? "rounded-t-md"
-          : index == query.data?.results.length - 1
-          ? "rounded-b-md"
-          : ""
-      } ${
         index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
       } flex py-2 text-sm items-center hover:bg-slate-300 group duration-200`}
     >
