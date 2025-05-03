@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 // import { useState } from "react";
 import { getStudentById, updateStudent } from "../../../api/student";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { getPrograms } from "../../../api/programs";
 import { IProgramGet } from "../../../interface/IProgram";
@@ -20,7 +20,7 @@ const StudentsInfo = () => {
   const navigate = useNavigate();
   // const [sibling, setSibling] = useState<ISibling[]>([]);
   const { id } = useParams();
-  const { handleSubmit, register } = useForm<IStudentsPost>();
+  const { handleSubmit, register, reset } = useForm<IStudentsPost>();
 
   if (!id) return;
 
@@ -47,6 +47,29 @@ const StudentsInfo = () => {
     },
   });
 
+  useEffect(() => {
+    if (query.data) {
+      reset({
+        firstName: query.data?.firstName,
+        surname: query.data?.surname,
+        middleName: query.data?.middleName,
+        email: query.data?.email,
+        program: query.data?.program._id,
+        // roles: deaf,
+        phone: query.data?.phone,
+        documents: query.data?.documents,
+        birth: {
+          birthDate: query.data?.birth.birthDate,
+          birthPlace: query.data?.birth.birthPlace,
+          religion: query.data?.birth.religion,
+          citizenship: query.data?.birth.citizenship,
+        },
+      });
+    }
+  }, [query.data, reset]);
+
+  console.log(query);
+
   return (
     <form
       onSubmit={handleSubmit((data) => {
@@ -54,6 +77,7 @@ const StudentsInfo = () => {
           toast.error("No employee ID found!");
           return;
         }
+        // console.log("Data to be patch : ", data);
         updateStudMutation.mutate({ data, id });
       })}
       className="mb-10 mt-5 flex flex-col border rounded-lg w-[1100px] shadow-md gap-5"
@@ -62,7 +86,67 @@ const StudentsInfo = () => {
         Update Student
       </h1>
       <div className="flex flex-col gap-5 px-10 pb-10">
-        <section className="flex gap-3 justify-end">
+        <section className="absolute bg-slate-50 top-[170px] right-[830px] flex gap-10 px-5 rounded-md p-3 shadow-sm border border-slate-100">
+          <div className="flex flex-col">
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="nso"
+                {...register("documents.birthCertificate")}
+                // defaultChecked={query.data?.documents?.birthCertificate}
+              />
+              <label htmlFor="nso">NSO</label>
+            </span>
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="form137"
+                {...register("documents.form137")}
+                // defaultChecked={query.data?.documents?.tin}
+              />
+              <label htmlFor="form137">Form 137</label>
+            </span>
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="form138"
+                {...register("documents.form138")}
+                // defaultChecked={query.data?.documents?.tin}
+              />
+              <label htmlFor="form138">Form 138</label>
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="goodmoral"
+                {...register("documents.goodMoral")}
+                // defaultChecked={query.data?.documents?.birthCertificate}
+              />
+              <label htmlFor="goodmoral">Good Moral</label>
+            </span>
+            {/* <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="tor"
+                {...register("documents.tor")}
+                // defaultChecked={query.data?.documents?.tin}
+              />
+              <label htmlFor="tor">TOR</label>
+            </span>
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="philhealth"
+                {...register("documents.philhealth")}
+                // defaultChecked={query.data?.documents?.tin}
+              />
+              <label htmlFor="philhealth">Philhealth</label>
+            </span> */}
+          </div>
+        </section>
+        <section className="flex gap-3 justify-end pt-20">
           <button
             disabled={isUpdate}
             type="button"

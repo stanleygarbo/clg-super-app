@@ -68,7 +68,7 @@ export interface IEmployeeGet {
 export const customStyles = {
   control: (base: any, state: any) => ({
     ...base,
-    height: "40px",
+    // height: "40px",
     width: "100%",
     borderRadius: "0.375rem", // rounded-md
     // borderColor: "#64748b", // border-slate-500
@@ -76,8 +76,7 @@ export const customStyles = {
     fontSize: "0.875rem", // text-sm
     textAlign: "center",
     borderColor: state.isFocused ? "#2563eb" : "#64748b", // border-blue-600 when focused, border-slate-500 when not focused
-
-    overflow: "hidden",
+    // overflow: "hidden",
     transition: "border-color 0.3s",
     "&:hover": {
       borderColor: state.isFocused ? "#2563eb" : "#64748b", // no change on hover

@@ -1,5 +1,5 @@
 import { Sibling } from "../components/admission/enrollment_form/EForm";
-import { IEmployeeDocs } from "./IDocuments";
+import { IEmployeeDocs, IStudentDocs } from "./IDocuments";
 import { IProgramGet } from "./IProgram";
 
 export interface IStudentsPost {
@@ -84,7 +84,7 @@ export interface IStudentsPost {
     firstName: string;
     children: number;
   };
-  documents: IEmployeeDocs;
+  documents: IStudentDocs;
   siblings: Sibling[];
 }
 
@@ -171,7 +171,7 @@ export interface IStudentsGet {
     firstName: string;
     children: number;
   };
-  documents: IEmployeeDocs;
+  documents: IStudentDocs;
   siblings: [
     {
       fullName: string;

@@ -64,6 +64,8 @@ const UpdateEmployee = () => {
     enabled: !!id,
   });
 
+  console.log(query.data);
+
   const {
     handleSubmit,
     register,
@@ -92,9 +94,10 @@ const UpdateEmployee = () => {
         ? data.roles.map((role) => role.value)
         : [],
     };
-    console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
+    // console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
 
-    // updateMutation.mutate({ id, value: { ...formattedData } });
+    updateMutation.mutate({ id, value: { ...formattedData } });
+    // query.refetch();
   };
 
   // set default value for update
@@ -108,6 +111,7 @@ const UpdateEmployee = () => {
         email: query.data?.email,
         roles: deaf,
         phone: query.data?.phone,
+        documents: query.data?.documents,
         governmentId: {
           sss: query.data?.governmentId?.sss,
           tin: query.data?.governmentId?.tin,
@@ -133,31 +137,74 @@ const UpdateEmployee = () => {
 
   console.log(query.data);
 
+  if (query.isFetching) {
+    return <img src="/loading.svg" className="p-80" alt="" />;
+  }
   return (
     <div className="">
       <div className="w-[1000px]">
         <h1 className="font-bold text-2xl text-start mt-5 pt-5 px-12 text-blue-800 mb-10">
           Employee Update Form
         </h1>
-        <section className="absolute bg-slate-200 top-20 right-96">
-          <span className="flex gap-1 items-center p-1">
-            <input
-              type="checkbox"
-              id="nso"
-              {...register("documents.birthCertificate")}
-              checked={query.data?.documents?.birthCertificate}
-            />
-            <label htmlFor="nso">NSO</label>
-          </span>
-          <span className="flex gap-1 items-center p-1">
-            <input
-              type="checkbox"
-              id="tin"
-              {...register("documents.tin")}
-              checked={query.data?.documents?.tin}
-            />
-            <label htmlFor="tin">TIN</label>
-          </span>
+        <section className="absolute bg-slate-50 top-20 right-[185px] flex rounded-md p-3 shadow-sm border border-slate-100">
+          <div className="flex flex-col">
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="nso"
+                {...register("documents.birthCertificate")}
+                // defaultChecked={query.data?.documents?.birthCertificate}
+              />
+              <label htmlFor="nso">NSO</label>
+            </span>
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="tin"
+                {...register("documents.tin")}
+                // defaultChecked={query.data?.documents?.tin}
+              />
+              <label htmlFor="tin">TIN</label>
+            </span>
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="nbi"
+                {...register("documents.nbiClearance")}
+                // defaultChecked={query.data?.documents?.tin}
+              />
+              <label htmlFor="nbi">NBI Clearance</label>
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="pagibig"
+                {...register("documents.pagibig")}
+                // defaultChecked={query.data?.documents?.birthCertificate}
+              />
+              <label htmlFor="pagibig">Pag-ibig</label>
+            </span>
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="tor"
+                {...register("documents.tor")}
+                // defaultChecked={query.data?.documents?.tin}
+              />
+              <label htmlFor="tor">TOR</label>
+            </span>
+            <span className="flex gap-1 items-center p-1">
+              <input
+                type="checkbox"
+                id="philhealth"
+                {...register("documents.philhealth")}
+                // defaultChecked={query.data?.documents?.tin}
+              />
+              <label htmlFor="philhealth">Philhealth</label>
+            </span>
+          </div>
         </section>
         <input type="text" {...register("hireDate")} className="hidden" />
         <form onSubmit={handleSubmit(onSubmit)} className="pt-6 p-5 grid gap-7">
