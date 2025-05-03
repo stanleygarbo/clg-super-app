@@ -1,5 +1,5 @@
 import { Sibling } from "../components/admission/enrollment_form/EForm";
-import { IEmployeeDocs, IStudentDocs } from "./IDocuments";
+import { IStudentDocs } from "./IDocuments";
 import { IProgramGet } from "./IProgram";
 
 export interface IStudentsPost {
