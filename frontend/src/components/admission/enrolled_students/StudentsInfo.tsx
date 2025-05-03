@@ -64,11 +64,25 @@ const StudentsInfo = () => {
           religion: query.data?.birth.religion,
           citizenship: query.data?.birth.citizenship,
         },
+        homeAddress: {
+          houseNum: query.data?.homeAddress?.houseNum,
+          streetBrgy: query.data?.homeAddress?.streetBrgy,
+          city: query.data?.homeAddress?.city,
+          province: query.data?.homeAddress?.province,
+          district: query.data?.homeAddress?.district,
+        },
+        boardAddress: {
+          houseNum: query.data?.homeAddress?.houseNum,
+          streetBrgy: query.data?.homeAddress?.streetBrgy,
+          city: query.data?.homeAddress?.city,
+          province: query.data?.homeAddress?.province,
+          district: query.data?.homeAddress?.district,
+        },
       });
     }
   }, [query.data, reset]);
 
-  console.log(query);
+  // console.log(query);
 
   return (
     <form
@@ -513,7 +527,7 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              defaultValue={query.data?.homeAddress?.province}
+              // defaultValue={query.data?.homeAddress?.province}
               {...register("homeAddress.province")}
               // value={query.data?.homeAddress?.province}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
@@ -526,8 +540,8 @@ const StudentsInfo = () => {
             <input
               type="text"
               readOnly={isUpdate}
-              defaultValue={query.data?.homeAddress?.province}
-              {...register("homeAddress.province")}
+              // defaultValue={query.data?.homeAddress?.province}
+              {...register("homeAddress.district")}
               // value={query.data?.homeAddress?.district}
               className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
             />
