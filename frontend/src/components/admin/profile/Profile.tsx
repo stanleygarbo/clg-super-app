@@ -44,7 +44,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="shadow-lg rounded-lg relative w-full xs:m-[] mb-10">
+    <div className="rounded-md shadow-md relative w-[1200px] h-[700px]">
       <span className="flex gap-5 items-start border-b p-10 rounded-t-lg bg-blue-600">
         <section {...getRootProps()} className="relative">
           <div className=" flex hover:opacity-100 justify-center items-center opacity-0 w-full h-full bg-black/50 absolute top-0 left-0 rounded-lg duration-200 cursor-pointer">
@@ -65,10 +65,10 @@ const Profile = () => {
             .
           </p>
           <p className="flex gap-2 text-slate-300 font-semibold">
-            <p>{employee?.position?.jobTitle}</p>
+            <p>Position : {employee?.position?.jobTitle}</p>
           </p>
           <p className="text-slate-300 font-semibold">
-            Office : {employee?.department?.departmentName}
+            Department : {employee?.department?.departmentName}
           </p>
         </section>
       </span>

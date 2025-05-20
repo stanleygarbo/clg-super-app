@@ -297,11 +297,24 @@ const UpdateEmployee = () => {
                 {...register("maritalStatus")}
                 className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               >
-                <option value="single" selected>
+                <option
+                  value="single"
+                  selected={query?.data?.maritalStatus === "single"}
+                >
                   Single
                 </option>
-                <option value="married">Married</option>
-                <option value="widow">Widow</option>
+                <option
+                  value="married"
+                  selected={query?.data?.maritalStatus === "married"}
+                >
+                  Married
+                </option>
+                <option
+                  value="widow"
+                  selected={query?.data?.maritalStatus === "widow"}
+                >
+                  Widow
+                </option>
               </select>
               {/* <input
                     className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"

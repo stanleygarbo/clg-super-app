@@ -35,6 +35,9 @@ const userSchema = new mongoose.Schema(
     middleName: {
       type: String,
     },
+    maritalStatus: {
+      type: String,
+    },
     birthDate: {
       type: Date,
       required: false,

@@ -8,6 +8,7 @@ export interface IEmployeeGet {
   surname: string;
   middleName: string;
   email: string;
+  maritalStatus: string;
   governmentId: {
     tin: string;
     sss: string;
@@ -15,7 +16,6 @@ export interface IEmployeeGet {
     philhealth: string;
   };
   username: string;
-  maritalStatus: string;
   phone: string;
   password: string;
   department: IDepartmentGet;
@@ -151,6 +151,7 @@ export interface IEmployeeSub {
   username: string;
   password: string;
   phone: string;
+  maritalStatus: string;
   email: string;
   department: string;
   position: string;

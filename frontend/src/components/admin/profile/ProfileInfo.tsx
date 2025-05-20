@@ -5,25 +5,18 @@ import { useState } from "react";
 import { IEmployeeGet } from "../../../interface/IEmployee";
 
 const ProfileInfo = () => {
-  const [employee, setEmployee] = useState<IEmployeeGet>();
   const { id } = useParams();
 
   // const authSnap = useSnapshot(authState);
   // console.log(authSnap.user.id);
 
-  if (id) {
-    const query = useQuery({
-      queryKey: ["employee", id],
-      queryFn: () => getEmployeeById({ id }),
-      enabled: !!id,
-    });
+  const query = useQuery({
+    queryKey: ["employee", id],
+    queryFn: () => getEmployeeById({ id }),
+    enabled: !!id,
+  });
 
-    console.log("Query Data: ", query.isSuccess);
-
-    if (query.isSuccess && !employee) {
-      setEmployee(query.data);
-    }
-  }
+  console.log(query.data);
 
   // TEST ID: 67838a242a0c891e5b2c0de0
 
@@ -39,7 +32,7 @@ const ProfileInfo = () => {
               className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
               readOnly
-              value={employee?.surname}
+              value={query?.data?.surname}
             />
           </span>
           <span className="relative">
@@ -50,7 +43,7 @@ const ProfileInfo = () => {
               className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
               readOnly
-              value={employee?.firstName}
+              value={query?.data?.firstName}
             />
           </span>
           <span className="relative">
@@ -61,31 +54,31 @@ const ProfileInfo = () => {
               className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
               readOnly
-              value={employee?.middleName}
+              value={query?.data?.middleName}
             />
           </span>
         </div>
         <div className="grid grid-cols-4 gap-5 ">
           <span className="relative">
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-              Position
+              Phone No.
             </p>
             <input
               className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
               readOnly
-              value={employee?.position?.jobTitle}
+              value={query?.data?.phone}
             />
           </span>
           <span className="relative">
             <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-              Office
+              Marital Status
             </p>
             <input
               className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
               readOnly
-              value={employee?.department?.departmentName}
+              value={query?.data?.maritalStatus}
             />
           </span>
           <span className="relative">
@@ -96,7 +89,7 @@ const ProfileInfo = () => {
               className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
               readOnly
-              value={employee?.username}
+              value={query?.data?.username}
             />
           </span>
           <span className="relative">
@@ -107,7 +100,7 @@ const ProfileInfo = () => {
               className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
               type="text"
               readOnly
-              value={employee?.employmentType}
+              value={query?.data?.employmentType}
             />
           </span>
           {/* <input
