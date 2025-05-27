@@ -18,7 +18,7 @@ const EnrolledStudents = () => {
   // Paginate
   const [search, setSearch] = useState("");
   const [by, setBy] = useState<string>("");
-  const itemsPerPage = 50;
+  const itemsPerPage = 10;
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + itemsPerPage;
 
@@ -153,7 +153,7 @@ const EnrolledStudents = () => {
 
   return (
     <div className="">
-      <div className="w-[1100px] h-[650px] relative">
+      <div className="w-[1200px] h-[650px] relative">
         <section className="flex justify-between items-center">
           <h1 className="text-2xl font-bold opacity-0">Student's List</h1>
           <button
@@ -165,7 +165,7 @@ const EnrolledStudents = () => {
             Enroll Student
           </button>
         </section>
-        <section className="mt-5 bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
+        <section className="mt-5 bg-slate-100 px-5 ml-1 py-2 rounded-md flex items-center justify-between">
           <h1 className="text-2xl font-bold text-blue-800">Student's List</h1>
           <section className="flex gap-3 items-center">
             <SelectButton onSelect={handleSelectBatch} />
@@ -193,7 +193,7 @@ const EnrolledStudents = () => {
             />
           </section>
         </section>
-        <section className="py-3">
+        <section className="py-3 pl-1">
           <span className="flex mb-3 text-lg">
             <h1 className="w-[150px] font-bold pl-3">Last Name</h1>
             <h1 className="w-[150px] font-bold">First Name</h1>

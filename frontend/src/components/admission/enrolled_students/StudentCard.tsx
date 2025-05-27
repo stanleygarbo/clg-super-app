@@ -38,12 +38,13 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
       key={index}
       className={`${
         index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
-      } flex py-2 text-sm items-center hover:bg-slate-300 group duration-200`}
+      } flex py-2 text-sm items-center pl-1 hover:bg-slate-300 group duration-200`}
     >
       <input
         type="checkbox"
         checked={checkedStudents[student._id] || false}
         onChange={() => onToggle(student._id)}
+        className="mt-[2px]"
       />
 
       <h1 className="w-[150px] pl-3">{student.surname}</h1>
