@@ -10,9 +10,11 @@ import { FaArchive } from "react-icons/fa";
 interface Params {
   student: IStudentsGet;
   index: number;
+  checkedStudents: Record<string, boolean>;
+  onToggle: (id: string) => void;
 }
 
-function StudentCard({ student, index }: Params) {
+function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
   const navigate = useNavigate();
 
   const query = useQuery({
@@ -38,6 +40,12 @@ function StudentCard({ student, index }: Params) {
         index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
       } flex py-2 text-sm items-center hover:bg-slate-300 group duration-200`}
     >
+      <input
+        type="checkbox"
+        checked={checkedStudents[student._id] || false}
+        onChange={() => onToggle(student._id)}
+      />
+
       <h1 className="w-[150px] pl-3">{student.surname}</h1>
       <h1 className="w-[150px]">{student.firstName}</h1>
       <h1 className="w-[150px]">{student.middleName}</h1>

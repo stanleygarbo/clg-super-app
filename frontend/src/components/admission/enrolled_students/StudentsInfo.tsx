@@ -1020,10 +1020,10 @@ const StudentsInfo = () => {
             </span>
           </div>
         )}
-        {query.data?.siblings && (
+        {/* {query.data?.siblings && (
           <h1 className="text-sm font-bold">Sibling Information : </h1>
-        )}
-        {query.data?.siblings &&
+        )} */}
+        {/* {query.data?.siblings &&
           query.data?.siblings.map((sib: Sibling, index: number) => (
             <span key={index} className="grid grid-cols-3 gap-2">
               <section className="relative rounded-lg">
@@ -1060,7 +1060,7 @@ const StudentsInfo = () => {
                 />
               </section>
             </span>
-          ))}
+          ))} */}
       </div>
     </form>
   );

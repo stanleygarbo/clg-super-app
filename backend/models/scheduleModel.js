@@ -27,7 +27,7 @@ const subjectScheduleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  idDeleted: {
+  isDeleted: {
     type: Boolean,
     default: false,
     required: true,
@@ -54,7 +54,7 @@ const scheduleSchema = new mongoose.Schema(
       type: [subjectScheduleSchema],
       required: true,
     },
-    idDeleted: {
+    isDeleted: {
       type: Boolean,
       default: false,
       required: true,

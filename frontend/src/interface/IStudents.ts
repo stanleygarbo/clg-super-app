@@ -9,6 +9,7 @@ export interface IStudentsPost {
   username: string;
   firstName: string;
   surname: string;
+  section: string;
   middleName: string;
   email: string;
   telephone: string;
@@ -94,6 +95,7 @@ export interface IStudentsGet {
   year: String;
   semester: string;
   username: string;
+  section: string;
   firstName: string;
   surname: string;
   middleName: string;

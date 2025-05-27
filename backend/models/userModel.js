@@ -38,10 +38,6 @@ const userSchema = new mongoose.Schema(
     maritalStatus: {
       type: String,
     },
-    birthDate: {
-      type: Date,
-      required: false,
-    },
     email: {
       type: String,
       required: false,
@@ -74,6 +70,9 @@ const User = mongoose.model("User", userSchema);
 const studentSchema = new mongoose.Schema(
   {
     program: { type: mongoose.Schema.Types.ObjectId, ref: "Program" },
+    section: {
+      type: String,
+    },
     standing: {
       type: String,
       enum: standing,

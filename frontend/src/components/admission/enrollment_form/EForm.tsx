@@ -1013,7 +1013,7 @@ function EForm() {
           </div>
         </div>
         {/* <EFormParents /> */}
-        <div className="p-3 duration-200">
+        {/* <div className="p-3 duration-200">
           <section className="flex justify-between">
             <p className="font-bold pb-4 px-6">SIBLING'S INFORMATION</p>
           </section>
@@ -1088,17 +1088,17 @@ function EForm() {
                 className="py-2 bg-slate-200 w-52 text-black font-bold rounded-md shadow hover:shadow-lg active:shadow  duration-200"
               >
                 Add Another Sibling
-              </button>
+              </button> */}
 
-              {/* <button
+        {/* <button
                 type="submit"
                 className="w-full py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700"
               >
                 Submit
               </button> */}
-            </section>
+        {/* </section>
           </div>
-        </div>
+        </div> */}
         {/* <EformSiblings /> */}
         <section className="flex justify-center px-7 mx-2">
           <button

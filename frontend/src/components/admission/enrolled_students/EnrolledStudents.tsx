@@ -7,6 +7,7 @@ import StudentCard from "./StudentCard";
 import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
+import SelectButton from "./SelectButtonProps";
 
 interface ItemsProps {
   currentItems: IStudentsGet[];
@@ -16,7 +17,8 @@ const EnrolledStudents = () => {
   const navigate = useNavigate();
   // Paginate
   const [search, setSearch] = useState("");
-  const itemsPerPage = 10;
+  const [by, setBy] = useState<string>("");
+  const itemsPerPage = 50;
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + itemsPerPage;
 
@@ -33,13 +35,32 @@ const EnrolledStudents = () => {
   //     )
   //   : [];
 
+  // const filteredStudents = query.data?.results?.length
+  //   ? query.data.results
+  //       .filter((stud: IStudentsGet) =>
+  //         `${stud.surname} ${stud.firstName} ${stud.middleName} ${stud.standing}`
+  //           .toLowerCase()
+  //           .includes(by.toLowerCase() || search.toLowerCase())
+  //       )
+  //       .sort((a: IStudentsGet, b: IStudentsGet) =>
+  //         a.surname.localeCompare(b.surname)
+  //       )
+  //   : [];
+
   const filteredStudents = query.data?.results?.length
     ? query.data.results
+        // First: Filter by year (standing)
         .filter((stud: IStudentsGet) =>
-          `${stud.surname} ${stud.firstName} ${stud.middleName}`
-            .toLowerCase()
-            .includes(search.toLowerCase())
+          by ? stud.standing.toLowerCase() === by.toLowerCase() : true
         )
+        // Then: Filter by search input
+        .filter((stud: IStudentsGet) => {
+          const fullName =
+            `${stud.surname} ${stud.firstName} ${stud.middleName}`.toLowerCase();
+          const searchLower = search?.toLowerCase() || "";
+          return fullName.includes(searchLower);
+        })
+        // Optional: Sort alphabetically by surname
         .sort((a: IStudentsGet, b: IStudentsGet) =>
           a.surname.localeCompare(b.surname)
         )
@@ -49,12 +70,72 @@ const EnrolledStudents = () => {
   //   return `${student.surname}, ${student.firstName} ${student.middleName}`;
   // };
 
+  // console.log(query.data);
+
+  const [checkedStudents, setCheckedStudents] = useState<
+    Record<string, boolean>
+  >({});
+
+  const toggleCheck = (_id: string) => {
+    setCheckedStudents((prev) => ({
+      ...prev,
+      [_id]: !prev[_id],
+    }));
+  };
+
+  // Add batchSize and batchIndex state
+  const batchSize = 5;
+  const [batchIndex, setBatchIndex] = useState(0);
+
+  const selectBatch = (startIndex: number) => {
+    const endIndex = startIndex + batchSize;
+    const newChecked: Record<string, boolean> = {};
+
+    const batch = filteredStudents.slice(startIndex, endIndex);
+
+    batch.forEach((student: IStudentsGet) => {
+      newChecked[student._id] = true;
+    });
+
+    setCheckedStudents((prev) => ({ ...prev, ...newChecked }));
+  };
+
+  const handleSelectBatch = () => {
+    const start = batchIndex * batchSize;
+    const end = start + batchSize;
+
+    const currentBatch = filteredStudents.slice(start, end);
+    const allChecked = currentBatch.every(
+      (student: IStudentsGet) => checkedStudents[student._id]
+    );
+
+    if (!allChecked) {
+      // Select only the unchecked students in the current batch
+      const newChecked: Record<string, boolean> = {};
+      currentBatch.forEach((student: IStudentsGet) => {
+        if (!checkedStudents[student._id]) {
+          newChecked[student._id] = true;
+        }
+      });
+      setCheckedStudents((prev) => ({ ...prev, ...newChecked }));
+    } else {
+      // Move to the next batch
+      setBatchIndex((prev) => prev + 1);
+      selectBatch(end);
+    }
+  };
+
   function Items({ currentItems }: ItemsProps) {
     return (
       <>
         {currentItems &&
           currentItems.map((student: IStudentsGet, i: number) => (
-            <StudentCard student={student} index={i} />
+            <StudentCard
+              student={student}
+              index={i}
+              checkedStudents={checkedStudents}
+              onToggle={() => toggleCheck(student._id)}
+            />
           ))}
       </>
     );
@@ -86,15 +167,31 @@ const EnrolledStudents = () => {
         </section>
         <section className="mt-5 bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
           <h1 className="text-2xl font-bold text-blue-800">Student's List</h1>
-          <input
-            type="text"
-            className="border-0 rounded-md py-2 px-5 outline-none"
-            placeholder="Q Search..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-          />
+          <section className="flex gap-3 items-center">
+            <SelectButton onSelect={handleSelectBatch} />
+            <select
+              value={by}
+              onChange={(e) => {
+                setBy(e.target.value);
+              }}
+              className="rounded-md px-4 py-2 text-center outline-none"
+            >
+              <option value="">All</option>
+              <option value="freshman">1st Year</option>
+              <option value="sophomore">2nd Year</option>
+              <option value="junior">3rd Year</option>
+              <option value="senoir">4th Year</option>
+            </select>
+            <input
+              type="text"
+              className="border-0 rounded-md py-2 px-5 outline-none"
+              placeholder="Q Search..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
+          </section>
         </section>
         <section className="py-3">
           <span className="flex mb-3 text-lg">
@@ -106,7 +203,9 @@ const EnrolledStudents = () => {
             <h1 className="w-[150px] font-bold text-center">Standing</h1>
             <h1 className="w-[200px] font-bold text-center">Action</h1>
           </span>
-          <Items currentItems={currentItems} />
+          <section className="max-h-[80hv] overflow-auto no-scrollbar">
+            <Items currentItems={currentItems} />
+          </section>
           <div className="flex justify-center w-full mt-2">
             <ReactPaginate
               breakLabel={<BsThreeDots />}

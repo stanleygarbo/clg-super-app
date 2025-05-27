@@ -44,7 +44,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="rounded-md shadow-md relative w-[1200px] h-[700px]">
+    <div className="rounded-md shadow-md relative w-[1200px] h-[650px]">
       <span className="flex gap-5 items-start border-b p-10 rounded-t-lg bg-blue-600">
         <section {...getRootProps()} className="relative">
           <div className=" flex hover:opacity-100 justify-center items-center opacity-0 w-full h-full bg-black/50 absolute top-0 left-0 rounded-lg duration-200 cursor-pointer">

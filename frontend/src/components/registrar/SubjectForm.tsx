@@ -7,10 +7,18 @@ import { useForm, Controller } from "react-hook-form";
 import { IRoomGet } from "../../interface/IRoom";
 import { getRooms } from "../../api/room";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+
+// interface Props {
+//   submitCallback: (data: any) => void;
+//   course: ICourse;
+//   existingSubjects: SubjectFormData[]; // Add this
+// }
 
 interface Props {
   submitCallback: (data: any) => void;
   course: ICourse;
+  existingSubjects: SubjectFormData[];
 }
 
 interface IOption {
@@ -37,7 +45,7 @@ const dayOptions = [
   { value: "sat", label: "Saturday" },
 ];
 
-function SubjectForm({ submitCallback, course }: Props) {
+function SubjectForm({ submitCallback, course, existingSubjects }: Props) {
   const intructor = useQuery({
     queryKey: ["employees"],
     queryFn: getEmployees,
@@ -83,10 +91,48 @@ function SubjectForm({ submitCallback, course }: Props) {
     },
   });
 
+  // const subjectForm = useForm<SubjectFormData>({
+  //   defaultValues: {
+  //     courseID: course?._id || "",
+  //     timeStart: "",
+  //     timeEnd: "",
+  //     day: [],
+  //     room: "",
+  //     instructorID: "",
+  //   },
+  // });
+
+  const onSubmit = (data: SubjectFormData) => {
+    const isConflict = existingSubjects.some((subject) => {
+      const sameCourse = subject.courseID === data.courseID;
+      const sameInstructor = subject.instructorID === data.instructorID;
+
+      const startA = parseInt(subject.timeStart.replace(":", ""));
+      const endA = parseInt(subject.timeEnd.replace(":", ""));
+      const startB = parseInt(data.timeStart.replace(":", ""));
+      const endB = parseInt(data.timeEnd.replace(":", ""));
+
+      const timeOverlap = startA < endB && startB < endA;
+
+      const daysOverlap = subject.day.some((d) => data.day.includes(d));
+
+      return sameCourse && sameInstructor && timeOverlap && daysOverlap;
+    });
+
+    if (isConflict) {
+      toast.error(
+        "Conflict: This subject already exists with overlapping time and instructor."
+      );
+      return;
+    }
+
+    submitCallback(data);
+  };
+
   return (
     <form
       className="grid grid-cols-scheduleCreate gap-2"
-      onSubmit={subjectForm.handleSubmit(submitCallback)}
+      onSubmit={subjectForm.handleSubmit(onSubmit)}
     >
       <Controller
         control={subjectForm.control}

@@ -15,6 +15,8 @@ import SubjectForm from "./SubjectForm";
 import { getPrograms } from "../../api/programs";
 import { getCourses } from "../../api/course";
 import { ISubjectSchedule } from "../../interface/ISchedule";
+import { useNavigate } from "react-router-dom";
+// import Schedule from "./Schedule";
 
 interface IOption {
   value: string;
@@ -45,7 +47,8 @@ function ScheduleForm() {
   const [subjectSchedules, setSubjectSchedules] = useState<ISubjectSchedule[]>(
     []
   );
-  const [submittedCourses, setSubmittedCourses] = useState<string[]>([]);
+  // const [submittedCourses, setSubmittedCourses] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const intructor = useQuery({
     queryKey: ["employees"],
@@ -101,10 +104,10 @@ function ScheduleForm() {
 
   const onSubjectSubmit = (data: any) => {
     setSubjectSchedules((prevState) => [...prevState, data]);
-    setSubmittedCourses((prevState) => [...prevState, data.courseID]);
+    // setSubmittedCourses((prevState) => [...prevState, data.courseID]);
   };
 
-  const onScheduleSubmit = (data: any) => {
+  const onScheduleSubmit = async (data: any) => {
     if (subjectSchedules.length == 0) {
       toast.error("Must have at least one subject", {
         position: "bottom-right",
@@ -125,30 +128,33 @@ function ScheduleForm() {
     console.log(data);
 
     try {
-      addSchedule(data);
-      toast.success("Schedule added successfully", {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
-      });
+      await addSchedule(data);
+      toast.success("Schedule added successfully");
+      navigate("/registrar/schedule");
+      //  {
+      //   position: "bottom-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: true,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      //   transition: Slide,
+      // }
     } catch (error) {
-      toast.error("Something went wrong!", {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
-      });
+      toast.error("Something went wrong!");
+      // {
+      //   position: "bottom-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: true,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      //   transition: Slide,
+      // }
     }
   };
 
@@ -294,12 +300,17 @@ function ScheduleForm() {
         </tbody>
       </table>
       {filteredCourses
-        .filter((course) => !submittedCourses.includes(course._id)) // Hide submitted courses
+        .filter((course) => {
+          return !subjectSchedules.some(
+            (subject) => subject.courseID === course._id
+          );
+        })
         .map((course) => (
           <SubjectForm
             key={course._id}
             submitCallback={onSubjectSubmit}
             course={course}
+            existingSubjects={subjectSchedules} // You’ll need to pass this down
           />
         ))}
     </main>
