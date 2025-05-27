@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getEmployeeById } from "../../../api/employee";
-import { useState } from "react";
-import { IEmployeeGet } from "../../../interface/IEmployee";
+// import { useState } from "react";
+// import { IEmployeeGet } from "../../../interface/IEmployee";
 
 const ProfileInfo = () => {
   const { id } = useParams();

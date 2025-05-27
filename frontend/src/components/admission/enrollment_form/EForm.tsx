@@ -7,7 +7,7 @@ import { addStudent } from "../../../api/student";
 import { getPrograms } from "../../../api/programs";
 import { IProgramGet } from "../../../interface/IProgram";
 import { useState } from "react";
-import { MdDeleteForever } from "react-icons/md";
+// import { MdDeleteForever } from "react-icons/md";
 
 export interface Sibling {
   fullName: string;
@@ -18,24 +18,24 @@ export interface Sibling {
 function EForm() {
   const navigate = useNavigate();
 
-  const [siblings, setSiblings] = useState<Sibling[]>([
-    { fullName: "", age: "", occupationSchool: "" },
-  ]);
+  // const [siblings, setSiblings] = useState<Sibling[]>([
+  //   { fullName: "", age: "", occupationSchool: "" },
+  // ]);
 
-  const handleChange = (index: number, field: keyof Sibling, value: string) => {
-    const updatedSiblings = [...siblings];
-    updatedSiblings[index][field] = value;
-    setSiblings(updatedSiblings);
-  };
+  // const handleChange = (index: number, field: keyof Sibling, value: string) => {
+  //   const updatedSiblings = [...siblings];
+  //   updatedSiblings[index][field] = value;
+  //   setSiblings(updatedSiblings);
+  // };
 
-  const addSibling = () => {
-    setSiblings([...siblings, { fullName: "", age: "", occupationSchool: "" }]);
-  };
+  // const addSibling = () => {
+  //   setSiblings([...siblings, { fullName: "", age: "", occupationSchool: "" }]);
+  // };
 
-  const removeSibling = (index: number) => {
-    const updatedSiblings = siblings.filter((_, i) => i !== index);
-    setSiblings(updatedSiblings);
-  };
+  // const removeSibling = (index: number) => {
+  //   const updatedSiblings = siblings.filter((_, i) => i !== index);
+  //   setSiblings(updatedSiblings);
+  // };
 
   const {
     handleSubmit,
@@ -80,9 +80,7 @@ function EForm() {
 
   return (
     <form
-      onSubmit={handleSubmit((data) =>
-        addMutation.mutate({ ...data, siblings })
-      )}
+      onSubmit={handleSubmit((data) => addMutation.mutate({ ...data }))}
       className="p-10 w-[1100px]"
     >
       <div className="bg-black p-2 text-white rounded-t-md">

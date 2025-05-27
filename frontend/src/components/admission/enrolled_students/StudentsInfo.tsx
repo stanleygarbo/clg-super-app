@@ -8,7 +8,7 @@ import { getPrograms } from "../../../api/programs";
 import { IProgramGet } from "../../../interface/IProgram";
 import { IStudentsGet, IStudentsPost } from "../../../interface/IStudents";
 import { useForm } from "react-hook-form";
-import { Sibling } from "../enrollment_form/EForm";
+// import { Sibling } from "../enrollment_form/EForm";
 
 const StudentsInfo = () => {
   const [isUpdate, setIsUpdate] = useState<boolean>(true);
