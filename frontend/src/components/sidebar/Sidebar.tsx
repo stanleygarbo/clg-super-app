@@ -27,7 +27,7 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
         className={`fixed top-0 left-0 min-h-screen bg-white p-5 border-r flex flex-col justify-between overflow-y-auto no-scrollbar
           duration-200
           ${
-            isOpen ? "w-64 xs:w-80 sm:w-80" : "w-0 left-[-50px] overflow-hidden"
+            isOpen ? "w-80 xs:w-80 xl:w-72" : "w-0 left-[-25px] overflow-hidden"
           }
         `}
       >

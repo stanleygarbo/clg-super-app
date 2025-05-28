@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import { getDepartments } from "../../../api/department";
 import { getPositions } from "../../../api/position";
 import { useEffect } from "react";
+import { useSnapshot } from "valtio";
+import { sidebarState } from "../../../store/auth";
 
 export interface IOption {
   label: string;
@@ -128,6 +130,9 @@ const UpdateEmployee = () => {
     }
   }, [query.data, reset]);
 
+  const snap = useSnapshot(sidebarState);
+  const isOpen = snap.isOpen;
+
   const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
     let input = e.currentTarget.value;
     input = input.replace(/\D/g, ""); // Remove non-digits
@@ -135,18 +140,20 @@ const UpdateEmployee = () => {
     setValue("phone", input); // Set clean value
   };
 
-  console.log(query.data);
+  // console.log(query.data);
 
   if (query.isFetching) {
     return <img src="/loading.svg" className="p-80" alt="" />;
   }
+
   return (
-    <div className="">
-      <div className="w-[1000px]">
-        <h1 className="font-bold text-2xl text-start mt-5 pt-5 px-12 text-blue-800 mb-10">
+    <div className=" flex justify-center">
+      <div className="w-0 xl:w-72"></div>
+      <div className="w-max flex flex-col items-center">
+        <h1 className="font-bold text-2xl text-center xl:text-start mt-10 text-blue-800 mb-10 xl:mb-20">
           Employee Update Form
         </h1>
-        <section className="absolute bg-slate-50 top-20 right-[185px] flex rounded-md p-3 shadow-sm border border-slate-100">
+        <section className="xl:absolute bg-slate-50 xl:top-[80px] xl:right-[225px] flex rounded-md p-3 shadow-sm border border-slate-100">
           <div className="flex flex-col">
             <span className="flex gap-1 items-center p-1">
               <input
@@ -206,47 +213,53 @@ const UpdateEmployee = () => {
             </span>
           </div>
         </section>
-        <input type="text" {...register("hireDate")} className="hidden" />
-        <form onSubmit={handleSubmit(onSubmit)} className="pt-6 p-5 grid gap-7">
+        {/* <input type="text" {...register("hireDate")} className="hidden" /> */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="pt-6 p-5 grid gap-3 xl:gap-5"
+        >
           {/* <img
                 src="https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
                 alt="IMG"
                 className="w-24 aspect-square rounded-full shadow-md mx-5 mb-5"
               /> */}
-          <div className="flex flex-col gap-5">
-            <h1 className="font-bold text-lg mb-3">Personal Information</h1>
-            <section className="grid grid-cols-3 gap-3 px-10">
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Last Name
-                </p>
-                <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  {...register("surname")}
-                />
-              </span>
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  First Name
-                </p>
-                <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  {...register("firstName")}
-                />
-              </span>
-              <span className={` relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Middle Name
-                </p>
-                <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                  type="text"
-                  {...register("middleName")}
-                />
-              </span>
-              {/* <span className={` relative`}>
+          <div className="flex flex-col gap-3">
+            <h1 className="font-bold text-lg mb-3 text-center xl:text-start">
+              Personal Information
+            </h1>
+            <div className="flex flex-col items-center">
+              <section className="grid xl:grid-cols-3 gap-3 w-[450px] xl:w-full">
+                <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    Last Name
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    {...register("surname")}
+                  />
+                </span>
+                <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    First Name
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    {...register("firstName")}
+                  />
+                </span>
+                <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    Middle Name
+                  </p>
+                  <input
+                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    type="text"
+                    {...register("middleName")}
+                  />
+                </span>
+                {/* <span className={`${isOpen ? "-z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Gender
                     </p>
@@ -260,292 +273,301 @@ const UpdateEmployee = () => {
                       <option value="female">Female</option>
                     </select>
                   </span> */}
-            </section>
+              </section>
+            </div>
           </div>
-          <section className="px-10 grid grid-cols-[1fr_1fr_2fr] gap-3">
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Phone No.
-              </p>
-              <input
-                type="text"
-                placeholder="e.g. 09*********"
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                inputMode="numeric"
-                {...register("phone", {
-                  pattern: {
-                    value: /^0\d{0,11}$/, // Must start with 0, max 11 digits
-                    message: "Must start with 0",
-                  },
-                })}
-                onInput={handleInput}
-              />
-              {errors.phone && (
-                <p
-                  style={{ color: "red" }}
-                  className="absolute font-bold text-xs left-16"
-                >
-                  {errors.phone.message}
+          <div className="flex flex-col items-center">
+            <section className="grid xl:grid-cols-[1fr_1fr_2fr] gap-3 w-[450px] xl:w-full">
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Phone No.
                 </p>
-              )}
-            </span>
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Marital Status
-              </p>
-              <select
-                {...register("maritalStatus")}
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-              >
-                <option
-                  value="single"
-                  selected={query?.data?.maritalStatus === "single"}
+                <input
+                  type="text"
+                  placeholder="e.g. 09*********"
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  inputMode="numeric"
+                  {...register("phone", {
+                    pattern: {
+                      value: /^0\d{0,11}$/, // Must start with 0, max 11 digits
+                      message: "Must start with 0",
+                    },
+                  })}
+                  onInput={handleInput}
+                />
+                {errors.phone && (
+                  <p
+                    style={{ color: "red" }}
+                    className="absolute font-bold text-xs left-16"
+                  >
+                    {errors.phone.message}
+                  </p>
+                )}
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Marital Status
+                </p>
+                <select
+                  {...register("maritalStatus")}
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
-                  Single
-                </option>
-                <option
-                  value="married"
-                  selected={query?.data?.maritalStatus === "married"}
-                >
-                  Married
-                </option>
-                <option
-                  value="widow"
-                  selected={query?.data?.maritalStatus === "widow"}
-                >
-                  Widow
-                </option>
-              </select>
-              {/* <input
+                  <option
+                    value="single"
+                    selected={query?.data?.maritalStatus === "single"}
+                  >
+                    Single
+                  </option>
+                  <option
+                    value="married"
+                    selected={query?.data?.maritalStatus === "married"}
+                  >
+                    Married
+                  </option>
+                  <option
+                    value="widow"
+                    selected={query?.data?.maritalStatus === "widow"}
+                  >
+                    Widow
+                  </option>
+                </select>
+                {/* <input
                     className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     
                   /> */}
-            </span>
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Email
-              </p>
-              <input
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                {...register("email", {
-                  // required: "Email is required",
-                  pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Enter a valid email address",
-                  },
-                })}
-              />
-              {errors.email && (
-                <p
-                  style={{ color: "red" }}
-                  className="absolute text-xs top-10 font-bold right-[129px]"
-                >
-                  {errors.email.message}
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Email
                 </p>
-              )}
-            </span>
-          </section>
-          <section className="grid grid-cols-5 gap-3 px-10">
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                BirthDate
-              </p>
-              <input
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="date"
-                {...register("birth.birthDate")}
-              />
-            </span>
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                BirthPlace
-              </p>
-              <input
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                {...register("birth.birthPlace")}
-              />
-            </span>
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Religion
-              </p>
-              <input
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                {...register("birth.religion")}
-              />
-            </span>
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Citizzenship
-              </p>
-              <input
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                {...register("birth.citizenship")}
-              />
-            </span>
-            <span className="relative">
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Gender
-              </p>
-              <div className="flex gap-3">
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("email", {
+                    // required: "Email is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Enter a valid email address",
+                    },
+                  })}
+                />
+                {errors.email && (
+                  <p
+                    style={{ color: "red" }}
+                    className="absolute text-xs top-10 font-bold right-[129px]"
+                  >
+                    {errors.email.message}
+                  </p>
+                )}
+              </span>
+            </section>
+          </div>
+          <div className="flex flex-col items-center">
+            <section className="grid xl:grid-cols-5 gap-3 w-[450px] xl:w-full">
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  BirthDate
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="date"
+                  {...register("birth.birthDate")}
+                />
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  BirthPlace
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("birth.birthPlace")}
+                />
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Religion
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("birth.religion")}
+                />
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Citizzenship
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("birth.citizenship")}
+                />
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Gender
+                </p>
+                <div className="flex gap-3">
+                  <select
+                    {...register("birth.sex")}
+                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  >
+                    <option
+                      value="male"
+                      selected={query.data?.birth.sex === "male"}
+                    >
+                      Male
+                    </option>
+                    <option
+                      value="female"
+                      selected={query.data?.birth.sex === "female"}
+                    >
+                      Female
+                    </option>
+                  </select>
+                </div>
+              </span>
+            </section>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <section className="grid xl:grid-cols-4 gap-3 w-[450px] xl:w-full">
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  SSS
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("governmentId.sss")}
+                />
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  TIN
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("governmentId.tin")}
+                />
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Pag-Ibig
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("governmentId.pagibig")}
+                />
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Philhealth
+                </p>
+                <input
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  type="text"
+                  {...register("governmentId.philhealth")}
+                />
+              </span>
+            </section>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <section className="grid xl:grid-cols-[2fr_1fr_1fr_1fr] gap-3 w-[450px] xl:w-full">
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 duration-200 text-xs z-50">
+                  Roles
+                </p>
+                <Controller
+                  name="roles"
+                  control={control}
+                  defaultValue={[]} // Default value must be an array for isMulti
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      isMulti
+                      styles={customStyles}
+                      options={roles}
+                      className="w-full"
+                      onChange={(selected) => field.onChange(selected)}
+                      value={field.value || []} // Ensures value is never undefined
+                    />
+                  )}
+                />
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Position
+                </p>
                 <select
-                  {...register("birth.sex")}
+                  {...register("position")}
                   className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
+                  {position.data?.results?.map(
+                    (pos: IPositionGet, index: number) => (
+                      <option
+                        key={index}
+                        value={pos._id}
+                        selected={query.data?.position._id === pos._id}
+                      >
+                        {pos.jobTitle}
+                      </option>
+                    )
+                  )}
+                </select>
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Department
+                </p>
+                <select
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  {...register("department")}
+                >
+                  {department?.data?.results?.map(
+                    (dept: IDepartmentGet, index: number) => (
+                      <option
+                        key={index}
+                        value={dept._id}
+                        selected={query.data?.department._id === dept._id}
+                      >
+                        {dept.departmentName}
+                      </option>
+                    )
+                  )}
+                </select>
+              </span>
+              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <p className="absolute w-[102px] left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  Employment Type
+                </p>
+                <select
+                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  {...register("employmentType")}
+                >
                   <option
-                    value="male"
-                    selected={query.data?.birth.sex === "male"}
+                    value="regular"
+                    selected={query.data?.employmentType === "regular"}
                   >
-                    Male
+                    Regular
                   </option>
                   <option
-                    value="female"
-                    selected={query.data?.birth.sex === "female"}
+                    value="contractual"
+                    selected={query.data?.employmentType === "contractual"}
                   >
-                    Female
+                    Contractual
                   </option>
                 </select>
-              </div>
-            </span>
-          </section>
-
-          <section className="grid grid-cols-4 gap-3 px-10">
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                SSS
-              </p>
-              <input
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                {...register("governmentId.sss")}
-              />
-            </span>
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                TIN
-              </p>
-              <input
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                {...register("governmentId.tin")}
-              />
-            </span>
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Pag-Ibig
-              </p>
-              <input
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                {...register("governmentId.pagibig")}
-              />
-            </span>
-            <span className={` relative`}>
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Philhealth
-              </p>
-              <input
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                {...register("governmentId.philhealth")}
-              />
-            </span>
-          </section>
-
-          <section className="grid grid-cols-[2fr_1fr_1fr_1fr] gap-3 px-10">
-            <span className="relative">
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 duration-200 text-xs z-50">
-                Roles
-              </p>
-              <Controller
-                name="roles"
-                control={control}
-                defaultValue={[]} // Default value must be an array for isMulti
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    isMulti
-                    styles={customStyles}
-                    options={roles}
-                    className="w-full"
-                    onChange={(selected) => field.onChange(selected)}
-                    value={field.value || []} // Ensures value is never undefined
-                  />
-                )}
-              />
-            </span>
-            <span className="relative">
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Position
-              </p>
-              <select
-                {...register("position")}
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-              >
-                {position.data?.results?.map(
-                  (pos: IPositionGet, index: number) => (
-                    <option
-                      key={index}
-                      value={pos._id}
-                      selected={query.data?.position._id === pos._id}
-                    >
-                      {pos.jobTitle}
-                    </option>
-                  )
-                )}
-              </select>
-            </span>
-            <span className="relative">
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Department
-              </p>
-              <select
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                {...register("department")}
-              >
-                {department?.data?.results?.map(
-                  (dept: IDepartmentGet, index: number) => (
-                    <option
-                      key={index}
-                      value={dept._id}
-                      selected={query.data?.department._id === dept._id}
-                    >
-                      {dept.departmentName}
-                    </option>
-                  )
-                )}
-              </select>
-            </span>
-            <span className="relative">
-              <p className="absolute w-[102px] left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Employment Type
-              </p>
-              <select
-                className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                {...register("employmentType")}
-              >
-                <option
-                  value="regular"
-                  selected={query.data?.employmentType === "regular"}
-                >
-                  Regular
-                </option>
-                <option
-                  value="contractual"
-                  selected={query.data?.employmentType === "contractual"}
-                >
-                  Contractual
-                </option>
-              </select>
-            </span>
-          </section>
+              </span>
+            </section>
+          </div>
           {/* <section className="grid grid-cols-3 gap-3 px-10">
-                <span className={` relative`}>
+                <span className={`${isOpen ? "-z-50" : ""} relative`}>
                   <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                     Username
                   </p>
@@ -619,191 +641,13 @@ const UpdateEmployee = () => {
               </section> */}
           <button
             type="submit"
-            className="bg-blue-600 py-1 mx-64 px-6 rounded-md font-bold text-lg text-white mt-5 hover:bg-blue-800 active:scale-90 duration-200"
+            className="bg-blue-600 py-1 xl:mx-64 px-6 rounded-md font-bold text-lg text-white mt-5 hover:bg-blue-800 active:scale-90 duration-200"
           >
             Submit
           </button>
         </form>
       </div>
     </div>
-    // <div className="m-10">
-    //   <div className="w-[900px]">
-    //     <h1 className="font-bold text-2xl text-start mt-5 pt-5 px-12 text-blue-800">
-    //       Employee Form
-    //     </h1>
-    //     <form
-    //       onSubmit={handleSubmit(
-    //         onSubmit
-    //         //   () => {
-    //         //   if (!id) {
-    //         //     toast.error("No employee ID found!");
-    //         //     return;
-    //         //   }
-    //         //   // updateMutation.mutate({ id, value: { ...data, ...roles.value } });
-    //         // }
-    //       )}
-    //       className="pt-6 p-5 grid gap-5"
-    //     >
-    //       <section className="grid grid-cols-3 gap-5 px-10">
-    //         <input
-    //           type="text"
-    //           placeholder="Last Name"
-    //           className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-    //           defaultValue={query.data?.surname}
-    //           {...register("surname")}
-    //         />
-    //         <input
-    //           type="text"
-    //           placeholder="First Name"
-    //           className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-    //           defaultValue={query.data?.firstName}
-    //           {...register("firstName")}
-    //         />
-    //         <input
-    //           type="text"
-    //           placeholder="Middle Name"
-    //           className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-    //           defaultValue={query.data?.middleName}
-    //           {...register("middleName")}
-    //         />
-    //       </section>
-    //       <section className="grid grid-cols-[1fr_200px] gap-5 px-10">
-    //         <span className="flex flex-col gap-2">
-    //           <h1 className="text-sm font-semibold">Roles :</h1>
-    //           <Controller
-    //             name="roles"
-    //             control={control}
-    //             // defaultValue={deaf} // Default value must be an array for isMulti
-    //             render={({ field }) => {
-    //               return (
-    //                 <Select
-    //                   {...field}
-    //                   isMulti
-    //                   options={roles}
-    //                   onChange={(selected) => field.onChange(selected)}
-    //                   value={field.value} // Ensures value is never undefined
-    //                 />
-    //               );
-    //             }}
-    //           />
-    //         </span>
-    //         <span className="px-5">
-    //           <h1 className="text-sm font-semibold pb-3">Gender:</h1>
-    //           <div className="flex">
-    //             <select
-    //               {...register("birth.sex")}
-    //               className="text-center w-[100%] outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-    //             >
-    //               <option
-    //                 value="male"
-    //                 selected={query.data?.birth?.sex === "male"}
-    //               >
-    //                 Male
-    //               </option>
-    //               <option
-    //                 value="female"
-    //                 selected={query.data?.birth?.sex === "female"}
-    //               >
-    //                 Female
-    //               </option>
-    //             </select>
-    //           </div>
-    //         </span>
-    //       </section>
-    //       <section className="grid grid-cols-3 gap-5 px-10">
-    //         <span className="flex flex-col gap-2">
-    //           <h1 className="text-sm font-semibold">Position :</h1>
-    //           <select
-    //             {...register("position")}
-    //             className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-    //             defaultValue={query.data?.position?._id}
-    //           >
-    //             {position.data?.results.map(
-    //               (pos: IPositionGet, index: number) => (
-    //                 <option
-    //                   key={index}
-    //                   value={pos._id}
-    //                   selected={query.data?.position?._id === pos._id}
-    //                 >
-    //                   {pos.jobTitle}
-    //                 </option>
-    //               )
-    //             )}
-    //           </select>
-    //         </span>
-    //         <span className="flex flex-col gap-2">
-    //           <h1 className="text-sm font-semibold">Department :</h1>
-
-    //           <select
-    //             className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-    //             // defaultValue={query.data?.department?._id}
-    //             {...register("department")}
-    //           >
-    //             {department.data?.results.map(
-    //               (dept: IDepartmentGet, index: number) => (
-    //                 <option
-    //                   key={index}
-    //                   value={dept._id}
-    //                   selected={query.data?.department?._id === dept._id}
-    //                 >
-    //                   {dept.departmentName}
-    //                 </option>
-    //               )
-    //             )}
-    //           </select>
-    //         </span>
-    //         <span className="flex flex-col gap-2">
-    //           <h1 className="text-sm font-semibold">Employment Type :</h1>
-    //           <select
-    //             className="text-center outline-none p-2 bg-transparent font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
-    //             // defaultValue={query.data?.employmentType}
-    //             {...register("employmentType")}
-    //           >
-    //             <option
-    //               value="regular"
-    //               selected={query.data?.employmentType === "regular"}
-    //             >
-    //               regular
-    //             </option>
-    //             <option
-    //               value="contractual"
-    //               selected={query.data?.employmentType === "contractual"}
-    //             >
-    //               contractual
-    //             </option>
-    //           </select>
-    //         </span>
-    //       </section>
-    //       <section className="grid grid-cols-3 gap-5 px-10">
-    //         <input
-    //           type="text"
-    //           placeholder="Username"
-    //           className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-    //           defaultValue={query.data?.username}
-    //           {...register("username")}
-    //         />
-    //         <input
-    //           type="password"
-    //           placeholder="Password"
-    //           className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-    //           defaultValue={query.data?.password}
-    //           {...register("password")}
-    //         />
-    //         <input
-    //           type="password"
-    //           placeholder="Confirm Password"
-    //           className="text-center outline-none border-0 p-2 bg-transparent font-semibold border-b-2 focus:border-b-blue-800 duration-200"
-    //         />
-    //       </section>
-    //       <button
-    //         type="submit"
-    //         className="mx-80 bg-blue-600 py-1 px-6 rounded-md font-bold text-lg text-white mt-5 hover:bg-blue-800 active:scale-95 duration-200"
-    //       >
-    //         Submit
-    //       </button>
-    //     </form>
-    //   </div>
-    // </div>
   );
 };
 
