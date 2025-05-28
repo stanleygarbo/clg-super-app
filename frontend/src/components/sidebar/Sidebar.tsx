@@ -16,17 +16,19 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
       {/* Toggle button: shows hamburger when closed, fold icon when open */}
       <button
         onClick={() => (sidebarState.isOpen = !sidebarState.isOpen)}
-        className="fixed top-5 left-5 z-50 p-2 bg-white border rounded-md shadow-md md:hidden"
+        className="fixed top-5 left-2 z-50 p-2 bg-white border rounded-md shadow-md md:hidden"
         aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
       >
-        {isOpen ? <RiSidebarFoldFill size={24} /> : <RiMenuFill size={24} />}
+        {isOpen ? <RiSidebarFoldFill size={20} /> : <RiMenuFill size={20} />}
       </button>
 
       {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 min-h-screen bg-white p-5 border-r flex flex-col justify-between overflow-y-auto no-scrollbar
           duration-200
-          ${isOpen ? "w-64 xs:w-80 sm:w-80" : "w-0 overflow-hidden"}
+          ${
+            isOpen ? "w-64 xs:w-80 sm:w-80" : "w-0 left-[-50px] overflow-hidden"
+          }
         `}
       >
         {isOpen && (
