@@ -157,9 +157,13 @@ const EnrolledStudents = () => {
   const isOpen = snap.isOpen;
 
   return (
-    <div className={`${isOpen ? "-z-50 xl:z-50" : ""} flex py-10`}>
-      <div className="w-0 xl:w-72"></div>
-      <div className="w-full xl:w-[1200px] xl:h-[650px] relative">
+    <div className={`${isOpen ? "" : ""} flex mt-5`}>
+      <div className="w-0 xl:block xl:w-72 xl:-z-50"></div>
+      <div
+        className={`${
+          isOpen ? "-z-50 xl:z-50" : ""
+        } w-full xl:w-[1200px] xl:h-[650px] relative`}
+      >
         <section className="flex justify-between items-center">
           <h1 className="text-2xl font-bold opacity-0">Student's List</h1>
           <button
@@ -171,7 +175,7 @@ const EnrolledStudents = () => {
             Enroll Student
           </button>
         </section>
-        <section className="my-5 bg-slate-100 px-5 ml-1 py-2 flex flex-col xl:flex-row rounded-md items-center justify-between">
+        <section className="my-5 bg-slate-100 px-5 ml-1 w-[330px] xl:w-full py-2 flex flex-col xl:flex-row rounded-md items-center justify-between">
           <h1 className="text-2xl font-bold text-blue-800 py-3">
             Student's List
           </h1>
@@ -182,7 +186,7 @@ const EnrolledStudents = () => {
               onChange={(e) => {
                 setBy(e.target.value);
               }}
-              className="rounded-md px-4 py-2 text-center outline-none"
+              className="rounded-md px-4 py-2 w-60 xl:w-40 bg-white text-center outline-none"
             >
               <option value="">All</option>
               <option value="freshman">1st Year</option>
@@ -192,7 +196,7 @@ const EnrolledStudents = () => {
             </select>
             <input
               type="text"
-              className="border-0 rounded-md py-2 px-5 outline-none"
+              className="border-0 rounded-md w-60 xl:w-72 text-center py-2 px-5 outline-none"
               placeholder="Q Search..."
               value={search}
               onChange={(e) => {
@@ -211,16 +215,16 @@ const EnrolledStudents = () => {
             <h1 className="w-[150px] font-bold text-center">Standing</h1>
             <h1 className="w-[200px] font-bold text-center">Action</h1>
           </span>
-          <div className="md:hidden text-xl font-bold mb-3 text-blue-800">
+          <div className="text-xl font-bold mb-3">
             <Items currentItems={currentItems} />
           </div>
-          <section
+          {/* <section
             className={`${
               isOpen ? "-z-50" : ""
-            } max-h-[80hv] overflow-auto no-scrollbar xs:hidden`}
+            } max-h-[80hv] overflow-auto no-scrollbar`}
           >
             <Items currentItems={currentItems} />
-          </section>
+          </section> */}
           <div className="flex justify-center w-full mt-2">
             <ReactPaginate
               breakLabel={<BsThreeDots />}

@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { AiFillDelete } from "react-icons/ai";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { useSnapshot } from "valtio";
+import { sidebarState } from "../../../store/auth";
 const RoomList = () => {
   const { handleSubmit, register, setValue, formState } = useForm<IRoomPost>();
   const [search, setSearch] = useState<string>("");
@@ -46,37 +48,52 @@ const RoomList = () => {
     room.room.toLowerCase().includes(search.toLowerCase())
   );
 
+  const snap = useSnapshot(sidebarState);
+  const isOpen = snap.isOpen;
+
   return (
-    <div className="">
-      <div className="w-[1100px] h-[650px]">
+    <div className="flex flex-col xl:flex-row my-10 items-center xl:items-start px-4">
+      <div className="w-0 xl:w-72"></div>
+
+      <div className="w-full max-w-[1100px] h-auto xl:h-[650px]">
         <form
           onSubmit={handleSubmit((data) => addRoomMutation.mutate(data))}
-          className={`rounded-md bg-white flex items-center gap-3 px-4 py-2 pb-5 duration-150`}
+          className="rounded-md bg-white flex flex-col xl:flex-row justify-center items-center gap-5 px-4 py-5"
         >
-          <h1 className="pr-20 text-xl font-bold text-blue-800">Add Room </h1>
-          <section className="flex gap-5">
-            <section className="relative">
+          <h1 className="text-xl font-bold text-blue-800">Add Room</h1>
+
+          <section className="flex flex-col md:flex-row gap-3">
+            {/* Room Name */}
+            <section
+              className={`${
+                isOpen ? "-z-50 xl:z-50" : ""
+              } relative flex-1 min-w-[200px]`}
+            >
+              <p className="text-sm font-semibold mb-1">Room Name:</p>
               <input
                 type="text"
                 className={twMerge(
-                  "text-center outline-none border-0 p-2 border-black bg-white font-semibold border-b-2 focus:border-b-blue-800 duration-200",
+                  "w-full text-center outline-none border-0 p-2 bg-white font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200",
                   errors.room?.message &&
                     "focus:border-b-red-500 border-b-red-500"
                 )}
-                placeholder="Room Name"
                 {...register("room", { required: "Room Name is required" })}
               />
-              <p className="text-[11px] text-red-500 font-semibold absolute transform -translate-x-[-45px] -translate-y-1/2 top-[51px]">
+              <p className="text-[11px] text-red-500 font-semibold absolute left-0 top-full mt-1">
                 {errors.room?.message}
               </p>
             </section>
-            <section className="relative">
-              <p className="absolute text-sm font-semibold top-[-10px]">
-                Building :
-              </p>
+
+            {/* Building */}
+            <section
+              className={`${
+                isOpen ? "-z-50 xl:z-50" : ""
+              } relative flex-1 min-w-[200px]`}
+            >
+              <p className="text-sm font-semibold mb-1">Building:</p>
               <select
                 {...register("building")}
-                className="text-center w-[200px] outline-none border-0 p-2 bg-white font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
+                className="w-full text-center outline-none border-0 p-2 bg-white font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
               >
                 <option value="A" selected>
                   A
@@ -84,13 +101,17 @@ const RoomList = () => {
                 <option value="B">B</option>
               </select>
             </section>
-            <section className="relative">
-              <p className="text-sm font-semibold absolute top-[-10px]">
-                Floor :
-              </p>
+
+            {/* Floor */}
+            <section
+              className={`${
+                isOpen ? "-z-50 xl:z-50" : ""
+              } relative flex-1 min-w-[200px]`}
+            >
+              <p className="text-sm font-semibold mb-1">Floor:</p>
               <select
                 {...register("floor")}
-                className="text-center w-[200px] outline-none border-0 p-2 bg-white font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
+                className="w-full text-center outline-none border-0 p-2 bg-white font-semibold border-b-2 border-b-black focus:border-b-blue-800 duration-200"
               >
                 <option value={2} selected>
                   2
@@ -101,23 +122,27 @@ const RoomList = () => {
                 <option value={6}>6</option>
               </select>
             </section>
-            <button
-              type="submit"
-              className="bg-blue-600 px-5 py-2 text-white font-semibold rounded-md text-base ml-10 hover:bg-blue-800 active:scale-95 duration-200"
-            >
-              Add Room
-            </button>
+
+            {/* Submit Button */}
+            <div className="flex-1 min-w-[200px] flex items-end">
+              <button
+                type="submit"
+                className="bg-blue-600 w-full md:w-auto px-5 py-2 text-white font-semibold rounded-md text-base hover:bg-blue-800 active:scale-95 duration-200"
+              >
+                Add Room
+              </button>
+            </div>
           </section>
         </form>
-        <section className="flex justify-between items-center"></section>
-        <section className="bg-slate-100 px-5 py-2 rounded-md flex justify-between">
+        {/* <section className="flex justify-between items-center"></section> */}
+        <section className="bg-slate-100 px-5 py-2 gap-5 rounded-md flex justify-between">
           <span className="flex gap-3 items-center">
             <h1 className="text-xl font-bold text-blue-700">Room's List</h1>
           </span>
           <span className="flex gap-3 ">
             <input
               type="text"
-              className="border-0 rounded-md px-5 text-center py-2 outline-none"
+              className="border-0 rounded-md w-40 px-5 text-center py-2 outline-none"
               placeholder="Q Search..."
               value={search}
               onChange={(e) => {
@@ -127,54 +152,98 @@ const RoomList = () => {
           </span>
         </section>
         <section className="py-3">
-          <span className="flex mb-3 text-lg">
-            <h1 className="w-[200px] font-bold pl-2">Room</h1>
-            <h1 className="w-[150px] font-bold text-center">Building</h1>
-            <h1 className="w-[150px] font-bold text-center">Floor</h1>
-            <h1 className="w-[200px] font-bold text-center">Action</h1>
-          </span>
-          <section className="flex flex-col overflow-auto no-scrollbar h-[470px] rounded-md">
+          {/* Desktop View */}
+          <div className="hidden md:block">
+            <span className="flex mb-3 text-lg">
+              <h1 className="w-[200px] font-bold pl-2">Room</h1>
+              <h1 className="w-[150px] font-bold text-center">Building</h1>
+              <h1 className="w-[150px] font-bold text-center">Floor</h1>
+              <h1 className="w-[200px] font-bold text-center">Action</h1>
+            </span>
+            <section className="flex flex-col overflow-auto no-scrollbar h-[470px] rounded-md">
+              {filteredData?.map((room: IRoomGet, index: number) => (
+                <span
+                  key={index}
+                  className={`${
+                    index == filteredData?.length - 1
+                      ? "rounded-b-md"
+                      : index == 0
+                      ? "rounded-t-md"
+                      : ""
+                  } ${
+                    index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
+                  } hover:bg-slate-300 group flex py-2 text-sm items-center duration-200`}
+                >
+                  <h1 className="w-[200px] pl-3 font-semibold">{room.room}</h1>
+                  <h1 className="w-[150px] font-semibold text-center">
+                    {room.building}
+                  </h1>
+                  <h1 className="w-[150px] font-semibold text-center">
+                    {room.floor}
+                    {room.floor === 2 ? (
+                      <sup className={`${isOpen ? "-z-50 xl:z-50" : ""}`}>
+                        nd
+                      </sup>
+                    ) : room.floor === 3 ? (
+                      <sup>rd</sup>
+                    ) : room.floor >= 4 ? (
+                      <sup>th</sup>
+                    ) : (
+                      ""
+                    )}
+                  </h1>
+                  <h1 className="w-[200px] font-semibold flex gap-3 justify-center opacity-0 group-hover:opacity-100">
+                    <button
+                      onClick={() => deleteRoomMutation.mutate(room._id)}
+                      type="button"
+                      className="bg-red-500 px-3 py-2 rounded-md text-lg text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
+                    >
+                      <AiFillDelete />
+                    </button>
+                  </h1>
+                </span>
+              ))}
+            </section>
+          </div>
+
+          {/* Mobile View */}
+          <div className="md:hidden flex flex-col gap-3">
             {filteredData?.map((room: IRoomGet, index: number) => (
-              <span
+              <div
                 key={index}
-                className={`${
-                  index == filteredData?.length - 1
-                    ? "rounded-b-md"
-                    : index == 0
-                    ? "rounded-t-md"
-                    : ""
-                } ${
-                  index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
-                } hover:bg-slate-300 group flex py-2 text-sm items-center duration-200`}
+                className="bg-slate-100 p-4 rounded-md shadow-sm text-sm font-semibold space-y-2"
               >
-                <h1 className="w-[200px] pl-3 font-semibold">{room.room}</h1>
-                <h1 className="w-[150px] font-semibold text-center">{`${room.building}`}</h1>
-                <h1 className="w-[150px] font-semibold text-center">
-                  {room.floor}
-                  {room.floor == 2 ? (
-                    <sup>nd</sup>
-                  ) : room.floor == 3 ? (
-                    <sup>rd</sup>
-                  ) : room.floor == 4 || 5 || 6 ? (
-                    <sup>th</sup>
+                <p>
+                  <span className="text-blue-800">Room:</span> {room.room}
+                </p>
+                <p>
+                  <span className="text-blue-800">Building:</span>{" "}
+                  {room.building}
+                </p>
+                <p>
+                  <span className="text-blue-800">Floor:</span> {room.floor}
+                  {room.floor === 2 ? (
+                    <sup className={`${isOpen ? "-z-50 xl:z-50" : ""}`}>nd</sup>
+                  ) : room.floor === 3 ? (
+                    <sup className={`${isOpen ? "-z-50 xl:z-50" : ""}`}>rd</sup>
+                  ) : room.floor >= 4 ? (
+                    <sup className={`${isOpen ? "-z-50 xl:z-50" : ""}`}>th</sup>
                   ) : (
                     ""
                   )}
-                </h1>
-                <h1 className="w-[200px] font-semibold flex gap-3 justify-center opacity-0 group-hover:opacity-100">
+                </p>
+                <div className="flex justify-end">
                   <button
-                    onClick={() => {
-                      deleteRoomMutation.mutate(room._id);
-                    }}
+                    onClick={() => deleteRoomMutation.mutate(room._id)}
                     type="button"
                     className="bg-red-500 px-3 py-2 rounded-md text-lg text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
                   >
                     <AiFillDelete />
                   </button>
-                </h1>
-              </span>
+                </div>
+              </div>
             ))}
-          </section>
+          </div>
         </section>
       </div>
     </div>

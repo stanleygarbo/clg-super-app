@@ -6,8 +6,6 @@ import { getStudents } from "../../../api/student";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { FaArchive } from "react-icons/fa";
-import { useSnapshot } from "valtio";
-import { sidebarState } from "../../../store/auth";
 
 interface Params {
   student: IStudentsGet;
@@ -34,9 +32,6 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
     } finally {
     }
   };
-
-  const snap = useSnapshot(sidebarState);
-  const isOpen = snap.isOpen;
 
   return (
     <div>
@@ -83,17 +78,16 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
       <div
         key={index}
         className={`${
-          isOpen ? "" : ""
-        } md:hidden w-full bg-slate-100 rounded-md p-4 shadow-sm space-y-2 font-semibold mb-3`}
+          index % 2 === 0 ? "bg-slate-200" : "bg-slate-100"
+        } md:hidden w-[330px] p-4 shadow-sm font-semibold`}
       >
         <div className="flex justify-between items-center">
           <div>
-            <h2 className="text-sm font-bold">
-              {student.surname}, {student.firstName}{" "}
-              {student.middleName?.[0] || ""}.
+            <h2 className="text-base font-bold">
+              {student.surname}, {student.firstName} {student.middleName}
             </h2>
-            <p className="text-xs text-gray-600">
-              {student.program?.programAcronym}
+            <p className="text-sm">
+              <strong>Program : </strong> {student.program?.programAcronym}
             </p>
           </div>
           <input
@@ -105,7 +99,7 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
 
         <div className="text-sm">
           <p>
-            <strong>Gender:</strong> {student.birth.sex}
+            <strong>Gender :</strong> {student.birth.sex}
           </p>
           <p>
             <strong>Standing:</strong> {student.standing}

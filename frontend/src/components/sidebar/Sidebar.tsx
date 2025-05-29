@@ -39,9 +39,7 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
       {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 bg-white p-5 h-full overflow-y-auto no-scrollbar border-r flex flex-col justify-between duration-200
-          ${
-            isOpen ? "w-80 xs:w-80 xl:w-72" : "w-0 left-[-50px] overflow-hidden"
-          }
+          ${isOpen ? "w-80 xl:w-72" : "w-0 left-[-50px] overflow-hidden"}
         `}
       >
         {isOpen && (
