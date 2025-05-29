@@ -5,6 +5,10 @@ const subjectScheduleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  section: {
+    type: String,
+    required: true,
+  },
   timeStart: {
     type: String,
     required: true,

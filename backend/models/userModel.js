@@ -11,6 +11,7 @@ const standing = require("../constants/studentStanding");
 const { scheduleSchema } = require("./scheduleModel");
 const { employeeDocsSchema } = require("./employeeDocsModel");
 const { studentDocsSchema } = require("./studentDocsModel");
+const { studentGradeSchema } = require("./studentGradeModel");
 
 const userSchema = new mongoose.Schema(
   {
@@ -73,6 +74,9 @@ const studentSchema = new mongoose.Schema(
     section: {
       type: String,
     },
+    section: {
+      type: String,
+    },
     standing: {
       type: String,
       enum: standing,
@@ -92,6 +96,7 @@ const studentSchema = new mongoose.Schema(
     siblings: [siblingSchema],
     schedules: employeeDocsSchema,
     documents: studentDocsSchema,
+    grades: [studentGradeSchema],
   },
   { timestamps: true }
 );
