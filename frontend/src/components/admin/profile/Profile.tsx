@@ -54,7 +54,7 @@ const Profile = () => {
       <div
         className={`${
           isOpen ? "-z-50 xl:z-50" : ""
-        } rounded-md shadow relative w-full xl:w-[1100px] xl:h-[700px] my-10 mx-10`}
+        } rounded-md shadow relative w-full xl:w-[1100px] xl:h-[700px] my-10`}
       >
         <span className="flex gap-5 items-start border-b p-10 rounded-t-lg bg-blue-600">
           <section
