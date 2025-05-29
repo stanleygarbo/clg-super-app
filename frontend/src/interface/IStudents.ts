@@ -9,6 +9,7 @@ export interface IStudentsPost {
   username: string;
   firstName: string;
   surname: string;
+  maritalStatus: string;
   section: string;
   middleName: string;
   email: string;
@@ -38,7 +39,7 @@ export interface IStudentsPost {
     district: string;
     province: string;
   };
-  boardAddress: {
+  cityAddress: {
     houseNum: number;
     streetBrgy: string;
     city: string;
@@ -97,6 +98,7 @@ export interface IStudentsGet {
   username: string;
   section: string;
   firstName: string;
+  maritalStatus: string;
   surname: string;
   middleName: string;
   email: string;
@@ -126,7 +128,7 @@ export interface IStudentsGet {
     district: string;
     province: string;
   };
-  boardAddress: {
+  cityAddress: {
     houseNum: number;
     streetBrgy: string;
     city: string;

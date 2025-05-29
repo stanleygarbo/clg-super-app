@@ -103,7 +103,7 @@ function EForm() {
               </div>
               <div className="border py-10 px-5 flex flex-col border-slate-500 rounded-md w- xl:w-[400px] gap-3">
                 <section className="grid grid-cols-2 gap-3">
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute left-1/2 w-[65px] xl:w-[66px] transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       School Year
                     </p>
@@ -129,7 +129,7 @@ function EForm() {
                       </option>
                     </select>
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Standing
                     </p>
@@ -157,7 +157,7 @@ function EForm() {
                   </span>
                 </section>
                 <section className="grid grid-cols-2 gap-3">
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Program
                     </p>
@@ -179,7 +179,7 @@ function EForm() {
                       )}
                     </select>
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Semester
                     </p>
@@ -199,7 +199,7 @@ function EForm() {
                   INITIAL PAYMENT :
                 </h1>
                 <section className="grid grid-cols-3 gap-3">
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Date
                     </p>
@@ -209,7 +209,7 @@ function EForm() {
                       type="date"
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 w-[38px] xl:w-[41px] duration-200 text-xs">
                       OR No.
                     </p>
@@ -219,7 +219,7 @@ function EForm() {
                       type="text"
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Amount
                     </p>
@@ -238,7 +238,7 @@ function EForm() {
                 {/* Student */}
                 <section className="flex flex-col gap-3 xl:flex-row justify-between">
                   <p className="font-bold">STUDENT'S INFORMATION</p>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       USN/LRN
                     </p>
@@ -250,7 +250,7 @@ function EForm() {
                   </span>
                 </section>
                 <div className="gap-3 grid xl:grid-cols-3">
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Last Name
                     </p>
@@ -260,7 +260,7 @@ function EForm() {
                       {...register("surname")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       First Name
                     </p>
@@ -270,7 +270,7 @@ function EForm() {
                       {...register("firstName")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Middle Name
                     </p>
@@ -282,7 +282,7 @@ function EForm() {
                   </span>
                 </div>
                 <div className="grid xl:grid-cols-[1fr_2fr] gap-3">
-                  {/* <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  {/* <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Telephone No.
                 </p>
@@ -292,7 +292,7 @@ function EForm() {
                   {...register("telephone")}
                 />
               </span> */}
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Phone No.
                     </p>
@@ -318,7 +318,7 @@ function EForm() {
                       </p>
                     )}
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Email
                     </p>
@@ -348,7 +348,7 @@ function EForm() {
                   BIRTH'S INFORMATION
                 </h1>
                 <div className="grid xl:grid-cols-5 gap-3">
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Birthdate
                     </p>
@@ -359,7 +359,9 @@ function EForm() {
                     />
                   </span>
                   <section className="grid xl:grid-cols-2 gap-3">
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span
+                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                    >
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         Birthplace
                       </p>
@@ -369,7 +371,9 @@ function EForm() {
                         {...register("birth.birthPlace")}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span
+                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                    >
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         Citizenship
                       </p>
@@ -380,7 +384,7 @@ function EForm() {
                       />
                     </span>
                   </section>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Gender
                     </p>
@@ -395,13 +399,13 @@ function EForm() {
                     </select>
                   </span>
 
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Marital Status
                     </p>
                     <select
                       className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                      // {...register("birth.sex")}
+                      {...register("maritalStatus")}
                       onChange={(e) => {
                         setMaritalStatus(e.target.value);
                       }}
@@ -410,9 +414,10 @@ function EForm() {
                         Single
                       </option>
                       <option value="married">Married</option>
+                      <option value="widow">Widow</option>
                     </select>
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Religion
                     </p>
@@ -436,7 +441,9 @@ function EForm() {
                   </h1>
 
                   <div className="grid xl:grid-cols-4 gap-3">
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span
+                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                    >
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         Last Name
                       </p>
@@ -446,7 +453,9 @@ function EForm() {
                         {...register("spouse.lastName")}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span
+                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                    >
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         First Name
                       </p>
@@ -456,7 +465,9 @@ function EForm() {
                         {...register("spouse.firstName")}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span
+                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                    >
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         Middle Name
                       </p>
@@ -466,7 +477,9 @@ function EForm() {
                         {...register("spouse.middleName")}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span
+                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                    >
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         No. of Child
                       </p>
@@ -500,7 +513,7 @@ function EForm() {
                   </span>
                 </section>
                 <div className="grid xl:grid-cols-5 gap-3 ">
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       House No.
                     </p>
@@ -510,7 +523,7 @@ function EForm() {
                       {...register("homeAddress.houseNum")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Street/Brgy.
                     </p>
@@ -521,7 +534,7 @@ function EForm() {
                       {...register("homeAddress.streetBrgy")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       City
                     </p>
@@ -532,7 +545,7 @@ function EForm() {
                       {...register("homeAddress.city")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Province
                     </p>
@@ -543,7 +556,7 @@ function EForm() {
                       {...register("homeAddress.province")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       District
                     </p>
@@ -563,48 +576,56 @@ function EForm() {
                     CITY ADRESS ( IF BOARDING )
                   </h1>
                   <div className="grid xl:grid-cols-4 gap-3 ">
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span
+                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                    >
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         House No.
                       </p>
                       <input
                         className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                         type="text"
-                        // value={snap.boardAddress.houseNum}
-                        {...register("boardAddress.houseNum")}
+                        // value={snap.cityAddress.houseNum}
+                        {...register("cityAddress.houseNum")}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span
+                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                    >
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         Street/Brgy.
                       </p>
                       <input
                         className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                         type="text"
-                        // value={snap.boardAddress.streetBrgy}
-                        {...register("boardAddress.streetBrgy")}
+                        // value={snap.cityAddress.streetBrgy}
+                        {...register("cityAddress.streetBrgy")}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span
+                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                    >
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         City
                       </p>
                       <input
                         className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                         type="text"
-                        // value={snap.boardAddress.city}
-                        {...register("boardAddress.city")}
+                        // value={snap.cityAddress.city}
+                        {...register("cityAddress.city")}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span
+                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                    >
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         District
                       </p>
                       <input
                         className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                         type="text"
-                        // value={snap.boardAddress.district}
-                        {...register("boardAddress.district")}
+                        // value={snap.cityAddress.district}
+                        {...register("cityAddress.district")}
                       />
                     </span>
                   </div>
@@ -618,7 +639,7 @@ function EForm() {
                 {/* Father */}
                 {/* <h1 className="text-start font-semibold">FATHER'S INFORMATION</h1>
             <div className="gap-3 grid grid-cols-3">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Last Name
                 </p>
@@ -629,7 +650,7 @@ function EForm() {
                   {...register("father.lastName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   First Name
                 </p>
@@ -640,7 +661,7 @@ function EForm() {
                   {...register("father.firstName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Middle Name
                 </p>
@@ -653,7 +674,7 @@ function EForm() {
               </span>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Occupation
                 </p>
@@ -664,7 +685,7 @@ function EForm() {
                   {...register("father.occupation")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Company Name
                 </p>
@@ -675,7 +696,7 @@ function EForm() {
                   {...register("father.companyName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Company Address
                 </p>
@@ -688,7 +709,7 @@ function EForm() {
               </span>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Telephone No.
                 </p>
@@ -699,7 +720,7 @@ function EForm() {
                   {...register("father.telephone")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Phone No.
                 </p>
@@ -710,7 +731,7 @@ function EForm() {
                   {...register("father.phone")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Email
                 </p>
@@ -728,7 +749,7 @@ function EForm() {
                 {/* Mother */}
                 {/* <h1 className="text-start font-semibold">MOTHER'S INFORMATION</h1>
             <div className="gap-3 grid grid-cols-3">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Last Name
                 </p>
@@ -739,7 +760,7 @@ function EForm() {
                   {...register("mother.lastName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   First Name
                 </p>
@@ -750,7 +771,7 @@ function EForm() {
                   {...register("mother.firstName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Middle Name
                 </p>
@@ -763,7 +784,7 @@ function EForm() {
               </span>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Occupation
                 </p>
@@ -774,7 +795,7 @@ function EForm() {
                   {...register("mother.occupation")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Company Name
                 </p>
@@ -785,7 +806,7 @@ function EForm() {
                   {...register("mother.companyName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Company Address
                 </p>
@@ -798,7 +819,7 @@ function EForm() {
               </span>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Telephone No.
                 </p>
@@ -809,7 +830,7 @@ function EForm() {
                   {...register("mother.telephone")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Phone No.
                 </p>
@@ -820,7 +841,7 @@ function EForm() {
                   {...register("mother.phone")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Email
                 </p>
@@ -840,7 +861,7 @@ function EForm() {
                   GUARDIAN'S INFORMATION
                 </h1>
                 <div className="grid xl:grid-cols-4 gap-3">
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Last Name
                     </p>
@@ -851,7 +872,7 @@ function EForm() {
                       {...register("guardian.lastName")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       First Name
                     </p>
@@ -862,7 +883,7 @@ function EForm() {
                       {...register("guardian.firstName")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Middle Name
                     </p>
@@ -873,7 +894,7 @@ function EForm() {
                       {...register("guardian.middleName")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Relationship
                     </p>
@@ -886,7 +907,7 @@ function EForm() {
                   </span>
                 </div>
                 <div className="grid xl:grid-cols-3 gap-3">
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Occupation
                     </p>
@@ -897,7 +918,7 @@ function EForm() {
                       {...register("guardian.occupation")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Company Name
                     </p>
@@ -908,7 +929,7 @@ function EForm() {
                       {...register("guardian.companyName")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Company Address
                     </p>
@@ -921,7 +942,7 @@ function EForm() {
                   </span>
                 </div>
                 <div className="grid xl:grid-cols-[1fr_2fr] gap-3">
-                  {/* <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  {/* <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Telephon No.
                 </p>
@@ -932,7 +953,7 @@ function EForm() {
                   {...register("guardian.telephone")}
                 />
               </span> */}
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Phone No.
                     </p>
@@ -958,7 +979,7 @@ function EForm() {
                       </p>
                     )}
                   </span>
-                  <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Email
                     </p>
@@ -987,7 +1008,7 @@ function EForm() {
               SPOUSE'S INFORMATION ( IF MARRIED )
             </h1>
             <div className="grid grid-cols-4 gap-3">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Last Name
                 </p>
@@ -998,7 +1019,7 @@ function EForm() {
                   {...register("guardianSpouse.lastName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   First Name
                 </p>
@@ -1009,7 +1030,7 @@ function EForm() {
                   {...register("guardianSpouse.firstName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Middle Name
                 </p>
@@ -1020,7 +1041,7 @@ function EForm() {
                   {...register("guardianSpouse.middleName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   No. of Children
                 </p>
@@ -1049,7 +1070,7 @@ function EForm() {
                       siblings.length > 1 ? "pr-10" : ""
                     } grid grid-cols-3 gap-3 pb-5`}
                   >
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         Name
                       </p>
@@ -1062,7 +1083,7 @@ function EForm() {
                         }}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         Age
                       </p>
@@ -1075,7 +1096,7 @@ function EForm() {
                         }}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                    <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                       <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                         Occupation/School
                       </p>
