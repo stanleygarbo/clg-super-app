@@ -8,6 +8,8 @@ import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import SelectButton from "./SelectButtonProps";
+import { useSnapshot } from "valtio";
+import { sidebarState } from "../../../store/auth";
 
 interface ItemsProps {
   currentItems: IStudentsGet[];
@@ -151,9 +153,13 @@ const EnrolledStudents = () => {
     setItemOffset(newOffset);
   };
 
+  const snap = useSnapshot(sidebarState);
+  const isOpen = snap.isOpen;
+
   return (
-    <div className="">
-      <div className="w-[1200px] h-[650px] relative">
+    <div className={`${isOpen ? "-z-50 xl:z-50" : ""} flex py-10`}>
+      <div className="w-0 xl:w-72"></div>
+      <div className="w-full xl:w-[1200px] xl:h-[650px] relative">
         <section className="flex justify-between items-center">
           <h1 className="text-2xl font-bold opacity-0">Student's List</h1>
           <button
@@ -165,9 +171,11 @@ const EnrolledStudents = () => {
             Enroll Student
           </button>
         </section>
-        <section className="mt-5 bg-slate-100 px-5 ml-1 py-2 rounded-md flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-blue-800">Student's List</h1>
-          <section className="flex gap-3 items-center">
+        <section className="my-5 bg-slate-100 px-5 ml-1 py-2 flex flex-col xl:flex-row rounded-md items-center justify-between">
+          <h1 className="text-2xl font-bold text-blue-800 py-3">
+            Student's List
+          </h1>
+          <section className="flex flex-col xl:flex-row gap-5 items-center">
             <SelectButton onSelect={handleSelectBatch} />
             <select
               value={by}
@@ -194,7 +202,7 @@ const EnrolledStudents = () => {
           </section>
         </section>
         <section className="py-3 pl-1">
-          <span className="flex mb-3 text-lg">
+          <span className="md:flex hidden mb-3 text-lg">
             <h1 className="w-[150px] font-bold pl-3">Last Name</h1>
             <h1 className="w-[150px] font-bold">First Name</h1>
             <h1 className="w-[150px] font-bold">Middle Name</h1>
@@ -203,7 +211,14 @@ const EnrolledStudents = () => {
             <h1 className="w-[150px] font-bold text-center">Standing</h1>
             <h1 className="w-[200px] font-bold text-center">Action</h1>
           </span>
-          <section className="max-h-[80hv] overflow-auto no-scrollbar">
+          <div className="md:hidden text-xl font-bold mb-3 text-blue-800">
+            <Items currentItems={currentItems} />
+          </div>
+          <section
+            className={`${
+              isOpen ? "-z-50" : ""
+            } max-h-[80hv] overflow-auto no-scrollbar xs:hidden`}
+          >
             <Items currentItems={currentItems} />
           </section>
           <div className="flex justify-center w-full mt-2">

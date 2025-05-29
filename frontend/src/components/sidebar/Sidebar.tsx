@@ -4,12 +4,26 @@ import SidebarItems, { ISidebarItem } from "./SidebarItems";
 // import { useState } from "react";
 import { useSnapshot } from "valtio";
 import { sidebarState } from "../../store/auth";
+// import { useEffect } from "react";
 
 const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
   const navigate = useNavigate();
   // const [isOpen, setIsOpen] = useState<boolean>(true);
   const snap = useSnapshot(sidebarState);
   const isOpen = snap.isOpen;
+
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     document.body.style.overflow = "hidden";
+  //   } else {
+  //     document.body.style.overflow = "auto";
+  //   }
+
+  //   // Cleanup on unmount
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // }, [isOpen]);
 
   return (
     <>
@@ -24,10 +38,9 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 min-h-screen bg-white p-5 border-r flex flex-col justify-between overflow-y-auto no-scrollbar
-          duration-200
+        className={`fixed top-0 left-0 bg-white p-5 h-full overflow-y-auto no-scrollbar border-r flex flex-col justify-between duration-200
           ${
-            isOpen ? "w-80 xs:w-80 xl:w-72" : "w-0 left-[-25px] overflow-hidden"
+            isOpen ? "w-80 xs:w-80 xl:w-72" : "w-0 left-[-50px] overflow-hidden"
           }
         `}
       >

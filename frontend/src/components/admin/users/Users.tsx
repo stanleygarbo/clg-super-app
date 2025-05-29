@@ -23,11 +23,23 @@ const Users = () => {
     queryFn: getStudents,
   });
 
-  const users = employees.data?.results.concat(students.data?.results) || [];
+  const users = [
+    ...(employees.data?.results || []),
+    ...(students.data?.results || []),
+  ];
+  const [search, setSearch] = useState("");
 
   const pageCount = Math.ceil(users.length / ITEMS_PER_PAGE);
 
-  const paginatedUsers = users.slice(
+  const filteredUsers = users
+    .filter((user: IStudentsGet) =>
+      `${user.surname} ${user.firstName} ${user.middleName}`
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    )
+    .sort((a, b) => a.surname.localeCompare(b.surname));
+
+  const paginatedUsers = filteredUsers.slice(
     currentPage * ITEMS_PER_PAGE,
     (currentPage + 1) * ITEMS_PER_PAGE
   );
@@ -37,47 +49,52 @@ const Users = () => {
   };
 
   return (
-    <div className="">
-      <div className="w-[1200px] h-[650px] relative">
+    <div className="flex flex-col xl:flex-row mt-20 xl:mt-10 mb-10 px-2">
+      {/* Sidebar spacing */}
+      <div className="hidden xl:block xl:w-72"></div>
+
+      {/* Main content */}
+      <div className="w-full max-w-screen-xl mx-auto xl:w-[1000px]">
         <section className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">User List</h1>
         </section>
 
-        <section className="mt-5 bg-slate-100 px-5 py-3 flex justify-between">
+        <section className="mt-3 bg-slate-100 px-5 py-3 flex flex-col sm:flex-row justify-between">
           <span className="flex gap-3">
-            <h1
-              className={`bg-white rounded-sm text-black flex items-center gap-1 px-2 py-2`}
-            >
-              <p className="font-bold text-lg">
-                <IoListOutline />
-              </p>
+            {/* <h1 className="bg-white rounded-sm text-black flex items-center gap-1 px-2 py-2">
+              <IoListOutline className="text-lg" />
               <p className="text-sm font-semibold">LIST</p>
-            </h1>
+            </h1> */}
           </span>
           <span className="flex gap-3">
             <input
               type="text"
-              className="bg-white rounded-sm px-5 outline-none hidden"
-              placeholder="Q Search..."
+              className="bg-white rounded-sm px-5 outline-none py-2 xl:py-1 w-full sm:w-auto"
+              placeholder="Search..."
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setCurrentPage(0); // Reset to page 0 on new search
+              }}
             />
           </span>
         </section>
 
-        <section className="py-3">
-          <span className="flex gap-5 mb-3">
-            <h1 className="w-[250px] font-bold">Name</h1>
-            <h1 className="w-[250px] font-bold">Email</h1>
-            <h1 className="w-[100px] font-bold">Phone No.</h1>
-          </span>
+        {/* Desktop Table Layout */}
+        <section className="py-3 hidden md:block">
+          <div className="flex gap-5 mb-3 font-bold text-sm">
+            <h1 className="w-[250px]">Name</h1>
+            <h1 className="w-[250px] text-center">Email</h1>
+            <h1 className="w-[150px] text-center">Phone No.</h1>
+          </div>
 
           {paginatedUsers.map((user: IStudentsGet, index: number) => (
-            <span
+            <div
               key={index}
               className={`${
                 index % 2 === 0 ? "bg-slate-100" : "bg-slate-300"
               } flex pl-3 py-3 text-sm items-center`}
             >
-              <h1 className="flex gap-2 items-center w-[250px]">
+              <div className="flex gap-2 items-center w-[250px]">
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6LXNJFTmLzCoExghcATlCWG85kI8dsnhJng&s"
                   alt="."
@@ -86,32 +103,58 @@ const Users = () => {
                 <p>
                   {user?.surname}, {user?.firstName} {user?.middleName}
                 </p>
-              </h1>
-
-              <h1 className="w-[250px] text-center">{user?.email}</h1>
-              <h1 className="w-[150px] text-center">{user?.phone}</h1>
-            </span>
-          ))}
-
-          {/* Pagination */}
-          {users.length > ITEMS_PER_PAGE && (
-            <div className="flex justify-center mt-6">
-              <ReactPaginate
-                breakLabel={<BsThreeDots />}
-                nextLabel={<FaChevronRight />}
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel={<FaChevronLeft />}
-                renderOnZeroPageCount={null}
-                containerClassName="flex items-center gap-4 font-bold"
-                activeClassName="bg-blue-600 px-2 font-semibold rounded-md text-white"
-                previousClassName="text-red-400"
-                nextClassName="text-green-400"
-              />
+              </div>
+              <div className="w-[250px] text-center">{user?.email}</div>
+              <div className="w-[150px] text-center">{user?.phone}</div>
             </div>
-          )}
+          ))}
         </section>
+
+        {/* Mobile Card Layout */}
+        <section className="md:hidden space-y-4 mt-3">
+          {paginatedUsers.map((user: IStudentsGet, index: number) => (
+            <div
+              key={index}
+              className="bg-slate-100 rounded-md p-4 shadow-sm space-y-2 font-semibold"
+            >
+              <div className="flex items-center gap-3">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6LXNJFTmLzCoExghcATlCWG85kI8dsnhJng&s"
+                  alt="."
+                  className="bg-blue-600 w-10 aspect-square rounded-full"
+                />
+                <h2 className="text-lg">
+                  {user?.surname}, {user?.firstName} {user?.middleName}
+                </h2>
+              </div>
+              <div>
+                <span className="font-bold">Email:</span> {user?.email}
+              </div>
+              <div>
+                <span className="font-bold">Phone:</span> {user?.phone}
+              </div>
+            </div>
+          ))}
+        </section>
+
+        {/* Pagination */}
+        {users.length > ITEMS_PER_PAGE && (
+          <div className="flex justify-center mt-6">
+            <ReactPaginate
+              breakLabel={<BsThreeDots />}
+              nextLabel={<FaChevronRight />}
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              previousLabel={<FaChevronLeft />}
+              renderOnZeroPageCount={null}
+              containerClassName="flex items-center gap-4 font-bold"
+              activeClassName="bg-blue-600 px-2 font-semibold rounded-md text-white"
+              previousClassName="text-red-400"
+              nextClassName="text-green-400"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -11,24 +11,23 @@ const Navbar = () => {
               alt="ACLC"
               className="size-11 md:size-12 rounded-full border border-red-500 object-fit"
             />
-            <p className="px-1 text-xs font-bold md:text-base">ACLC COLLEGE</p>
+            <p className="px-1 text-sm font-bold xl:text-base">ACLC COLLEGE</p>
             {/* <span className="text-sm mr-5">🌿</span> */}
           </Link>
         </div>
-        <section className="flex gap-5">
+        <section className="flex gap-2 xl:gap-5">
           <div className="hover:bg-black hover:text-white p-2 rounded-md duration-300">
-            <div className=""></div>
-            <Link className="font-bold" to="/">
+            <Link className="font-bold text-xs xl:text-base" to="/">
               HOME
             </Link>
           </div>
           <div className="hover:bg-black hover:text-white p-2 rounded-md duration-300">
-            <Link className="font-bold" to="/about">
+            <Link className="font-bold text-xs xl:text-base" to="/about">
               ABOUT
             </Link>
           </div>
           <div className="hover:bg-black hover:text-white p-2 rounded-md duration-300">
-            <Link className="font-bold" to="/login">
+            <Link className="font-bold text-xs xl:text-base" to="/login">
               LOGIN
             </Link>
           </div>

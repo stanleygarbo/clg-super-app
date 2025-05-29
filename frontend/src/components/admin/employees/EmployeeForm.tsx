@@ -138,30 +138,27 @@ const EmploymentForm = () => {
   const isOpen = snap.isOpen;
 
   return (
-    <div className="flex xl:justify-center mt-10">
+    <div className="flex xl:justify-center">
       <div className="w-0 xl:w-72"></div>
-      <div className="w-max mx-5 px-10">
-        <h1 className="font-bold text-2xl text-center xl:text-start mt-5 pt-5 px-12 text-blue-800 mb-10">
+      <div className="mb-10">
+        <h1 className="font-bold text-2xl text-center xl:text-start mt-5 pt-5 text-blue-800 mb-5">
           Employee Form
         </h1>
         <input type="text" {...register("hireDate")} className="hidden" />
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="pt-6 p-5 flex flex-col gap-7"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
           {/* <img
             src="https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
             alt="IMG"
             className="w-24 aspect-square rounded-full shadow-md mx-5 mb-5"
           /> */}
-          <div className="flex flex-col gap-3 items-center">
-            <section className="flex items-start">
+          <div className="flex flex-col gap-3 items-center xl:items-start text-center">
+            <section className="flex">
               <h1 className="font-bold text-lg mb-3 text-start">
                 Personal Information
               </h1>
             </section>
 
-            <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 w-[450px] xl:w-full">
+            <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 w-[100%] xl:w-full">
               <span className={`${isOpen ? "-z-50" : ""} relative`}>
                 <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 text-xs">
                   Last Name
@@ -198,7 +195,7 @@ const EmploymentForm = () => {
           </div>
 
           <div className="flex flex-col gap-3 items-center">
-            <section className="grid grid-cols-1 items-center xl:grid-cols-[1fr_1fr_2fr] gap-3 w-[450px] xl:w-full">
+            <section className="grid grid-cols-1 items-center xl:grid-cols-[1fr_1fr_2fr] gap-3 w-[100%] xl:w-full">
               <span className={`${isOpen ? "-z-50" : ""} relative`}>
                 <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 duration-200 text-xs">
                   Phone No.
@@ -231,7 +228,7 @@ const EmploymentForm = () => {
                 </p>
                 <select
                   {...register("maritalStatus")}
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
                   <option value="single" selected>
                     Single
@@ -272,13 +269,13 @@ const EmploymentForm = () => {
             </section>
           </div>
           <div className="flex flex-col gap-3 items-center">
-            <section className="flex flex-col xl:grid xl:grid-cols-5 gap-3 w-[450px] xl:w-full">
+            <section className="flex flex-col xl:grid xl:grid-cols-5 gap-3 w-[100%] xl:w-full">
               <span className={`${isOpen ? "-z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   BirthDate
                 </p>
                 <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="date"
                   {...register("birth.birthDate")}
                 />
@@ -320,7 +317,7 @@ const EmploymentForm = () => {
                 <div className="flex gap-3">
                   <select
                     {...register("birth.sex")}
-                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   >
                     <option value="male" selected>
                       Male
@@ -333,7 +330,7 @@ const EmploymentForm = () => {
           </div>
 
           <div className="flex flex-col gap-3 items-center">
-            <section className="grid xl:grid xl:grid-cols-4 gap-3 w-[450px] xl:w-full">
+            <section className="grid xl:grid xl:grid-cols-4 gap-3 w-[100%] xl:w-full">
               <span className={`${isOpen ? "-z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   SSS
@@ -377,7 +374,7 @@ const EmploymentForm = () => {
             </section>
           </div>
           <div className="flex flex-col gap-3 items-center">
-            <section className="grid xl:grid xl:grid-cols-[2fr_1fr_1fr_1fr] gap-3 w-[450px] xl:w-full">
+            <section className="grid xl:grid xl:grid-cols-[2fr_1fr_1fr_1fr] gap-3 w-[100%] xl:w-full">
               <span className={`${isOpen ? "-z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 duration-200 text-xs z-50">
                   Roles
@@ -405,7 +402,7 @@ const EmploymentForm = () => {
                 </p>
                 <select
                   {...register("position")}
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
                   {position.data?.results?.map(
                     (pos: IPositionGet, index: number) => (
@@ -425,7 +422,7 @@ const EmploymentForm = () => {
                   Department
                 </p>
                 <select
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   {...register("department")}
                 >
                   {department?.data?.results?.map(
@@ -446,7 +443,7 @@ const EmploymentForm = () => {
                   Employment Type
                 </p>
                 <select
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   {...register("employmentType")}
                 >
                   <option value="regular" selected>
@@ -459,7 +456,7 @@ const EmploymentForm = () => {
           </div>
 
           <div className="flex flex-col gap-3 items-center">
-            <section className="grid  xl:grid-cols-3 gap-3 w-[450px] xl:w-full">
+            <section className="grid  xl:grid-cols-3 gap-3 w-[100%] xl:w-full">
               <span className={`${isOpen ? "-z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Username

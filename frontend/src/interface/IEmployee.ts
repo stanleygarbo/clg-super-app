@@ -68,7 +68,7 @@ export interface IEmployeeGet {
 export const customStyles = {
   control: (base: any, state: any) => ({
     ...base,
-    // height: "40px",
+    height: "40px",
     width: "100%",
     borderRadius: "0.375rem", // rounded-md
     // borderColor: "#64748b", // border-slate-500

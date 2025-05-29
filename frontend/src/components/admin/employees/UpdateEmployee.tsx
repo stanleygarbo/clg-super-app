@@ -121,7 +121,7 @@ const UpdateEmployee = () => {
           pagibig: query.data?.governmentId?.pagibig,
         },
         birth: {
-          birthDate: query.data?.birth.birthDate,
+          birthDate: query.data?.birth.birthDate.toString().split("T")[0],
           birthPlace: query.data?.birth.birthPlace,
           religion: query.data?.birth.religion,
           citizenship: query.data?.birth.citizenship,
@@ -143,17 +143,22 @@ const UpdateEmployee = () => {
   // console.log(query.data);
 
   if (query.isFetching) {
-    return <img src="/loading.svg" className="p-80" alt="" />;
+    return (
+      <div className="flex">
+        <div className="w-0 xl:w-72"></div>
+        <img src="/loading.svg" className="p-96 text-center" alt="" />
+      </div>
+    );
   }
 
   return (
     <div className=" flex justify-center">
       <div className="w-0 xl:w-72"></div>
-      <div className="w-max flex flex-col items-center">
+      <div className="w-full flex flex-col items-center">
         <h1 className="font-bold text-2xl text-center xl:text-start mt-10 text-blue-800 mb-10 xl:mb-20">
           Employee Update Form
         </h1>
-        <section className="xl:absolute bg-slate-50 xl:top-[80px] xl:right-[225px] flex rounded-md p-3 shadow-sm border border-slate-100">
+        <section className="xl:absolute bg-slate-50 xl:top-[80px] xl:right-[250px] flex rounded-md p-3 shadow-sm border border-slate-100">
           <div className="flex flex-col">
             <span className="flex gap-1 items-center p-1">
               <input
@@ -228,13 +233,13 @@ const UpdateEmployee = () => {
               Personal Information
             </h1>
             <div className="flex flex-col items-center">
-              <section className="grid xl:grid-cols-3 gap-3 w-[450px] xl:w-full">
+              <section className="grid xl:grid-cols-3 gap-3 w-[100%] xl:w-full">
                 <span className={`${isOpen ? "-z-50" : ""} relative`}>
                   <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                     Last Name
                   </p>
                   <input
-                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     {...register("surname")}
                   />
@@ -244,7 +249,7 @@ const UpdateEmployee = () => {
                     First Name
                   </p>
                   <input
-                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     {...register("firstName")}
                   />
@@ -254,7 +259,7 @@ const UpdateEmployee = () => {
                     Middle Name
                   </p>
                   <input
-                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     {...register("middleName")}
                   />
@@ -264,7 +269,7 @@ const UpdateEmployee = () => {
                       Gender
                     </p>
                     <select
-                      className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                       {...register("birth.sex")}
                     >
                       <option value="male" selected>
@@ -277,7 +282,7 @@ const UpdateEmployee = () => {
             </div>
           </div>
           <div className="flex flex-col items-center">
-            <section className="grid xl:grid-cols-[1fr_1fr_2fr] gap-3 w-[450px] xl:w-full">
+            <section className="grid xl:grid-cols-[1fr_1fr_2fr] gap-3 w-[100%] xl:w-full">
               <span className={`${isOpen ? "-z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Phone No.
@@ -285,7 +290,7 @@ const UpdateEmployee = () => {
                 <input
                   type="text"
                   placeholder="e.g. 09*********"
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   inputMode="numeric"
                   {...register("phone", {
                     pattern: {
@@ -310,7 +315,7 @@ const UpdateEmployee = () => {
                 </p>
                 <select
                   {...register("maritalStatus")}
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
                   <option
                     value="single"
@@ -332,7 +337,7 @@ const UpdateEmployee = () => {
                   </option>
                 </select>
                 {/* <input
-                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     
                   /> */}
@@ -342,7 +347,7 @@ const UpdateEmployee = () => {
                   Email
                 </p>
                 <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("email", {
                     // required: "Email is required",
@@ -364,14 +369,15 @@ const UpdateEmployee = () => {
             </section>
           </div>
           <div className="flex flex-col items-center">
-            <section className="grid xl:grid-cols-5 gap-3 w-[450px] xl:w-full">
+            <section className="grid xl:grid-cols-5 gap-3 w-[100%] xl:w-full">
               <span className={`${isOpen ? "-z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   BirthDate
                 </p>
                 <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center flex justify-center overflow-hidden text-sm"
                   type="date"
+                  // value="2025-05-28"
                   {...register("birth.birthDate")}
                 />
               </span>
@@ -380,7 +386,7 @@ const UpdateEmployee = () => {
                   BirthPlace
                 </p>
                 <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("birth.birthPlace")}
                 />
@@ -390,7 +396,7 @@ const UpdateEmployee = () => {
                   Religion
                 </p>
                 <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("birth.religion")}
                 />
@@ -400,7 +406,7 @@ const UpdateEmployee = () => {
                   Citizzenship
                 </p>
                 <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("birth.citizenship")}
                 />
@@ -412,7 +418,7 @@ const UpdateEmployee = () => {
                 <div className="flex gap-3">
                   <select
                     {...register("birth.sex")}
-                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   >
                     <option
                       value="male"
@@ -433,13 +439,13 @@ const UpdateEmployee = () => {
           </div>
 
           <div className="flex flex-col items-center">
-            <section className="grid xl:grid-cols-4 gap-3 w-[450px] xl:w-full">
+            <section className="grid xl:grid-cols-4 gap-3 w-[100%] xl:w-full">
               <span className={`${isOpen ? "-z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   SSS
                 </p>
                 <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("governmentId.sss")}
                 />
@@ -449,7 +455,7 @@ const UpdateEmployee = () => {
                   TIN
                 </p>
                 <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("governmentId.tin")}
                 />
@@ -459,7 +465,7 @@ const UpdateEmployee = () => {
                   Pag-Ibig
                 </p>
                 <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("governmentId.pagibig")}
                 />
@@ -469,7 +475,7 @@ const UpdateEmployee = () => {
                   Philhealth
                 </p>
                 <input
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   type="text"
                   {...register("governmentId.philhealth")}
                 />
@@ -478,7 +484,7 @@ const UpdateEmployee = () => {
           </div>
 
           <div className="flex flex-col items-center">
-            <section className="grid xl:grid-cols-[2fr_1fr_1fr_1fr] gap-3 w-[450px] xl:w-full">
+            <section className="grid xl:grid-cols-[2fr_1fr_1fr_1fr] gap-3 w-[100%] xl:w-full">
               <span className={`${isOpen ? "-z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 duration-200 text-xs z-50">
                   Roles
@@ -506,7 +512,7 @@ const UpdateEmployee = () => {
                 </p>
                 <select
                   {...register("position")}
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                 >
                   {position.data?.results?.map(
                     (pos: IPositionGet, index: number) => (
@@ -526,7 +532,7 @@ const UpdateEmployee = () => {
                   Department
                 </p>
                 <select
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   {...register("department")}
                 >
                   {department?.data?.results?.map(
@@ -547,7 +553,7 @@ const UpdateEmployee = () => {
                   Employment Type
                 </p>
                 <select
-                  className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                   {...register("employmentType")}
                 >
                   <option
@@ -572,7 +578,7 @@ const UpdateEmployee = () => {
                     Username
                   </p>
                   <input
-                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type="text"
                     {...register("username")}
                   />
@@ -582,7 +588,7 @@ const UpdateEmployee = () => {
                     Password
                   </p>
                   <input
-                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type={isPasswordVisible ? "text" : "password"}
                     {...register("password")}
                     value={password}
@@ -620,7 +626,7 @@ const UpdateEmployee = () => {
                     Confirm Password
                   </p>
                   <input
-                    className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                    className="border border-slate-500 bg-white h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
                     type={isPasswordVisible ? "text" : "password"}
                     value={conPass}
                     onChange={(e) => {

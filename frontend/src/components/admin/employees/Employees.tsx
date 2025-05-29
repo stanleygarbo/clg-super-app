@@ -56,10 +56,11 @@ const Employees = () => {
 
   const snap = useSnapshot(sidebarState);
   return (
-    <div className="px-4 sm:px-6 lg:px-8 mt-10">
+    <div className="my-10 flex">
+      <div className="w-0 xl:w-72"></div>
       <div
         className={`px-4 sm:px-6 lg:px-8 transition-all duration-300
-        ${snap.isOpen ? "ml-64 xs:ml-80 sm:ml-80" : "ml-0"}
+        ${snap.isOpen ? "" : "ml-0"}
       `}
         style={{ minHeight: "650px" }}
       >
@@ -81,7 +82,7 @@ const Employees = () => {
           </h1>
           <input
             type="text"
-            className="border-0 text-center rounded-md px-5 outline-none max-w-[300px] flex-grow"
+            className="border-0 text-center rounded-md px-5 py-2 outline-none max-w-[300px] flex-grow"
             placeholder="Q Search..."
             value={search}
             onChange={(e) => {
@@ -188,38 +189,42 @@ const Employees = () => {
                       alt="."
                       className="bg-blue-600 w-10 aspect-square rounded-full"
                     />
-                    <h2 className="text-lg">
+                    <h2 className="text-sm">
                       {employee.surname}, {employee.firstName}{" "}
                       {employee.middleName[0]}.
                     </h2>
                   </div>
-                  <div className="text-green-700 font-semibold flex items-center gap-1 pr-10">
-                    <div className="w-3 h-3 bg-green-700 rounded-full"></div>{" "}
+                  <div className="text-green-700 font-semibold flex text-sm items-center gap-1 pr-5">
+                    <div className="w-2 h-2 bg-green-700 rounded-full "></div>{" "}
                     Active
                   </div>
                 </div>
                 <div>
-                  <span className="font-bold">Position: </span>{" "}
-                  {employee.position?.jobTitle}
+                  <span className="font-bold text-sm">
+                    Position: {employee.position?.jobTitle}
+                  </span>
                 </div>
                 <div>
-                  <span className="font-bold">Department: </span>{" "}
-                  {employee.department?.departmentName}
+                  <span className="font-bold text-sm">
+                    Department: {employee.department?.departmentName}
+                  </span>
                 </div>
                 <div>
-                  <span className="font-bold">Gender: </span>{" "}
-                  {employee?.birth?.sex}
+                  <span className="font-bold text-sm">
+                    Gender: {employee?.birth?.sex.toUpperCase()}
+                  </span>
                 </div>
                 <div>
-                  <span className="font-bold">Roles: </span>{" "}
-                  {employee.roles.join(", ")}
+                  <span className="font-bold text-sm">
+                    Roles: {employee.roles.join(", ")}
+                  </span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 justify-center items-center mt-2">
                   <button
                     onClick={() => navigate("/" + employee._id + "/profile")}
                     type="button"
-                    className="bg-blue-600 text-3xl py-2 flex justify-center rounded-md font-semibold text-white hover:bg-blue-800 active:scale-95 duration-200"
+                    className="bg-blue-600 text-2xl mx-1 py-2 flex justify-center rounded-md font-semibold text-white hover:bg-blue-800 active:scale-90 duration-200"
                   >
                     <MdPageview />
                   </button>
@@ -228,14 +233,14 @@ const Employees = () => {
                       navigate("/admin/update-employee/" + employee._id)
                     }
                     type="button"
-                    className="bg-blue-600 text-3xl py-2 flex justify-center rounded-md font-semibold text-white hover:bg-blue-800 active:scale-95 duration-200"
+                    className="bg-blue-600 text-2xl mx-1 py-2 flex justify-center rounded-md font-semibold text-white hover:bg-blue-800 active:scale-90 duration-200"
                   >
                     <FaEdit />
                   </button>
                   <button
                     onClick={() => deleteMutation.mutate(employee._id)}
                     type="button"
-                    className="bg-red-600 text-3xl py-2 flex justify-center rounded-md font-semibold text-white hover:bg-red-800 active:scale-95 duration-200"
+                    className="bg-red-600 text-2xl mx-1 py-2 flex justify-center rounded-md font-semibold text-white hover:bg-red-800 active:scale-90 duration-200"
                   >
                     <MdArchive />
                   </button>

@@ -21,7 +21,7 @@ const ProfileInfo = () => {
   // TEST ID: 67838a242a0c891e5b2c0de0
 
   return (
-    <div className="">
+    <div className="w-[280px] xl:w-full">
       <div className="flex flex-col gap-3 pt-3">
         <section className="flex flex-col">
           <div className="gap-3 grid xl:grid-cols-3">

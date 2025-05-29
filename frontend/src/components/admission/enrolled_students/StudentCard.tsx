@@ -6,6 +6,8 @@ import { getStudents } from "../../../api/student";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { FaArchive } from "react-icons/fa";
+import { useSnapshot } from "valtio";
+import { sidebarState } from "../../../store/auth";
 
 interface Params {
   student: IStudentsGet;
@@ -33,45 +35,101 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
     }
   };
 
-  return (
-    <span
-      key={index}
-      className={`${
-        index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
-      } flex py-2 text-sm items-center pl-1 hover:bg-slate-300 group duration-200`}
-    >
-      <input
-        type="checkbox"
-        checked={checkedStudents[student._id] || false}
-        onChange={() => onToggle(student._id)}
-        className="mt-[2px]"
-      />
+  const snap = useSnapshot(sidebarState);
+  const isOpen = snap.isOpen;
 
-      <h1 className="w-[150px] pl-3">{student.surname}</h1>
-      <h1 className="w-[150px]">{student.firstName}</h1>
-      <h1 className="w-[150px]">{student.middleName}</h1>
-      <h1 className="w-[150px] text-center">{student.birth.sex}</h1>
-      <h1 className="w-[150px] text-center">
-        {student.program?.programAcronym}
-      </h1>
-      <h1 className="w-[150px] text-center">{student.standing}</h1>
-      <h1 className="w-[200px] flex gap-2 text-lg justify-center opacity-50 group-hover:opacity-100">
-        <button
-          onClick={() => navigate(`/admission/studentInfo/${student._id}`)}
-          type="button"
-          className="bg-blue-600 px-3 py-2 rounded-md text-white font-semibold hover:bg-blue-800 active:scale-95 duration-200"
-        >
-          <MdPageview />
-        </button>
-        <button
-          onClick={() => archiveStudents(student._id)}
-          type="button"
-          className="bg-red-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
-        >
-          <FaArchive />
-        </button>
-      </h1>
-    </span>
+  return (
+    <div>
+      <span
+        key={index}
+        className={`${
+          index % 2 === 0 ? "bg-slate-200" : "bg-slate-100"
+        } md:flex hidden py-2 text-sm items-center pl-1 hover:bg-slate-300 group duration-200`}
+      >
+        <input
+          type="checkbox"
+          checked={checkedStudents[student._id] || false}
+          onChange={() => onToggle(student._id)}
+          className="mt-[2px]"
+        />
+
+        <h1 className="w-[150px] pl-3">{student.surname}</h1>
+        <h1 className="w-[150px]">{student.firstName}</h1>
+        <h1 className="w-[150px]">{student.middleName}</h1>
+        <h1 className="w-[150px] text-center">{student.birth.sex}</h1>
+        <h1 className="w-[150px] text-center">
+          {student.program?.programAcronym}
+        </h1>
+        <h1 className="w-[150px] text-center">{student.standing}</h1>
+        <h1 className="w-[200px] flex gap-2 text-lg justify-center opacity-50 group-hover:opacity-100">
+          <button
+            onClick={() => navigate(`/admission/studentInfo/${student._id}`)}
+            type="button"
+            className="bg-blue-600 px-3 py-2 rounded-md text-white font-semibold hover:bg-blue-800 active:scale-95 duration-200"
+          >
+            <MdPageview />
+          </button>
+          <button
+            onClick={() => archiveStudents(student._id)}
+            type="button"
+            className="bg-red-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
+          >
+            <FaArchive />
+          </button>
+        </h1>
+      </span>
+
+      {/* Mobile View */}
+      <div
+        key={index}
+        className={`${
+          isOpen ? "" : ""
+        } md:hidden w-full bg-slate-100 rounded-md p-4 shadow-sm space-y-2 font-semibold mb-3`}
+      >
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-sm font-bold">
+              {student.surname}, {student.firstName}{" "}
+              {student.middleName?.[0] || ""}.
+            </h2>
+            <p className="text-xs text-gray-600">
+              {student.program?.programAcronym}
+            </p>
+          </div>
+          <input
+            type="checkbox"
+            checked={checkedStudents[student._id] || false}
+            onChange={() => onToggle(student._id)}
+          />
+        </div>
+
+        <div className="text-sm">
+          <p>
+            <strong>Gender:</strong> {student.birth.sex}
+          </p>
+          <p>
+            <strong>Standing:</strong> {student.standing}
+          </p>
+        </div>
+
+        <div className="flex justify-center gap-3 mt-2">
+          <button
+            onClick={() => navigate(`/admission/studentInfo/${student._id}`)}
+            type="button"
+            className="bg-blue-600 px-3 py-2 rounded-md text-white font-semibold hover:bg-blue-800 active:scale-95 duration-200"
+          >
+            <MdPageview />
+          </button>
+          <button
+            onClick={() => archiveStudents(student._id)}
+            type="button"
+            className="bg-red-500 px-3 py-2 rounded-md text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
+          >
+            <FaArchive />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 
