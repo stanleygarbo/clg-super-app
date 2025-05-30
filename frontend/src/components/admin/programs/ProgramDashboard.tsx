@@ -7,10 +7,16 @@ import { IProgramGet, IProgramPost } from "../../../interface/IProgram";
 import { useForm } from "react-hook-form";
 import { getDepartments } from "../../../api/department";
 import { IDepartmentGet } from "../../../interface/IDepartment";
+import { twMerge } from "tailwind-merge";
 
 const ProgramDashboard = () => {
   const [search, setSearch] = useState<string>("");
-  const { register, handleSubmit } = useForm<IProgramPost>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IProgramPost>();
 
   const query = useQuery({
     queryKey: ["programs"],
@@ -33,6 +39,7 @@ const ProgramDashboard = () => {
     onSuccess() {
       toast.success("Added Successfully");
       query.refetch();
+      reset();
     },
     onError: (err: any) => {
       console.log(err.message);
@@ -64,30 +71,57 @@ const ProgramDashboard = () => {
               addProgMutation.mutate(data);
             })}
           >
-            <input
-              type="text"
-              {...register("programName")}
-              placeholder="Program"
-              className="outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
-            />
-            <input
-              type="text"
-              {...register("programAcronym")}
-              placeholder="Acronym"
-              className="outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
-            />
-            <select
-              {...register("departmentId")}
-              className="outline-none border-0 border-b-2 border-blue-900 w-[200px] text-center"
-            >
-              {queryDept.data?.results?.map(
-                (dept: IDepartmentGet, index: number) => (
-                  <option value={dept._id} selected={index == 0}>
-                    {dept.departmentName}
-                  </option>
-                )
-              )}
-            </select>
+            <section className="relative">
+              <input
+                type="text"
+                {...register("programName", {
+                  required: "Program Name is required",
+                })}
+                placeholder="Program"
+                className={twMerge(
+                  "outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-black focus:border-b-blue-800",
+                  errors.programName?.message &&
+                    "focus:border-red-500 border-b-red-500"
+                )}
+              />
+              <p className="absolute text-[11px] text-red-500 font-semibold left-8">
+                {errors.programName?.message}
+              </p>
+            </section>
+            <section className="relative">
+              <input
+                type="text"
+                {...register("programAcronym", {
+                  required: "Program Acronym is required",
+                })}
+                placeholder="Acronym"
+                className={twMerge(
+                  "outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-black focus:border-b-blue-800",
+                  errors.programAcronym?.message &&
+                    "focus:border-red-500 border-b-red-500"
+                )}
+              />
+              <p className="absolute text-[11px] text-red-500 font-semibold left-8">
+                {errors.programAcronym?.message}
+              </p>
+            </section>
+            <section className="relative">
+              <p className="text-xs font-bold absolute top-[-8px]">
+                Department :
+              </p>
+              <select
+                {...register("departmentId")}
+                className="outline-none border-0 h-[38px] border-b-2 focus:border-blue-900 border-b-black w-[200px] text-center"
+              >
+                {queryDept.data?.results?.map(
+                  (dept: IDepartmentGet, index: number) => (
+                    <option value={dept._id} selected={index == 0}>
+                      {dept.departmentName}
+                    </option>
+                  )
+                )}
+              </select>
+            </section>
             <button
               type="submit"
               className="bg-blue-600 w-[190px] flex justify-center py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"

@@ -63,18 +63,39 @@ const updateSchedule = async (req, res) => {
 
 const deleteSchedule = async (req, res) => {
   try {
-    const schedule = await scheduleService.deleteSchedule(req.params.id);
+    const schedule = await scheduleService.deleteSchedule({
+      id: req.params.id,
+    });
+
     if (!schedule) {
       return res.status(404).json({
         message: "Not Found",
       });
     }
 
-    res.status(200).json(schedule);
+    res.status(200).json({
+      message: "Schedule deleted successfully",
+      result: schedule,
+    });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
+
+// const deleteSchedule = async (req, res) => {
+//   try {
+//     const schedule = await scheduleService.deleteSchedule(req.params.id);
+//     if (!schedule) {
+//       return res.status(404).json({
+//         message: "Not Found",
+//       });
+//     }
+
+//     res.status(200).json(schedule);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
 
 module.exports = {
   addSchedule,

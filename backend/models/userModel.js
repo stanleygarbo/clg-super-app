@@ -9,6 +9,9 @@ const { cityAddressSchema, homeAddressSchema } = require("./addressModel");
 const { siblingSchema } = require("./siblingModel");
 const standing = require("../constants/studentStanding");
 const { scheduleSchema } = require("./scheduleModel");
+const { employeeDocsSchema } = require("./employeeDocsModel");
+const { studentDocsSchema } = require("./studentDocsModel");
+const { studentGradeSchema } = require("./studentGradeModel");
 
 const userSchema = new mongoose.Schema(
   {
@@ -33,9 +36,8 @@ const userSchema = new mongoose.Schema(
     middleName: {
       type: String,
     },
-    birthDate: {
-      type: Date,
-      required: false,
+    maritalStatus: {
+      type: String,
     },
     email: {
       type: String,
@@ -69,6 +71,12 @@ const User = mongoose.model("User", userSchema);
 const studentSchema = new mongoose.Schema(
   {
     program: { type: mongoose.Schema.Types.ObjectId, ref: "Program" },
+    section: {
+      type: String,
+    },
+    section: {
+      type: String,
+    },
     standing: {
       type: String,
       enum: standing,
@@ -86,7 +94,9 @@ const studentSchema = new mongoose.Schema(
     guardian: guardianSchema,
     guardianSpouse: spouseSchema,
     siblings: [siblingSchema],
-    schedules: scheduleSchema,
+    schedules: employeeDocsSchema,
+    documents: studentDocsSchema,
+    grades: [studentGradeSchema],
   },
   { timestamps: true }
 );
@@ -107,6 +117,7 @@ const employeeSchema = new mongoose.Schema(
     birth: birthSchema,
     homeAddress: homeAddressSchema,
     cityAddress: cityAddressSchema,
+    documents: employeeDocsSchema,
   },
   { timestamps: true }
 );

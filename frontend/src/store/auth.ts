@@ -18,3 +18,7 @@ export const authState = proxy<{
 subscribe(authState, () => {
   localStorage.setItem("auth", JSON.stringify(authState));
 });
+
+export const sidebarState = proxy({
+  isOpen: true,
+});

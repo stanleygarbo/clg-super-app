@@ -14,7 +14,7 @@ const PrevHome = () => {
 
             <p className="w-[70%] md:w-[50%] text-base md:text-lg lg:text-xl xl:w-[350px] py-7 font-semibold">
               A leading computer training institution in the country offering
-              full 2-year programs and short-term courses.
+              Bachelor's, Diploma and 2-year programs.
             </p>
             <button className="w-[50%] md:w-[40%] xl:w-[90%] py-3 text-base md:text-lg lg:text-xl rounded-md font-bold  hover:bg-white hover:text-black hover:border-black transition-colors bg-black border border-black text-white duration-200">
               CONTACT US

@@ -12,7 +12,7 @@ const About = () => {
           alt="Image"
           className="border rounded-md opacity-30 shadow-md"
         />
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center p-20 gap-5">
           <p className="text-center text-xl">
             ACLC College is a member of the AMA Education System and is one of
             the leading computer schools in the country. With a curriculum that

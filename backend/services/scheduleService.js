@@ -6,7 +6,7 @@ const getSchedule = async (id) => {
 };
 
 const getSchedules = async () => {
-  const schedule = await Schedule.find();
+  const schedule = await Schedule.find({ isDeleted: { $ne: true } });
   return schedule;
 };
 
@@ -27,7 +27,7 @@ const updateSchedule = async ({ id, data }) => {
   return res;
 };
 
-const deleteSchedule = async ({ id, data }) => {
+const deleteSchedule = async ({ id }) => {
   const res = await Schedule.updateOne(
     { _id: id },
     { $set: { isDeleted: true } }

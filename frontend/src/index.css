@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* index.css */
+.Toastify__toast {
+  border-radius: 0.75rem;
+  padding: 1rem;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 70vw;
+}
+
+@media (min-width: 640px) {
+  .Toastify__toast {
+    max-width: 400px;
+  }
+}
+
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
@@ -10,10 +25,10 @@
   }
 }
 
-body {
-  /* overflow-y: hidden; */
-  /* overflow-x: hidden; */
-}
+/* body { */
+/* overflow-y: hidden; */
+/* overflow-x: hidden; */
+/* } */
 
 .gradient1 {
   background: linear-gradient(

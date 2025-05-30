@@ -1,18 +1,28 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getStudents } from "../../../api/student";
-import apiClient from "../../../api/apiClient";
-import { toast } from "react-toastify";
-import { IoListOutline } from "react-icons/io5";
 import { IStudentsGet } from "../../../interface/IStudents";
-import { FaArchive, FaEdit } from "react-icons/fa";
-import { MdPageview } from "react-icons/md";
 import { useState } from "react";
+import StudentCard from "./StudentCard";
+import ReactPaginate from "react-paginate";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { BsThreeDots } from "react-icons/bs";
+import SelectButton from "./SelectButtonProps";
+import { useSnapshot } from "valtio";
+import { sidebarState } from "../../../store/auth";
+
+interface ItemsProps {
+  currentItems: IStudentsGet[];
+}
 
 const EnrolledStudents = () => {
   const navigate = useNavigate();
+  // Paginate
   const [search, setSearch] = useState("");
-  let { id } = useParams();
+  const [by, setBy] = useState<string>("");
+  const itemsPerPage = 10;
+  const [itemOffset, setItemOffset] = useState(0);
+  const endOffset = itemOffset + itemsPerPage;
 
   const query = useQuery({
     queryKey: ["students"],
@@ -27,38 +37,133 @@ const EnrolledStudents = () => {
   //     )
   //   : [];
 
+  // const filteredStudents = query.data?.results?.length
+  //   ? query.data.results
+  //       .filter((stud: IStudentsGet) =>
+  //         `${stud.surname} ${stud.firstName} ${stud.middleName} ${stud.standing}`
+  //           .toLowerCase()
+  //           .includes(by.toLowerCase() || search.toLowerCase())
+  //       )
+  //       .sort((a: IStudentsGet, b: IStudentsGet) =>
+  //         a.surname.localeCompare(b.surname)
+  //       )
+  //   : [];
+
   const filteredStudents = query.data?.results?.length
     ? query.data.results
+        // First: Filter by year (standing)
         .filter((stud: IStudentsGet) =>
-          `${stud.surname} ${stud.firstName} ${stud.middleName}`
-            .toLowerCase()
-            .includes(search.toLowerCase())
+          by ? stud.standing.toLowerCase() === by.toLowerCase() : true
         )
+        // Then: Filter by search input
+        .filter((stud: IStudentsGet) => {
+          const fullName =
+            `${stud.surname} ${stud.firstName} ${stud.middleName}`.toLowerCase();
+          const searchLower = search?.toLowerCase() || "";
+          return fullName.includes(searchLower);
+        })
+        // Optional: Sort alphabetically by surname
         .sort((a: IStudentsGet, b: IStudentsGet) =>
           a.surname.localeCompare(b.surname)
         )
     : [];
 
-  // console.log(query.data);
-
   // const getFullName = (student: any) => {
   //   return `${student.surname}, ${student.firstName} ${student.middleName}`;
   // };
 
-  const archiveStudents = async () => {
-    try {
-      await apiClient.delete("/students/" + id);
-      query.refetch();
-      toast.success("Successfully archived student");
-    } catch {
-      toast.error("Failed to delete students");
-    } finally {
+  // console.log(query.data);
+
+  const [checkedStudents, setCheckedStudents] = useState<
+    Record<string, boolean>
+  >({});
+
+  const toggleCheck = (_id: string) => {
+    setCheckedStudents((prev) => ({
+      ...prev,
+      [_id]: !prev[_id],
+    }));
+  };
+
+  // Add batchSize and batchIndex state
+  const batchSize = 5;
+  const [batchIndex, setBatchIndex] = useState(0);
+
+  const selectBatch = (startIndex: number) => {
+    const endIndex = startIndex + batchSize;
+    const newChecked: Record<string, boolean> = {};
+
+    const batch = filteredStudents.slice(startIndex, endIndex);
+
+    batch.forEach((student: IStudentsGet) => {
+      newChecked[student._id] = true;
+    });
+
+    setCheckedStudents((prev) => ({ ...prev, ...newChecked }));
+  };
+
+  const handleSelectBatch = () => {
+    const start = batchIndex * batchSize;
+    const end = start + batchSize;
+
+    const currentBatch = filteredStudents.slice(start, end);
+    const allChecked = currentBatch.every(
+      (student: IStudentsGet) => checkedStudents[student._id]
+    );
+
+    if (!allChecked) {
+      // Select only the unchecked students in the current batch
+      const newChecked: Record<string, boolean> = {};
+      currentBatch.forEach((student: IStudentsGet) => {
+        if (!checkedStudents[student._id]) {
+          newChecked[student._id] = true;
+        }
+      });
+      setCheckedStudents((prev) => ({ ...prev, ...newChecked }));
+    } else {
+      // Move to the next batch
+      setBatchIndex((prev) => prev + 1);
+      selectBatch(end);
     }
   };
 
+  function Items({ currentItems }: ItemsProps) {
+    return (
+      <>
+        {currentItems &&
+          currentItems.map((student: IStudentsGet, i: number) => (
+            <StudentCard
+              student={student}
+              index={i}
+              checkedStudents={checkedStudents}
+              onToggle={() => toggleCheck(student._id)}
+            />
+          ))}
+      </>
+    );
+  }
+  const currentItems = filteredStudents.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(filteredStudents.length / itemsPerPage);
+
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % filteredStudents.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
+  const snap = useSnapshot(sidebarState);
+  const isOpen = snap.isOpen;
+
   return (
-    <div className="">
-      <div className="w-[1100px] h-[650px] relative">
+    <div className={`${isOpen ? "" : ""} flex mt-5`}>
+      <div className="w-0 xl:block xl:w-72 xl:-z-50"></div>
+      <div
+        className={`${
+          isOpen ? "-z-50 xl:z-50" : ""
+        } w-full xl:w-[1200px] xl:h-[650px] relative`}
+      >
         <section className="flex justify-between items-center">
           <h1 className="text-2xl font-bold opacity-0">Student's List</h1>
           <button
@@ -70,20 +175,38 @@ const EnrolledStudents = () => {
             Enroll Student
           </button>
         </section>
-        <section className="mt-5 bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-blue-800">Student's List</h1>
-          <input
-            type="text"
-            className="border-0 rounded-md py-2 px-5 outline-none"
-            placeholder="Q Search..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-          />
+        <section className="my-5 bg-slate-100 px-5 ml-1 w-[330px] xl:w-full py-2 flex flex-col xl:flex-row rounded-md items-center justify-between">
+          <h1 className="text-2xl font-bold text-blue-800 py-3">
+            Student's List
+          </h1>
+          <section className="flex flex-col xl:flex-row gap-5 items-center">
+            <SelectButton onSelect={handleSelectBatch} />
+            <select
+              value={by}
+              onChange={(e) => {
+                setBy(e.target.value);
+              }}
+              className="rounded-md px-4 py-2 w-60 xl:w-40 bg-white text-center outline-none"
+            >
+              <option value="">All</option>
+              <option value="freshman">1st Year</option>
+              <option value="sophomore">2nd Year</option>
+              <option value="junior">3rd Year</option>
+              <option value="senoir">4th Year</option>
+            </select>
+            <input
+              type="text"
+              className="border-0 rounded-md w-60 xl:w-72 text-center py-2 px-5 outline-none"
+              placeholder="Q Search..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
+          </section>
         </section>
-        <section className="py-3">
-          <span className="flex mb-3 text-lg">
+        <section className="py-3 pl-1">
+          <span className="md:flex hidden mb-3 text-lg">
             <h1 className="w-[150px] font-bold pl-3">Last Name</h1>
             <h1 className="w-[150px] font-bold">First Name</h1>
             <h1 className="w-[150px] font-bold">Middle Name</h1>
@@ -92,51 +215,32 @@ const EnrolledStudents = () => {
             <h1 className="w-[150px] font-bold text-center">Standing</h1>
             <h1 className="w-[200px] font-bold text-center">Action</h1>
           </span>
-          {filteredStudents.map((student: IStudentsGet, index: number) => (
-            <span
-              key={index}
-              className={`${
-                index == 0
-                  ? "rounded-t-md"
-                  : index == query.data?.results.length - 1
-                  ? "rounded-b-md"
-                  : ""
-              } ${
-                index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
-              } flex py-2 text-sm items-center hover:bg-slate-300 group duration-200`}
-            >
-              <h1 className="w-[150px] pl-3">{student.surname}</h1>
-              <h1 className="w-[150px]">{student.firstName}</h1>
-              <h1 className="w-[150px]">{student.middleName}</h1>
-              <h1 className="w-[150px] text-center">{student.birth.sex}</h1>
-              <h1 className="w-[150px] text-center">
-                {student.program?.programAcronym}
-              </h1>
-              <h1 className="w-[150px] text-center">{student.standing}</h1>
-              <h1 className="w-[200px] flex gap-2 text-lg justify-center opacity-0 group-hover:opacity-100">
-                <button
-                  onClick={() => {
-                    id = student._id;
-                    navigate(`/admission/studentInfo/${id}`);
-                  }}
-                  type="button"
-                  className="bg-blue-600 px-3 py-2 rounded-md text-white font-semibold hover:bg-blue-800 active:scale-95 duration-200"
-                >
-                  <MdPageview />
-                </button>
-                <button
-                  onClick={() => {
-                    id = student._id;
-                    archiveStudents();
-                  }}
-                  type="button"
-                  className="bg-red-500 px-3 py-1 rounded-md text-white font-semibold hover:bg-red-700 active:scale-95 duration-200"
-                >
-                  <FaArchive />
-                </button>
-              </h1>
-            </span>
-          ))}
+          <div className="text-xl font-bold mb-3">
+            <Items currentItems={currentItems} />
+          </div>
+          {/* <section
+            className={`${
+              isOpen ? "-z-50" : ""
+            } max-h-[80hv] overflow-auto no-scrollbar`}
+          >
+            <Items currentItems={currentItems} />
+          </section> */}
+          <div className="flex justify-center w-full mt-2">
+            <ReactPaginate
+              breakLabel={<BsThreeDots />}
+              nextLabel={<FaChevronRight />}
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              previousLabel={<FaChevronLeft />}
+              renderOnZeroPageCount={null}
+              className="flex items-center gap-4 font-bold"
+              //pageClassName="text-orange-400" // para ni sa tanan numbers pero ma override ang activeClassName
+              activeClassName="bg-blue-600 px-2 font-semibold rounded-md text-white" // para ni sa number nga active
+              previousClassName="text-red-400" // Previous button #note icon ako gamit dili text
+              nextClassName="text-green-400" // Next button #note icon ako gamit dili text
+            />
+          </div>
         </section>
       </div>
     </div>

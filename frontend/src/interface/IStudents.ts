@@ -1,3 +1,5 @@
+import { Sibling } from "../components/admission/enrollment_form/EForm";
+import { IStudentDocs } from "./IDocuments";
 import { IProgramGet } from "./IProgram";
 
 export interface IStudentsPost {
@@ -7,6 +9,8 @@ export interface IStudentsPost {
   username: string;
   firstName: string;
   surname: string;
+  maritalStatus: string;
+  section: string;
   middleName: string;
   email: string;
   telephone: string;
@@ -35,7 +39,7 @@ export interface IStudentsPost {
     district: string;
     province: string;
   };
-  boardAddress: {
+  cityAddress: {
     houseNum: number;
     streetBrgy: string;
     city: string;
@@ -82,13 +86,8 @@ export interface IStudentsPost {
     firstName: string;
     children: number;
   };
-  siblings: [
-    {
-      fullName: string;
-      age: string;
-      occupationSchool: string;
-    }
-  ];
+  documents: IStudentDocs;
+  siblings: Sibling[];
 }
 
 export interface IStudentsGet {
@@ -97,7 +96,9 @@ export interface IStudentsGet {
   year: String;
   semester: string;
   username: string;
+  section: string;
   firstName: string;
+  maritalStatus: string;
   surname: string;
   middleName: string;
   email: string;
@@ -127,7 +128,7 @@ export interface IStudentsGet {
     district: string;
     province: string;
   };
-  boardAddress: {
+  cityAddress: {
     houseNum: number;
     streetBrgy: string;
     city: string;
@@ -174,6 +175,7 @@ export interface IStudentsGet {
     firstName: string;
     children: number;
   };
+  documents: IStudentDocs;
   siblings: [
     {
       fullName: string;

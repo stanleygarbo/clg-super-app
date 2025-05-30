@@ -9,11 +9,16 @@ import {
   deletePosition,
   getPositions,
 } from "../../../api/position";
+import { twMerge } from "tailwind-merge";
 
 const PositionDashboard = () => {
   const [search, setSearch] = useState<string>("");
-
-  const { handleSubmit, register, setValue } = useForm<IPositionPost>();
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm<IPositionPost>();
 
   const query = useQuery({
     queryKey: ["/positions"],
@@ -39,6 +44,7 @@ const PositionDashboard = () => {
       toast.success("Deleted Successfully");
       query.refetch();
     },
+
     onError: (err: any) => {
       toast.error(err.message);
     },
@@ -61,26 +67,46 @@ const PositionDashboard = () => {
               addPostMutation.mutate(data)
             )}
           >
-            <input
-              type="text"
-              {...register("jobTitle")}
-              placeholder="Job Title"
-              className="outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
-            />
-            <input
-              type="number"
-              {...register("hourlyWage")}
-              placeholder="Hourly Wage"
-              className="outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-blue-800"
-            />
+            <section className="relative">
+              <input
+                type="text"
+                {...register("jobTitle", { required: "Job Title is required" })}
+                placeholder="Job Title"
+                className={twMerge(
+                  "outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-black focus:border-b-blue-800",
+                  errors.jobTitle?.message &&
+                    "focus:border-b-red-500 border-b-red-500"
+                )}
+              />
+              <p className="absolute text-[11px] text-red-500 font-semibold bottom-[-15px] left-[50px]">
+                {errors.jobTitle?.message}
+              </p>
+            </section>
+            <section className="relative">
+              <input
+                type="number"
+                {...register("hourlyWage", {
+                  required: "Hourly Wage is required",
+                })}
+                placeholder="Hourly Wage"
+                className={twMerge(
+                  "outline-none w-[200px] border-0 py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-black focus:border-b-blue-800",
+                  errors.hourlyWage?.message &&
+                    "focus:border-b-red-500 border-b-red-500"
+                )}
+              />
+              <p className="absolute text-[11px] text-red-500 font-semibold bottom-[-15px] left-[50px]">
+                {errors.hourlyWage?.message}
+              </p>
+            </section>
             <button
               type="submit"
-              className="bg-blue-600 w-[190px] flex justify-center py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
+              className="bg-blue-600 w-[190px] flex justify-center py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200 ml-10"
             >
               {addPostMutation.isPending ? (
                 <img src="/loading.svg" className="invert" alt="" />
               ) : (
-                "Add Department"
+                "Add Position"
               )}
             </button>
           </form>

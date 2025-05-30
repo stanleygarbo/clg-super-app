@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { getPrograms } from "../../api/programs";
-import { getCourses } from "../../api/course";
-import { ICourseGet } from "../../interface/ICourse";
-import { getEmployeees, getEmployees } from "../../api/employee";
+import { ICourse, ICourseGet } from "../../interface/ICourse";
+import { getEmployees } from "../../api/employee";
 import { IEmployeeGet } from "../../interface/IEmployee";
 import { useForm, Controller } from "react-hook-form";
-import { ISubjectSchedule } from "../../interface/ISchedule";
 import { Slide, toast } from "react-toastify";
 import { addSchedule } from "../../api/schedule";
 import { IRoomGet } from "../../interface/IRoom";
 import { getRooms } from "../../api/room";
 import { convertMilitaryTo12Hour } from "../../Helper";
-import { IPositionGet } from "../../interface/IPosition";
 import { useQuery } from "@tanstack/react-query";
 import { IProgramGet } from "../../interface/IProgram";
+import SubjectForm from "./SubjectForm";
+import { getPrograms } from "../../api/programs";
+import { getCourses } from "../../api/course";
+import { ISubjectSchedule } from "../../interface/ISchedule";
+import { useNavigate } from "react-router-dom";
+// import Schedule from "./Schedule";
 
 interface IOption {
   value: string;
@@ -37,15 +39,16 @@ const dayOptions = [
   { value: "sat", label: "Saturday" },
 ];
 
-function CreateSchedule() {
+function ScheduleForm() {
+  const date = new Date();
   const scheduleForm = useForm();
-  const subjectForm = useForm();
-  // const [programOptions, setProgramOptions] = useState<IOption[]>([]);
-  const [courseOptions, setCourseOptions] = useState<IOption[]>([]);
-  // const [instructorOptions, setInstructorOptions] = useState<IOption[]>([]);
+  const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);
+  const [selectedProgram, setSelectedProgram] = useState<string>();
   const [subjectSchedules, setSubjectSchedules] = useState<ISubjectSchedule[]>(
     []
   );
+  // const [submittedCourses, setSubmittedCourses] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const intructor = useQuery({
     queryKey: ["employees"],
@@ -60,6 +63,11 @@ function CreateSchedule() {
   const programs = useQuery({
     queryKey: ["programs"],
     queryFn: getPrograms,
+  });
+
+  const courses = useQuery({
+    queryKey: ["courses"],
+    queryFn: getCourses,
   });
 
   const roomOptions: IOption[] = room.data?.map((room: IRoomGet) => {
@@ -87,29 +95,19 @@ function CreateSchedule() {
     }
   );
 
-  const loadOptions = async () => {
-    // const programs = await getPrograms();
-    const courses = await getCourses();
-
-    // setProgramOptions(
-    //   programs.results.map((program: IPositionGet) => {
-    //     return { value: program._id, label: program.jobTitle };
-    //   })
-    // );
-    setCourseOptions(
-      courses.results.map((course: ICourseGet) => {
-        return { value: course._id, label: course.courseName };
-      })
-    );
-  };
+  const courseOptions: IOption[] = courses.data?.results.map(
+    (course: ICourse) => ({
+      value: course._id,
+      label: course.courseName,
+    })
+  );
 
   const onSubjectSubmit = (data: any) => {
     setSubjectSchedules((prevState) => [...prevState, data]);
+    // setSubmittedCourses((prevState) => [...prevState, data.courseID]);
   };
 
-  const onScheduleSubmit = (data: any) => {
-    const date = new Date();
-
+  const onScheduleSubmit = async (data: any) => {
     if (subjectSchedules.length == 0) {
       toast.error("Must have at least one subject", {
         position: "bottom-right",
@@ -125,41 +123,58 @@ function CreateSchedule() {
       return;
     }
 
-    data.schoolYear = `${date.getFullYear()}-${date.getFullYear() + 1}`;
+    data.schoolYear = `${data.schoolYear}-${data.schoolYear + 1}`;
     data.subjectSchedules = subjectSchedules;
     console.log(data);
 
     try {
-      addSchedule(data);
-      toast.success("Schedule added successfully", {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        // theme: "light",
-        transition: Slide,
-      });
+      await addSchedule(data);
+      toast.success("Schedule added successfully");
+      navigate("/registrar/schedule");
+      //  {
+      //   position: "bottom-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: true,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      //   transition: Slide,
+      // }
     } catch (error) {
-      toast.error("Something went wrong!", {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
-      });
+      toast.error("Something went wrong!");
+      // {
+      //   position: "bottom-right",
+      //   autoClose: 3000,
+      //   hideProgressBar: true,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      //   transition: Slide,
+      // }
     }
   };
 
+  const loadProgramCourses = async () => {
+    if (!selectedProgram) return;
+    const filtered = courses.data?.results.filter((course: ICourseGet) =>
+      course.program
+        ?.map((prog: IProgramGet) => {
+          return prog?._id;
+        })
+        .includes(selectedProgram)
+    );
+    console.log(courses.data.results[0].program, selectedProgram);
+    setFilteredCourses(filtered);
+  };
+
   useEffect(() => {
-    loadOptions();
-  }, []);
+    loadProgramCourses();
+    // toast("Loaded");
+  }, [selectedProgram]);
 
   return (
     <main className="flex flex-col gap-8 w-full mx-16 my-8">
@@ -169,6 +184,22 @@ function CreateSchedule() {
           className="flex gap-4"
           onSubmit={scheduleForm.handleSubmit(onScheduleSubmit)}
         >
+          <input
+            {...scheduleForm.register("schoolYear", {
+              required: true,
+              min: 1980,
+              max: date.getFullYear(),
+              valueAsNumber: true,
+              validate: (value) =>
+                (value >= 1980 && value <= date.getFullYear()) ||
+                "Enter a valid year",
+            })}
+            type="number"
+            className="px-2 border-[#cccccc] border-[1px] rounded-[4px]"
+            placeholder="School Year"
+            defaultValue={date.getFullYear()}
+            required
+          />
           <Controller
             control={scheduleForm.control}
             name="program"
@@ -177,11 +208,16 @@ function CreateSchedule() {
               <Select
                 {...field}
                 options={programOptions}
-                value={programOptions.find(
+                value={programOptions?.find(
                   (option) => option.value === field.value
                 )}
-                onChange={(option) => field.onChange(option?.value)}
-                className="w-96"
+                onChange={(option) => {
+                  field.onChange(option?.value);
+                  setSelectedProgram(option?.value);
+                  // toast(selectedProgram);
+                }}
+                placeholder="Program"
+                className="w-32"
               />
             )}
           />
@@ -193,18 +229,18 @@ function CreateSchedule() {
               <Select
                 {...field}
                 options={semesterOptions}
-                value={semesterOptions.find(
+                value={semesterOptions?.find(
                   (option) => option.value === field.value
                 )}
                 onChange={(option) => field.onChange(option?.value)}
+                placeholder="Semester"
                 className="w-48"
               />
             )}
           />
-          {/* <Select options={semesterOptions} className="w-48" /> */}
           <button
             type="submit"
-            className="px-4 rounded-md text-white bg-blue-600"
+            className="px-4 rounded-md text-white font-semibold bg-blue-700 hover:bg-blue-600 active:scale-90 duration-200"
           >
             Submit schedule
           </button>
@@ -263,98 +299,22 @@ function CreateSchedule() {
           ))}
         </tbody>
       </table>
-      <form
-        className="grid grid-cols-scheduleCreate gap-2"
-        onSubmit={subjectForm.handleSubmit(onSubjectSubmit)}
-      >
-        <Controller
-          control={subjectForm.control}
-          name="courseID"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={courseOptions}
-              value={courseOptions.find(
-                (option) => option.value === field.value
-              )}
-              onChange={(option) => field.onChange(option?.value)}
-            />
-          )}
-        />
-        <input
-          {...subjectForm.register("timeStart")}
-          type="time"
-          className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
-          required
-        />
-        <input
-          {...subjectForm.register("timeEnd")}
-          type="time"
-          className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
-          required
-        />
-        <Controller
-          control={subjectForm.control}
-          name="day"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={dayOptions}
-              isMulti={true}
-              value={dayOptions.filter((option) =>
-                field.value?.includes(option.value)
-              )}
-              onChange={(selectedOptions) =>
-                field.onChange(
-                  selectedOptions
-                    ? selectedOptions.map((option) => option.value)
-                    : []
-                )
-              }
-            />
-          )}
-        />
-        <Controller
-          control={subjectForm.control}
-          name="room"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={roomOptions}
-              value={courseOptions.find(
-                (option) => option.value === field.value
-              )}
-              onChange={(option) => field.onChange(option?.value)}
-            />
-          )}
-        />
-        <Controller
-          control={subjectForm.control}
-          name="instructorID"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <Select
-              options={instructorOptions}
-              {...field}
-              value={courseOptions.find(
-                (option) => option.value === field.value
-              )}
-              onChange={(option) => field.onChange(option?.value)}
-            />
-          )}
-        />
-        <button
-          type="submit"
-          className="px-4 rounded-md text-white bg-blue-600"
-        >
-          Add subject
-        </button>
-      </form>
+      {filteredCourses
+        .filter((course) => {
+          return !subjectSchedules.some(
+            (subject) => subject.courseID === course._id
+          );
+        })
+        .map((course) => (
+          <SubjectForm
+            key={course._id}
+            submitCallback={onSubjectSubmit}
+            course={course}
+            existingSubjects={subjectSchedules} // You’ll need to pass this down
+          />
+        ))}
     </main>
   );
 }
 
-export default CreateSchedule;
+export default ScheduleForm;
