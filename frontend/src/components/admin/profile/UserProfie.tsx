@@ -2,12 +2,9 @@ import { useSnapshot } from "valtio";
 import { authState, sidebarState } from "../../../store/auth";
 import { useQuery } from "@tanstack/react-query";
 import { getEmployeeById } from "../../../api/employee";
-import { useNavigate, useParams } from "react-router-dom";
-import { IEmployeeGet } from "../../../interface/IEmployee";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdEdit } from "react-icons/md";
-import ProfileInfo from "./ProfileInfo";
 import { getStudentById } from "../../../api/student";
 
 const UserProfie = () => {
@@ -15,8 +12,6 @@ const UserProfie = () => {
     "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
   );
   // const [infoOpacity, setInfoOpacity] = useState("opacity-0 w-0");
-  const [employee, setEmployee] = useState<IEmployeeGet>();
-  const { id } = useParams();
   //   const navigate = useNavigate();
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -60,14 +55,14 @@ const UserProfie = () => {
   });
 
   return (
-    <div className="flex px-5">
+    <div className="flex">
       <div className="xl:w-72 w-0"></div>
       <div
         className={`${
           isOpen ? "-z-50 xl:z-50" : ""
         } rounded-md shadow relative w-full xl:w-[1100px] xl:h-[700px] my-10`}
       >
-        <span className="flex gap-5 items-start border-b p-10 rounded-t-lg bg-blue-700">
+        <span className="flex gap-5 items-start border-b p-16 rounded-t-lg bg-blue-700">
           <section
             {...getRootProps()}
             className="relative w-[100px] aspect-square"

@@ -60,7 +60,7 @@ const StudentsInfo = () => {
         // roles: deaf,
         phone: query.data?.phone,
         documents: query.data?.documents,
-        grades: query.data?.grades,
+        // grades: query.data?.grades,
         birth: {
           birthDate: query.data?.birth.birthDate?.toString().split("T")[0],
           birthPlace: query.data?.birth.birthPlace,

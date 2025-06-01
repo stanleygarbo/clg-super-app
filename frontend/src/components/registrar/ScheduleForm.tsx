@@ -177,143 +177,293 @@ function ScheduleForm() {
   }, [selectedProgram]);
 
   return (
-    <main className="flex flex-col gap-8 w-full mx-16 my-8">
-      <header className="flex justify-between items-center h-12">
-        <p className="text-2xl font-bold">Schedule</p>
-        <form
-          className="flex gap-4"
-          onSubmit={scheduleForm.handleSubmit(onScheduleSubmit)}
-        >
-          <input
-            {...scheduleForm.register("schoolYear", {
-              required: true,
-              min: 1980,
-              max: date.getFullYear(),
-              valueAsNumber: true,
-              validate: (value) =>
-                (value >= 1980 && value <= date.getFullYear()) ||
-                "Enter a valid year",
-            })}
-            type="number"
-            className="px-2 border-[#cccccc] border-[1px] rounded-[4px]"
-            placeholder="School Year"
-            defaultValue={date.getFullYear()}
-            required
-          />
-          <Controller
-            control={scheduleForm.control}
-            name="program"
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={programOptions}
-                value={programOptions?.find(
-                  (option) => option.value === field.value
-                )}
-                onChange={(option) => {
-                  field.onChange(option?.value);
-                  setSelectedProgram(option?.value);
-                  // toast(selectedProgram);
-                }}
-                placeholder="Program"
-                className="w-32"
-              />
-            )}
-          />
-          <Controller
-            control={scheduleForm.control}
-            name="semester"
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={semesterOptions}
-                value={semesterOptions?.find(
-                  (option) => option.value === field.value
-                )}
-                onChange={(option) => field.onChange(option?.value)}
-                placeholder="Semester"
-                className="w-48"
-              />
-            )}
-          />
-          <button
-            type="submit"
-            className="px-4 rounded-md text-white font-semibold bg-blue-700 hover:bg-blue-600 active:scale-90 duration-200"
+    <div className="flex flex-col xl:flex-row px-5 xl:px-16 mt-5">
+      {/* Left sidebar spacer for xl and up */}
+      <div className="hidden xl:block xl:w-72" />
+
+      {/* Desktop Schedule (md and up) */}
+      <main className="hidden md:flex flex-col gap-8 flex-1 mx-auto max-w-7xl my-8 px-4 md:px-0">
+        <header className="flex justify-between items-center h-12">
+          <p className="text-2xl font-bold">Schedule</p>
+          <form
+            className="flex gap-4"
+            onSubmit={scheduleForm.handleSubmit(onScheduleSubmit)}
           >
-            Submit schedule
-          </button>
-        </form>
-      </header>
-      <table className="w-full">
-        <thead>
-          <tr className="grid grid-cols-scheduleCreate gap-2">
-            <th>Subject</th>
-            <th>Time Start</th>
-            <th>Time End</th>
-            <th>Days</th>
-            <th>Room</th>
-            <th>Instructor</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {subjectSchedules.map((subjectSchedule) => (
-            <tr className="grid grid-cols-scheduleCreate justify-center gap-2">
-              <td>
-                {
-                  courseOptions.find(
-                    (course) => course.value == subjectSchedule.courseID
-                  )?.label
-                }
-              </td>
-              <td className="text-center">
-                {convertMilitaryTo12Hour(subjectSchedule.timeStart)}
-              </td>
-              <td className="text-center">
-                {convertMilitaryTo12Hour(subjectSchedule.timeEnd)}
-              </td>
-              <td className="text-center">
-                {subjectSchedule.day
-                  .map((day) => dayOptions.find((d) => d.value == day)?.label)
-                  .join(" / ")}
-              </td>
-              <td className="text-center">
-                {
-                  roomOptions.find(
-                    (room: IOption) => room.value == subjectSchedule.room
-                  )?.label
-                }
-              </td>
-              <td className="text-center">
-                {
-                  instructorOptions.find(
-                    (instructor) =>
-                      instructor.value == subjectSchedule.instructorID
-                  )?.label
-                }
-              </td>
-              <td className="text-end">Edit / Delete</td>
+            <input
+              {...scheduleForm.register("schoolYear", {
+                required: true,
+                min: 1980,
+                max: date.getFullYear(),
+                valueAsNumber: true,
+                validate: (value) =>
+                  (value >= 1980 && value <= date.getFullYear()) ||
+                  "Enter a valid year",
+              })}
+              type="number"
+              className="px-2 border border-gray-300 rounded-md"
+              placeholder="School Year"
+              defaultValue={date.getFullYear()}
+              required
+            />
+            <Controller
+              control={scheduleForm.control}
+              name="program"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={programOptions}
+                  value={programOptions?.find(
+                    (option) => option.value === field.value
+                  )}
+                  onChange={(option) => {
+                    field.onChange(option?.value);
+                    setSelectedProgram(option?.value);
+                  }}
+                  placeholder="Program"
+                  className="w-32"
+                />
+              )}
+            />
+            <Controller
+              control={scheduleForm.control}
+              name="semester"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={semesterOptions}
+                  value={semesterOptions?.find(
+                    (option) => option.value === field.value
+                  )}
+                  onChange={(option) => field.onChange(option?.value)}
+                  placeholder="Semester"
+                  className="w-48"
+                />
+              )}
+            />
+            <button
+              type="submit"
+              className="px-4 rounded-md text-white font-semibold bg-blue-700 hover:bg-blue-600 active:scale-90 duration-200"
+            >
+              Submit schedule
+            </button>
+          </form>
+        </header>
+
+        <table className="w-full">
+          <thead>
+            <tr className="grid grid-cols-scheduleCreate gap-2">
+              <th>Subject</th>
+              <th>Time Start</th>
+              <th>Time End</th>
+              <th>Days</th>
+              <th>Room</th>
+              <th>Instructor</th>
+              <th>Action</th>
             </tr>
+          </thead>
+          <tbody>
+            {subjectSchedules.map((subjectSchedule) => (
+              <tr
+                key={subjectSchedule.courseID}
+                className="grid grid-cols-scheduleCreate justify-center gap-2"
+              >
+                <td>
+                  {
+                    courseOptions.find(
+                      (course) => course.value == subjectSchedule.courseID
+                    )?.label
+                  }
+                </td>
+                <td className="text-center">
+                  {convertMilitaryTo12Hour(subjectSchedule.timeStart)}
+                </td>
+                <td className="text-center">
+                  {convertMilitaryTo12Hour(subjectSchedule.timeEnd)}
+                </td>
+                <td className="text-center">
+                  {subjectSchedule.day
+                    .map((day) => dayOptions.find((d) => d.value == day)?.label)
+                    .join(" / ")}
+                </td>
+                <td className="text-center">
+                  {
+                    roomOptions.find(
+                      (room) => room.value == subjectSchedule.room
+                    )?.label
+                  }
+                </td>
+                <td className="text-center">
+                  {
+                    instructorOptions.find(
+                      (instructor) =>
+                        instructor.value == subjectSchedule.instructorID
+                    )?.label
+                  }
+                </td>
+                <td className="text-end">Edit / Delete</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {filteredCourses
+          .filter(
+            (course) =>
+              !subjectSchedules.some(
+                (subject) => subject.courseID === course._id
+              )
+          )
+          .map((course) => (
+            <SubjectForm
+              key={course._id}
+              submitCallback={onSubjectSubmit}
+              course={course}
+              existingSubjects={subjectSchedules}
+            />
           ))}
-        </tbody>
-      </table>
-      {filteredCourses
-        .filter((course) => {
-          return !subjectSchedules.some(
-            (subject) => subject.courseID === course._id
-          );
-        })
-        .map((course) => (
-          <SubjectForm
-            key={course._id}
-            submitCallback={onSubjectSubmit}
-            course={course}
-            existingSubjects={subjectSchedules} // You’ll need to pass this down
-          />
-        ))}
-    </main>
+      </main>
+
+      {/* Mobile Schedule (below md) */}
+      <main className="flex flex-col gap-8 w-full px-4 py-6 max-w-md mx-auto md:hidden">
+        <header className="flex flex-col gap-4">
+          <p className="text-2xl font-bold">Schedule</p>
+          <form
+            className="flex flex-col gap-4"
+            onSubmit={scheduleForm.handleSubmit(onScheduleSubmit)}
+          >
+            <input
+              {...scheduleForm.register("schoolYear", {
+                required: true,
+                min: 1980,
+                max: date.getFullYear(),
+                valueAsNumber: true,
+                validate: (value) =>
+                  (value >= 1980 && value <= date.getFullYear()) ||
+                  "Enter a valid year",
+              })}
+              type="number"
+              className="px-3 py-2 border border-gray-300 rounded-md"
+              placeholder="School Year"
+              defaultValue={date.getFullYear()}
+              required
+            />
+            <Controller
+              control={scheduleForm.control}
+              name="program"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={programOptions}
+                  value={programOptions?.find(
+                    (option) => option.value === field.value
+                  )}
+                  onChange={(option) => {
+                    field.onChange(option?.value);
+                    setSelectedProgram(option?.value);
+                  }}
+                  placeholder="Program"
+                  className="w-full"
+                />
+              )}
+            />
+            <Controller
+              control={scheduleForm.control}
+              name="semester"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={semesterOptions}
+                  value={semesterOptions?.find(
+                    (option) => option.value === field.value
+                  )}
+                  onChange={(option) => field.onChange(option?.value)}
+                  placeholder="Semester"
+                  className="w-full"
+                />
+              )}
+            />
+            <button
+              type="submit"
+              className="py-2 rounded-md text-white font-semibold bg-blue-700 hover:bg-blue-600 active:scale-95 duration-200"
+            >
+              Submit schedule
+            </button>
+          </form>
+        </header>
+
+        <section className="flex flex-col gap-6">
+          {subjectSchedules.length === 0 && (
+            <p className="text-center text-gray-500">No schedules available.</p>
+          )}
+
+          {subjectSchedules.map((subjectSchedule) => {
+            const courseLabel = courseOptions.find(
+              (course) => course.value === subjectSchedule.courseID
+            )?.label;
+            const daysLabel = subjectSchedule.day
+              .map((day) => dayOptions.find((d) => d.value === day)?.label)
+              .join(" / ");
+            const roomLabel = roomOptions.find(
+              (room) => room.value === subjectSchedule.room
+            )?.label;
+            const instructorLabel = instructorOptions.find(
+              (instructor) => instructor.value === subjectSchedule.instructorID
+            )?.label;
+
+            return (
+              <article
+                key={subjectSchedule.courseID}
+                className="border border-gray-300 rounded-md p-4 shadow-sm"
+              >
+                <h3 className="font-semibold text-lg mb-2">{courseLabel}</h3>
+                <div className="flex flex-col gap-1 text-gray-700">
+                  <p>
+                    <strong>Time:</strong>{" "}
+                    {convertMilitaryTo12Hour(subjectSchedule.timeStart)} -{" "}
+                    {convertMilitaryTo12Hour(subjectSchedule.timeEnd)}
+                  </p>
+                  <p>
+                    <strong>Days:</strong> {daysLabel}
+                  </p>
+                  <p>
+                    <strong>Room:</strong> {roomLabel}
+                  </p>
+                  <p>
+                    <strong>Instructor:</strong> {instructorLabel}
+                  </p>
+                </div>
+                <div className="mt-3 flex justify-end gap-4 text-blue-600 cursor-pointer">
+                  <button>Edit</button>
+                  <button className="text-red-600">Delete</button>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+
+        <section className="flex flex-col gap-4">
+          {filteredCourses
+            .filter(
+              (course) =>
+                !subjectSchedules.some(
+                  (subject) => subject.courseID === course._id
+                )
+            )
+            .map((course) => (
+              <SubjectForm
+                key={course._id}
+                submitCallback={onSubjectSubmit}
+                course={course}
+                existingSubjects={subjectSchedules}
+              />
+            ))}
+        </section>
+      </main>
+    </div>
   );
 }
 
