@@ -12,6 +12,7 @@ const seatSchema = mongoose.Schema(
       ref: "Student",
       required: true,
     },
+
     section: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -24,9 +25,13 @@ const seatSchema = mongoose.Schema(
       enum: ["DROPPED", "ENROLLED"],
       required: true,
     },
-    finalGrade: {
-      type: Number,
-    },
+    grades: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Grade",
+        required: true,
+      },
+    ],
   },
   { timestamps: true }
 );
