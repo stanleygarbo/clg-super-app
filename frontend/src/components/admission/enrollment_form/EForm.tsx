@@ -170,7 +170,7 @@ function EForm() {
                         (prog: IProgramGet, index: number) => (
                           <option
                             key={index}
-                            selected={prog.programAcronym === "BSCS"}
+                            selected={index === 0}
                             value={prog._id}
                           >
                             {prog.programAcronym}

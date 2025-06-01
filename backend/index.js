@@ -22,6 +22,7 @@ const swaggerSchemas = require("./utils/swaggerSchemas.js");
 const { User } = require("./models/userModel");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
+const gradeRoutes = require("./routes/gradeRoutes.js");
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -68,6 +69,7 @@ app.use("/api/programs", programRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/schedules", scheduleRoutes);
 app.use("/api/rooms", roomRoutes);
+app.use("/api/grades", gradeRoutes);
 
 app.get("/", (req, res) => {
   res.json({

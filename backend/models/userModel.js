@@ -96,7 +96,7 @@ const studentSchema = new mongoose.Schema(
     siblings: [siblingSchema],
     schedules: employeeDocsSchema,
     documents: studentDocsSchema,
-    grades: [studentGradeSchema],
+    // grades: { type: mongoose.Schema.Types.ObjectId, ref: "Grade" },
   },
   { timestamps: true }
 );

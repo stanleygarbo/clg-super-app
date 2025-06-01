@@ -121,6 +121,10 @@ const sidebarItemsConditional = [
         name: "Schedules",
         path: "/registrar/schedule",
       },
+      {
+        name: "Students",
+        path: "/registrar/students",
+      },
     ],
   },
   {

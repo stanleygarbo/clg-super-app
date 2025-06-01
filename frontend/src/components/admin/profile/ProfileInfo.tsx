@@ -16,7 +16,7 @@ const ProfileInfo = () => {
     enabled: !!id,
   });
 
-  console.log(query.data);
+  // console.log(query.data);
 
   // TEST ID: 67838a242a0c891e5b2c0de0
 

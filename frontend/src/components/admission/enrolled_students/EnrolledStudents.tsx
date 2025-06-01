@@ -157,7 +157,7 @@ const EnrolledStudents = () => {
   const isOpen = snap.isOpen;
 
   return (
-    <div className={`${isOpen ? "" : ""} flex mt-5`}>
+    <div className={`flex mt-5`}>
       <div className="w-0 xl:block xl:w-72 xl:-z-50"></div>
       <div
         className={`${

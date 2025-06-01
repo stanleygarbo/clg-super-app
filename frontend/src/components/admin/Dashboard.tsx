@@ -5,8 +5,8 @@ import apiClient from "../../api/apiClient";
 import { toast } from "react-toastify";
 import { IEmployeeGet } from "../../interface/IEmployee";
 import { IStudentsGet } from "../../interface/IStudents";
-import { useSnapshot } from "valtio";
-import { sidebarState } from "../../store/auth";
+// import { useSnapshot } from "valtio";
+// import { sidebarState } from "../../store/auth";
 
 const Dashboard = () => {
   const [employees, setEmployees] = useState<IEmployeeGet[]>([]);
@@ -45,12 +45,12 @@ const Dashboard = () => {
   }, []);
 
   const navigate = useNavigate();
-  const snap = useSnapshot(sidebarState);
-  const isOpen = snap.isOpen;
+  // const snap = useSnapshot(sidebarState);
+  // const isOpen = snap.isOpen;
 
   return (
-    <div className={`${isOpen ? "-z-50" : ""} flex px-3`}>
-      <div className="w-0 xl:w-72"></div>
+    <div className={`flex px-3`}>
+      <div className="w-0 xl:block xl:w-72 xl:-z-50"></div>
       <div className="flex flex-col my-10">
         <h1 className="text-center bg-blue-600 text-white text-2xl font-bold p-5 rounded-t-md">
           Dashboard
@@ -98,7 +98,7 @@ const Dashboard = () => {
             <p
               className="bg-blue-600 text-center py-8 px-16 rounded-md hover:cursor-pointer text-white font-bold text-xl hover:scale-105 active:scale-95 duration-200 shadow-sm shadow-blue-600/50"
               onClick={() => {
-                navigate("/admin/profile");
+                navigate("/profile");
               }}
             >
               Profile

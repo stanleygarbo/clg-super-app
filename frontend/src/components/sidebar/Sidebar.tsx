@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { RiSidebarFoldFill, RiMenuFill } from "react-icons/ri";
 import SidebarItems, { ISidebarItem } from "./SidebarItems";
-// import { useState } from "react";
 import { useSnapshot } from "valtio";
-import { sidebarState } from "../../store/auth";
-// import { useEffect } from "react";
+import { authState, sidebarState } from "../../store/auth";
+import { useQuery } from "@tanstack/react-query";
+import { getStudentById } from "../../api/student";
+import { getEmployeeById } from "../../api/employee";
 
 const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
   const navigate = useNavigate();
-  // const [isOpen, setIsOpen] = useState<boolean>(true);
   const snap = useSnapshot(sidebarState);
   const isOpen = snap.isOpen;
 
@@ -24,6 +24,19 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
   //     document.body.style.overflow = "auto";
   //   };
   // }, [isOpen]);
+
+  const { user } = useSnapshot(authState);
+  console.log(user.id);
+
+  const loginUser = useQuery({
+    queryKey: ["user", user.id],
+    queryFn: async () => {
+      if (user.role.includes("students")) {
+        return await getStudentById({ id: user.id });
+      } else return getEmployeeById({ id: user.id });
+    },
+    enabled: !!user.id,
+  });
 
   return (
     <>
@@ -44,12 +57,21 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
       >
         {isOpen && (
           <>
-            <section className="flex justify-center mb-10">
+            <section className="flex flex-col items-center">
               <img
                 src="/aclc-logo.png"
                 className="w-[100px] h-[100px]"
                 alt="Logo"
               />
+              <section className="bg-blue-100 my-10 p-5 rounded-md flex flex-col items-center">
+                <h1 className="font-bold">
+                  {loginUser.data?.surname}, {loginUser.data?.firstName}{" "}
+                  {loginUser.data?.middleName[0]}.
+                </h1>
+                <p className="text-blue-700 font-bold text-sm">
+                  {user.role.join(" - ")}
+                </p>
+              </section>
             </section>
             <section>
               <SidebarItems data={sidebarItems} depth={1} />

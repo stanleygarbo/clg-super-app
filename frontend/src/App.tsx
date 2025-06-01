@@ -30,6 +30,9 @@ import SubjectLoad from "./components/admin/subject-load/SubjectLoad";
 import SubjectLoadDetails from "./components/admin/subject-load/SubjectLoadDetails";
 import ScheduleForm from "./components/registrar/ScheduleForm";
 import ViewSchedule from "./components/registrar/ViewSchedule";
+import UserProfie from "./components/admin/profile/UserProfie";
+import StudentList from "./components/registrar/grade/StudentList";
+import StudentGrades from "./components/registrar/grade/StudentGrades";
 
 const router = createBrowserRouter([
   {
@@ -66,7 +69,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/profile",
-        element: <Profile />,
+        element: <UserProfie />,
       },
     ],
   },
@@ -183,6 +186,14 @@ const router = createBrowserRouter([
       {
         path: "schedule/:id",
         element: <ViewSchedule />,
+      },
+      {
+        path: "students/",
+        element: <StudentList />,
+      },
+      {
+        path: "students-grade/:id",
+        element: <StudentGrades />,
       },
     ],
   },
