@@ -2,7 +2,7 @@ import Select from "react-select";
 import { getCourses } from "../../api/course";
 import { ICourse } from "../../interface/ICourse";
 import { getEmployees } from "../../api/employee";
-import { IEmployeeGet } from "../../interface/IEmployee";
+import { customStyles, IEmployeeGet } from "../../interface/IEmployee";
 import { useForm, Controller } from "react-hook-form";
 import { IRoomGet } from "../../interface/IRoom";
 import { getRooms } from "../../api/room";
@@ -130,13 +130,13 @@ function SubjectForm({ submitCallback, course, existingSubjects }: Props) {
   };
 
   return (
-    <div>
-      {/* Desktop grid form (hidden on mobile) */}
-      <div className="hidden md:block">
-        <form
-          className="grid grid-cols-scheduleCreate gap-2"
-          onSubmit={subjectForm.handleSubmit(onSubmit)}
-        >
+    <div className="flex">
+      {/* <div className="w-0 xl:w-72"></div> */}
+      <form
+        className="grid grid-cols-1 md:grid-cols-[7fr_1fr] md:gap-2 gap-4"
+        onSubmit={subjectForm.handleSubmit(onSubmit)}
+      >
+        <div className="flex flex-col md:grid w-[290px] xl:w-full md:grid-cols-6 gap-4">
           <Controller
             control={subjectForm.control}
             name="courseID"
@@ -155,13 +155,13 @@ function SubjectForm({ submitCallback, course, existingSubjects }: Props) {
           <input
             {...subjectForm.register("timeStart")}
             type="time"
-            className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
+            className="w-full px-3 py-1 border border-gray-300 rounded-md"
             required
           />
           <input
             {...subjectForm.register("timeEnd")}
             type="time"
-            className="w-full h-full px-2 border-[#cccccc] rounded-[4px]"
+            className="w-full px-3 py-1 border border-gray-300 rounded-md"
             required
           />
           <Controller
@@ -171,16 +171,15 @@ function SubjectForm({ submitCallback, course, existingSubjects }: Props) {
             render={({ field }) => (
               <Select
                 {...field}
+                isMulti
                 options={dayOptions}
-                isMulti={true}
                 value={dayOptions.filter((option) =>
                   field.value?.includes(option.value)
                 )}
+                styles={customStyles}
                 onChange={(selectedOptions) =>
                   field.onChange(
-                    selectedOptions
-                      ? selectedOptions.map((option) => option.value)
-                      : []
+                    selectedOptions?.map((option) => option.value) || []
                   )
                 }
               />
@@ -207,8 +206,8 @@ function SubjectForm({ submitCallback, course, existingSubjects }: Props) {
             rules={{ required: true }}
             render={({ field }) => (
               <Select
-                options={instructorOptions}
                 {...field}
+                options={instructorOptions}
                 value={instructorOptions?.find(
                   (option) => option.value === field.value
                 )}
@@ -216,112 +215,17 @@ function SubjectForm({ submitCallback, course, existingSubjects }: Props) {
               />
             )}
           />
-          <button
-            type="submit"
-            className="px-4 rounded-md text-white font-semibold bg-blue-700 hover:bg-blue-600 active:scale-90 duration-200"
-          >
-            Add subject
-          </button>
-        </form>
-      </div>
+        </div>
+        <button
+          type="submit"
+          className="py-2 rounded-md text-white w-[100%] font-semibold bg-blue-700 hover:bg-blue-600 active:scale-95 duration-200 mb-10 xl:mb-0"
+        >
+          Add subject
+        </button>
+      </form>
 
       {/* Mobile stacked form (visible on mobile only) */}
-      <div className="block md:hidden">
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={subjectForm.handleSubmit(onSubmit)}
-        >
-          <Controller
-            control={subjectForm.control}
-            name="courseID"
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={courseOptions}
-                value={courseOptions?.find(
-                  (option) => option.value === field.value
-                )}
-                onChange={(option) => field.onChange(option?.value)}
-                className="w-full"
-              />
-            )}
-          />
-          <input
-            {...subjectForm.register("timeStart")}
-            type="time"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            required
-          />
-          <input
-            {...subjectForm.register("timeEnd")}
-            type="time"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            required
-          />
-          <Controller
-            control={subjectForm.control}
-            name="day"
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={dayOptions}
-                isMulti={true}
-                value={dayOptions.filter((option) =>
-                  field.value?.includes(option.value)
-                )}
-                onChange={(selectedOptions) =>
-                  field.onChange(
-                    selectedOptions
-                      ? selectedOptions.map((option) => option.value)
-                      : []
-                  )
-                }
-                className="w-full"
-              />
-            )}
-          />
-          <Controller
-            control={subjectForm.control}
-            name="room"
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={roomOptions}
-                value={roomOptions?.find(
-                  (option) => option.value === field.value
-                )}
-                onChange={(option) => field.onChange(option?.value)}
-                className="w-full"
-              />
-            )}
-          />
-          <Controller
-            control={subjectForm.control}
-            name="instructorID"
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Select
-                options={instructorOptions}
-                {...field}
-                value={instructorOptions?.find(
-                  (option) => option.value === field.value
-                )}
-                onChange={(option) => field.onChange(option?.value)}
-                className="w-full"
-              />
-            )}
-          />
-          <button
-            type="submit"
-            className="py-2 rounded-md text-white font-semibold bg-blue-700 hover:bg-blue-600 active:scale-95 duration-200"
-          >
-            Add subject
-          </button>
-        </form>
-      </div>
+      {/* <div className="block md:hidden"></div> */}
     </div>
   );
 }
