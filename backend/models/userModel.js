@@ -11,7 +11,6 @@ const standing = require("../constants/studentStanding");
 const { scheduleSchema } = require("./scheduleModel");
 const { employeeDocsSchema } = require("./employeeDocsModel");
 const { studentDocsSchema } = require("./studentDocsModel");
-const { studentGradeSchema } = require("./studentGradeModel");
 
 const userSchema = new mongoose.Schema(
   {

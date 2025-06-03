@@ -7,7 +7,7 @@ const subjectScheduleSchema = new mongoose.Schema({
   },
   section: {
     type: String,
-    required: true,
+    // required: true,
   },
   timeStart: {
     type: String,
