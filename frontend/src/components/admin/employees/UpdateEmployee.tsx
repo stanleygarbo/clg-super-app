@@ -145,15 +145,13 @@ const UpdateEmployee = () => {
   if (query.isFetching) {
     return (
       <div className="flex">
-        <div className="w-0 xl:w-72"></div>
-        <img src="/loading.svg" className="p-96 text-center" alt="" />
+        <img src="/loading.svg" className="p-80 text-center" alt="" />
       </div>
     );
   }
 
   return (
-    <div className=" flex justify-center">
-      <div className="w-0 xl:w-72"></div>
+    <div className=" flex justify-center mt-5">
       <div className="w-full flex flex-col items-center">
         <h1 className="font-bold text-2xl text-center xl:text-start mt-10 text-blue-800 mb-10 xl:mb-20">
           Employee Update Form

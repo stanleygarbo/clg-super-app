@@ -56,8 +56,7 @@ const Employees = () => {
 
   const snap = useSnapshot(sidebarState);
   return (
-    <div className="my-10 flex">
-      <div className="w-0 xl:w-72"></div>
+    <div className="my-5 flex">
       <div
         className={`px-4 sm:px-6 lg:px-8 transition-all duration-300
         ${snap.isOpen ? "" : "ml-0"}

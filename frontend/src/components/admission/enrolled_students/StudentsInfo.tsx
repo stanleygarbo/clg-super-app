@@ -95,7 +95,6 @@ const StudentsInfo = () => {
 
   return (
     <div className="flex p-3">
-      <div className="w-0 xl:w-72"></div>
       <form
         onSubmit={handleSubmit((data) => {
           if (!id) {

@@ -102,9 +102,6 @@ const DepartmentDashboard = () => {
         Open ? "-z-50 xl:z-50" : ""
       } flex my-10 w-full xl:w-[1000px] px-4`}
     >
-      {/* Sidebar */}
-      <div className="hidden xl:block xl:w-72 -z-50"></div>
-
       {/* Main Content */}
       <div className="w-full xl:flex-1 relative">
         {/* Header & Forms */}

@@ -53,8 +53,6 @@ const RoomList = () => {
 
   return (
     <div className="flex flex-col xl:flex-row my-10 items-center xl:items-start px-4">
-      <div className="w-0 xl:w-72"></div>
-
       <div className="w-full max-w-[1100px] h-auto xl:h-[650px]">
         <form
           onSubmit={handleSubmit((data) => addRoomMutation.mutate(data))}

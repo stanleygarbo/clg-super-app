@@ -16,49 +16,7 @@ import { getPrograms } from "../../../api/programs";
 import { IProgramGet } from "../../../interface/IProgram";
 import { twMerge } from "tailwind-merge";
 import Select from "react-select";
-
-const customStyles = {
-  control: (provided: any, state: any) => ({
-    ...provided,
-    height: 40,
-    borderRadius: "6px",
-    overflow: "hidden",
-    border: 0,
-    outline: "none",
-    borderBottom: state.isFocused ? "2px solid blue" : "2px solid black",
-    boxShadow: state.isFocused ? "none" : provided.boxShadow,
-  }),
-  multiValue: (provided: any) => ({
-    ...provided,
-    maxWidth: 90,
-    height: "28px",
-    alignItems: "center",
-    borderRadius: "6px",
-    textOverflow: "ellipsis",
-  }),
-  multiValueRemove: (provided: any) => ({
-    ...provided,
-    cursor: "pointer",
-    padding: "0 5px",
-    height: "28px",
-    display: "flex",
-    alignItems: "center",
-  }),
-  menu: (provided: any) => ({
-    ...provided,
-    height: 80,
-    overflowY: "auto",
-  }),
-  option: (provided: any, state: { isSelected: any }) => ({
-    ...provided,
-    height: 40,
-    backgroundColor: state.isSelected ? "#d3d3d3" : "white",
-  }),
-  singleValue: (provided: any) => ({
-    ...provided,
-    height: 30,
-  }),
-};
+import { customStyles } from "../../../interface/IEmployee";
 
 interface IOption {
   value: string;
@@ -208,7 +166,7 @@ const CourseDashboard = () => {
   }, [courseById.data, update.reset]);
 
   return (
-    <div>
+    <div className="mt-10">
       <div
         onClick={() => {
           setAddOpen(false);

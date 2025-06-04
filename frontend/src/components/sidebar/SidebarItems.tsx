@@ -10,6 +10,7 @@ export type ISidebarItem = {
   subItems?: ISidebarItem[];
   type?: "drawer";
   path: string;
+  allowedRoles?: string[];
 };
 
 function countItems(items: ISidebarItem[] | undefined) {

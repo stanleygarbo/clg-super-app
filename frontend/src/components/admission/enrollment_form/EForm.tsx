@@ -85,7 +85,6 @@ function EForm() {
 
   return (
     <div className="flex py-5">
-      <div className="w-0 xl:w-72"></div>
       <div className="px-2">
         <form
           onSubmit={handleSubmit((data) => addMutation.mutate({ ...data }))}

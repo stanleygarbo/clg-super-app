@@ -56,13 +56,12 @@ const UserProfie = () => {
 
   return (
     <div className="flex">
-      <div className="xl:w-72 w-0"></div>
       <div
         className={`${
           isOpen ? "-z-50 xl:z-50" : ""
-        } rounded-md shadow relative w-full xl:w-[1100px] xl:h-[700px] my-10`}
+        } rounded-md relative w-full xl:w-[1100px] xl:h-[700px] my-10 px-5`}
       >
-        <span className="flex gap-5 items-start border-b p-16 rounded-t-lg bg-blue-700">
+        <span className="flex gap-5 xl:items-start py-10 px-5 xl:p-16 rounded-t-lg bg-blue-800">
           <section
             {...getRootProps()}
             className="relative w-[100px] aspect-square"
@@ -76,31 +75,37 @@ const UserProfie = () => {
             <img
               src={pfp}
               alt=""
-              className="w-full h-full xl:w-[100px] xl:h-[100px] rounded-lg shadow-md object-cover border"
+              className="w-full h-full xl:w-[100px] xl:h-[100px] rounded-lg shadow-md object-cover border-0"
             />
           </section>
           <section className="flex flex-col justify-center">
-            <p className="text-sm xl:text-lg text-start font-bold text-slate-50">
+            <p className="text-sm xl:text-lg text-start font-bold text-slate-200">
               {loginUser.data?.surname}, {loginUser.data?.firstName}{" "}
-              {loginUser.data?.middleName[0]}.
+              {loginUser.data?.middleName[0]
+                ? loginUser.data?.middleName[0] + "."
+                : ""}
             </p>
-            <p className="flex gap-2 text-xs xl:text-base text-slate-300 font-semibold">
+            <p className="flex gap-2 text-xs xl:text-base text-slate-200 font-semibold">
               <p>Position : {loginUser.data?.position?.jobTitle}</p>
             </p>
-            <p className="text-slate-300 text-xs xl:text-base font-semibold">
+            <p className="text-slate-200 text-xs xl:text-base font-semibold">
               Department : {loginUser.data?.department?.departmentName}
             </p>
           </section>
         </span>
         <div className="flex flex-col items-center">
-          <section className="flex justify-center absolute w-[200px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-md shadow-md bg-slate-50 z-50">
-            <h1 className="py-2 px-5 font-bold">User Information</h1>
+          <section className="flex justify-center absolute w-[200px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded bg-white z-50 border-0">
+            <h1 className="py-2 font-bold text-blue-900 xl:text-xl">
+              User Information
+            </h1>
           </section>
         </div>
 
-        <section className="flex flex-col gap-5 p-5 py-10 relative">
+        <section className="flex flex-col gap-5 p-5 py-10 relative bg-blue-100 rounded-b-lg">
           <section className="flex flex-col-reverse gap-5 xl:flex-row items-center justify-between">
-            <h1 className="font-bold text-xl xl:text-2xl">Information</h1>
+            <h1 className="font-bold text-xl xl:text-2xl text-blue-800">
+              Information
+            </h1>
             {/* <button
               onClick={() => {
                 // setInfoOpacity("opacity-100 left-1/2 w-[100%]");
@@ -112,36 +117,30 @@ const UserProfie = () => {
               Employees
             </button> */}
           </section>
-          <span className="flex flex-col mb-5 gap-3">
-            <section className="grid xl:grid-cols-3 gap-3">
-              <span className="relative">
-                <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Last Name
-                </p>
+          <span className="flex flex-col mb-5 gap-3 mt-5 xl:px-5">
+            <section className="grid xl:grid-cols-3 gap-3 xl:gap-3">
+              <span className="flex flex-col items-start">
+                <p className="text-base font-bold text-blue-500">Last Name</p>
                 <input
-                  className="border border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border-0 border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden outline-none"
                   type="text"
                   readOnly
                   value={loginUser?.data?.surname}
                 />
               </span>
-              <span className="relative">
-                <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  First Name
-                </p>
+              <span className="flex flex-col items-start">
+                <p className="text-base font-bold text-blue-500">First Name</p>
                 <input
-                  className="border border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border-0 border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden outline-none"
                   type="text"
                   readOnly
                   value={loginUser?.data?.firstName}
                 />
               </span>
-              <span className="relative">
-                <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Middle Name
-                </p>
+              <span className="flex flex-col items-start">
+                <p className="text-base font-bold text-blue-500">Middle Name</p>
                 <input
-                  className="border border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border-0 border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden outline-none"
                   type="text"
                   readOnly
                   value={loginUser?.data?.middleName}
@@ -149,12 +148,10 @@ const UserProfie = () => {
               </span>
             </section>
             <section className="grid xl:grid-cols-5 gap-3">
-              <span className="relative">
-                <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Birthdate
-                </p>
+              <span className="flex flex-col items-start">
+                <p className="text-base font-bold text-blue-500">Birthdate</p>
                 <input
-                  className="border border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border-0 border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden outline-none"
                   type="text"
                   readOnly
                   value={
@@ -162,48 +159,40 @@ const UserProfie = () => {
                   }
                 />
               </span>
-              <span className="relative">
-                <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Birthplace
-                </p>
+              <span className="flex flex-col items-start">
+                <p className="text-base font-bold text-blue-500">Birthplace</p>
                 <input
-                  className="border border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border-0 border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden outline-none"
                   type="text"
                   readOnly
-                  value={loginUser?.data?.birth.birthPlace}
+                  value={loginUser?.data?.birth?.birthPlace}
                 />
               </span>
-              <span className="relative">
-                <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Nationality
-                </p>
+              <span className="flex flex-col items-start">
+                <p className="text-base font-bold text-blue-500">Nationality</p>
                 <input
-                  className="border border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border-0 border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden outline-none"
                   type="text"
                   readOnly
-                  value={loginUser?.data?.birth.citizenship}
+                  value={loginUser?.data?.birth?.citizenship}
                 />
               </span>
-              <span className="relative">
-                <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Religion
-                </p>
+              <span className="flex flex-col items-start">
+                <p className="text-base font-bold text-blue-500">Religion</p>
                 <input
-                  className="border border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border-0 border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden outline-none"
                   type="text"
                   readOnly
-                  value={loginUser?.data?.birth.religion}
+                  value={loginUser?.data?.birth?.religion}
                 />
               </span>
-              <span className="relative">
-                <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                  Gender
-                </p>
+              <span className="flex flex-col items-start">
+                <p className="text-base font-bold text-blue-500">Gender</p>
                 <input
-                  className="border border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border-0 border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden outline-none"
                   type="text"
                   readOnly
-                  value={loginUser?.data?.birth.sex}
+                  value={loginUser?.data?.birth?.sex}
                 />
               </span>
             </section>

@@ -41,12 +41,12 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
           index % 2 === 0 ? "bg-slate-200" : "bg-slate-100"
         } md:flex hidden py-2 text-sm items-center pl-1 hover:bg-slate-300 group duration-200`}
       >
-        <input
+        {/* <input
           type="checkbox"
           checked={checkedStudents[student._id] || false}
           onChange={() => onToggle(student._id)}
           className="mt-[2px]"
-        />
+        /> */}
 
         <h1 className="w-[150px] pl-3">{student.surname}</h1>
         <h1 className="w-[150px]">{student.firstName}</h1>

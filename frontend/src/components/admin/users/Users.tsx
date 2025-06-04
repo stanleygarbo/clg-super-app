@@ -51,7 +51,6 @@ const Users = () => {
   return (
     <div className="flex flex-col xl:flex-row mt-20 xl:mt-10 mb-10 px-2">
       {/* Sidebar spacing */}
-      <div className="hidden xl:block xl:w-72"></div>
 
       {/* Main content */}
       <div className="w-full max-w-screen-xl mx-auto xl:w-[1000px]">

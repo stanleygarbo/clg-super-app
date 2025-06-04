@@ -50,7 +50,6 @@ const Dashboard = () => {
 
   return (
     <div className={`flex px-3`}>
-      <div className="w-0 xl:block xl:w-72 xl:-z-50"></div>
       <div className="flex flex-col my-10">
         <h1 className="text-center bg-blue-600 text-white text-2xl font-bold p-5 rounded-t-md">
           Dashboard

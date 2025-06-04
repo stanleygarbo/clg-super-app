@@ -55,7 +55,7 @@ const PositionDashboard = () => {
   );
   return (
     <div>
-      <div className="w-[1100px] h-[650px]">
+      <div className="w-[1100px] h-[650px] mt-10">
         {/* ADD POSITION */}
         <section className={`p-5 flex items-center gap-5`}>
           <h1 className="text-xl font-bold text-blue-800 w-[200px]">

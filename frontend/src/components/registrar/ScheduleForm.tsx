@@ -177,12 +177,9 @@ function ScheduleForm() {
   }, [selectedProgram]);
 
   return (
-    <div className="flex flex-col xl:flex-row px-5 xl:px-16 mt-5">
-      {/* Left sidebar spacer for xl and up */}
-      <div className="hidden xl:block xl:w-72" />
-
+    <div className="flex flex-col xl:flex-row px-5 xl:px-16 mt-10">
       {/* Desktop Schedule (md and up) */}
-      <main className="hidden md:flex flex-col gap-8 flex-1 mx-auto max-w-7xl my-8 px-4 md:px-0">
+      <main className="hidden md:flex flex-col gap-8 flex-1 mx-auto max-w-6xl my-8 px-4 md:px-0">
         <header className="flex justify-between items-center h-12">
           <p className="text-2xl font-bold">Schedule</p>
           <form

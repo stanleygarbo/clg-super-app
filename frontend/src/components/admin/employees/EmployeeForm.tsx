@@ -139,7 +139,6 @@ const EmploymentForm = () => {
 
   return (
     <div className="flex xl:justify-center mt-10">
-      <div className="w-0 xl:w-72"></div>
       <div className="mb-10">
         <h1 className="font-bold text-2xl text-center xl:text-start mt-5 pt-5 text-blue-800 mb-5">
           Employee Form

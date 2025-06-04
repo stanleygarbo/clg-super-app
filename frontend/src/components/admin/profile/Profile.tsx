@@ -50,7 +50,6 @@ const Profile = () => {
 
   return (
     <div className="flex px-5">
-      <div className="xl:w-72 w-0"></div>
       <div
         className={`${
           isOpen ? "-z-50 xl:z-50" : ""

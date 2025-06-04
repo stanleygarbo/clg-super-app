@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { RiSidebarFoldFill, RiMenuFill } from "react-icons/ri";
 import SidebarItems, { ISidebarItem } from "./SidebarItems";
 import { useSnapshot } from "valtio";
-import { authState, sidebarState } from "../../store/auth";
+import { authState, resetAuthState, sidebarState } from "../../store/auth";
 import { useQuery } from "@tanstack/react-query";
 import { getStudentById } from "../../api/student";
 import { getEmployeeById } from "../../api/employee";
@@ -26,7 +26,7 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
   // }, [isOpen]);
 
   const { user } = useSnapshot(authState);
-  console.log(user.id);
+  // console.log(user.id);
 
   const loginUser = useQuery({
     queryKey: ["user", user.id],
@@ -37,6 +37,12 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
     },
     enabled: !!user.id,
   });
+
+  const handleLogout = () => {
+    localStorage.removeItem("auth");
+    resetAuthState();
+    navigate("/login");
+  };
 
   return (
     <>
@@ -51,38 +57,37 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 bg-white p-5 h-full overflow-y-auto no-scrollbar border-r flex flex-col justify-between duration-200
+        className={`fixed top-0 left-0 bg-white gap-5 p-5 h-full overflow-y-auto no-scrollbar border-r flex flex-col justify-between duration-200
           ${isOpen ? "w-80 xl:w-72" : "w-0 left-[-50px] overflow-hidden"}
         `}
       >
         {isOpen && (
           <>
-            <section className="flex flex-col items-center">
-              <img
-                src="/aclc-logo.png"
-                className="w-[100px] h-[100px]"
-                alt="Logo"
-              />
-              <section className="bg-blue-100 my-10 p-5 rounded-md flex flex-col items-center">
-                <h1 className="font-bold">
-                  {loginUser.data?.surname}, {loginUser.data?.firstName}{" "}
-                  {loginUser.data?.middleName[0]}.
-                </h1>
-                <p className="text-blue-700 font-bold text-sm">
-                  {user.role.join(" - ")}
-                </p>
+            <div>
+              <section className="flex flex-col items-center">
+                <img
+                  src="/aclc-logo.png"
+                  className="w-[100px] h-[100px]"
+                  alt="Logo"
+                />
+                <section className="bg-blue-100 my-10 p-5 rounded-md flex flex-col items-center">
+                  <h1 className="font-bold">
+                    {loginUser.data?.surname}, {loginUser.data?.firstName}{" "}
+                    {loginUser.data?.middleName[0]}.
+                  </h1>
+                  <p className="text-blue-700 font-bold text-sm">
+                    {user.role?.join(" - ")}
+                  </p>
+                </section>
               </section>
-            </section>
-            <section>
-              <SidebarItems data={sidebarItems} depth={1} />
-            </section>
+              <section>
+                <SidebarItems data={sidebarItems} depth={1} />
+              </section>
+            </div>
 
             <section>
               <button
-                onClick={() => {
-                  localStorage.removeItem("auth");
-                  navigate("/login");
-                }}
+                onClick={handleLogout}
                 className="rounded-md bg-gradient-to-t from-red-600 to-red-400 shadow-md shadow-red-500/50 hover:scale-105 active:scale-95 text-white font-bold w-full py-2 duration-200"
               >
                 Log out

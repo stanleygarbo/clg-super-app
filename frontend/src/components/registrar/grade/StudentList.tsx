@@ -53,7 +53,6 @@ const StudentList = () => {
 
   return (
     <div className="flex xl:pt-10">
-      <div className="w-0 xl:w-72"></div>
       <div className="w-full xl:w-[1200px] flex flex-col my-10">
         <section className="bg-blue-800 p-3 rounded-md flex flex-col md:flex-row items-center justify-between gap-4">
           <h1 className="text-white font-bold text-xl">Students List</h1>
@@ -104,16 +103,16 @@ const StudentList = () => {
               <h1>{student.standing}</h1>
               <h1>Enrolled</h1>
               <h1>
-                <button
+                not available...
+                {/* <button
                   onClick={() => {
                     navigate(`/registrar/students-grade/${student._id}`);
                   }}
                   className="bg-blue-700 px-2 py-1 rounded text-white font-semibold hover:bg-blue-800 active:scale-90 duration-200"
                 >
                   View Grade
-                </button>
+                </button> */}
               </h1>{" "}
-              {/* Replace with actual actions */}
             </section>
           ))}
         </section>
