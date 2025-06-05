@@ -17,6 +17,8 @@ import { IProgramGet } from "../../../interface/IProgram";
 import { twMerge } from "tailwind-merge";
 import Select from "react-select";
 import { customStyles } from "../../../interface/IEmployee";
+import { useSnapshot } from "valtio";
+import { sidebarState } from "../../../store/auth";
 
 interface IOption {
   value: string;
@@ -165,17 +167,12 @@ const CourseDashboard = () => {
     }
   }, [courseById.data, update.reset]);
 
+  const snap = useSnapshot(sidebarState);
+  const isOpen = snap.isOpen;
+
   return (
     <div className="mt-10">
-      <div
-        onClick={() => {
-          setAddOpen(false);
-        }}
-        className={`${
-          addOpen ? "z-50 left-0" : "left-[2000px]"
-        } bg-black opacity-20 w-full h-full right-0 top-0 bottom-0 fixed`}
-      ></div>
-      <div className="w-[100%] h-[95%] relative">
+      <div className={`${isOpen ? "-z-50 xl:z-50" : ""} w-full relative`}>
         <section className="flex justify-end gap-3">
           <button
             type="button"
@@ -192,11 +189,13 @@ const CourseDashboard = () => {
 
         <section
           className={`${
-            updateOpen ? "w-[600px] z-50" : "w-0 left-[-200px] opacity-0"
-          } absolute p-10 rounded-md transform translate-x-1/2 translate-y-10 flex flex-col items-center justify-between gap-5 border border-blue-200 backdrop-blur-md overflow-hidden duration-200`}
+            updateOpen
+              ? "w-full xl:w-[600px] z-50"
+              : "w-0 left-[-200px] opacity-0"
+          } absolute rounded-md p-5 gap-5 transform translate-y-1/2 xl:translate-x-1/2 xl:translate-y-10 flex flex-col items-center justify-between border backdrop-blur-md overflow-hidden duration-200`}
         >
-          <section className="flex justify-between w-[500px]">
-            <h1 className="text-xl font-bold text-blue-700 w-[150px]">
+          <section className="flex justify-between px-3 w-full xl:w-[500px]">
+            <h1 className="text-xl font-bold text-blue-700 xl:w-[150px]">
               Update Course
             </h1>
             <button
@@ -214,7 +213,7 @@ const CourseDashboard = () => {
             className={`flex flex-col gap-5`}
             onSubmit={update.handleSubmit(upSubmit)}
           >
-            <span className="grid grid-cols-[1fr,2fr] gap-2">
+            <span className="grid xl:grid-cols-[1fr,2fr] gap-2">
               <section className="relative grid grid-cols-1">
                 <input
                   type="text"
@@ -232,7 +231,7 @@ const CourseDashboard = () => {
                 />
               </section>
             </span>
-            <section className="grid grid-cols-3 gap-2">
+            <section className="grid xl:grid-cols-3 gap-2 items-center">
               <select
                 className="outline-none border-0 h-[40px] rounded-md border-b-2 focus:border-blue-900 border-b-black text-center"
                 {...update.register("semester")}
@@ -261,12 +260,12 @@ const CourseDashboard = () => {
                   4<sup>th</sup> year
                 </option>
               </select>
-              <section className="relative grid grid-cols-1">
+              <section className="">
                 <input
                   type="number"
                   {...update.register("units")}
                   placeholder="Units"
-                  className="outline-none border-0 rounded-md py-1 px-2 text-lg font-semibold text-center border-b-2 border-b-black focus:border-b-blue-800"
+                  className="outline-none border-0 w-full h-[40px] rounded-md border-b-2 focus:border-blue-900 border-b-black text-center"
                 />
               </section>
             </section>
@@ -309,11 +308,11 @@ const CourseDashboard = () => {
 
         <section
           className={`${
-            addOpen ? "w-[600px] z-50" : "w-0 -z-0 left-[-200px] opacity-0"
-          } absolute p-10 rounded-md transform translate-x-1/2 translate-y-10 flex flex-col items-center justify-between gap-5 border border-blue-20 bg-white overflow-hidden duration-200`}
+            addOpen ? "w-full xl:w-[600px] z-50" : "w-0 left-[-200px] opacity-0"
+          } absolute rounded-md p-5 gap-5 transform translate-y-1/2 xl:translate-x-1/2 xl:translate-y-10 flex flex-col items-center justify-between border backdrop-blur-md overflow-hidden duration-200`}
         >
-          <section className="flex justify-between w-[500px]">
-            <h1 className="text-xl font-bold text-blue-700 w-[150px]">
+          <section className="flex justify-between w-full xl:w-[500px]">
+            <h1 className="text-xl font-bold text-blue-700 xl:w-[150px]">
               Add Course
             </h1>
             <button
@@ -331,7 +330,7 @@ const CourseDashboard = () => {
             className={`flex flex-col gap-5`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <span className="grid grid-cols-2 gap-2">
+            <span className="grid xl:grid-cols-2 gap-2">
               <section className="relative grid grid-cols-1">
                 <input
                   type="text"
@@ -349,7 +348,7 @@ const CourseDashboard = () => {
                   {errors.courseCode?.message}
                 </p>
               </section>
-              <section className="relative grid grid-cols-1">
+              <section className="relative grid">
                 <input
                   type="text"
                   {...register("courseName", {
@@ -367,7 +366,7 @@ const CourseDashboard = () => {
                 </p>
               </section>
             </span>
-            <section className="grid grid-cols-3 gap-2">
+            <section className="grid xl:grid-cols-3 gap-2">
               <select
                 className="outline-none border-0 h-[40px] rounded-md border-b-2 focus:border-blue-900 border-b-black text-center"
                 {...register("semester")}
@@ -448,140 +447,195 @@ const CourseDashboard = () => {
         </section>
 
         {/* Display Courses */}
-
-        <section className="bg-slate-100 px-5 py-2 rounded-md flex items-center justify-between">
-          <span className="flex gap-3">
-            <h1 className="text-xl font-bold text-blue-800">Course's List</h1>
-          </span>
-          <span className="flex gap-3 ">
-            <input
-              type="text"
-              className="border-0 rounded-md px-5 py-2 outline-none text-center"
-              placeholder="Q Search..."
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-              }}
-            />
-          </span>
-        </section>
-        <section className="w-[100%] h-[100%] ">
-          <span className="flex flex-col">
-            <span className="flex mb-3 mt-2 text-lg text-center font-bold">
-              <h1 className="w-[10%] pl-2 text-start">Course Code</h1>
-              <h1 className="w-[25%]">Course</h1>
-              <h1 className="w-[10%]">Units</h1>
-              <h1 className="w-[5%]">Year</h1>
-              <h1 className="w-[5%]">Sem</h1>
-              <h1 className="w-[25%]">Program</h1>
-              <h1 className="w-[20%]">Action</h1>
+        <div className={`${addOpen ? "-z-50" : "z-50"} `}>
+          <section className="bg-slate-100 px-5 py-3 rounded-md flex flex-col xl:flex-row gap-3 items-center justify-between">
+            <span className="flex gap-3">
+              <h1 className="text-xl font-bold text-blue-800">Course's List</h1>
             </span>
-            <span className="overflow-scroll no-scrollbar w-[1200px] h-[90%]">
-              {query.isLoading && (
-                <div className="flex justify-center w-[1200px] bg-slate-100 h-[90%] rounded-md p-52">
-                  <img src="/loading.svg" className="px-5" alt="" />
-                </div>
-              )}
-              {filteredData?.map((cour: ICourseGet, index: number) => (
-                <section
-                  key={cour._id}
-                  className={`${
-                    index == 0
-                      ? "rounded-t-md"
-                      : index == query.data?.results?.length - 1
-                      ? "rounded-b-md"
-                      : ""
-                  } ${
-                    index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
-                  } hover:bg-slate-300 group flex w-[100%] text-center items-center py-2 font-semibold duration-200`}
+            <span className="flex gap-3 ">
+              <input
+                type="text"
+                className="border-0 rounded-md px-5 py-2 outline-none text-center"
+                placeholder="Q Search..."
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+              />
+            </span>
+          </section>
+          <div className="hidden xl:flex">
+            <section className="w-[100%] h-[100%] ">
+              <span className="flex flex-col">
+                <span className="flex mb-3 mt-2 text-lg text-center font-bold">
+                  <h1 className="w-[10%] pl-2 text-start">Course Code</h1>
+                  <h1 className="w-[25%]">Course</h1>
+                  <h1 className="w-[10%]">Units</h1>
+                  <h1 className="w-[5%]">Year</h1>
+                  <h1 className="w-[5%]">Sem</h1>
+                  <h1 className="w-[25%]">Program</h1>
+                  <h1 className="w-[20%]">Action</h1>
+                </span>
+                <span className="overflow-scroll no-scrollbar w-[1200px] h-[90%]">
+                  {query.isLoading && (
+                    <div className="flex justify-center w-[1200px] bg-slate-100 h-[90%] rounded-md p-52">
+                      <img src="/loading.svg" className="px-5" alt="" />
+                    </div>
+                  )}
+                  {filteredData?.map((cour: ICourseGet, index: number) => (
+                    <section
+                      key={cour._id}
+                      className={`${
+                        index == 0
+                          ? "rounded-t-md"
+                          : index == query.data?.results?.length - 1
+                          ? "rounded-b-md"
+                          : ""
+                      } ${
+                        index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
+                      } hover:bg-slate-300 group flex w-[100%] text-center items-center py-2 font-semibold duration-200`}
+                    >
+                      <h1 className="w-[10%] text-start pl-2">
+                        {cour?.courseCode}{" "}
+                      </h1>
+                      <h1 className="w-[25%] ">{cour?.courseName}</h1>
+                      <h1 className="w-[10%] ">{cour?.units} units</h1>
+                      <h1 className="w-[5%] ">
+                        {cour?.year ? (
+                          cour.year === 1 ? (
+                            <p>
+                              {cour.year}
+                              <sup>st</sup>
+                            </p>
+                          ) : cour.year === 2 ? (
+                            <p>
+                              {cour.year}
+                              <sup>nd</sup>
+                            </p>
+                          ) : cour.year === 3 ? (
+                            <p>
+                              {cour.year}
+                              <sup>rd</sup>
+                            </p>
+                          ) : cour.year === 4 ? (
+                            <p>
+                              {cour.year}
+                              <sup>4th</sup>
+                            </p>
+                          ) : (
+                            ""
+                          )
+                        ) : (
+                          ""
+                        )}
+                      </h1>
+                      <h1 className="w-[5%] ">
+                        {cour?.semester ? (
+                          cour.semester === 1 ? (
+                            <p>
+                              {cour.semester}
+                              <sup>st</sup>
+                            </p>
+                          ) : cour.semester === 2 ? (
+                            <p>
+                              {cour.semester}
+                              <sup>nd</sup>
+                            </p>
+                          ) : (
+                            ""
+                          )
+                        ) : (
+                          ""
+                        )}
+                      </h1>
+                      <h1 className="flex flex-wrap w-[25%] justify-center gap-2">
+                        {cour.program?.length > 0
+                          ? cour.program
+                              ?.map((prog: IProgramGet) => prog.programAcronym)
+                              .join(", ")
+                          : "none"}
+                      </h1>
+
+                      <h1 className="w-[20%] flex justify-center gap-2 opacity-50 group-hover:opacity-100">
+                        <button
+                          onClick={() => {
+                            deleteCourMutation.mutate(cour._id);
+                          }}
+                          className="bg-red-500 py-2 px-3 font-semibold text-xl text-white rounded-md hover:bg-red-700 active:scale-95 duration-200"
+                        >
+                          <AiFillDelete />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setId(cour._id);
+                            setUpdateOpen(true);
+                          }}
+                          className="bg-blue-500 py-2 px-3 font-semibold text-xl text-white rounded-md hover:bg-blue-700 active:scale-95 duration-200"
+                        >
+                          <MdEditSquare />
+                        </button>
+                      </h1>
+                    </section>
+                  ))}
+                </span>
+              </span>
+            </section>
+          </div>
+        </div>
+        {/* Mobile View */}
+        <div
+          className={`${
+            isOpen ? "-z-50 xl:z-50" : "z-50"
+          } sm:hidden flex flex-col mt-3 gap-3`}
+        >
+          {filteredData?.map((cour: ICourseGet, index: number) => (
+            <div
+              key={cour._id}
+              className={`${
+                index % 2 === 0 ? "bg-blue-50" : "bg-slate-50"
+              } p-5 flex flex-col gap-1 rounded-lg`}
+            >
+              <p className="text-sm">
+                <strong>Code:</strong> {cour.courseCode}
+              </p>
+              <p className="text-sm">
+                <strong>Name:</strong> {cour.courseName}
+              </p>
+              <p className="text-sm">
+                <strong>Units:</strong> {cour.units}
+              </p>
+              <p className="text-sm">
+                <strong>Year:</strong> {cour.year}
+              </p>
+              <p className="text-sm">
+                <strong>Semester:</strong> {cour.semester}
+              </p>
+              <p className="text-sm">
+                <strong>Programs:</strong>{" "}
+                {cour.program?.length
+                  ? cour.program.map((prog) => prog.programAcronym).join(", ")
+                  : "none"}
+              </p>
+              <div className="flex gap-4 mt-2 justify-end items-center">
+                <button
+                  className="bg-blue-600 hover:bg-blue-800 px-3 py-2 text-white rounded-lg"
+                  onClick={() => {
+                    setId(cour._id);
+                    setUpdateOpen(true);
+                  }}
                 >
-                  <h1 className="w-[10%] text-start pl-2">
-                    {cour?.courseCode}{" "}
-                  </h1>
-                  <h1 className="w-[25%] ">{cour?.courseName}</h1>
-                  <h1 className="w-[10%] ">{cour?.units} units</h1>
-                  <h1 className="w-[5%] ">
-                    {cour?.year ? (
-                      cour.year === 1 ? (
-                        <p>
-                          {cour.year}
-                          <sup>st</sup>
-                        </p>
-                      ) : cour.year === 2 ? (
-                        <p>
-                          {cour.year}
-                          <sup>nd</sup>
-                        </p>
-                      ) : cour.year === 3 ? (
-                        <p>
-                          {cour.year}
-                          <sup>rd</sup>
-                        </p>
-                      ) : cour.year === 4 ? (
-                        <p>
-                          {cour.year}
-                          <sup>4th</sup>
-                        </p>
-                      ) : (
-                        ""
-                      )
-                    ) : (
-                      ""
-                    )}
-                  </h1>
-                  <h1 className="w-[5%] ">
-                    {cour?.semester ? (
-                      cour.semester === 1 ? (
-                        <p>
-                          {cour.semester}
-                          <sup>st</sup>
-                        </p>
-                      ) : cour.semester === 2 ? (
-                        <p>
-                          {cour.semester}
-                          <sup>nd</sup>
-                        </p>
-                      ) : (
-                        ""
-                      )
-                    ) : (
-                      ""
-                    )}
-                  </h1>
-                  <h1 className="flex flex-wrap w-[25%] justify-center gap-2">
-                    {cour.program?.length > 0 ? (
-                      cour.program?.map((prog: IProgramGet, index: number) => (
-                        <h1 key={index}>{prog.programAcronym}</h1>
-                      ))
-                    ) : (
-                      <h1 className="w-[25%] ">n/a</h1>
-                    )}
-                  </h1>
-
-                  <h1 className="w-[20%] flex justify-center gap-2 opacity-0 group-hover:opacity-100">
-                    <button
-                      onClick={() => {
-                        deleteCourMutation.mutate(cour._id);
-                      }}
-                      className="bg-red-500 py-2 px-3 font-semibold text-xl text-white rounded-md hover:bg-red-700 active:scale-95 duration-200"
-                    >
-                      <AiFillDelete />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setId(cour._id);
-                        setUpdateOpen(true);
-                      }}
-                      className="bg-blue-500 py-2 px-3 font-semibold text-xl text-white rounded-md hover:bg-blue-700 active:scale-95 duration-200"
-                    >
-                      <MdEditSquare />
-                    </button>
-                  </h1>
-                </section>
-              ))}
-            </span>
-          </span>
-        </section>
+                  <MdEditSquare size={20} />
+                </button>
+                <button
+                  className="bg-red-600 hover:bg-red-800 px-3 py-2 text-white rounded-lg"
+                  onClick={() => deleteCourMutation.mutate(cour._id)}
+                >
+                  <AiFillDelete size={20} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

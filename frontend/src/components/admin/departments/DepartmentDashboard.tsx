@@ -87,12 +87,6 @@ const DepartmentDashboard = () => {
     }
   }, [deptQuery.data, update.reset]);
 
-  // useEffect(() => {
-  //   if (deptQuery.data?.departmentName) {
-  //     update.setValue("departmentName", deptQuery.data.departmentName);
-  //   }
-  // }, [deptQuery.data]);
-
   const snap = useSnapshot(sidebarState);
   const Open = snap.isOpen;
 
@@ -115,7 +109,7 @@ const DepartmentDashboard = () => {
             })}
             className={`${
               isOpen ? "left-1/2 z-50 opacity-100" : "w-0 opacity-0 left-1"
-            } absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 flex flex-col gap-5 items-center px-6 py-4 border backdrop-blur-lg bg-white rounded-md duration-200`}
+            } absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 flex flex-col gap-5 items-center px-6 py-4 border backdrop-blur-lg bg-white rounded-lg duration-200`}
           >
             <section className="flex justify-between w-full">
               <h1 className="text-lg font-bold text-blue-800">
@@ -124,7 +118,7 @@ const DepartmentDashboard = () => {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="bg-red-600 px-2 text-white font-bold rounded-md hover:bg-red-800 active:scale-90 duration-200"
+                className="bg-red-600 px-2 text-white font-bold rounded-lg hover:bg-red-800 active:scale-90 duration-200"
               >
                 <MdClose />
               </button>
@@ -143,7 +137,7 @@ const DepartmentDashboard = () => {
             </section>
             <button
               type="submit"
-              className="bg-blue-600 w-[190px] py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
+              className="bg-blue-600 w-[190px] py-2 text-white font-bold rounded-lg hover:bg-blue-800 active:scale-95 duration-200"
             >
               {updateMutation.isPending ? (
                 <img src="/loading.svg" className="invert" alt="Loading" />
@@ -155,7 +149,7 @@ const DepartmentDashboard = () => {
 
           {/* Add Department Form */}
           <form
-            className="flex flex-col sm:flex-row gap-5 sm:gap-10 items-start sm:items-center"
+            className="flex flex-col sm:flex-row gap-5 sm:gap-10 items-start sm:items-center pb-5"
             onSubmit={handleSubmit((data: IDepartmentPost) =>
               addDeptMutation.mutate(data)
             )}
@@ -177,14 +171,14 @@ const DepartmentDashboard = () => {
                 )}
               />
               {errors.departmentName && (
-                <p className="text-red-600 text-[11px] font-semibold absolute top-full left-0 mt-1">
+                <p className="text-red-600 text-[11px] font-semibold absolute top-full left-14 xl:left-12">
                   {errors.departmentName.message}
                 </p>
               )}
             </div>
             <button
               type="submit"
-              className="bg-blue-600 w-full sm:w-[190px] h-[40px] py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
+              className="bg-blue-600 w-full sm:w-[190px] h-[40px] py-2 text-white font-bold rounded-lg hover:bg-blue-800 active:scale-95 duration-200"
             >
               {addDeptMutation.isPending ? (
                 <img src="/loading.svg" className="invert" alt="Loading" />
@@ -196,11 +190,11 @@ const DepartmentDashboard = () => {
         </section>
 
         {/* Search Bar & Title */}
-        <section className="bg-slate-100 px-5 py-3 rounded-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <section className="bg-slate-100 px-5 py-3 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <h1 className="text-xl font-bold text-blue-800">Department List</h1>
           <input
             type="text"
-            className="border-0 rounded-md px-5 py-2 outline-none text-center w-full sm:w-[250px]"
+            className="border-0 rounded-lg px-5 py-2 outline-none text-center w-full sm:w-[250px]"
             placeholder="Q Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -217,7 +211,7 @@ const DepartmentDashboard = () => {
               <h1 className="w-[200px] text-center">Action</h1>
             </div>
 
-            <div className="h-[470px] rounded-md overflow-y-scroll no-scrollbar flex flex-col">
+            <div className="h-[470px] rounded-lg overflow-y-scroll no-scrollbar flex flex-col">
               {filteredData?.map((dept: IDepartmentGet, index: number) => (
                 <div
                   key={dept._id}
@@ -235,11 +229,11 @@ const DepartmentDashboard = () => {
                   <h1 className="w-[200px] text-center">
                     {dept.departmentName}
                   </h1>
-                  <div className="w-[200px] flex gap-2 justify-center items-center opacity-0 group-hover:opacity-100">
+                  <div className="w-[200px] flex gap-2 justify-center items-center opacity-50 group-hover:opacity-100">
                     <button
                       type="button"
                       onClick={() => deleteDeptMutation.mutate(dept._id)}
-                      className="bg-red-600 py-2 px-3 text-xl text-white rounded-md hover:bg-red-800 active:scale-95 duration-200"
+                      className="bg-red-600 py-2 px-3 text-xl text-white rounded-lg hover:bg-red-800 active:scale-95 duration-200"
                     >
                       <AiFillDelete />
                     </button>
@@ -250,7 +244,7 @@ const DepartmentDashboard = () => {
                         setTimeout(() => deptQuery.refetch(), 0);
                         setIsOpen(true);
                       }}
-                      className="bg-blue-600 py-2 px-3 text-xl text-white rounded-md hover:bg-blue-800 active:scale-95 duration-200"
+                      className="bg-blue-600 py-2 px-3 text-xl text-white rounded-lg hover:bg-blue-800 active:scale-95 duration-200"
                     >
                       <AiFillEdit />
                     </button>
@@ -265,7 +259,7 @@ const DepartmentDashboard = () => {
             {filteredData?.map((dept: IDepartmentGet) => (
               <div
                 key={dept._id}
-                className="bg-slate-100 p-4 rounded-md shadow-sm text-sm font-semibold space-y-2"
+                className="bg-slate-100 p-4 rounded-lg text-sm font-semibold space-y-2"
               >
                 <p className="break-all">
                   <span className="text-blue-800">ID:</span> {dept._id}
@@ -278,7 +272,7 @@ const DepartmentDashboard = () => {
                   <button
                     type="button"
                     onClick={() => deleteDeptMutation.mutate(dept._id)}
-                    className="bg-red-600 py-2 px-3 text-white text-xl rounded-md hover:bg-red-800 active:scale-95 duration-200"
+                    className="bg-red-600 py-2 px-3 text-white text-xl rounded-lg hover:bg-red-800 active:scale-95 duration-200"
                   >
                     <AiFillDelete />
                   </button>
@@ -289,7 +283,7 @@ const DepartmentDashboard = () => {
                       setTimeout(() => deptQuery.refetch(), 0);
                       setIsOpen(true);
                     }}
-                    className="bg-blue-600 py-2 px-3 text-white text-xl rounded-md hover:bg-blue-800 active:scale-95 duration-200"
+                    className="bg-blue-600 py-2 px-3 text-white text-xl rounded-lg hover:bg-blue-800 active:scale-95 duration-200"
                   >
                     <AiFillEdit />
                   </button>

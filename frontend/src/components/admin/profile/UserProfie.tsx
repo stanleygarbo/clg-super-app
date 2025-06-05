@@ -195,7 +195,7 @@ const UserProfie = () => {
               <input
                 type="text"
                 readOnly
-                value={loginUser?.data?.birth.nationality}
+                value={loginUser?.data?.birth.citizenship}
                 className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
               />
             </span>

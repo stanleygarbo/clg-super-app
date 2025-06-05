@@ -68,18 +68,24 @@ export interface IEmployeeGet {
 export const customStyles = {
   control: (base: any, state: any) => ({
     ...base,
-    height: "40px",
+    // height: "50px",
+    padding: "6px",
     width: "100%",
-    borderRadius: "0.375rem", // rounded-md
+    borderRadius: "6px", // rounded-md
     // borderColor: "#64748b", // border-slate-500
     fontWeight: "700", // font-bold
     fontSize: "0.875rem", // text-sm
     textAlign: "center",
-    borderColor: state.isFocused ? "#2563eb" : "#64748b", // border-blue-600 when focused, border-slate-500 when not focused
+    borderColor: state.isFocused ? "#1D4ED8" : "#1D4ED8;", // border-blue-600 when focused, border-slate-500 when not focused
     // overflow: "hidden",
     transition: "border-color 0.3s",
+    // borderColor: state.isFocused ? "#1D4ED8" : provided.borderColor,
+    // "&:hover": {
+    //   borderColor: "#B91C1C",
+    // },
+    boxShadow: "none",
     "&:hover": {
-      borderColor: state.isFocused ? "#2563eb" : "#64748b", // no change on hover
+      borderColor: state.isFocused ? "#B91C1C" : "#B91C1C", // no change on hover
     },
   }),
   singleValue: (base: any) => ({

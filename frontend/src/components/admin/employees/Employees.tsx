@@ -69,19 +69,19 @@ const Employees = () => {
             onClick={() => {
               navigate("/admin/add-employee");
             }}
-            className="bg-blue-600 px-3 py-2 text-white font-bold rounded-md hover:bg-blue-800 active:scale-95 duration-200"
+            className="bg-blue-600 px-3 py-2 text-white font-bold rounded-lg hover:bg-blue-800 active:scale-95 duration-200"
           >
             Add Employee
           </button>
         </section>
 
-        <section className="mt-5 bg-slate-100 px-5 py-2 rounded-md flex justify-between flex-wrap gap-3">
+        <section className="mt-5 bg-slate-100 px-5 py-2 rounded-lg flex justify-between flex-wrap gap-3">
           <h1 className="text-xl font-bold text-blue-800 py-1 flex-1 min-w-[180px]">
             Employee's List
           </h1>
           <input
             type="text"
-            className="border-0 text-center rounded-md px-5 py-2 outline-none max-w-[300px] flex-grow"
+            className="border-0 text-center rounded-lg px-5 py-2 outline-none max-w-[300px] flex-grow"
             placeholder="Q Search..."
             value={search}
             onChange={(e) => {
@@ -149,7 +149,7 @@ const Employees = () => {
                   <button
                     onClick={() => navigate("/" + employee._id + "/profile")}
                     type="button"
-                    className="bg-blue-600 text-xl py-2 px-3 rounded-md font-semibold text-white hover:bg-blue-800 active:scale-95 duration-200"
+                    className="bg-blue-600 text-xl py-2 px-3 rounded-lg font-semibold text-white hover:bg-blue-800 active:scale-95 duration-200"
                   >
                     <MdPageview />
                   </button>
@@ -158,14 +158,14 @@ const Employees = () => {
                       navigate("/admin/update-employee/" + employee._id)
                     }
                     type="button"
-                    className="bg-blue-600 text-xl py-2 px-3 rounded-md font-semibold text-white hover:bg-blue-800 active:scale-95 duration-200"
+                    className="bg-blue-600 text-xl py-2 px-3 rounded-lg font-semibold text-white hover:bg-blue-800 active:scale-95 duration-200"
                   >
                     <FaEdit />
                   </button>
                   <button
                     onClick={() => deleteMutation.mutate(employee._id)}
                     type="button"
-                    className="bg-red-600 py-2 px-3 rounded-md text-xl font-semibold text-white hover:bg-red-800 active:scale-95 duration-200"
+                    className="bg-red-600 py-2 px-3 rounded-lg text-xl font-semibold text-white hover:bg-red-800 active:scale-95 duration-200"
                   >
                     <MdArchive />
                   </button>
@@ -179,7 +179,7 @@ const Employees = () => {
             {paginatedEmployees.map((employee: IEmployeeGet, index: number) => (
               <div
                 key={index}
-                className="bg-slate-100 rounded-md p-4 shadow-sm space-y-2 font-semibold"
+                className="bg-slate-100 rounded-lg p-4 space-y-2 font-semibold"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -223,7 +223,7 @@ const Employees = () => {
                   <button
                     onClick={() => navigate("/" + employee._id + "/profile")}
                     type="button"
-                    className="bg-blue-600 text-2xl mx-1 py-2 flex justify-center rounded-md font-semibold text-white hover:bg-blue-800 active:scale-90 duration-200"
+                    className="bg-blue-600 text-2xl mx-1 py-2 flex justify-center rounded-lg font-semibold text-white hover:bg-blue-800 active:scale-90 duration-200"
                   >
                     <MdPageview />
                   </button>
@@ -232,14 +232,14 @@ const Employees = () => {
                       navigate("/admin/update-employee/" + employee._id)
                     }
                     type="button"
-                    className="bg-blue-600 text-2xl mx-1 py-2 flex justify-center rounded-md font-semibold text-white hover:bg-blue-800 active:scale-90 duration-200"
+                    className="bg-blue-600 text-2xl mx-1 py-2 flex justify-center rounded-lg font-semibold text-white hover:bg-blue-800 active:scale-90 duration-200"
                   >
                     <FaEdit />
                   </button>
                   <button
                     onClick={() => deleteMutation.mutate(employee._id)}
                     type="button"
-                    className="bg-red-600 text-2xl mx-1 py-2 flex justify-center rounded-md font-semibold text-white hover:bg-red-800 active:scale-90 duration-200"
+                    className="bg-red-600 text-2xl mx-1 py-2 flex justify-center rounded-lg font-semibold text-white hover:bg-red-800 active:scale-90 duration-200"
                   >
                     <MdArchive />
                   </button>
@@ -261,7 +261,7 @@ const Employees = () => {
                 previousLabel={<FaChevronLeft />}
                 renderOnZeroPageCount={null}
                 containerClassName="flex items-center gap-4 font-bold flex-wrap justify-center"
-                activeClassName="bg-blue-600 px-2 font-semibold rounded-md text-white"
+                activeClassName="bg-blue-600 px-2 font-semibold rounded-lg text-white"
                 previousClassName="text-red-400"
                 nextClassName="text-green-400"
               />
