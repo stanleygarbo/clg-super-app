@@ -57,8 +57,8 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 bg-white gap-5 p-5 h-full overflow-y-auto no-scrollbar border-r flex flex-col justify-between duration-200
-          ${isOpen ? "w-80 xl:w-72" : "w-0 left-[-50px] overflow-hidden"}
+        className={`fixed top-0 left-0 gap-5 py-5 pr-10 pl-5 xl:p-5 h-full overflow-y-auto no-scrollbar flex flex-col justify-between duration-200 bg-slate-50 
+          ${isOpen ? "w-full xl:w-80 left-0" : "left-[-150px] overflow-hidden"}
         `}
       >
         {isOpen && (
@@ -67,7 +67,7 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
               <section className="flex flex-col items-center">
                 <img
                   src="/aclc-logo.png"
-                  className="w-[100px] h-[100px]"
+                  className="w-[100px] h-[100px] rounded-full border-0"
                   alt="Logo"
                 />
                 <section className="bg-blue-100 my-10 p-5 rounded-md flex flex-col items-center">

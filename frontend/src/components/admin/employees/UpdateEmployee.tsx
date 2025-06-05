@@ -151,7 +151,7 @@ const UpdateEmployee = () => {
   }
 
   return (
-    <div className=" flex justify-center mt-5">
+    <div className={`flex justify-center mt-5`}>
       <div className="w-full flex flex-col items-center">
         <h1 className="font-bold text-2xl text-center xl:text-start mt-10 text-blue-800 mb-10 xl:mb-20">
           Employee Update Form
@@ -232,7 +232,7 @@ const UpdateEmployee = () => {
             </h1>
             <div className="flex flex-col items-center">
               <section className="grid xl:grid-cols-3 gap-3 w-[100%] xl:w-full">
-                <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                   <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                     Last Name
                   </p>
@@ -242,7 +242,7 @@ const UpdateEmployee = () => {
                     {...register("surname")}
                   />
                 </span>
-                <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                   <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                     First Name
                   </p>
@@ -252,7 +252,7 @@ const UpdateEmployee = () => {
                     {...register("firstName")}
                   />
                 </span>
-                <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                   <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                     Middle Name
                   </p>
@@ -262,7 +262,7 @@ const UpdateEmployee = () => {
                     {...register("middleName")}
                   />
                 </span>
-                {/* <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                {/* <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                     <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                       Gender
                     </p>
@@ -281,7 +281,7 @@ const UpdateEmployee = () => {
           </div>
           <div className="flex flex-col items-center">
             <section className="grid xl:grid-cols-[1fr_1fr_2fr] gap-3 w-[100%] xl:w-full">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Phone No.
                 </p>
@@ -307,7 +307,7 @@ const UpdateEmployee = () => {
                   </p>
                 )}
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Marital Status
                 </p>
@@ -340,7 +340,7 @@ const UpdateEmployee = () => {
                     
                   /> */}
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Email
                 </p>
@@ -368,7 +368,7 @@ const UpdateEmployee = () => {
           </div>
           <div className="flex flex-col items-center">
             <section className="grid xl:grid-cols-5 gap-3 w-[100%] xl:w-full">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   BirthDate
                 </p>
@@ -379,7 +379,7 @@ const UpdateEmployee = () => {
                   {...register("birth.birthDate")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   BirthPlace
                 </p>
@@ -389,7 +389,7 @@ const UpdateEmployee = () => {
                   {...register("birth.birthPlace")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Religion
                 </p>
@@ -399,7 +399,7 @@ const UpdateEmployee = () => {
                   {...register("birth.religion")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Citizzenship
                 </p>
@@ -409,7 +409,7 @@ const UpdateEmployee = () => {
                   {...register("birth.citizenship")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Gender
                 </p>
@@ -438,7 +438,7 @@ const UpdateEmployee = () => {
 
           <div className="flex flex-col items-center">
             <section className="grid xl:grid-cols-4 gap-3 w-[100%] xl:w-full">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   SSS
                 </p>
@@ -448,7 +448,7 @@ const UpdateEmployee = () => {
                   {...register("governmentId.sss")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   TIN
                 </p>
@@ -458,7 +458,7 @@ const UpdateEmployee = () => {
                   {...register("governmentId.tin")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Pag-Ibig
                 </p>
@@ -468,7 +468,7 @@ const UpdateEmployee = () => {
                   {...register("governmentId.pagibig")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Philhealth
                 </p>
@@ -483,7 +483,7 @@ const UpdateEmployee = () => {
 
           <div className="flex flex-col items-center">
             <section className="grid xl:grid-cols-[2fr_1fr_1fr_1fr] gap-3 w-[100%] xl:w-full">
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 duration-200 text-xs z-50">
                   Roles
                 </p>
@@ -504,7 +504,7 @@ const UpdateEmployee = () => {
                   )}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Position
                 </p>
@@ -525,7 +525,7 @@ const UpdateEmployee = () => {
                   )}
                 </select>
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Department
                 </p>
@@ -546,7 +546,7 @@ const UpdateEmployee = () => {
                   )}
                 </select>
               </span>
-              <span className={`${isOpen ? "-z-50" : ""} relative`}>
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                 <p className="absolute w-[102px] left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                   Employment Type
                 </p>
@@ -571,7 +571,7 @@ const UpdateEmployee = () => {
             </section>
           </div>
           {/* <section className="grid grid-cols-3 gap-3 px-10">
-                <span className={`${isOpen ? "-z-50" : ""} relative`}>
+                <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
                   <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
                     Username
                   </p>

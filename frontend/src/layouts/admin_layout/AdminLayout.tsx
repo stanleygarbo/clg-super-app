@@ -216,7 +216,7 @@ const AdminLayout = () => {
     <div className="flex min-h-screen box-border">
       <Sidebar sidebarItems={sidebarItems} />
       <div className="flex justify-center w-full">
-        <div className="hidded xl:w-72"></div>
+        <div className="w-0 xl:w-80"></div>
         <Outlet />
       </div>
     </div>
