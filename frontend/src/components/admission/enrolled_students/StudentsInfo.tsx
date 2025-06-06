@@ -8,8 +8,8 @@ import { getPrograms } from "../../../api/programs";
 import { IProgramGet } from "../../../interface/IProgram";
 import { IStudentsGet, IStudentsPost } from "../../../interface/IStudents";
 import { useForm } from "react-hook-form";
-import { useSnapshot } from "valtio";
-import { sidebarState } from "../../../store/auth";
+// import { useSnapshot } from "valtio";
+// import { sidebarState } from "../../../store/auth";
 // import { Sibling } from "../enrollment_form/EForm";
 
 const StudentsInfo = () => {
@@ -89,8 +89,8 @@ const StudentsInfo = () => {
     }
   }, [query.data, reset]);
 
-  const snap = useSnapshot(sidebarState);
-  const isOpen = snap.isOpen;
+  // const snap = useSnapshot(sidebarState);
+  // const isOpen = snap.isOpen;
   const [checkboarding, setCheckboarding] = useState<boolean>(false);
   const [maritalStatus, setMaritalStatus] = useState("");
 
