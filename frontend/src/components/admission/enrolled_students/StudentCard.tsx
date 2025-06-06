@@ -10,11 +10,18 @@ import { FaArchive } from "react-icons/fa";
 interface Params {
   student: IStudentsGet;
   index: number;
-  checkedStudents: Record<string, boolean>;
-  onToggle: (id: string) => void;
+  currentItems: IStudentsGet[];
+  // checkedStudents: Record<string, boolean>;
+  // onToggle: (id: string) => void;
 }
 
-function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
+function StudentCard({
+  student,
+  index,
+  // checkedStudents,
+  currentItems,
+}: // onToggle,
+Params) {
   const navigate = useNavigate();
 
   const query = useQuery({
@@ -34,11 +41,15 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
   };
 
   return (
-    <div>
+    <div className="">
       <span
         key={index}
-        className={`${
-          index % 2 === 0 ? "bg-slate-200" : "bg-slate-100"
+        className={`${index % 2 === 0 ? "bg-blue-100" : "bg-slate-100"} ${
+          index === 0
+            ? "rounded-t-lg"
+            : index === currentItems.length - 1
+            ? "rounded-b-lg"
+            : ""
         } md:flex hidden py-2 text-sm items-center pl-1 hover:bg-slate-300 group duration-200`}
       >
         {/* <input
@@ -78,8 +89,8 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
       <div
         key={index}
         className={`${
-          index % 2 === 0 ? "bg-slate-200" : "bg-slate-100"
-        } md:hidden w-[330px] p-4 shadow-sm font-semibold`}
+          index % 2 === 0 ? "bg-blue-100" : "bg-slate-100"
+        } md:hidden w-[330px] p-4 font-semibold rounded-lg`}
       >
         <div className="flex justify-between items-center">
           <div>
@@ -90,11 +101,11 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
               <strong>Program : </strong> {student.program?.programAcronym}
             </p>
           </div>
-          <input
+          {/* <input
             type="checkbox"
             checked={checkedStudents[student._id] || false}
             onChange={() => onToggle(student._id)}
-          />
+          /> */}
         </div>
 
         <div className="text-sm">

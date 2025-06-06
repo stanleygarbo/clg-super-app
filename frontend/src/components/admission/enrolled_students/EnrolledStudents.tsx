@@ -7,7 +7,7 @@ import StudentCard from "./StudentCard";
 import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
-import SelectButton from "./SelectButtonProps";
+// import SelectButton from "./SelectButtonProps";
 import { useSnapshot } from "valtio";
 import { sidebarState } from "../../../store/auth";
 
@@ -74,58 +74,58 @@ const EnrolledStudents = () => {
 
   // console.log(query.data);
 
-  const [checkedStudents, setCheckedStudents] = useState<
-    Record<string, boolean>
-  >({});
+  // const [checkedStudents, setCheckedStudents] = useState<
+  //   Record<string, boolean>
+  // >({});
 
-  const toggleCheck = (_id: string) => {
-    setCheckedStudents((prev) => ({
-      ...prev,
-      [_id]: !prev[_id],
-    }));
-  };
+  // const toggleCheck = (_id: string) => {
+  //   setCheckedStudents((prev) => ({
+  //     ...prev,
+  //     [_id]: !prev[_id],
+  //   }));
+  // };
 
   // Add batchSize and batchIndex state
-  const batchSize = 5;
-  const [batchIndex, setBatchIndex] = useState(0);
+  // const batchSize = 5;
+  // const [batchIndex, setBatchIndex] = useState(0);
 
-  const selectBatch = (startIndex: number) => {
-    const endIndex = startIndex + batchSize;
-    const newChecked: Record<string, boolean> = {};
+  // const selectBatch = (startIndex: number) => {
+  //   const endIndex = startIndex + batchSize;
+  //   const newChecked: Record<string, boolean> = {};
 
-    const batch = filteredStudents.slice(startIndex, endIndex);
+  //   const batch = filteredStudents.slice(startIndex, endIndex);
 
-    batch.forEach((student: IStudentsGet) => {
-      newChecked[student._id] = true;
-    });
+  //   batch.forEach((student: IStudentsGet) => {
+  //     newChecked[student._id] = true;
+  //   });
 
-    setCheckedStudents((prev) => ({ ...prev, ...newChecked }));
-  };
+  //   setCheckedStudents((prev) => ({ ...prev, ...newChecked }));
+  // };
 
-  const handleSelectBatch = () => {
-    const start = batchIndex * batchSize;
-    const end = start + batchSize;
+  // const handleSelectBatch = () => {
+  //   const start = batchIndex * batchSize;
+  //   const end = start + batchSize;
 
-    const currentBatch = filteredStudents.slice(start, end);
-    const allChecked = currentBatch.every(
-      (student: IStudentsGet) => checkedStudents[student._id]
-    );
+  //   const currentBatch = filteredStudents.slice(start, end);
+  //   const allChecked = currentBatch.every(
+  //     (student: IStudentsGet) => checkedStudents[student._id]
+  //   );
 
-    if (!allChecked) {
-      // Select only the unchecked students in the current batch
-      const newChecked: Record<string, boolean> = {};
-      currentBatch.forEach((student: IStudentsGet) => {
-        if (!checkedStudents[student._id]) {
-          newChecked[student._id] = true;
-        }
-      });
-      setCheckedStudents((prev) => ({ ...prev, ...newChecked }));
-    } else {
-      // Move to the next batch
-      setBatchIndex((prev) => prev + 1);
-      selectBatch(end);
-    }
-  };
+  //   if (!allChecked) {
+  //     // Select only the unchecked students in the current batch
+  //     const newChecked: Record<string, boolean> = {};
+  //     currentBatch.forEach((student: IStudentsGet) => {
+  //       if (!checkedStudents[student._id]) {
+  //         newChecked[student._id] = true;
+  //       }
+  //     });
+  //     setCheckedStudents((prev) => ({ ...prev, ...newChecked }));
+  //   } else {
+  //     // Move to the next batch
+  //     setBatchIndex((prev) => prev + 1);
+  //     selectBatch(end);
+  //   }
+  // };
 
   function Items({ currentItems }: ItemsProps) {
     return (
@@ -133,10 +133,11 @@ const EnrolledStudents = () => {
         {currentItems &&
           currentItems.map((student: IStudentsGet, i: number) => (
             <StudentCard
+              currentItems={currentItems}
               student={student}
               index={i}
-              checkedStudents={checkedStudents}
-              onToggle={() => toggleCheck(student._id)}
+              // checkedStudents={checkedStudents}
+              // onToggle={() => toggleCheck(student._id)}
             />
           ))}
       </>
@@ -179,7 +180,7 @@ const EnrolledStudents = () => {
             Student's List
           </h1>
           <section className="flex flex-col xl:flex-row gap-5 items-center">
-            <SelectButton onSelect={handleSelectBatch} />
+            {/* <SelectButton onSelect={handleSelectBatch} /> */}
             <select
               value={by}
               onChange={(e) => {
@@ -214,7 +215,7 @@ const EnrolledStudents = () => {
             <h1 className="w-[150px] font-bold text-center">Standing</h1>
             <h1 className="w-[200px] font-bold text-center">Action</h1>
           </span>
-          <div className="text-xl font-bold mb-3">
+          <div className="text-xl font-bold mb-3 flex flex-col gap-2 xl:gap-0">
             <Items currentItems={currentItems} />
           </div>
           {/* <section

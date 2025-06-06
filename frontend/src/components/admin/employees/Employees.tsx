@@ -115,7 +115,7 @@ const Employees = () => {
                     ? "rounded-b-md"
                     : ""
                 } ${
-                  index % 2 === 0 ? "bg-slate-200" : "bg-slate-100"
+                  index % 2 === 0 ? "bg-blue-100" : "bg-slate-100"
                 } flex hover:bg-slate-300 py-2 text-sm font-semibold group items-center w-full whitespace-nowrap duration-200`}
               >
                 <h1 className="flex items-center pl-3 w-[300px]">
@@ -179,7 +179,9 @@ const Employees = () => {
             {paginatedEmployees.map((employee: IEmployeeGet, index: number) => (
               <div
                 key={index}
-                className="bg-slate-100 rounded-lg p-4 space-y-2 font-semibold"
+                className={`${
+                  index % 2 === 0 ? "bg-blue-100" : "bg-slate-100"
+                } rounded-lg p-4 space-y-2 font-semibold`}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
