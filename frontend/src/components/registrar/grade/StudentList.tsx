@@ -16,11 +16,18 @@ const StudentList = () => {
   //   const students = data?.results || [];
   const [search, setSearch] = useState("");
   const [by, setBy] = useState("");
+  const [standing, setStanding] = useState("");
   const navigate = useNavigate();
 
   const filteredStudents = data?.results?.length
     ? data.results
         // First: Filter by year (standing)
+        .filter((stud: IStudentsGet) =>
+          standing
+            ? stud.standing.toLowerCase() === standing.toLowerCase()
+            : true
+        )
+        // Filter by program
         .filter((stud: IStudentsGet) =>
           by
             ? stud.program.programAcronym.toLowerCase() === by.toLowerCase()
@@ -58,17 +65,28 @@ const StudentList = () => {
           <h1 className="text-white font-bold text-xl">Students List</h1>
           <section className="flex flex-col md:flex-row items-center gap-3">
             <select
+              value={standing}
+              className="py-2 px-2 text-center rounded-md outline-none"
+              onChange={(e) => setStanding(e.target.value)}
+            >
+              <option value="">By Standing</option>
+              <option value="freshman">Freshman</option>
+              <option value="sophomore">Sophomore</option>
+              <option value="junior">Junior</option>
+              <option value="senoir">Senior</option>
+            </select>
+            <select
               value={by}
               className="py-2 px-2 text-center rounded-md outline-none"
               onChange={(e) => setBy(e.target.value)}
             >
-              <option value="">All</option>
+              <option value="">By Program</option>
               <option value="BSCS">BSCS</option>
               <option value="BSIT">BSIT</option>
             </select>
             <input
               type="search"
-              className="outline-none px-2 p-2 text-center rounded-md"
+              className="outline-none px-2 p-2 text-center font-semibold rounded-md"
               placeholder="Q search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -103,15 +121,15 @@ const StudentList = () => {
               <h1>{student.standing}</h1>
               <h1>Enrolled</h1>
               <h1>
-                not available...
-                {/* <button
+                {/* not available... */}
+                <button
                   onClick={() => {
                     navigate(`/registrar/students-grade/${student._id}`);
                   }}
                   className="bg-blue-700 px-2 py-1 rounded text-white font-semibold hover:bg-blue-800 active:scale-90 duration-200"
                 >
                   View Grade
-                </button> */}
+                </button>
               </h1>{" "}
             </section>
           ))}

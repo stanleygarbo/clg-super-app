@@ -100,7 +100,7 @@ const UserProfie = () => {
         </section>
       </div>
 
-      <section className="flex flex-col gap-5 p-5 py-10 relative bg-blue-50 rounded-b-lg">
+      <section className="flex flex-col gap-5 p-5 py-10 relative bg-slate-50 rounded-b-lg">
         <section className="flex flex-col-reverse gap-5 xl:flex-row items-center justify-between">
           <h1 className="font-bold text-xl xl:text-2xl text-blue-800">
             Information
@@ -126,7 +126,7 @@ const UserProfie = () => {
                 type="text"
                 readOnly
                 value={loginUser?.data?.surname}
-                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                className="border-b group-hover:border-red-700 font-bold text-slate-900 bg-slate-100 border-b-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
               />
             </span>
             <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>

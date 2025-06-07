@@ -2,12 +2,14 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { LuClipboard, LuDoorOpen, LuSchool } from "react-icons/lu";
 import { ISidebarItem } from "../../components/sidebar/SidebarItems";
-import { MdOutlineDashboard } from "react-icons/md";
+import { MdOutlineDashboard, MdSchedule } from "react-icons/md";
 import { BiClinic } from "react-icons/bi";
 import { RiAdminFill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
 import { useSnapshot } from "valtio";
 import { authState } from "../../store/auth";
+import { FaNoteSticky } from "react-icons/fa6";
+import { BsFileSpreadsheet } from "react-icons/bs";
 
 // const adminItems: ISidebarItem = {
 //   name: "Admin",
@@ -37,6 +39,7 @@ const facultyRole = ["super", "admin", "faculty"];
 const sccRole = ["super", "admin", "scc"];
 const clinicRole = ["super", "admin", "clinic"];
 const accountingRole = ["super", "admin", "accounting"];
+const studentRole = ["student"];
 
 const registrar: ISidebarItem = {
   name: "Registrar",
@@ -178,7 +181,24 @@ const sidebarItemsConditional: ISidebarItem[] = [
     icon: FaUser,
     path: "/profile",
   },
-
+  {
+    name: "Grade",
+    icon: FaNoteSticky,
+    path: "/grade",
+    allowedRoles: studentRole,
+  },
+  {
+    name: "SubjectLoad",
+    icon: BsFileSpreadsheet,
+    path: "/subject-load",
+    allowedRoles: studentRole,
+  },
+  {
+    name: "Schedule",
+    icon: MdSchedule,
+    path: "/schedule",
+    allowedRoles: studentRole,
+  },
   admin,
   admission,
   registrar,

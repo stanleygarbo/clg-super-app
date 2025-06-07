@@ -85,6 +85,12 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    semester: {
+      type: Number,
+      required: true,
+    },
+
     birth: birthSchema,
     homeAddress: homeAddressSchema,
     cityAddress: cityAddressSchema,

@@ -215,10 +215,10 @@ function EForm() {
                       {...register("semester")}
                       className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                     >
-                      <option value="1st" selected>
+                      <option value={1} selected>
                         1st
                       </option>
-                      <option value="2nd">2nd</option>
+                      <option value={2}>2nd</option>
                     </select>
                   </span>
                 </section>

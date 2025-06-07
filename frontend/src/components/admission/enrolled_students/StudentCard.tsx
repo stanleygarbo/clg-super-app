@@ -50,7 +50,7 @@ Params) {
             : index === currentItems.length - 1
             ? "rounded-b-lg"
             : ""
-        } md:flex hidden py-2 text-sm items-center pl-1 hover:bg-slate-300 group duration-200`}
+        } md:grid md:grid-cols-7 hidden py-2 font-semibold text-sm items-center pl-1 hover:bg-slate-300 group duration-200`}
       >
         {/* <input
           type="checkbox"
@@ -59,15 +59,13 @@ Params) {
           className="mt-[2px]"
         /> */}
 
-        <h1 className="w-[150px] pl-3">{student.surname}</h1>
-        <h1 className="w-[150px]">{student.firstName}</h1>
-        <h1 className="w-[150px]">{student.middleName}</h1>
-        <h1 className="w-[150px] text-center">{student.birth.sex}</h1>
-        <h1 className="w-[150px] text-center">
-          {student.program?.programAcronym}
-        </h1>
-        <h1 className="w-[150px] text-center">{student.standing}</h1>
-        <h1 className="w-[200px] flex gap-2 text-lg justify-center opacity-50 group-hover:opacity-100">
+        <h1 className=" pl-3">{student.surname}</h1>
+        <h1 className="">{student.firstName}</h1>
+        <h1 className="">{student.middleName}</h1>
+        <h1 className=" text-center">{student.birth.sex}</h1>
+        <h1 className=" text-center">{student.program?.programAcronym}</h1>
+        <h1 className=" text-center">{student.standing}</h1>
+        <h1 className=" flex gap-2 text-lg justify-center opacity-50 group-hover:opacity-100">
           <button
             onClick={() => navigate(`/admission/studentInfo/${student._id}`)}
             type="button"

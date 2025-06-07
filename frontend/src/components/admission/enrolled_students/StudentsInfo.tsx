@@ -8,6 +8,8 @@ import { getPrograms } from "../../../api/programs";
 import { IProgramGet } from "../../../interface/IProgram";
 import { IStudentsGet, IStudentsPost } from "../../../interface/IStudents";
 import { useForm } from "react-hook-form";
+import Input from "./Input";
+// import Select from "./Select";
 // import { useSnapshot } from "valtio";
 // import { sidebarState } from "../../../store/auth";
 // import { Sibling } from "../enrollment_form/EForm";
@@ -93,6 +95,7 @@ const StudentsInfo = () => {
   // const isOpen = snap.isOpen;
   const [checkboarding, setCheckboarding] = useState<boolean>(false);
   const [maritalStatus, setMaritalStatus] = useState("");
+  // const selectedProgram = watch("program");
 
   return (
     <div className="flex">
@@ -212,15 +215,24 @@ const StudentsInfo = () => {
           </section>
 
           <span className="grid xl:grid-cols-5 gap-3 xl:gap-2 w-full">
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Last Name</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
-                {...register("surname")}
-              />
-            </section>
+            <Input
+              label="Last Name"
+              register={register("surname")}
+              value={query.data?.surname}
+              readOnly={isUpdate}
+            />
+            <Input
+              label="First Name"
+              value={query.data?.firstName}
+              readOnly={isUpdate}
+              register={register("firstName")}
+            />
+            <Input
+              label="Middle Name"
+              value={query.data?.middleName}
+              readOnly={isUpdate}
+              register={register("middleName")}
+            />
             {/* <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
               <p className="text-[11px] px-1 font-bold absolute text-blue-700 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                 Last Name
@@ -233,30 +245,22 @@ const StudentsInfo = () => {
                 className="border focus:border-2 border-blue-700 outline-none h-[35px] w-[100%] py-1 rounded-md font-semibold text-center overflow-hidden px-1"
               />
             </section> */}
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">First Name</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
-                {...register("firstName")}
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Middle Name</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
-                {...register("middleName")}
-              />
-            </section>
+            {/* <Select
+              label="Select Program"
+              // value={query.data?.program}
+              onChange={() => {}}
+              options={programs.data?.results.map((prog: IProgramGet) => {
+                return { value: prog._id, label: prog.programAcronym };
+              })}
+              register={register("program")}
+            /> */}
+
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
               <p className="text-xs font-semibold px-3">Program</p>
               <select
                 disabled={isUpdate}
                 {...register("program")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               >
                 {programs.data?.results.map(
                   (prog: IProgramGet, index: number) => (
@@ -276,7 +280,7 @@ const StudentsInfo = () => {
               <select
                 disabled={isUpdate}
                 {...register("standing")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               >
                 {["freshman", "sophomore", "junior", "senoir", "graduate"].map(
                   (standing, index) => {
@@ -302,7 +306,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.schoolYear}
                 {...register("schoolYear")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -312,7 +316,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.username}
                 {...register("username")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
 
@@ -323,7 +327,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.phone}
                 {...register("phone")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -335,7 +339,7 @@ const StudentsInfo = () => {
                 onChange={(e) => {
                   setMaritalStatus(e.target.value);
                 }}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               >
                 {[
                   { value: "single", label: "Single" },
@@ -359,7 +363,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.email}
                 {...register("email")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
           </span>
@@ -371,7 +375,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.birth.birthDate}
                 {...register("birth.birthDate")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -381,7 +385,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.birth.birthPlace}
                 {...register("birth.birthPlace")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
 
@@ -392,7 +396,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.birth.citizenship}
                 {...register("birth.citizenship")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -400,7 +404,7 @@ const StudentsInfo = () => {
               <select
                 disabled={isUpdate}
                 {...register("birth.sex")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               >
                 {[
                   { value: "male", label: "Male" },
@@ -423,7 +427,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.birth.religion}
                 {...register("birth.religion")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
           </span>
@@ -442,7 +446,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     defaultValue={query.data?.spouse?.lastName}
                     {...register("spouse.lastName")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
@@ -454,7 +458,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     defaultValue={query.data?.spouse?.firstName}
                     {...register("spouse.firstName")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
@@ -466,7 +470,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     defaultValue={query.data?.spouse?.middleName}
                     {...register("spouse.middleName")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
@@ -478,7 +482,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     defaultValue={query.data?.spouse?.children}
                     {...register("spouse.children")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
               </span>
@@ -511,7 +515,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.homeAddress?.houseNum}
                 {...register("homeAddress.houseNum")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -521,7 +525,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.homeAddress?.streetBrgy}
                 {...register("homeAddress.streetBrgy")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -531,7 +535,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.homeAddress?.city}
                 {...register("homeAddress.city")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -540,7 +544,7 @@ const StudentsInfo = () => {
                 type="text"
                 readOnly={isUpdate}
                 {...register("homeAddress.province")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -549,7 +553,7 @@ const StudentsInfo = () => {
                 type="text"
                 readOnly={isUpdate}
                 {...register("homeAddress.district")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
           </span>
@@ -568,7 +572,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     // defaultValue={query.data?.cityAddress?.houseNum}
                     {...register("cityAddress.houseNum")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
@@ -580,7 +584,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     // defaultValue={query.data?.cityAddress?.streetBrgy}
                     {...register("cityAddress.streetBrgy")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
@@ -592,7 +596,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     // defaultValue={query.data?.cityAddress?.city}
                     {...register("cityAddress.city")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
@@ -604,7 +608,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     // defaultValue={query.data?.cityAddress?.district}
                     {...register("cityAddress.district")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
               </span>
@@ -619,7 +623,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.lastName}
                 {...register("guardian.lastName")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -629,7 +633,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.firstName}
                 {...register("guardian.firstName")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -639,7 +643,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.middleName}
                 {...register("guardian.middleName")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -649,7 +653,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.occupation}
                 {...register("guardian.occupation")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -659,7 +663,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.relationship}
                 {...register("guardian.relationship")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
           </span>
@@ -671,7 +675,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.companyName}
                 {...register("guardian.companyName")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -681,7 +685,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.companyAddress}
                 {...register("guardian.companyAddress")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -691,7 +695,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.phone}
                 {...register("guardian.phone")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
             <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
@@ -701,7 +705,7 @@ const StudentsInfo = () => {
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.email}
                 {...register("guardian.email")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
           </span>
@@ -720,7 +724,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     defaultValue={query.data?.guardianSpouse?.lastName}
                     {...register("guardianSpouse.lastName")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
@@ -732,7 +736,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     defaultValue={query.data?.guardianSpouse?.firstName}
                     {...register("guardianSpouse.firstName")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
@@ -744,7 +748,7 @@ const StudentsInfo = () => {
                     readOnly={isUpdate}
                     defaultValue={query.data?.guardianSpouse?.middleName}
                     {...register("guardianSpouse.middleName")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-sm border-b-2 border-b-red-600"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
               </span>

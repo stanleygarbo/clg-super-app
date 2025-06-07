@@ -53,44 +53,44 @@ const Dashboard = () => {
       <h1 className="text-center bg-blue-800 text-blue-100 text-2xl font-bold p-5 xl:rounded-t-md">
         Dashboard
       </h1>
-      <div className="flex flex-col gap-5 bg-blue-50 xl:rounded-b-md">
+      <div className="flex flex-col gap-5 bg-slate-50 xl:rounded-b-md">
         <section className="flex flex-col xl:flex-row gap-5 px-10 justify-evenly my-10 pb-5">
-          <h1 className="rounded-lg px-10 py-5 flex items-center gap-3 bg-white justify-center">
+          <h1 className="rounded-lg px-10 py-5 flex items-center gap-3 bg-blue-900 justify-center">
             {" "}
-            <p className="text-3xl text-black">
+            <p className="text-3xl text-white">
               <FaUsers />
             </p>
             <p className=" ">
-              <h1 className="text-sm text-slate-700 font-semibold">
+              <h1 className="text-sm text-slate-50 font-semibold">
                 Total Users
               </h1>
-              <h1 className="text-center text-xl font-bold text-slate-700">
-                {employees?.length + students.length}
+              <h1 className="text-center text-xl font-bold text-blue-100">
+                {employees?.length + students?.length}
               </h1>
             </p>
           </h1>
-          <h1 className="rounded-lg px-10 py-5 flex items-center gap-3 bg-blue-100 justify-center">
+          <h1 className="rounded-lg px-10 py-5 flex items-center gap-3 bg-red-800 justify-center">
             {" "}
-            <p className="text-3xl text-black">
+            <p className="text-3xl text-white">
               <FaUsers />
             </p>
             <p className=" ">
-              <h1 className="text-sm text-slate-700 font-semibold">Students</h1>
-              <h1 className="text-center text-xl font-bold text-blue-700">
-                {students.length}
+              <h1 className="text-sm text-slate-50 font-semibold">Students</h1>
+              <h1 className="text-center text-xl font-bold text-red-100">
+                {students?.length}
               </h1>
             </p>
           </h1>
-          <h1 className="rounded-lg px-10 py-5 flex items-center gap-3 bg-red-100 justify-center">
+          <h1 className="rounded-lg px-10 py-5 flex items-center gap-3 bg-yellow-500 justify-center">
             {" "}
-            <p className="text-3xl text-black">
+            <p className="text-3xl text-white">
               <FaUsers />
             </p>
             <p className=" ">
-              <h1 className="text-sm text-slate-700 font-semibold">
+              <h1 className="text-sm text-slate-100 font-semibold">
                 Employees
               </h1>
-              <h1 className="text-center text-xl font-bold text-red-700">
+              <h1 className="text-center text-xl font-bold text-yellow-100">
                 {employees?.length}
               </h1>
             </p>
@@ -98,7 +98,7 @@ const Dashboard = () => {
         </section>
         <section className="px-10 pb-10 grid xl:grid-cols-4 gap-5">
           <p
-            className="bg-blue-600 text-center py-8 px-16 rounded-lg hover:cursor-pointer text-white font-semibold text-xl hover:bg-blue-800 active:scale-95 duration-200"
+            className="bg-blue-600 text-center py-8 px-16 rounded-lg hover:cursor-pointer text-white font-semibold text-xl hover:bg-blue-800 active:scale-90 duration-200"
             onClick={() => {
               navigate("/profile");
             }}
@@ -106,7 +106,7 @@ const Dashboard = () => {
             Profile
           </p>
           <p
-            className="bg-blue-600 text-center py-8 px-16 rounded-lg hover:cursor-pointer text-white font-semibold text-xl hover:bg-blue-800 active:scale-95 duration-200"
+            className="bg-blue-600 text-center py-8 px-16 rounded-lg hover:cursor-pointer text-white font-semibold text-xl hover:bg-blue-800 active:scale-90 duration-200"
             onClick={() => {
               navigate("/admin/users");
             }}
@@ -114,7 +114,7 @@ const Dashboard = () => {
             Users
           </p>
           <p
-            className="bg-blue-600 text-center py-8 px-16 rounded-lg hover:cursor-pointer text-white font-semibold text-xl hover:bg-blue-800 active:scale-95 duration-200"
+            className="bg-blue-600 text-center py-8 px-16 rounded-lg hover:cursor-pointer text-white font-semibold text-xl hover:bg-blue-800 active:scale-90 duration-200"
             onClick={() => {
               navigate("/admission/enroll-student");
             }}
@@ -122,7 +122,7 @@ const Dashboard = () => {
             Students
           </p>
           <p
-            className="bg-blue-600 text-center py-8 px-16 rounded-lg hover:cursor-pointer text-white font-semibold text-xl hover:bg-blue-800 active:scale-95 duration-200"
+            className="bg-blue-600 text-center py-8 px-16 rounded-lg hover:cursor-pointer text-white font-semibold text-xl hover:bg-blue-800 active:scale-90 duration-200"
             onClick={() => {
               navigate("/admin/employees");
             }}

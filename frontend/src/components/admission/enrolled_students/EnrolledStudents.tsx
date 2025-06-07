@@ -195,7 +195,7 @@ const EnrolledStudents = () => {
               <option value="senoir">4th Year</option>
             </select>
             <input
-              type="text"
+              type="search"
               className="border-0 rounded-md w-60 xl:w-72 text-center py-2 px-5 outline-none"
               placeholder="Q Search..."
               value={search}
@@ -206,14 +206,14 @@ const EnrolledStudents = () => {
           </section>
         </section>
         <section className="py-3 pl-1">
-          <span className="md:flex hidden mb-3 text-lg">
-            <h1 className="w-[150px] font-bold pl-3">Last Name</h1>
-            <h1 className="w-[150px] font-bold">First Name</h1>
-            <h1 className="w-[150px] font-bold">Middle Name</h1>
-            <h1 className="w-[150px] font-bold text-center">Gender</h1>
-            <h1 className="w-[150px] font-bold text-center">Course</h1>
-            <h1 className="w-[150px] font-bold text-center">Standing</h1>
-            <h1 className="w-[200px] font-bold text-center">Action</h1>
+          <span className="md:grid grid-cols-7 hidden mb-3 text-lg">
+            <h1 className="font-bold pl-3">Last Name</h1>
+            <h1 className="font-bold">First Name</h1>
+            <h1 className="font-bold">Middle Name</h1>
+            <h1 className="font-bold text-center">Gender</h1>
+            <h1 className="font-bold text-center">Course</h1>
+            <h1 className="font-bold text-center">Standing</h1>
+            <h1 className="font-bold text-center">Action</h1>
           </span>
           <div className="text-xl font-bold mb-3 flex flex-col gap-2 xl:gap-0">
             <Items currentItems={currentItems} />

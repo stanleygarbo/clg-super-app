@@ -33,6 +33,7 @@ import ViewSchedule from "./components/registrar/ViewSchedule";
 import UserProfie from "./components/admin/profile/UserProfie";
 import StudentList from "./components/registrar/grade/StudentList";
 import StudentGrades from "./components/registrar/grade/StudentGrades";
+import Grade from "./components/student/Grade";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,16 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <UserProfie />,
+      },
+    ],
+  },
+  {
+    path: "/grade",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/grade",
+        element: <Grade />,
       },
     ],
   },
