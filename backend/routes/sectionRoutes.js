@@ -171,7 +171,7 @@ router.patch(
   ],
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
-  courseController.updateCourse
+  sectionController.updateSection
 );
 
 /**
