@@ -85,7 +85,6 @@ function EForm() {
 
   return (
     <div className="flex py-5">
-      <div className="w-0 xl:w-72"></div>
       <div className="px-2">
         <form
           onSubmit={handleSubmit((data) => addMutation.mutate({ ...data }))}
@@ -103,14 +102,30 @@ function EForm() {
               </div>
               <div className="border py-10 px-5 flex flex-col border-slate-500 rounded-md w- xl:w-[400px] gap-3">
                 <section className="grid grid-cols-2 gap-3">
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute left-1/2 w-[65px] xl:w-[66px] transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  {/* <span
+                className= 
+              >
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+                  SSS
+                </p>
+                <input
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                  type="text"
+                  {...register("governmentId.sss")}
+                />
+              </span> */}
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs w-full xl:w-[82px] px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       School Year
                     </p>
                     <select
                       required
                       {...register("schoolYear")}
-                      className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                     >
                       <option
                         value={`${
@@ -129,14 +144,18 @@ function EForm() {
                       </option>
                     </select>
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Standing
                     </p>
                     <select
                       required
                       {...register("standing")}
-                      className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                     >
                       {[
                         "freshman",
@@ -157,20 +176,24 @@ function EForm() {
                   </span>
                 </section>
                 <section className="grid grid-cols-2 gap-3">
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Program
                     </p>
                     <select
                       required
                       {...register("program")}
-                      className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                     >
                       {programs.data?.results.map(
                         (prog: IProgramGet, index: number) => (
                           <option
                             key={index}
-                            selected={prog.programAcronym === "BSCS"}
+                            selected={index === 0}
                             value={prog._id}
                           >
                             {prog.programAcronym}
@@ -179,53 +202,69 @@ function EForm() {
                       )}
                     </select>
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Semester
                     </p>
                     <select
                       required
                       {...register("semester")}
-                      className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                     >
-                      <option value="1st" selected>
+                      <option value={1} selected>
                         1st
                       </option>
-                      <option value="2nd">2nd</option>
+                      <option value={2}>2nd</option>
                     </select>
                   </span>
                 </section>
-                <h1 className="text-sm font-bold text-black">
+                <h1 className="text-xs font-bold text-black">
                   INITIAL PAYMENT :
                 </h1>
                 <section className="grid grid-cols-3 gap-3">
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-8 xl:left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Date
                     </p>
                     <input
                       readOnly
-                      className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="date"
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 w-[38px] xl:w-[41px] duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-8 w-[54px] xl:w-[57px] xl:left-11 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       OR No.
                     </p>
                     <input
                       readOnly
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-11 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Amount
                     </p>
                     <input
                       readOnly
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                     />
                   </span>
@@ -238,68 +277,88 @@ function EForm() {
                 {/* Student */}
                 <section className="flex flex-col gap-3 xl:flex-row justify-between">
                   <p className="font-bold">STUDENT'S INFORMATION</p>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       USN/LRN
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       {...register("username")}
                     />
                   </span>
                 </section>
                 <div className="gap-3 grid xl:grid-cols-3">
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Last Name
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       {...register("surname")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       First Name
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       {...register("firstName")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-16 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Middle Name
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       {...register("middleName")}
                     />
                   </span>
                 </div>
                 <div className="grid xl:grid-cols-[1fr_2fr] gap-3">
-                  {/* <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  {/* <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Telephone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   {...register("telephone")}
                 />
               </span> */}
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Phone No.
                     </p>
                     <input
                       type="text"
                       placeholder="e.g. 09*********"
-                      className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       inputMode="numeric"
                       {...register("phone", {
                         pattern: {
@@ -318,12 +377,16 @@ function EForm() {
                       </p>
                     )}
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Email
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       {...register("email", {
                         // required: "Email is required",
@@ -348,48 +411,60 @@ function EForm() {
                   BIRTH'S INFORMATION
                 </h1>
                 <div className="grid xl:grid-cols-5 gap-3">
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Birthdate
                     </p>
                     <input
-                      className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="date"
                       {...register("birth.birthDate")}
                     />
                   </span>
                   <section className="grid xl:grid-cols-2 gap-3">
                     <span
-                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                      className={`${
+                        isOpen ? "-z-50 xl:z-50" : ""
+                      } relative group`}
                     >
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         Birthplace
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         {...register("birth.birthPlace")}
                       />
                     </span>
                     <span
-                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                      className={`${
+                        isOpen ? "-z-50 xl:z-50" : ""
+                      } relative group`}
                     >
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-11 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         Citizenship
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         {...register("birth.citizenship")}
                       />
                     </span>
                   </section>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Gender
                     </p>
                     <select
-                      className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       {...register("birth.sex")}
                     >
                       <option value="male" selected>
@@ -399,12 +474,16 @@ function EForm() {
                     </select>
                   </span>
 
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Marital Status
                     </p>
                     <select
-                      className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       {...register("maritalStatus")}
                       onChange={(e) => {
                         setMaritalStatus(e.target.value);
@@ -417,12 +496,16 @@ function EForm() {
                       <option value="widow">Widow</option>
                     </select>
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Religion
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       {...register("birth.religion")}
                     />
@@ -442,49 +525,57 @@ function EForm() {
 
                   <div className="grid xl:grid-cols-4 gap-3">
                     <span
-                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                      className={`${
+                        isOpen ? "-z-50 xl:z-50" : ""
+                      } relative group`}
                     >
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         Last Name
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         {...register("spouse.lastName")}
                       />
                     </span>
                     <span
-                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                      className={`${
+                        isOpen ? "-z-50 xl:z-50" : ""
+                      } relative group`}
                     >
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         First Name
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         {...register("spouse.firstName")}
                       />
                     </span>
                     <span
-                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                      className={`${
+                        isOpen ? "-z-50 xl:z-50" : ""
+                      } relative group`}
                     >
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         Middle Name
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         {...register("spouse.middleName")}
                       />
                     </span>
                     <span
-                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                      className={`${
+                        isOpen ? "-z-50 xl:z-50" : ""
+                      } relative group`}
                     >
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         No. of Child
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="number"
                         {...register("spouse.children")}
                       />
@@ -513,55 +604,75 @@ function EForm() {
                   </span>
                 </section>
                 <div className="grid xl:grid-cols-5 gap-3 ">
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       House No.
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="number"
                       {...register("homeAddress.houseNum")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Street/Brgy.
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.homeAddress?.streetBrgy}
                       {...register("homeAddress.streetBrgy")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-8 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       City
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.homeAddress.city}
                       {...register("homeAddress.city")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Province
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.homeAddress.province}
                       {...register("homeAddress.province")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       District
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.homeAddress.district}
                       {...register("homeAddress.district")}
@@ -577,52 +688,60 @@ function EForm() {
                   </h1>
                   <div className="grid xl:grid-cols-4 gap-3 ">
                     <span
-                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                      className={`${
+                        isOpen ? "-z-50 xl:z-50" : ""
+                      } relative group`}
                     >
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         House No.
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         // value={snap.cityAddress.houseNum}
                         {...register("cityAddress.houseNum")}
                       />
                     </span>
                     <span
-                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                      className={`${
+                        isOpen ? "-z-50 xl:z-50" : ""
+                      } relative group`}
                     >
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         Street/Brgy.
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         // value={snap.cityAddress.streetBrgy}
                         {...register("cityAddress.streetBrgy")}
                       />
                     </span>
                     <span
-                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                      className={`${
+                        isOpen ? "-z-50 xl:z-50" : ""
+                      } relative group`}
                     >
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-8 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         City
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         // value={snap.cityAddress.city}
                         {...register("cityAddress.city")}
                       />
                     </span>
                     <span
-                      className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                      className={`${
+                        isOpen ? "-z-50 xl:z-50" : ""
+                      } relative group`}
                     >
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         District
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         // value={snap.cityAddress.district}
                         {...register("cityAddress.district")}
@@ -639,34 +758,34 @@ function EForm() {
                 {/* Father */}
                 {/* <h1 className="text-start font-semibold">FATHER'S INFORMATION</h1>
             <div className="gap-3 grid grid-cols-3">
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Last Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.father.lastName}
                   {...register("father.lastName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   First Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.father.firstName}
                   {...register("father.firstName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Middle Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.father.middleName}
                   {...register("father.middleName")}
@@ -674,34 +793,34 @@ function EForm() {
               </span>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Occupation
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.father.occupation}
                   {...register("father.occupation")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Company Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.father.companyName}
                   {...register("father.companyName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Company Address
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.father.companyAddress}
                   {...register("father.companyAddress")}
@@ -709,34 +828,34 @@ function EForm() {
               </span>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Telephone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.father.telephone}
                   {...register("father.telephone")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Phone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.father.phone}
                   {...register("father.phone")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Email
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.father.email}
                   {...register("father.email")}
@@ -749,34 +868,34 @@ function EForm() {
                 {/* Mother */}
                 {/* <h1 className="text-start font-semibold">MOTHER'S INFORMATION</h1>
             <div className="gap-3 grid grid-cols-3">
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Last Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.mother.lastName}
                   {...register("mother.lastName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   First Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.mother.firstName}
                   {...register("mother.firstName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Middle Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.mother.middleName}
                   {...register("mother.middleName")}
@@ -784,34 +903,34 @@ function EForm() {
               </span>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Occupation
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.mother.occupation}
                   {...register("mother.occupation")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Company Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.mother.companyName}
                   {...register("mother.companyName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Company Address
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.mother.companyAddress}
                   {...register("mother.companyAddress")}
@@ -819,34 +938,34 @@ function EForm() {
               </span>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Telephone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.mother.telephone}
                   {...register("mother.telephone")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Phone No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.mother.phone}
                   {...register("mother.phone")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Email
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.mother.email}
                   {...register("mother.email")}
@@ -861,45 +980,61 @@ function EForm() {
                   GUARDIAN'S INFORMATION
                 </h1>
                 <div className="grid xl:grid-cols-4 gap-3">
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Last Name
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.guardian.lastName}
                       {...register("guardian.lastName")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       First Name
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.guardian.firstName}
                       {...register("guardian.firstName")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Middle Name
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.guardian.middleName}
                       {...register("guardian.middleName")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Relationship
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.guardian.relationship}
                       {...register("guardian.relationship")}
@@ -907,34 +1042,46 @@ function EForm() {
                   </span>
                 </div>
                 <div className="grid xl:grid-cols-3 gap-3">
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Occupation
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.guardian.occupation}
                       {...register("guardian.occupation")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-16 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Company Name
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.guardian.companyName}
                       {...register("guardian.companyName")}
                     />
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-20 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Company Address
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       // value={snap.guardian.companyAddress}
                       {...register("guardian.companyAddress")}
@@ -942,25 +1089,29 @@ function EForm() {
                   </span>
                 </div>
                 <div className="grid xl:grid-cols-[1fr_2fr] gap-3">
-                  {/* <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  {/* <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Telephon No.
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.guardian.telephone}
                   {...register("guardian.telephone")}
                 />
               </span> */}
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Phone No.
                     </p>
                     <input
                       type="text"
                       placeholder="e.g. 09*********"
-                      className="border border-slate-500 h-[40px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       inputMode="numeric"
                       {...register("guardian.phone", {
                         pattern: {
@@ -979,12 +1130,16 @@ function EForm() {
                       </p>
                     )}
                   </span>
-                  <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                    <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                  <span
+                    className={`${
+                      isOpen ? "-z-50 xl:z-50" : ""
+                    } relative group`}
+                  >
+                    <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                       Email
                     </p>
                     <input
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                      className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                       type="text"
                       {...register("guardian.email", {
                         // required: "Email is required",
@@ -1008,45 +1163,45 @@ function EForm() {
               SPOUSE'S INFORMATION ( IF MARRIED )
             </h1>
             <div className="grid grid-cols-4 gap-3">
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Last Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.guardianSpouse.lastName}
                   {...register("guardianSpouse.lastName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   First Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.guardianSpouse.firstName}
                   {...register("guardianSpouse.firstName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   Middle Name
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="text"
                   // value={snap.guardianSpouse.middleName}
                   {...register("guardianSpouse.middleName")}
                 />
               </span>
-              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+              <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                   No. of Children
                 </p>
                 <input
-                  className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                   type="number"
                   // value={snap.guardianSpouse.children}
                   {...register("guardianSpouse.children")}
@@ -1070,12 +1225,12 @@ function EForm() {
                       siblings.length > 1 ? "pr-10" : ""
                     } grid grid-cols-3 gap-3 pb-5`}
                   >
-                    <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         Name
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         value={sibling?.fullName}
                         onChange={(e) => {
@@ -1083,12 +1238,12 @@ function EForm() {
                         }}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         Age
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="number"
                         value={sibling?.age}
                         onChange={(e) => {
@@ -1096,12 +1251,12 @@ function EForm() {
                         }}
                       />
                     </span>
-                    <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-                      <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
+                    <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
+                      <p className="text-xs px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                         Occupation/School
                       </p>
                       <input
-                        className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
+                        className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
                         type="text"
                         value={sibling?.occupationSchool}
                         onChange={(e) => {

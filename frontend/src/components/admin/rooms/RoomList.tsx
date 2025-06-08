@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { IRoomGet, IRoomPost } from "../../../interface/IRoom";
-import { deleteRoom, getRooms } from "../../../api/room";
-import { addRoom } from "../../../api/room";
+import { deleteRoom, getRooms, addRoom } from "../../../api/room";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { AiFillDelete } from "react-icons/ai";
@@ -9,10 +8,34 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useSnapshot } from "valtio";
 import { sidebarState } from "../../../store/auth";
+import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+
 const RoomList = () => {
   const { handleSubmit, register, setValue, formState } = useForm<IRoomPost>();
-  const [search, setSearch] = useState<string>("");
   const { errors } = formState;
+  const [search, setSearch] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 10;
+
+  const snap = useSnapshot(sidebarState);
+  const isOpen = snap.isOpen;
+
+  const query = useQuery({
+    queryKey: ["rooms"],
+    queryFn: getRooms,
+  });
+
+  const filteredData = query.data?.filter((room: IRoomGet) =>
+    room.room.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const totalPages = filteredData
+    ? Math.ceil(filteredData.length / itemsPerPage)
+    : 1;
+  const paginatedData = filteredData?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const addRoomMutation = useMutation({
     mutationFn: addRoom,
@@ -22,6 +45,7 @@ const RoomList = () => {
       setValue("room", "");
       setValue("building", "");
       setValue("floor", "");
+      setCurrentPage(1); // Reset to first page after adding
     },
     onError: (err: any) => {
       console.log(err.message);
@@ -39,29 +63,14 @@ const RoomList = () => {
     },
   });
 
-  const query = useQuery({
-    queryKey: ["rooms"],
-    queryFn: getRooms,
-  });
-
-  const filteredData = query.data?.filter((room: IRoomGet) =>
-    room.room.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const snap = useSnapshot(sidebarState);
-  const isOpen = snap.isOpen;
-
   return (
     <div className="flex flex-col xl:flex-row my-10 items-center xl:items-start px-4">
-      <div className="w-0 xl:w-72"></div>
-
       <div className="w-full max-w-[1100px] h-auto xl:h-[650px]">
         <form
           onSubmit={handleSubmit((data) => addRoomMutation.mutate(data))}
           className="rounded-md bg-white flex flex-col xl:flex-row justify-center items-center gap-5 px-4 py-5"
         >
           <h1 className="text-xl font-bold text-blue-800">Add Room</h1>
-
           <section className="flex flex-col md:flex-row gap-3">
             {/* Room Name */}
             <section
@@ -134,7 +143,8 @@ const RoomList = () => {
             </div>
           </section>
         </form>
-        {/* <section className="flex justify-between items-center"></section> */}
+
+        {/* Search & Header */}
         <section className="bg-slate-100 px-5 py-2 gap-5 rounded-md flex justify-between">
           <span className="flex gap-3 items-center">
             <h1 className="text-xl font-bold text-blue-700">Room's List</h1>
@@ -147,12 +157,14 @@ const RoomList = () => {
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
+                setCurrentPage(1);
               }}
             />
           </span>
         </section>
+
+        {/* Room List - Desktop */}
         <section className="py-3">
-          {/* Desktop View */}
           <div className="hidden md:block">
             <span className="flex mb-3 text-lg">
               <h1 className="w-[200px] font-bold pl-2">Room</h1>
@@ -160,18 +172,18 @@ const RoomList = () => {
               <h1 className="w-[150px] font-bold text-center">Floor</h1>
               <h1 className="w-[200px] font-bold text-center">Action</h1>
             </span>
-            <section className="flex flex-col overflow-auto no-scrollbar h-[470px] rounded-md">
-              {filteredData?.map((room: IRoomGet, index: number) => (
+            <section className="flex flex-col h-[500px]">
+              {paginatedData?.map((room: IRoomGet, index: number) => (
                 <span
                   key={index}
                   className={`${
-                    index == filteredData?.length - 1
-                      ? "rounded-b-md"
-                      : index == 0
-                      ? "rounded-t-md"
+                    index === 0
+                      ? "rounded-t-lg"
+                      : index === paginatedData.length - 1
+                      ? "rounded-b-lg"
                       : ""
                   } ${
-                    index % 2 == 0 ? "bg-slate-200" : "bg-slate-100"
+                    index % 2 === 0 ? "bg-slate-200" : "bg-slate-100"
                   } hover:bg-slate-300 group flex py-2 text-sm items-center duration-200`}
                 >
                   <h1 className="w-[200px] pl-3 font-semibold">{room.room}</h1>
@@ -180,17 +192,9 @@ const RoomList = () => {
                   </h1>
                   <h1 className="w-[150px] font-semibold text-center">
                     {room.floor}
-                    {room.floor === 2 ? (
-                      <sup className={`${isOpen ? "-z-50 xl:z-50" : ""}`}>
-                        nd
-                      </sup>
-                    ) : room.floor === 3 ? (
-                      <sup>rd</sup>
-                    ) : room.floor >= 4 ? (
-                      <sup>th</sup>
-                    ) : (
-                      ""
-                    )}
+                    <sup>
+                      {room.floor === 2 ? "nd" : room.floor === 3 ? "rd" : "th"}
+                    </sup>
                   </h1>
                   <h1 className="w-[200px] font-semibold flex gap-3 justify-center opacity-0 group-hover:opacity-100">
                     <button
@@ -206,9 +210,9 @@ const RoomList = () => {
             </section>
           </div>
 
-          {/* Mobile View */}
+          {/* Room List - Mobile */}
           <div className="md:hidden flex flex-col gap-3">
-            {filteredData?.map((room: IRoomGet, index: number) => (
+            {paginatedData?.map((room: IRoomGet, index: number) => (
               <div
                 key={index}
                 className="bg-slate-100 p-4 rounded-md shadow-sm text-sm font-semibold space-y-2"
@@ -222,15 +226,9 @@ const RoomList = () => {
                 </p>
                 <p>
                   <span className="text-blue-800">Floor:</span> {room.floor}
-                  {room.floor === 2 ? (
-                    <sup className={`${isOpen ? "-z-50 xl:z-50" : ""}`}>nd</sup>
-                  ) : room.floor === 3 ? (
-                    <sup className={`${isOpen ? "-z-50 xl:z-50" : ""}`}>rd</sup>
-                  ) : room.floor >= 4 ? (
-                    <sup className={`${isOpen ? "-z-50 xl:z-50" : ""}`}>th</sup>
-                  ) : (
-                    ""
-                  )}
+                  <sup className="-z-50">
+                    {room.floor === 2 ? "nd" : room.floor === 3 ? "rd" : "th"}
+                  </sup>
                 </p>
                 <div className="flex justify-end">
                   <button
@@ -243,6 +241,43 @@ const RoomList = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Pagination Controls */}
+          <div className="flex justify-center gap-2 mt-4">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className={`${
+                isOpen ? "-z-50 xl:z-50" : ""
+              } px-3 py-1 bg-blue-600 text-white rounded disabled:opacity-50`}
+            >
+              <FaArrowAltCircleLeft />
+            </button>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(index + 1)}
+                className={`px-3 py-1 rounded ${
+                  currentPage === index + 1
+                    ? "bg-blue-800 text-white"
+                    : "bg-gray-200"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className={`${
+                isOpen ? "-z-50 xl:z-50" : ""
+              } px-3 py-1 bg-blue-600 text-white rounded disabled:opacity-50`}
+            >
+              <FaArrowAltCircleRight />
+            </button>
           </div>
         </section>
       </div>

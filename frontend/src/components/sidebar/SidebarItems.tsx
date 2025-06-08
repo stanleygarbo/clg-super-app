@@ -10,6 +10,7 @@ export type ISidebarItem = {
   subItems?: ISidebarItem[];
   type?: "drawer";
   path: string;
+  allowedRoles?: string[];
 };
 
 function countItems(items: ISidebarItem[] | undefined) {
@@ -85,7 +86,7 @@ const SidebarItems = ({
               <section
                 className={twMerge(
                   "rounded-md h-[42px] flex justify-between items-center mb-1 pr-4",
-                  isActive && depth === 1 ? "bg-blue-50" : "hover:bg-gray-100"
+                  isActive && depth === 1 ? "bg-blue-100" : "hover:bg-slate-200"
                 )}
                 style={{
                   paddingLeft: depth > 0 ? ` ${16 * depth}px` : "",

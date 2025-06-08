@@ -11,7 +11,6 @@ const standing = require("../constants/studentStanding");
 const { scheduleSchema } = require("./scheduleModel");
 const { employeeDocsSchema } = require("./employeeDocsModel");
 const { studentDocsSchema } = require("./studentDocsModel");
-const { studentGradeSchema } = require("./studentGradeModel");
 
 const userSchema = new mongoose.Schema(
   {
@@ -86,6 +85,12 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    semester: {
+      type: Number,
+      required: true,
+    },
+
     birth: birthSchema,
     homeAddress: homeAddressSchema,
     cityAddress: cityAddressSchema,
@@ -96,7 +101,7 @@ const studentSchema = new mongoose.Schema(
     siblings: [siblingSchema],
     schedules: employeeDocsSchema,
     documents: studentDocsSchema,
-    grades: [studentGradeSchema],
+    // grades: { type: mongoose.Schema.Types.ObjectId, ref: "Grade" },
   },
   { timestamps: true }
 );

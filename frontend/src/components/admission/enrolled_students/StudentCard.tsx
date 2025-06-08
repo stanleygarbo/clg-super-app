@@ -10,11 +10,18 @@ import { FaArchive } from "react-icons/fa";
 interface Params {
   student: IStudentsGet;
   index: number;
-  checkedStudents: Record<string, boolean>;
-  onToggle: (id: string) => void;
+  currentItems: IStudentsGet[];
+  // checkedStudents: Record<string, boolean>;
+  // onToggle: (id: string) => void;
 }
 
-function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
+function StudentCard({
+  student,
+  index,
+  // checkedStudents,
+  currentItems,
+}: // onToggle,
+Params) {
   const navigate = useNavigate();
 
   const query = useQuery({
@@ -34,29 +41,31 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
   };
 
   return (
-    <div>
+    <div className="">
       <span
         key={index}
-        className={`${
-          index % 2 === 0 ? "bg-slate-200" : "bg-slate-100"
-        } md:flex hidden py-2 text-sm items-center pl-1 hover:bg-slate-300 group duration-200`}
+        className={`${index % 2 === 0 ? "bg-blue-100" : "bg-slate-100"} ${
+          index === 0
+            ? "rounded-t-lg"
+            : index === currentItems.length - 1
+            ? "rounded-b-lg"
+            : ""
+        } md:grid md:grid-cols-7 hidden py-2 font-semibold text-sm items-center pl-1 hover:bg-slate-300 group duration-200`}
       >
-        <input
+        {/* <input
           type="checkbox"
           checked={checkedStudents[student._id] || false}
           onChange={() => onToggle(student._id)}
           className="mt-[2px]"
-        />
+        /> */}
 
-        <h1 className="w-[150px] pl-3">{student.surname}</h1>
-        <h1 className="w-[150px]">{student.firstName}</h1>
-        <h1 className="w-[150px]">{student.middleName}</h1>
-        <h1 className="w-[150px] text-center">{student.birth.sex}</h1>
-        <h1 className="w-[150px] text-center">
-          {student.program?.programAcronym}
-        </h1>
-        <h1 className="w-[150px] text-center">{student.standing}</h1>
-        <h1 className="w-[200px] flex gap-2 text-lg justify-center opacity-50 group-hover:opacity-100">
+        <h1 className=" pl-3">{student.surname}</h1>
+        <h1 className="">{student.firstName}</h1>
+        <h1 className="">{student.middleName}</h1>
+        <h1 className=" text-center">{student.birth.sex}</h1>
+        <h1 className=" text-center">{student.program?.programAcronym}</h1>
+        <h1 className=" text-center">{student.standing}</h1>
+        <h1 className=" flex gap-2 text-lg justify-center opacity-50 group-hover:opacity-100">
           <button
             onClick={() => navigate(`/admission/studentInfo/${student._id}`)}
             type="button"
@@ -78,8 +87,8 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
       <div
         key={index}
         className={`${
-          index % 2 === 0 ? "bg-slate-200" : "bg-slate-100"
-        } md:hidden w-[330px] p-4 shadow-sm font-semibold`}
+          index % 2 === 0 ? "bg-blue-100" : "bg-slate-100"
+        } md:hidden w-[330px] p-4 font-semibold rounded-lg`}
       >
         <div className="flex justify-between items-center">
           <div>
@@ -90,11 +99,11 @@ function StudentCard({ student, index, checkedStudents, onToggle }: Params) {
               <strong>Program : </strong> {student.program?.programAcronym}
             </p>
           </div>
-          <input
+          {/* <input
             type="checkbox"
             checked={checkedStudents[student._id] || false}
             onChange={() => onToggle(student._id)}
-          />
+          /> */}
         </div>
 
         <div className="text-sm">

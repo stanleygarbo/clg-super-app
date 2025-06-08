@@ -37,10 +37,10 @@ const Profile = () => {
       enabled: !!id,
     });
 
-    console.log("Query Data: ", query.isSuccess);
+    // console.log("Query Data: ", query.isSuccess);
 
     if (query.isSuccess && !employee) {
-      console.log(query.data);
+      // console.log(query.data);
       setEmployee(query.data);
     }
   }
@@ -49,8 +49,7 @@ const Profile = () => {
   const isOpen = snap.isOpen;
 
   return (
-    <div className="flex">
-      <div className="xl:w-72 w-0"></div>
+    <div className="flex px-5">
       <div
         className={`${
           isOpen ? "-z-50 xl:z-50" : ""

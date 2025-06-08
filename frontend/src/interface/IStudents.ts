@@ -4,8 +4,8 @@ import { IProgramGet } from "./IProgram";
 
 export interface IStudentsPost {
   schoolYear: string;
-  year: String;
-  semester: string;
+  year: string;
+  semester: number;
   username: string;
   firstName: string;
   surname: string;
@@ -93,8 +93,8 @@ export interface IStudentsPost {
 export interface IStudentsGet {
   _id: string;
   schoolYear: string;
-  year: String;
-  semester: string;
+  year: string;
+  semester: number;
   username: string;
   section: string;
   firstName: string;
@@ -176,11 +176,5 @@ export interface IStudentsGet {
     children: number;
   };
   documents: IStudentDocs;
-  siblings: [
-    {
-      fullName: string;
-      age: string;
-      occupationSchool: string;
-    }
-  ];
+  siblings: Sibling[];
 }

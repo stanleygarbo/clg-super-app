@@ -8,8 +8,10 @@ import { getPrograms } from "../../../api/programs";
 import { IProgramGet } from "../../../interface/IProgram";
 import { IStudentsGet, IStudentsPost } from "../../../interface/IStudents";
 import { useForm } from "react-hook-form";
-import { useSnapshot } from "valtio";
-import { sidebarState } from "../../../store/auth";
+import Input from "./Input";
+// import Select from "./Select";
+// import { useSnapshot } from "valtio";
+// import { sidebarState } from "../../../store/auth";
 // import { Sibling } from "../enrollment_form/EForm";
 
 const StudentsInfo = () => {
@@ -60,6 +62,7 @@ const StudentsInfo = () => {
         // roles: deaf,
         phone: query.data?.phone,
         documents: query.data?.documents,
+        // grades: query.data?.grades,
         birth: {
           birthDate: query.data?.birth.birthDate?.toString().split("T")[0],
           birthPlace: query.data?.birth.birthPlace,
@@ -88,13 +91,14 @@ const StudentsInfo = () => {
     }
   }, [query.data, reset]);
 
-  const snap = useSnapshot(sidebarState);
-  const isOpen = snap.isOpen;
+  // const snap = useSnapshot(sidebarState);
+  // const isOpen = snap.isOpen;
   const [checkboarding, setCheckboarding] = useState<boolean>(false);
+  const [maritalStatus, setMaritalStatus] = useState("");
+  // const selectedProgram = watch("program");
 
   return (
-    <div className="flex p-3">
-      <div className="w-0 xl:w-72"></div>
+    <div className="flex">
       <form
         onSubmit={handleSubmit((data) => {
           if (!id) {
@@ -103,13 +107,13 @@ const StudentsInfo = () => {
           }
           updateStudMutation.mutate({ data, id });
         })}
-        className="mb-10 mt-5 flex flex-col border rounded-lg w-full xl:w-[1100px] shadow-md gap-5"
+        className="xl:mb-10 xl:mt-5 flex flex-col rounded-lg w-full xl:w-[1200px] gap-5 bg-slate-50"
       >
-        <h1 className="text-2xl font-bold mb-10 rounded-t-lg text-blue-800 border-b text-center bg-slate-100 py-4">
+        <h1 className="text-2xl font-bold xl:mb-10 xl:rounded-t-lg text-white text-center bg-blue-800 py-4">
           Update Student
         </h1>
         <div className="flex flex-col gap-5 px-10 pb-10">
-          <section className="xl:absolute bg-slate-50 top-[150px] right-[953px] flex gap-10 px-5 rounded-md p-3 shadow-sm border border-slate-100">
+          <section className="xl:absolute bg-blue-100 top-[150px] right-[953px] flex gap-10 px-5 rounded-md p-3 ">
             <div className="flex flex-col">
               <span className="flex gap-1 items-center p-1">
                 <input
@@ -207,11 +211,29 @@ const StudentsInfo = () => {
             </button>
           </section>
           <section className="flex justify-between">
-            <h1 className="text-lg font-bold">Student Information : </h1>
+            <h1 className="text-lg font-bold">Student Information </h1>
           </section>
 
-          <span className="grid xl:grid-cols-5 gap-2">
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
+          <span className="grid xl:grid-cols-5 gap-3 xl:gap-2 w-full">
+            <Input
+              label="Last Name"
+              register={register("surname")}
+              value={query.data?.surname}
+              readOnly={isUpdate}
+            />
+            <Input
+              label="First Name"
+              value={query.data?.firstName}
+              readOnly={isUpdate}
+              register={register("firstName")}
+            />
+            <Input
+              label="Middle Name"
+              value={query.data?.middleName}
+              readOnly={isUpdate}
+              register={register("middleName")}
+            />
+            {/* <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
               <p className="text-[11px] px-1 font-bold absolute text-blue-700 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
                 Last Name
               </p>
@@ -222,39 +244,23 @@ const StudentsInfo = () => {
                 {...register("surname")}
                 className="border focus:border-2 border-blue-700 outline-none h-[35px] w-[100%] py-1 rounded-md font-semibold text-center overflow-hidden px-1"
               />
-            </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-[11px] px-1 font-bold absolute text-blue-700 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                First Name
-              </p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.firstName}
-                {...register("firstName")}
-                className="border border-blue-700 focus:border-2 outline-none h-[35px] w-[100%] py-1 rounded-md font-semibold text-center overflow-hidden px-1"
-              />
-            </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-[11px] px-1 font-bold absolute text-blue-700 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Middle Name
-              </p>
-              <input
-                defaultValue={query.data?.middleName}
-                {...register("middleName")}
-                type="text"
-                readOnly={isUpdate}
-                className="border border-blue-700 focus:border-2 outline-none h-[35px] w-[100%] py-1 rounded-md font-semibold text-center overflow-hidden px-1"
-              />
-            </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 z-50 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Program
-              </p>
+            </section> */}
+            {/* <Select
+              label="Select Program"
+              // value={query.data?.program}
+              onChange={() => {}}
+              options={programs.data?.results.map((prog: IProgramGet) => {
+                return { value: prog._id, label: prog.programAcronym };
+              })}
+              register={register("program")}
+            /> */}
+
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Program</p>
               <select
                 disabled={isUpdate}
                 {...register("program")}
-                className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               >
                 {programs.data?.results.map(
                   (prog: IProgramGet, index: number) => (
@@ -269,14 +275,12 @@ const StudentsInfo = () => {
                 )}
               </select>
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 z-50 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Standing
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Standing</p>
               <select
                 disabled={isUpdate}
                 {...register("standing")}
-                className="border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               >
                 {["freshman", "sophomore", "junior", "senoir", "graduate"].map(
                   (standing, index) => {
@@ -294,90 +298,48 @@ const StudentsInfo = () => {
               </select>
             </section>
           </span>
-          <span className="grid xl:grid-cols-[1fr_1fr_1fr_2fr] gap-2">
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                School Year
-              </p>
+          <span className="grid xl:grid-cols-[1fr_1fr_1fr_1fr_2fr] gap-2">
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">School Year</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.schoolYear}
                 {...register("schoolYear")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                USN
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">USN</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.username}
                 {...register("username")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
 
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Phone No.
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Phone No.</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.phone}
                 {...register("phone")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Email
-              </p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.email}
-                {...register("email")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-              />
-            </section>
-          </span>
-          <span className="grid xl:grid-cols-6 gap-2">
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Birth Date
-              </p>
-              <input
-                type="date"
-                readOnly={isUpdate}
-                defaultValue={query.data?.birth.birthDate}
-                {...register("birth.birthDate")}
-                className="border border-slate-500 bg-white flex justify-center h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-              />
-            </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Birth Place
-              </p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.birth.birthPlace}
-                {...register("birth.birthPlace")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-              />
-            </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 z-50 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Marital Status
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Marital Status</p>
               <select
                 disabled={isUpdate}
                 {...register("maritalStatus")}
-                className={`border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1`}
+                value={maritalStatus}
+                onChange={(e) => {
+                  setMaritalStatus(e.target.value);
+                }}
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               >
                 {[
                   { value: "single", label: "Single" },
@@ -394,26 +356,55 @@ const StudentsInfo = () => {
                 ))}
               </select>
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Citizenship
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Email</p>
+              <input
+                type="text"
+                readOnly={isUpdate}
+                defaultValue={query.data?.email}
+                {...register("email")}
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
+              />
+            </section>
+          </span>
+          <span className="grid xl:grid-cols-5 gap-2">
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Birth Date</p>
+              <input
+                type="date"
+                readOnly={isUpdate}
+                defaultValue={query.data?.birth.birthDate}
+                {...register("birth.birthDate")}
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
+              />
+            </section>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Birth Place</p>
+              <input
+                type="text"
+                readOnly={isUpdate}
+                defaultValue={query.data?.birth.birthPlace}
+                {...register("birth.birthPlace")}
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
+              />
+            </section>
+
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Citizenship</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.birth.citizenship}
                 {...register("birth.citizenship")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 z-50 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Sex
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Sex</p>
               <select
                 disabled={isUpdate}
                 {...register("birth.sex")}
-                className={`border border-slate-500 bg-white h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1`}
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               >
                 {[
                   { value: "male", label: "Male" },
@@ -429,85 +420,74 @@ const StudentsInfo = () => {
                 ))}
               </select>
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Religion
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Religion</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.birth.religion}
                 {...register("birth.religion")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
           </span>
-          {query.data?.spouse.lastName &&
-            query.data?.maritalStatus === "married" && (
-              <div className="flex flex-col gap-5">
-                <h1 className="text-sm font-bold">
-                  Student Spouse Information :{" "}
-                </h1>
-                <span className="grid xl:grid-cols-4 gap-2">
-                  <section
-                    className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
-                  >
-                    <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                      Last Name
-                    </p>
-                    <input
-                      type="text"
-                      readOnly={isUpdate}
-                      defaultValue={query.data?.spouse?.lastName}
-                      {...register("spouse.lastName")}
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-                    />
-                  </section>
-                  <section
-                    className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
-                  >
-                    <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                      First Name
-                    </p>
-                    <input
-                      type="text"
-                      readOnly={isUpdate}
-                      defaultValue={query.data?.spouse?.firstName}
-                      {...register("spouse.firstName")}
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-                    />
-                  </section>
-                  <section
-                    className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
-                  >
-                    <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                      Middle Name
-                    </p>
-                    <input
-                      type="text"
-                      readOnly={isUpdate}
-                      defaultValue={query.data?.spouse?.middleName}
-                      {...register("spouse.middleName")}
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-                    />
-                  </section>
-                  <section
-                    className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
-                  >
-                    <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                      No. of Children
-                    </p>
-                    <input
-                      type="text"
-                      readOnly={isUpdate}
-                      defaultValue={query.data?.spouse?.children}
-                      {...register("spouse.children")}
-                      className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
-                    />
-                  </section>
-                </span>
-              </div>
-            )}
+          {(query.data?.spouse?.lastName || maritalStatus === "married") && (
+            <div className="flex flex-col gap-5">
+              <h1 className="text-sm font-bold">
+                Student Spouse Information :{" "}
+              </h1>
+              <span className="grid xl:grid-cols-4 gap-2">
+                <section
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
+                >
+                  <p className="text-xs font-semibold px-3">Last Name</p>
+                  <input
+                    type="text"
+                    readOnly={isUpdate}
+                    defaultValue={query.data?.spouse?.lastName}
+                    {...register("spouse.lastName")}
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
+                  />
+                </section>
+                <section
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
+                >
+                  <p className="text-xs font-semibold px-3">First Name</p>
+                  <input
+                    type="text"
+                    readOnly={isUpdate}
+                    defaultValue={query.data?.spouse?.firstName}
+                    {...register("spouse.firstName")}
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
+                  />
+                </section>
+                <section
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
+                >
+                  <p className="text-xs font-semibold px-3">Middle Name</p>
+                  <input
+                    type="text"
+                    readOnly={isUpdate}
+                    defaultValue={query.data?.spouse?.middleName}
+                    {...register("spouse.middleName")}
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
+                  />
+                </section>
+                <section
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
+                >
+                  <p className="text-xs font-semibold px-3">No. of Children</p>
+                  <input
+                    type="text"
+                    readOnly={isUpdate}
+                    defaultValue={query.data?.spouse?.children}
+                    {...register("spouse.children")}
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
+                  />
+                </section>
+              </span>
+            </div>
+          )}
           <section className="flex justify-between">
             <h1 className="text-sm font-bold">Home Address : </h1>
             <section className="flex gap-3 items-center">
@@ -528,62 +508,52 @@ const StudentsInfo = () => {
             </section>
           </section>
           <span className="grid xl:grid-cols-5 gap-2">
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                House No.
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">House No.</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.homeAddress?.houseNum}
                 {...register("homeAddress.houseNum")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Brgy./Street
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Brgy./Street</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.homeAddress?.streetBrgy}
                 {...register("homeAddress.streetBrgy")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                City
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">City</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.homeAddress?.city}
                 {...register("homeAddress.city")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Province
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Province</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 {...register("homeAddress.province")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                District
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">District</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 {...register("homeAddress.district")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
           </span>
@@ -594,59 +564,51 @@ const StudentsInfo = () => {
               </h1>
               <span className="grid xl:grid-cols-4 gap-2">
                 <section
-                  className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
                 >
-                  <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                    House No.
-                  </p>
+                  <p className="text-xs font-semibold px-3">House No.</p>
                   <input
                     type="text"
                     readOnly={isUpdate}
                     // defaultValue={query.data?.cityAddress?.houseNum}
                     {...register("cityAddress.houseNum")}
-                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
-                  className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
                 >
-                  <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                    Brgy./Street
-                  </p>
+                  <p className="text-xs font-semibold px-3">Brgy./Street</p>
                   <input
                     type="text"
                     readOnly={isUpdate}
                     // defaultValue={query.data?.cityAddress?.streetBrgy}
                     {...register("cityAddress.streetBrgy")}
-                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
-                  className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
                 >
-                  <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                    City
-                  </p>
+                  <p className="text-xs font-semibold px-3">City</p>
                   <input
                     type="text"
                     readOnly={isUpdate}
                     // defaultValue={query.data?.cityAddress?.city}
                     {...register("cityAddress.city")}
-                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
-                  className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
                 >
-                  <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                    District
-                  </p>
+                  <p className="text-xs font-semibold px-3">District</p>
                   <input
                     type="text"
                     readOnly={isUpdate}
                     // defaultValue={query.data?.cityAddress?.district}
                     {...register("cityAddress.district")}
-                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
               </span>
@@ -654,114 +616,96 @@ const StudentsInfo = () => {
           )}
           <h1 className="text-sm font-bold">Guardian Information : </h1>
           <span className="grid xl:grid-cols-5 gap-2">
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Last Name
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Last Name</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.lastName}
                 {...register("guardian.lastName")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                First Name
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">First Name</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.firstName}
                 {...register("guardian.firstName")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Middle Name
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Middle Name</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.middleName}
                 {...register("guardian.middleName")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Occupation
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Occupation</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.occupation}
                 {...register("guardian.occupation")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Relationship
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Relationship</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.relationship}
                 {...register("guardian.relationship")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
           </span>
           <span className="grid xl:grid-cols-[1fr_1fr_1fr_2fr] gap-2">
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Company Name
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Company Name</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.companyName}
                 {...register("guardian.companyName")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 w-[105px] text-center left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Company Address
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Company Address</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.companyAddress}
                 {...register("guardian.companyAddress")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Phone No.
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Phone No.</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.phone}
                 {...register("guardian.phone")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
-            <section className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}>
-              <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Email
-              </p>
+            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
+              <p className="text-xs font-semibold px-3">Email</p>
               <input
                 type="text"
                 readOnly={isUpdate}
                 defaultValue={query.data?.guardian?.email}
                 {...register("guardian.email")}
-                className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
               />
             </section>
           </span>
@@ -772,45 +716,39 @@ const StudentsInfo = () => {
               </h1>
               <span className="grid grid-cols-3 gap-2">
                 <section
-                  className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
                 >
-                  <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                    Last Name
-                  </p>
+                  <p className="text-xs font-semibold px-3">Last Name</p>
                   <input
                     type="text"
                     readOnly={isUpdate}
                     defaultValue={query.data?.guardianSpouse?.lastName}
                     {...register("guardianSpouse.lastName")}
-                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
-                  className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
                 >
-                  <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                    First Name
-                  </p>
+                  <p className="text-xs font-semibold px-3">First Name</p>
                   <input
                     type="text"
                     readOnly={isUpdate}
                     defaultValue={query.data?.guardianSpouse?.firstName}
                     {...register("guardianSpouse.firstName")}
-                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
                 <section
-                  className={`${isOpen ? "-z-50 xl:z-50" : ""} relative`}
+                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
                 >
-                  <p className="text-xs font-bold absolute text-slate-600 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                    Middle Name
-                  </p>
+                  <p className="text-xs font-semibold px-3">Middle Name</p>
                   <input
                     type="text"
                     readOnly={isUpdate}
                     defaultValue={query.data?.guardianSpouse?.middleName}
                     {...register("guardianSpouse.middleName")}
-                    className="border border-slate-500 h-[35px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden px-1"
+                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
                   />
                 </section>
               </span>

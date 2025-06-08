@@ -44,7 +44,7 @@ function ViewSchedule() {
   }, []);
 
   return (
-    <main className="flex flex-col gap-8 w-full mx-16 my-8">
+    <div className="flex flex-col gap-8 my-10 xl:mt-20 px-10">
       <header className="flex justify-between">
         <p className="text-2xl font-bold">Schedule</p>
         <div className="flex gap-4 text-lg font-semibold">
@@ -97,7 +97,7 @@ function ViewSchedule() {
           </tbody>
         </table>
       </main>
-    </main>
+    </div>
   );
 }
 

@@ -76,7 +76,7 @@ router.post(
     body("departmentId").notEmpty().trim().custom(ObjectId.isValid),
   ],
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
+  roleMiddleware(["admin", "super", "registrar"]),
   programController.addProgram
 );
 
@@ -152,7 +152,7 @@ router.patch(
     body("departmentId").optional().trim().custom(ObjectId.isValid),
   ],
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
+  roleMiddleware(["admin", "super", "registrar"]),
   programController.updateProgram
 );
 
@@ -193,7 +193,7 @@ router.patch(
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
+  roleMiddleware(["admin", "super", "registrar"]),
   programController.getProgram
 );
 
@@ -229,7 +229,7 @@ router.get(
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
+  roleMiddleware(["admin", "super", "registrar"]),
   programController.getPrograms
 );
 
@@ -270,7 +270,7 @@ router.get(
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
+  roleMiddleware(["admin", "super", "registrar"]),
   programController.deleteProgram
 );
 

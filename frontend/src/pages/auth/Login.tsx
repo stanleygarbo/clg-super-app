@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/auth";
 import { toast } from "react-toastify";
@@ -6,29 +6,43 @@ import { authState } from "../../store/auth";
 import { jwtDecode } from "jwt-decode";
 import { IUser } from "../../interface/IUser";
 import { useMutation } from "@tanstack/react-query";
-import { useSnapshot } from "valtio";
 
 const Login = () => {
-  const auth = useSnapshot(authState);
+  // const auth = useSnapshot(authState);
   const [userPass, setUserPass] = useState<string>("");
   const [userUsn, setUserUsn] = useState<string>("");
   const navigate = useNavigate();
+  // const userRoles = auth.user.role;
 
-  useEffect(() => {
-    if (auth.token) {
-      navigate("/login");
-    }
-  }, []);
+  // const checkrole = (find: string) => {
+  //   return userRoles?.includes(find);
+  // };
+
+  // useEffect(() => {
+  //   // if (!auth?.user || !auth.user.role) return;
+
+  //   if (checkrole("super") || checkrole("admin")) {
+  //     navigate("/dashboard");
+  //   } else if (checkrole("registrar")) {
+  //     navigate("/registrarlayout/schedule");
+  //   } else return;
+  //   // console.log(auth);
+  // }, [auth?.user]);
+
+  //   const Superadmin = ["super", "admin"].some((role) =>
+  //     auth.user.role.includes(role)
+  //   );
+  // };
 
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (res) => {
-      console.log(res);
+      // console.log(res);
       authState.token = res.token;
       const user = jwtDecode<IUser>(res.token);
       authState.user = user;
-
-      navigate("/dashboard");
+      toast.success("Login Successfully");
+      navigate("/profile");
     },
     onError: () => {
       toast.error("Invalid credentials", { type: "error" });

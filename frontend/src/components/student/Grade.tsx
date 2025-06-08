@@ -1,12 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
-import { getStudentById } from "../../../api/student";
-import { IStudentsGet } from "../../../interface/IStudents";
-import { useState } from "react";
+// import { useState } from "react";
+import { IStudentsGet } from "../../interface/IStudents";
+import { getStudentById } from "../../api/student";
+import { useSnapshot } from "valtio";
+import { authState } from "../../store/auth";
 
-const StudentGrades = () => {
-  const { id } = useParams();
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+const Grade = () => {
+  const snap = useSnapshot(authState);
+  const id = snap.user.id;
+
+  console.log(id);
+  //   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const query = useQuery<IStudentsGet>({
     queryKey: ["student", id],
@@ -59,7 +63,7 @@ const StudentGrades = () => {
                   ? "3"
                   : "4"}
               </h1>
-              <h1>
+              {/* <h1>
                 <button
                   type="button"
                   className={`${
@@ -81,7 +85,7 @@ const StudentGrades = () => {
                 >
                   Save
                 </button>
-              </h1>
+              </h1> */}
             </section>
           </section>
           <section className="flex flex-col gap-3 rounded-lg px-2 py-5">
@@ -128,4 +132,4 @@ const StudentGrades = () => {
   );
 };
 
-export default StudentGrades;
+export default Grade;

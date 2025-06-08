@@ -58,9 +58,6 @@ function Schedule() {
 
   return (
     <div className="flex my-14 xl:my-10 px-4">
-      {/* Sidebar space */}
-      <div className="w-0 xl:w-72"></div>
-
       {/* Main Content */}
       <main className="flex flex-col gap-8 w-full xl:mx-16 xl:my-8">
         {/* Header */}
@@ -68,7 +65,9 @@ function Schedule() {
           <p className="text-2xl font-bold">Schedules</p>
           <button
             className="px-4 py-2 text-white font-semibold rounded-md bg-blue-600 hover:bg-blue-800 duration-200"
-            onClick={() => navigate("/registrar/schedule/form")}
+            onClick={() => {
+              navigate("/registrar/schedule/form");
+            }}
           >
             Create Schedule
           </button>
