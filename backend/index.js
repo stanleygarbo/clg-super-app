@@ -14,6 +14,7 @@ const employeeRoutes = require("./routes/employeeRoutes.js");
 const programRoutes = require("./routes/programRoutes.js");
 const courseRoutes = require("./routes/courseRoutes.js");
 const roomRoutes = require("./routes/roomRoutes.js");
+const sectionRoutes = require("./routes/sectionRoutes.js");
 
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
@@ -68,6 +69,7 @@ app.use("/api/programs", programRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/schedules", scheduleRoutes);
 app.use("/api/rooms", roomRoutes);
+app.use("/api/sections", sectionRoutes);
 
 app.get("/", (req, res) => {
   res.json({
