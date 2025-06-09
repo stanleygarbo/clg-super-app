@@ -2,27 +2,14 @@ const mongoose = require("mongoose");
 
 const seatSchema = mongoose.Schema(
   {
-    term: {
+    section: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Term",
+      ref: "section",
       required: true,
     },
     student: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
-      required: true,
-    },
-
-    section: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Section",
-        required: true,
-      },
-    ],
-    status: {
-      type: String,
-      enum: ["DROPPED", "ENROLLED"],
       required: true,
     },
     grades: [
