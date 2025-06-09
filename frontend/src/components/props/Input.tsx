@@ -3,9 +3,9 @@ import { UseFormRegisterReturn } from "react-hook-form";
 
 interface FloatingLabelInputProps {
   label: string;
-  readOnly: boolean;
-  value: string | undefined;
-  register?: UseFormRegisterReturn;
+  readOnly?: boolean;
+  value: string | number | undefined;
+  register: UseFormRegisterReturn;
   // onChange: (value: string) => void;
   type?: string;
 }
@@ -13,25 +13,23 @@ interface FloatingLabelInputProps {
 const Input = ({
   label,
   value,
-  readOnly,
+  readOnly = true,
   // onChange,
   register,
   type = "text",
 }: // ...rest
 FloatingLabelInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
-
-  const shouldFloat = isFocused || (value?.length ?? 0) > 0;
+  const shouldFloat =
+    isFocused || (typeof value === "string" ? (value?.length ?? 0) > 0 : true);
 
   return (
     <div className="relative bg-white w-full pt-5 rounded-lg">
       <input
         type={type}
-        defaultValue={value}
+        value={value}
         {...register}
         readOnly={readOnly}
-        // {...rest}
-        // onChange={(e) => onChange(e.target.value)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         className="peer w-full rounded-lg px-3 text-center py-3 focus:outline-none border-b-2 border-b-blue-600"

@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-// import { useState } from "react";
 import { getStudentById, updateStudent } from "../../../api/student";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -8,11 +7,8 @@ import { getPrograms } from "../../../api/programs";
 import { IProgramGet } from "../../../interface/IProgram";
 import { IStudentsGet, IStudentsPost } from "../../../interface/IStudents";
 import { useForm } from "react-hook-form";
-import Input from "./Input";
-// import Select from "./Select";
-// import { useSnapshot } from "valtio";
-// import { sidebarState } from "../../../store/auth";
-// import { Sibling } from "../enrollment_form/EForm";
+import Input from "../../props/Input";
+import Select from "../../props/Select";
 
 const StudentsInfo = () => {
   const [isUpdate, setIsUpdate] = useState<boolean>(true);
@@ -24,7 +20,7 @@ const StudentsInfo = () => {
   const navigate = useNavigate();
   // const [sibling, setSibling] = useState<ISibling[]>([]);
   const { id } = useParams();
-  const { handleSubmit, register, reset } = useForm<IStudentsPost>();
+  const { handleSubmit, register, reset, watch } = useForm<IStudentsPost>();
 
   if (!id) return;
 
@@ -58,11 +54,19 @@ const StudentsInfo = () => {
         surname: query.data?.surname,
         middleName: query.data?.middleName,
         email: query.data?.email,
+        username: query.data?.username,
+        schoolYear: query.data?.schoolYear,
         program: query.data?.program._id,
         // roles: deaf,
         phone: query.data?.phone,
         documents: query.data?.documents,
         // grades: query.data?.grades,
+        spouse: {
+          lastName: query.data?.spouse?.lastName,
+          middleName: query.data?.spouse?.middleName,
+          firstName: query.data?.spouse?.firstName,
+          children: query.data?.spouse?.children,
+        },
         birth: {
           birthDate: query.data?.birth.birthDate?.toString().split("T")[0],
           birthPlace: query.data?.birth.birthPlace,
@@ -83,10 +87,26 @@ const StudentsInfo = () => {
           province: query.data?.cityAddress?.province,
           district: query.data?.cityAddress?.district,
         },
+        guardian: {
+          lastName: query.data?.guardian?.lastName,
+          firstName: query.data?.guardian?.firstName,
+          middleName: query.data?.guardian?.middleName,
+          email: query.data?.guardian?.email,
+          relationship: query.data?.guardian?.relationship,
+          companyName: query.data?.guardian?.companyName,
+          companyAddress: query.data?.guardian?.companyAddress,
+          phone: query.data?.guardian?.phone,
+          occupation: query.data?.guardian?.occupation,
+        },
       });
     }
 
-    if (query.data?.cityAddress?.streetBrgy != null) {
+    if (
+      query.data?.cityAddress?.streetBrgy ||
+      query.data?.cityAddress?.province ||
+      query.data?.cityAddress?.district ||
+      query.data?.cityAddress?.city != null
+    ) {
       setCheckboarding(true);
     }
   }, [query.data, reset]);
@@ -96,6 +116,39 @@ const StudentsInfo = () => {
   const [checkboarding, setCheckboarding] = useState<boolean>(false);
   const [maritalStatus, setMaritalStatus] = useState("");
   // const selectedProgram = watch("program");
+  const middleName = watch("middleName") || "";
+  const lastName = watch("surname") || "";
+  const firstName = watch("firstName") || "";
+  const schoolYear = watch("schoolYear") || "";
+  const username = watch("username") || "";
+  const email = watch("email") || "";
+  const phone = watch("phone") || "";
+  const spouseLastName = watch("spouse.lastName") || "";
+  const spouseFirstName = watch("spouse.firstName") || "";
+  const spouseMiddleName = watch("spouse.middleName") || "";
+  const spouseChildren = watch("spouse.children");
+  const birthDate = watch("birth.birthDate") || " ";
+  const citizenship = watch("birth.citizenship") || "";
+  const religion = watch("birth.religion") || "";
+  const homeCity = watch("homeAddress.city") || "";
+  const homeHouse = watch("homeAddress.houseNum") || "";
+  const homeProvince = watch("homeAddress.province") || "";
+  const homeStreet = watch("homeAddress.streetBrgy") || "";
+  const homeDistrict = watch("homeAddress.district") || "";
+  const cityHouse = watch("cityAddress.houseNum") || "";
+  const cityCity = watch("cityAddress.city") || "";
+  const cityProvince = watch("cityAddress.province") || "";
+  const cityStreet = watch("cityAddress.streetBrgy") || "";
+  const cityDistrict = watch("cityAddress.district") || "";
+  const guardianLastName = watch("guardian.lastName") || "";
+  const guardianFirstName = watch("guardian.firstName") || "";
+  const guardianMiddle = watch("guardian.middleName") || "";
+  const guardianEmail = watch("guardian.email") || "";
+  const guardianPhone = watch("guardian.phone") || "";
+  const guardianCompany = watch("guardian.companyName") || "";
+  const guardianCompanyAddress = watch("guardian.companyAddress") || "";
+  const guardianOccupation = watch("guardian.occupation") || "";
+  const guardianRelationship = watch("guardian.relationship") || "";
 
   return (
     <div className="flex">
@@ -218,273 +271,157 @@ const StudentsInfo = () => {
             <Input
               label="Last Name"
               register={register("surname")}
-              value={query.data?.surname}
+              value={lastName}
               readOnly={isUpdate}
             />
             <Input
               label="First Name"
-              value={query.data?.firstName}
+              value={firstName}
               readOnly={isUpdate}
               register={register("firstName")}
             />
             <Input
               label="Middle Name"
-              value={query.data?.middleName}
+              value={middleName}
               readOnly={isUpdate}
               register={register("middleName")}
             />
-            {/* <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-[11px] px-1 font-bold absolute text-blue-700 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                Last Name
-              </p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.surname}
-                {...register("surname")}
-                className="border focus:border-2 border-blue-700 outline-none h-[35px] w-[100%] py-1 rounded-md font-semibold text-center overflow-hidden px-1"
-              />
-            </section> */}
-            {/* <Select
-              label="Select Program"
-              // value={query.data?.program}
-              onChange={() => {}}
-              options={programs.data?.results.map((prog: IProgramGet) => {
+            <Select
+              options={programs.data?.results?.map((prog: IProgramGet) => {
                 return { value: prog._id, label: prog.programAcronym };
               })}
+              disabled={isUpdate}
+              label="Program"
+              selected={query.data?.program?._id || ""}
               register={register("program")}
-            /> */}
-
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Program</p>
-              <select
-                disabled={isUpdate}
-                {...register("program")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              >
-                {programs.data?.results.map(
-                  (prog: IProgramGet, index: number) => (
-                    <option
-                      selected={prog._id == query.data?.program._id}
-                      key={index}
-                      value={prog._id}
-                    >
-                      {prog.programAcronym}
-                    </option>
-                  )
-                )}
-              </select>
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Standing</p>
-              <select
-                disabled={isUpdate}
-                {...register("standing")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              >
-                {["freshman", "sophomore", "junior", "senoir", "graduate"].map(
-                  (standing, index) => {
-                    return (
-                      <option
-                        selected={standing == query.data?.standing}
-                        key={index}
-                        value={standing}
-                      >
-                        {standing}
-                      </option>
-                    );
-                  }
-                )}
-              </select>
-            </section>
+            />
+            <Select
+              label="Standing"
+              options={[
+                { value: "freshman", label: "Freshman" },
+                { value: "sophomore", label: "Sophomore" },
+                { value: "junior", label: "Junior" },
+                { value: "senoir", label: "Senoir" },
+              ]}
+              disabled={isUpdate}
+              selected={query.data?.standing || ""}
+              register={register("standing")}
+            />
           </span>
           <span className="grid xl:grid-cols-[1fr_1fr_1fr_1fr_2fr] gap-2">
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">School Year</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.schoolYear}
-                {...register("schoolYear")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">USN</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.username}
-                {...register("username")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
+            <Input
+              label="School Year"
+              readOnly={isUpdate}
+              value={schoolYear}
+              register={register("schoolYear")}
+            />
+            <Input
+              label="Username"
+              readOnly={isUpdate}
+              value={username}
+              register={register("username")}
+            />
 
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Phone No.</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.phone}
-                {...register("phone")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Marital Status</p>
-              <select
-                disabled={isUpdate}
-                {...register("maritalStatus")}
-                value={maritalStatus}
-                onChange={(e) => {
-                  setMaritalStatus(e.target.value);
-                }}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              >
-                {[
-                  { value: "single", label: "Single" },
-                  { value: "married", label: "Married" },
-                  { value: "widow", label: "Widow" },
-                ].map((marital, index) => (
-                  <option
-                    key={index}
-                    value={marital.value}
-                    selected={marital.value == query.data?.maritalStatus}
-                  >
-                    {marital.label}
-                  </option>
-                ))}
-              </select>
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Email</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.email}
-                {...register("email")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
+            <Input
+              label="Phone"
+              readOnly={isUpdate}
+              value={phone}
+              register={register("phone")}
+            />
+            <Select
+              label="Marital Status"
+              disabled={isUpdate}
+              onChange={setMaritalStatus}
+              selected={
+                query.data?.maritalStatus ? query.data.maritalStatus : ""
+              }
+              options={[
+                { value: "single", label: "Single" },
+                { value: "married", label: "Married" },
+                { value: "widow", label: "Widow" },
+              ]}
+              register={register("maritalStatus")}
+            />
+            <Input
+              value={email}
+              label="Email"
+              type="email"
+              register={register("email")}
+              readOnly={isUpdate}
+            />
           </span>
           <span className="grid xl:grid-cols-5 gap-2">
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Birth Date</p>
-              <input
-                type="date"
-                readOnly={isUpdate}
-                defaultValue={query.data?.birth.birthDate}
-                {...register("birth.birthDate")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Birth Place</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.birth.birthPlace}
-                {...register("birth.birthPlace")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Citizenship</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.birth.citizenship}
-                {...register("birth.citizenship")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Sex</p>
-              <select
-                disabled={isUpdate}
-                {...register("birth.sex")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              >
-                {[
-                  { value: "male", label: "Male" },
-                  { value: "female", label: "Female" },
-                ].map((gender, index) => (
-                  <option
-                    key={index}
-                    value={gender.value}
-                    selected={gender.value == query.data?.birth?.sex}
-                  >
-                    {gender.label}
-                  </option>
-                ))}
-              </select>
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Religion</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.birth.religion}
-                {...register("birth.religion")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
+            <Input
+              label="Birthdate"
+              value={birthDate}
+              type={isUpdate ? "text" : "date"}
+              readOnly={isUpdate}
+              register={register("birth.birthDate")}
+            />
+            <Input
+              value={query.data?.birth.birthPlace}
+              label="Birthplace"
+              readOnly={isUpdate}
+              register={register("birth.birthPlace")}
+            />
+            <Input
+              value={citizenship}
+              label="Citizenship"
+              readOnly={isUpdate}
+              register={register("birth.citizenship")}
+            />
+            <Select
+              label="Gender"
+              disabled={isUpdate}
+              selected={query.data?.birth.sex || ""}
+              options={[
+                { value: "male", label: "Male" },
+                { value: "female", label: "Female" },
+              ]}
+              register={register("birth.sex")}
+            />
+            <Input
+              value={religion}
+              label="Religion"
+              readOnly={isUpdate}
+              register={register("birth.religion")}
+            />
           </span>
-          {(query.data?.spouse?.lastName || maritalStatus === "married") && (
+          {(query.data?.spouse?.lastName ||
+            query.data?.spouse.firstName ||
+            query.data?.spouse.middleName ||
+            query.data?.spouse.children ||
+            maritalStatus === "married") && (
             <div className="flex flex-col gap-5">
               <h1 className="text-sm font-bold">
                 Student Spouse Information :{" "}
               </h1>
               <span className="grid xl:grid-cols-4 gap-2">
-                <section
-                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
-                >
-                  <p className="text-xs font-semibold px-3">Last Name</p>
-                  <input
-                    type="text"
-                    readOnly={isUpdate}
-                    defaultValue={query.data?.spouse?.lastName}
-                    {...register("spouse.lastName")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-                  />
-                </section>
-                <section
-                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
-                >
-                  <p className="text-xs font-semibold px-3">First Name</p>
-                  <input
-                    type="text"
-                    readOnly={isUpdate}
-                    defaultValue={query.data?.spouse?.firstName}
-                    {...register("spouse.firstName")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-                  />
-                </section>
-                <section
-                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
-                >
-                  <p className="text-xs font-semibold px-3">Middle Name</p>
-                  <input
-                    type="text"
-                    readOnly={isUpdate}
-                    defaultValue={query.data?.spouse?.middleName}
-                    {...register("spouse.middleName")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-                  />
-                </section>
-                <section
-                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
-                >
-                  <p className="text-xs font-semibold px-3">No. of Children</p>
-                  <input
-                    type="text"
-                    readOnly={isUpdate}
-                    defaultValue={query.data?.spouse?.children}
-                    {...register("spouse.children")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-                  />
-                </section>
+                <Input
+                  value={spouseLastName}
+                  label="Last Name"
+                  readOnly={isUpdate}
+                  register={register("spouse.lastName")}
+                />
+                <Input
+                  value={spouseFirstName}
+                  label="First Name"
+                  readOnly={isUpdate}
+                  register={register("spouse.firstName")}
+                />
+                <Input
+                  value={spouseMiddleName}
+                  label="Middle Name"
+                  readOnly={isUpdate}
+                  register={register("spouse.middleName")}
+                />
+                <Input
+                  value={spouseChildren}
+                  type="number"
+                  label="No. of Child"
+                  readOnly={isUpdate}
+                  register={register("spouse.children")}
+                />
               </span>
             </div>
           )}
@@ -494,10 +431,23 @@ const StudentsInfo = () => {
               <input
                 type="checkbox"
                 id="boarding"
-                className="w-4 h-4"
+                className="w-4 h-4 disabled:cursor-not-allowed"
                 checked={checkboarding}
+                disabled={
+                  !!(
+                    query.data?.cityAddress?.city ||
+                    query.data?.cityAddress?.province ||
+                    query.data?.cityAddress?.streetBrgy ||
+                    query.data?.cityAddress?.district
+                  ) || isUpdate
+                }
                 onClick={() => {
-                  if (!query.data?.cityAddress?.streetBrgy) {
+                  if (
+                    !query.data?.cityAddress?.streetBrgy ||
+                    !query.data?.cityAddress?.province ||
+                    !query.data?.cityAddress?.district ||
+                    query.data?.cityAddress.city
+                  ) {
                     setCheckboarding(!checkboarding);
                   }
                 }}
@@ -508,206 +458,139 @@ const StudentsInfo = () => {
             </section>
           </section>
           <span className="grid xl:grid-cols-5 gap-2">
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">House No.</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.homeAddress?.houseNum}
-                {...register("homeAddress.houseNum")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Brgy./Street</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.homeAddress?.streetBrgy}
-                {...register("homeAddress.streetBrgy")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">City</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.homeAddress?.city}
-                {...register("homeAddress.city")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Province</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                {...register("homeAddress.province")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">District</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                {...register("homeAddress.district")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
+            <Input
+              value={String(homeHouse)}
+              label="House No."
+              type="number"
+              readOnly={isUpdate}
+              register={register("homeAddress.houseNum")}
+            />
+            <Input
+              value={homeStreet}
+              label="Brgy./Street"
+              readOnly={isUpdate}
+              register={register("homeAddress.streetBrgy")}
+            />
+            <Input
+              value={homeCity}
+              label="City"
+              readOnly={isUpdate}
+              register={register("homeAddress.city")}
+            />
+            <Input
+              value={homeProvince}
+              label="Province"
+              readOnly={isUpdate}
+              register={register("homeAddress.province")}
+            />
+            <Input
+              value={homeDistrict}
+              label="District"
+              readOnly={isUpdate}
+              register={register("homeAddress.district")}
+            />
           </span>
-          {(query.data?.cityAddress?.streetBrgy || checkboarding) && (
+          {(query.data?.cityAddress?.streetBrgy ||
+            query.data?.cityAddress?.district ||
+            query.data?.cityAddress?.province ||
+            query.data?.cityAddress?.city ||
+            checkboarding) && (
             <div>
               <h1 className="text-sm font-bold pb-5">
                 Address ( if Boarding ) :{" "}
               </h1>
-              <span className="grid xl:grid-cols-4 gap-2">
-                <section
-                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
-                >
-                  <p className="text-xs font-semibold px-3">House No.</p>
-                  <input
-                    type="text"
-                    readOnly={isUpdate}
-                    // defaultValue={query.data?.cityAddress?.houseNum}
-                    {...register("cityAddress.houseNum")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-                  />
-                </section>
-                <section
-                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
-                >
-                  <p className="text-xs font-semibold px-3">Brgy./Street</p>
-                  <input
-                    type="text"
-                    readOnly={isUpdate}
-                    // defaultValue={query.data?.cityAddress?.streetBrgy}
-                    {...register("cityAddress.streetBrgy")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-                  />
-                </section>
-                <section
-                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
-                >
-                  <p className="text-xs font-semibold px-3">City</p>
-                  <input
-                    type="text"
-                    readOnly={isUpdate}
-                    // defaultValue={query.data?.cityAddress?.city}
-                    {...register("cityAddress.city")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-                  />
-                </section>
-                <section
-                  className={`grid items-start bg-blue-100 pt-2 rounded-lg`}
-                >
-                  <p className="text-xs font-semibold px-3">District</p>
-                  <input
-                    type="text"
-                    readOnly={isUpdate}
-                    // defaultValue={query.data?.cityAddress?.district}
-                    {...register("cityAddress.district")}
-                    className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-                  />
-                </section>
+              <span className="grid xl:grid-cols-5 gap-2">
+                <Input
+                  value={cityHouse}
+                  label="House No."
+                  readOnly={isUpdate}
+                  register={register("cityAddress.houseNum")}
+                />
+                <Input
+                  value={cityStreet}
+                  label="Brgy./Street"
+                  readOnly={isUpdate}
+                  register={register("cityAddress.streetBrgy")}
+                />
+                <Input
+                  value={cityCity}
+                  label="City"
+                  readOnly={isUpdate}
+                  register={register("cityAddress.city")}
+                />
+                <Input
+                  value={cityProvince}
+                  label="Province"
+                  readOnly={isUpdate}
+                  register={register("cityAddress.province")}
+                />
+                <Input
+                  value={cityDistrict}
+                  label="District"
+                  readOnly={isUpdate}
+                  register={register("cityAddress.district")}
+                />
               </span>
             </div>
           )}
           <h1 className="text-sm font-bold">Guardian Information : </h1>
           <span className="grid xl:grid-cols-5 gap-2">
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Last Name</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.guardian?.lastName}
-                {...register("guardian.lastName")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">First Name</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.guardian?.firstName}
-                {...register("guardian.firstName")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Middle Name</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.guardian?.middleName}
-                {...register("guardian.middleName")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Occupation</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.guardian?.occupation}
-                {...register("guardian.occupation")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Relationship</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.guardian?.relationship}
-                {...register("guardian.relationship")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
+            <Input
+              value={guardianLastName}
+              label="Last Name"
+              readOnly={isUpdate}
+              register={register("guardian.lastName")}
+            />
+            <Input
+              value={guardianFirstName}
+              label="First Name"
+              readOnly={isUpdate}
+              register={register("guardian.firstName")}
+            />
+            <Input
+              value={guardianMiddle}
+              label="Middle Name"
+              readOnly={isUpdate}
+              register={register("guardian.middleName")}
+            />
+            <Input
+              value={guardianOccupation}
+              label="Occupation"
+              readOnly={isUpdate}
+              register={register("guardian.occupation")}
+            />
+            <Input
+              value={guardianRelationship}
+              label="Relationship"
+              readOnly={isUpdate}
+              register={register("guardian.relationship")}
+            />
           </span>
           <span className="grid xl:grid-cols-[1fr_1fr_1fr_2fr] gap-2">
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Company Name</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.guardian?.companyName}
-                {...register("guardian.companyName")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Company Address</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.guardian?.companyAddress}
-                {...register("guardian.companyAddress")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Phone No.</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.guardian?.phone}
-                {...register("guardian.phone")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
-            <section className={`grid items-start bg-blue-100 pt-2 rounded-lg`}>
-              <p className="text-xs font-semibold px-3">Email</p>
-              <input
-                type="text"
-                readOnly={isUpdate}
-                defaultValue={query.data?.guardian?.email}
-                {...register("guardian.email")}
-                className="outline-none bg-inherit pb-1 text-center text-lg rounded-b-lg"
-              />
-            </section>
+            <Input
+              value={guardianCompany}
+              label="Company Name"
+              readOnly={isUpdate}
+              register={register("guardian.companyName")}
+            />
+            <Input
+              value={guardianCompanyAddress}
+              label="Company Address"
+              readOnly={isUpdate}
+              register={register("guardian.companyAddress")}
+            />
+            <Input
+              value={guardianPhone}
+              label="Phone"
+              readOnly={isUpdate}
+              register={register("guardian.phone")}
+            />
+            <Input
+              value={guardianEmail}
+              label="Email"
+              readOnly={isUpdate}
+              register={register("guardian.email")}
+            />
           </span>
           {query.data?.guardianSpouse?.lastName && (
             <div>
