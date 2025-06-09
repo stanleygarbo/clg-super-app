@@ -95,11 +95,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/:id/profile",
+    path: "/:id/employee-info",
     element: <AdminLayout />,
     children: [
       {
-        path: "/:id/profile",
+        path: "/:id/employee-info",
         element: <Profile />,
       },
     ],

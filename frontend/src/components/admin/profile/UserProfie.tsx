@@ -58,7 +58,7 @@ const UserProfie = () => {
     <div
       className={`${
         isOpen ? "-z-50 xl:z-50" : ""
-      } relative w-full xl:w-[1100px] xl:mt-20`}
+      } relative w-full xl:w-[1200px] xl:h-[700px] rounded-lg xl:mt-20 border border-slate-200`}
     >
       <span className="flex gap-5 xl:items-start py-10 px-5 xl:p-16 xl:rounded-t-lg bg-blue-800 pt-16">
         <section
@@ -93,14 +93,14 @@ const UserProfie = () => {
         </section>
       </span>
       <div className="flex flex-col items-center">
-        <section className="flex justify-center absolute w-[200px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded bg-white z-50 border-0">
+        <section className="flex justify-center absolute w-[200px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-slate-100 z-50 border border-slate-100">
           <h1 className="py-2 font-bold text-blue-900 xl:text-xl">
             User Information
           </h1>
         </section>
       </div>
 
-      <section className="flex flex-col gap-5 p-5 py-10 relative bg-slate-50 rounded-b-lg">
+      <section className="flex flex-col gap-5 p-5 py-10 relative rounded-b-lg">
         <section className="flex flex-col-reverse gap-5 xl:flex-row items-center justify-between">
           <h1 className="font-bold text-xl xl:text-2xl text-blue-800">
             Information
@@ -126,7 +126,7 @@ const UserProfie = () => {
                 type="text"
                 readOnly
                 value={loginUser?.data?.surname}
-                className="border-b group-hover:border-red-700 font-bold text-slate-900 bg-slate-100 border-b-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                className="border-b group-hover:border-red-700 font-bold text-slate-900 bg-slate-100 border-b-blue-700 outline-none w-[100%] py-3 rounded-lg text-center overflow-hidden px-1"
               />
             </span>
             <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
@@ -137,7 +137,7 @@ const UserProfie = () => {
                 type="text"
                 readOnly
                 value={loginUser?.data?.firstName}
-                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-lg text-center overflow-hidden px-1"
               />
             </span>
             <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
@@ -148,7 +148,7 @@ const UserProfie = () => {
                 type="text"
                 readOnly
                 value={loginUser?.data?.middleName}
-                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-lg text-center overflow-hidden px-1"
               />
             </span>
           </section>
@@ -156,7 +156,7 @@ const UserProfie = () => {
             {/* <span className="flex flex-col items-start">
               <p className="text-base font-bold text-blue-500">Birthdate</p>
               <input
-                className="border-0 border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden outline-none"
+                className="border-0 border-slate-500 h-[42px] w-full py-1 rounded-lg font-bold text-center overflow-hidden outline-none"
                 type="text"
                 readOnly
                 value={
@@ -174,7 +174,7 @@ const UserProfie = () => {
                 value={
                   loginUser?.data?.birth.birthDate.toString().split("T")[0]
                 }
-                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-lg text-center overflow-hidden px-1"
               />
             </span>
             <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
@@ -185,7 +185,7 @@ const UserProfie = () => {
                 type="text"
                 readOnly
                 value={loginUser?.data?.birth.birthPlace}
-                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-lg text-center overflow-hidden px-1"
               />
             </span>
             <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
@@ -196,7 +196,7 @@ const UserProfie = () => {
                 type="text"
                 readOnly
                 value={loginUser?.data?.birth.citizenship}
-                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-lg text-center overflow-hidden px-1"
               />
             </span>
             <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
@@ -207,7 +207,7 @@ const UserProfie = () => {
                 type="text"
                 readOnly
                 value={loginUser?.data?.birth.religion}
-                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-lg text-center overflow-hidden px-1"
               />
             </span>
             <span className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}>
@@ -218,7 +218,7 @@ const UserProfie = () => {
                 type="text"
                 readOnly
                 value={loginUser?.data?.birth.sex}
-                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-lg text-center overflow-hidden px-1"
               />
             </span>
           </section>

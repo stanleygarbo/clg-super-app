@@ -10,9 +10,12 @@ import { useNavigate } from "react-router-dom";
 import { getDepartments } from "../../../api/department";
 import { getPositions } from "../../../api/position";
 import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSnapshot } from "valtio";
 import { sidebarState } from "../../../store/auth";
+import Input from "../../props/Input";
+import SelectComponent from "../../props/SelectComponent";
+import { RiEyeCloseLine } from "react-icons/ri";
+import { LuEye } from "react-icons/lu";
 
 const EmploymentForm = () => {
   const navigate = useNavigate();
@@ -53,27 +56,13 @@ const EmploymentForm = () => {
     },
   });
 
-  const onSubmit = (data: IEmployeePost) => {
-    if (!(password === conPass)) {
-      return toast.error("password dont match");
-    }
-    const formattedData = {
-      ...data,
-      roles: Array.isArray(data.roles)
-        ? data.roles.map((role) => role.value)
-        : [],
-    };
-    console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
-
-    addMutation.mutate(formattedData);
-  };
-
   const {
     handleSubmit,
     register,
     control,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<IEmployeePost>({
     defaultValues: {
       // gender: "male",
@@ -137,84 +126,90 @@ const EmploymentForm = () => {
   const snap = useSnapshot(sidebarState);
   const isOpen = snap.isOpen;
 
+  const surname = watch("surname") || "";
+  const firstName = watch("firstName") || "";
+  const middleName = watch("middleName") || "";
+  const phone = watch("phone") || "";
+  const email = watch("email") || "";
+  const birthDate =
+    watch("birth.birthDate") || new Date().toISOString().split("T")[0];
+  const birthPlace = watch("birth.birthPlace") || "";
+  const religion = watch("birth.religion") || "";
+  const citizenship = watch("birth.citizenship") || "";
+  const sss = watch("governmentId.sss") || "";
+  const philhealth = watch("governmentId.philhealth") || "";
+  const tin = watch("governmentId.tin") || "";
+  const pagibig = watch("governmentId.pagibig") || "";
+  const username = watch("username") || "";
+
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const shouldFloat = isFocused || password.length > 0;
+
+  const onSubmit = (data: IEmployeePost) => {
+    if (!(password === conPass)) {
+      return toast.error("password dont match");
+    }
+    const formattedData = {
+      ...data,
+      roles: Array.isArray(data.roles)
+        ? data.roles.map((role) => role.value)
+        : [],
+    };
+    // console.log("Formatted Data:", formattedData); // Check if the data is correct before sending
+
+    addMutation.mutate(formattedData);
+  };
+
   return (
-    <div className="flex xl:justify-center mt-10">
+    <div
+      className={`${
+        isOpen ? "-z-50 xl:z-50" : ""
+      } flex xl:justify-center mt-10 max-w-[1200px]`}
+    >
       <div className="mb-10">
         <h1 className="font-bold text-2xl text-center xl:text-start mt-5 pt-5 text-blue-800 mb-5">
-          Employee Form
+          Add Employee Form
         </h1>
         <input type="text" {...register("hireDate")} className="hidden" />
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={` flex flex-col gap-5`}
+        >
           {/* <img
             src="https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
             alt="IMG"
             className="w-24 aspect-square rounded-full shadow-md mx-5 mb-5"
           /> */}
           <div className="flex flex-col gap-3 items-center xl:items-start text-center">
-            <section className="flex">
-              <h1 className="font-bold text-lg mb-3 text-start">
-                Personal Information
-              </h1>
-            </section>
-
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 w-[100%] xl:w-full">
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Last Name
-                </p>
-                <input
-                  required
-                  type="text"
-                  {...register("surname")}
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                />
-              </span>
-
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  First Name
-                </p>
-                <input
-                  type="text"
-                  required
-                  {...register("firstName")}
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                />
-              </span>
-
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-[60px] xl:left-16 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Middle Name
-                </p>
-                <input
-                  type="text"
-                  {...register("middleName")}
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                />
-              </span>
+              <Input
+                label="Last Name"
+                value={surname}
+                required={true}
+                register={register("surname")}
+              />
+              <Input
+                label="First Name"
+                value={firstName}
+                required={true}
+                register={register("firstName")}
+              />
+              <Input
+                label="Middle Name"
+                value={middleName}
+                register={register("middleName")}
+              />
             </section>
           </div>
 
           <div className="flex flex-col gap-3 items-center">
             <section className="grid grid-cols-1 items-center xl:grid-cols-[1fr_1fr_2fr] gap-3 w-[100%] xl:w-full">
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 xl:left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Phone No.
-                </p>
-                <input
-                  type="text"
-                  placeholder="e.g. 09*********"
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  inputMode="numeric"
-                  {...register("phone", {
+              <span className={` relative`}>
+                <Input
+                  type="number"
+                  label="Phone"
+                  value={phone}
+                  register={register("phone", {
                     pattern: {
                       value: /^0\d{0,11}$/, // Must start with 0, max 11 digits
                       message: "Must start with 0",
@@ -225,192 +220,94 @@ const EmploymentForm = () => {
                 {errors.phone && (
                   <p
                     style={{ color: "red" }}
-                    className="absolute font-bold text-xs left-16"
+                    className="absolute font-bold text-xs left-28"
                   >
                     {errors.phone.message}
                   </p>
                 )}
               </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-[60px] xl:left-16 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Marital Status
-                </p>
-                <select
-                  {...register("maritalStatus")}
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                >
-                  <option value="single" selected>
-                    Single
-                  </option>
-                  <option value="married">Married</option>
-                  <option value="widow">Widow</option>
-                </select>
-                {/* <input
-                className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                type="text"
-                
-              /> */}
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Email
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  type="text"
-                  {...register("email", {
-                    // required: "Email is required",
-                    pattern: {
-                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: "Enter a valid email address",
-                    },
-                  })}
-                />
-                {errors.email && (
-                  <p
-                    style={{ color: "red" }}
-                    className="absolute text-xs top-12 font-bold right-1/2 xl:right-[150px]"
-                  >
-                    {errors.email.message}
-                  </p>
-                )}
-              </span>
+              <SelectComponent
+                label="Marital Status"
+                options={[
+                  { value: "single", label: "Single" },
+                  { value: "married", label: "Married" },
+                  { value: "widow", label: "Widow" },
+                ]}
+                selected="single"
+                register={register("maritalStatus")}
+              />
+              <Input
+                label="Email"
+                type="email"
+                value={email}
+                register={register("email")}
+              />
             </section>
           </div>
           <div className="flex flex-col gap-3 items-center">
             <section className="flex flex-col xl:grid xl:grid-cols-5 gap-3 w-[100%] xl:w-full">
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  BirthDate
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  type="date"
-                  placeholder="**/**/****"
-                  {...register("birth.birthDate")}
-                />
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  BirthPlace
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  type="text"
-                  {...register("birth.birthPlace")}
-                />
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Religion
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  type="text"
-                  {...register("birth.religion")}
-                />
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-16 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Citizzenship
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  type="text"
-                  {...register("birth.citizenship")}
-                />
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Gender
-                </p>
-                <div className="flex gap-3">
-                  <select
-                    {...register("birth.sex")}
-                    className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  >
-                    <option value="male" selected>
-                      Male
-                    </option>
-                    <option value="female">Female</option>
-                  </select>
-                </div>
-              </span>
+              <Input
+                label="Birthdate"
+                type="date"
+                value={birthDate}
+                register={register("birth.birthDate")}
+                required={true}
+              />
+              <Input
+                label="Birthplace"
+                value={birthPlace}
+                register={register("birth.birthPlace")}
+              />
+              <Input
+                label="Religion"
+                value={religion}
+                register={register("birth.religion")}
+              />
+              <Input
+                label="Citizenship"
+                value={citizenship}
+                register={register("birth.citizenship")}
+              />
+              <SelectComponent
+                label="Gender"
+                options={[
+                  { value: "male", label: "Male" },
+                  { value: "female", label: "Female" },
+                ]}
+                selected="male"
+                register={register("birth.sex")}
+              />
             </section>
           </div>
 
           <div className="flex flex-col gap-3 items-center">
             <section className="grid xl:grid xl:grid-cols-4 gap-3 w-[100%] xl:w-full">
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  SSS
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  type="text"
-                  {...register("governmentId.sss")}
-                />
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  TIN
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  type="text"
-                  {...register("governmentId.tin")}
-                />
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Pag-Ibig
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  type="text"
-                  {...register("governmentId.pagibig")}
-                />
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Philhealth
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  type="text"
-                  {...register("governmentId.philhealth")}
-                />
-              </span>
+              <Input
+                label="SSS"
+                value={sss}
+                register={register("governmentId.sss")}
+              />
+              <Input
+                label="TIN"
+                value={tin}
+                register={register("governmentId.tin")}
+              />
+              <Input
+                label="Pag-Ibig"
+                value={pagibig}
+                register={register("governmentId.pagibig")}
+              />
+              <Input
+                label="Philhealth"
+                value={philhealth}
+                register={register("governmentId.philhealth")}
+              />
             </section>
           </div>
           <div className="flex flex-col gap-3 items-center">
             <section className="grid xl:grid xl:grid-cols-[2fr_1fr_1fr_1fr] gap-3 w-[100%] xl:w-full">
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-10 transform -translate-x-1/2 -translate-y-1/2 bg-white z-50">
+              <span className="relative w-full pt-5 rounded-lg bg-slate-100">
+                <p className="absolute px-1 rounded-lg duration-200 font-semibold pointer-events-none top-1 left-3 text-blue-800 text-sm">
                   Roles
                 </p>
                 <Controller
@@ -430,112 +327,77 @@ const EmploymentForm = () => {
                   )}
                 />
               </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-12 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Position
-                </p>
-                <select
-                  {...register("position")}
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                >
-                  {position.data?.results?.map(
-                    (pos: IPositionGet, index: number) => (
-                      <option
-                        key={index}
-                        value={pos._id}
-                        selected={index === 0}
-                      >
-                        {pos.jobTitle}
-                      </option>
-                    )
-                  )}
-                </select>
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Department
-                </p>
-                <select
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  {...register("department")}
-                >
-                  {department?.data?.results?.map(
-                    (dept: IDepartmentGet, index: number) => (
-                      <option
-                        key={index}
-                        value={dept._id}
-                        selected={index === 0}
-                      >
-                        {dept.departmentName}
-                      </option>
-                    )
-                  )}
-                </select>
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-[72px] xl:left-20 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Employment Type
-                </p>
-                <select
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  {...register("employmentType")}
-                >
-                  <option value="regular" selected>
-                    Regular
-                  </option>
-                  <option value="contractual">Contractual</option>
-                </select>
-              </span>
+              <SelectComponent
+                label="Position"
+                options={position?.data?.results.map((prog: IPositionGet) => {
+                  return { value: prog._id, label: prog.jobTitle };
+                })}
+                selected={""}
+                register={register("position")}
+              />
+              <SelectComponent
+                label="Department"
+                options={department.data?.results.map(
+                  (dept: IDepartmentGet) => {
+                    return { value: dept._id, label: dept.departmentName };
+                  }
+                )}
+                selected={""}
+                register={register("department")}
+              />
+              <SelectComponent
+                label="Employment Type"
+                options={[
+                  { value: "regular", label: "Regular" },
+                  { value: "contractual", label: "Contractual" },
+                ]}
+                selected={""}
+                register={register("employmentType")}
+              />
             </section>
           </div>
 
           <div className="flex flex-col gap-3 items-center">
             <section className="grid  xl:grid-cols-3 gap-3 w-[100%] xl:w-full">
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Username
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
-                  type="text"
-                  {...register("username")}
-                />
-              </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-14 transform -translate-x-1/2 -translate-y-1/2 bg-white">
+              <Input
+                label="Username"
+                value={username}
+                register={register("username")}
+              />
+              <span className="relative group w-full pt-5 rounded-lg bg-slate-100">
+                <p
+                  className={`absolute px-1 rounded-lg duration-200 font-semibold pointer-events-none
+          ${
+            shouldFloat
+              ? "top-1 left-3 text-blue-800 text-sm"
+              : "top-[37px] left-3 -translate-y-1/2 text-base text-gray-500"
+          }`}
+                >
                   Password
                 </p>
                 <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+                  className="peer w-full rounded-lg px-3 bg-inherit text-center py-3 focus:outline-none border-b-2 border-b-blue-600"
                   type={isPasswordVisible ? "text" : "password"}
                   {...register("password")}
-                  value={password}
+                  // value={password}
                   onChange={handlePasswordChange}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
                 />
                 <span
                   onClick={togglePasswordVisibility}
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer opacity-0 group-hover:opacity-100 duration-200"
                 >
                   {isPasswordVisible ? (
-                    <FaEye size={20} />
+                    <RiEyeCloseLine size={22} />
                   ) : (
-                    <FaEyeSlash size={20} />
+                    <LuEye size={22} />
                   )}
                 </span>
                 {errorMessage && (
                   <p
                     style={{ color: "red" }}
-                    className="absolute text-xs right-1 text-center"
+                    className="absolute text-xs right-12 text-center"
                   >
                     {errorMessage}
                   </p>
@@ -543,34 +405,27 @@ const EmploymentForm = () => {
                 {isPasswordValid && (
                   <p
                     style={{ color: "green" }}
-                    className="absolute text-xs right-20 text-center"
+                    className="absolute text-xs right-32 text-center"
                   >
                     Password is valid!
                   </p>
                 )}
               </span>
-              <span
-                className={`${isOpen ? "-z-50 xl:z-50" : ""} relative group`}
-              >
-                <p className="text-sm px-2 font-bold group-hover:text-red-800 absolute text-blue-800 left-20 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-                  Confirm Password
-                </p>
-                <input
-                  className="border group-hover:border-red-700 font-bold text-slate-900 bg-transparent border-blue-700 outline-none w-[100%] py-3 rounded-md text-center overflow-hidden px-1"
+              <span className={` relative group`}>
+                <Input
+                  label="Confirm Password"
                   type={isPasswordVisible ? "text" : "password"}
                   value={conPass}
-                  onChange={(e) => {
-                    setConPass(e.target.value);
-                  }}
+                  onChange={setConPass}
                 />
                 <span
                   onClick={togglePasswordVisibility}
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer opacity-0 group-hover:opacity-100 duration-200"
                 >
                   {isPasswordVisible ? (
-                    <FaEye size={20} />
+                    <RiEyeCloseLine size={22} />
                   ) : (
-                    <FaEyeSlash size={20} />
+                    <LuEye size={22} />
                   )}
                 </span>
               </span>

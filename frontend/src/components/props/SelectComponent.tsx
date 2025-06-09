@@ -3,14 +3,14 @@ import { UseFormRegisterReturn } from "react-hook-form";
 interface ISelect {
   register: UseFormRegisterReturn;
   options: { value: string; label: string }[];
-  disabled: boolean;
+  disabled?: boolean;
   selected: string;
   label: string;
   onChange?: (value: string) => void;
   value?: string;
 }
 
-const Select = ({
+const SelectComponent = ({
   register,
   options,
   disabled,
@@ -20,7 +20,7 @@ const Select = ({
   onChange,
 }: ISelect) => {
   return (
-    <div className="relative bg-white w-full pt-[22px] rounded-lg">
+    <div className="relative bg-slate-100 w-full pt-[22px] rounded-lg">
       <select
         {...register}
         disabled={disabled}
@@ -28,7 +28,7 @@ const Select = ({
         onChange={(e) => {
           onChange?.(e.target.value);
         }}
-        className="peer w-full rounded-lg px-3 text-center py-3 focus:outline-none border-b-2 border-b-blue-600"
+        className="peer w-full rounded-lg px-3 bg-inherit text-center py-3 focus:outline-none border-b-2 border-b-blue-600"
       >
         {options?.map((opt) => (
           <option value={opt.value} selected={opt.value === selected}>
@@ -43,4 +43,4 @@ const Select = ({
   );
 };
 
-export default Select;
+export default SelectComponent;

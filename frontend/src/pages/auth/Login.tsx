@@ -6,6 +6,9 @@ import { authState } from "../../store/auth";
 import { jwtDecode } from "jwt-decode";
 import { IUser } from "../../interface/IUser";
 import { useMutation } from "@tanstack/react-query";
+import Input from "../../components/props/Input";
+import { LuEye } from "react-icons/lu";
+import { RiEyeCloseLine } from "react-icons/ri";
 
 const Login = () => {
   // const auth = useSnapshot(authState);
@@ -56,13 +59,15 @@ const Login = () => {
     }
   };
 
+  const [showPass, setShowPass] = useState<boolean>(false);
+
   return (
     <div id="loginPopUp" className="h-screen py-20 px-5">
       <form
         onSubmit={proceedLogin}
-        className="flex flex-col m-auto shadow-md gap-3 mt-28 p-10 w-full xl:w-[450px] rounded-lg border"
+        className="flex flex-col m-auto gap-3 mt-28 p-10 w-full xl:w-[450px] rounded-lg border"
       >
-        <h1 className="text-2xl text-black font-bold mb-6 flex items-center justify-center">
+        <h1 className="text-base xl:text-2xl text-black font-bold mb-6 flex items-center justify-center">
           <img
             src="/aclc-logo.png"
             alt=""
@@ -70,8 +75,27 @@ const Login = () => {
           />
           Welcome back! 🤗
         </h1>
-
-        <span className="relative">
+        <Input
+          label="Username"
+          // value={userUsn}
+          onChange={setUserUsn}
+        />
+        <section className="relative group">
+          <Input
+            label="Password"
+            type={showPass ? "text" : "password"}
+            // value={userPass}
+            onChange={setUserPass}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPass(!showPass)}
+            className="absolute right-4 group-hover:opacity-100 opacity-0 top-1/2 -translate-y-1/2 text-sm text-blue-600 duration-200"
+          >
+            {showPass ? <RiEyeCloseLine size={20} /> : <LuEye size={20} />}
+          </button>
+        </section>
+        {/* <span className="relative">
           <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
             User Name
           </p>
@@ -84,8 +108,8 @@ const Login = () => {
               setUserUsn(e.target.value);
             }}
           />
-        </span>
-        <span className="relative">
+        </span> */}
+        {/* <span className="relative">
           <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
             Password
           </p>
@@ -98,7 +122,7 @@ const Login = () => {
               setUserPass(e.target.value);
             }}
           />
-        </span>
+        </span> */}
         <button
           type="submit"
           disabled={mutation.isPending}

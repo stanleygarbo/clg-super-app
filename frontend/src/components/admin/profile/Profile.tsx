@@ -49,11 +49,11 @@ const Profile = () => {
   const isOpen = snap.isOpen;
 
   return (
-    <div className="flex px-5">
+    <div className="flex px-5 max-w-[1200px]">
       <div
         className={`${
           isOpen ? "-z-50 xl:z-50" : ""
-        } rounded-md shadow relative w-full xl:w-[1100px] xl:h-[700px] my-10`}
+        } rounded-lg border border-slate-200 relative w-full xl:h-[700px] my-10`}
       >
         <span className="flex gap-5 items-start border-b p-10 rounded-t-lg bg-blue-600">
           <section
@@ -86,7 +86,7 @@ const Profile = () => {
           </section>
         </span>
         <div className="flex flex-col items-center">
-          <section className="flex absolute w-[200px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-md shadow-md bg-slate-50 z-50">
+          <section className="flex absolute w-[200px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-slate-100 z-50">
             <h1 className="py-2 px-5 font-bold">Personal Information</h1>
           </section>
         </div>

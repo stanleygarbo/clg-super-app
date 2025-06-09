@@ -8,7 +8,7 @@ import { IProgramGet } from "../../../interface/IProgram";
 import { IStudentsGet, IStudentsPost } from "../../../interface/IStudents";
 import { useForm } from "react-hook-form";
 import Input from "../../props/Input";
-import Select from "../../props/Select";
+import Select from "../../props/SelectComponent";
 
 const StudentsInfo = () => {
   const [isUpdate, setIsUpdate] = useState<boolean>(true);
@@ -47,8 +47,60 @@ const StudentsInfo = () => {
     },
   });
 
+  // const snap = useSnapshot(sidebarState);
+  // const isOpen = snap.isOpen;
+  const [checkboarding, setCheckboarding] = useState<boolean>(false);
+  const [maritalStatus, setMaritalStatus] = useState("");
+  // const selectedProgram = watch("program");
+  const middleName = watch("middleName") || "";
+  const lastName = watch("surname") || "";
+  const firstName = watch("firstName") || "";
+  const schoolYear = watch("schoolYear") || "";
+  const username = watch("username") || "";
+  const email = watch("email") || "";
+  const phone = watch("phone") || "";
+  const spouseLastName = watch("spouse.lastName") || "";
+  const spouseFirstName = watch("spouse.firstName") || "";
+  const spouseMiddleName = watch("spouse.middleName") || "";
+  const spouseChildren = watch("spouse.children");
+  const birthDate = watch("birth.birthDate") || " ";
+  const citizenship = watch("birth.citizenship") || "";
+  const religion = watch("birth.religion") || "";
+  const homeCity = watch("homeAddress.city") || "";
+  const homeHouse = watch("homeAddress.houseNum") || "";
+  const homeProvince = watch("homeAddress.province") || "";
+  const homeStreet = watch("homeAddress.streetBrgy") || "";
+  const homeDistrict = watch("homeAddress.district") || "";
+  const cityHouse = watch("cityAddress.houseNum") || "";
+  const cityCity = watch("cityAddress.city") || "";
+  const cityProvince = watch("cityAddress.province") || "";
+  const cityStreet = watch("cityAddress.streetBrgy") || "";
+  const cityDistrict = watch("cityAddress.district") || "";
+  const guardianLastName = watch("guardian.lastName") || "";
+  const guardianFirstName = watch("guardian.firstName") || "";
+  const guardianMiddle = watch("guardian.middleName") || "";
+  const guardianEmail = watch("guardian.email") || "";
+  const guardianPhone = watch("guardian.phone") || "";
+  const guardianCompany = watch("guardian.companyName") || "";
+  const guardianCompanyAddress = watch("guardian.companyAddress") || "";
+  const guardianOccupation = watch("guardian.occupation") || "";
+  const guardianRelationship = watch("guardian.relationship") || "";
+
+  const isAnyFieldFilled =
+    cityCity?.trim() ||
+    cityProvince?.trim() ||
+    cityDistrict?.trim() ||
+    cityHouse ||
+    cityStreet?.trim();
+
+  const checkData = () => {
+    if (isAnyFieldFilled) {
+      setCheckboarding(Boolean(isAnyFieldFilled));
+    }
+  };
+
   useEffect(() => {
-    if (query.data) {
+    if (query?.data) {
       reset({
         firstName: query.data?.firstName,
         surname: query.data?.surname,
@@ -101,54 +153,10 @@ const StudentsInfo = () => {
       });
     }
 
-    if (
-      query.data?.cityAddress?.streetBrgy ||
-      query.data?.cityAddress?.province ||
-      query.data?.cityAddress?.district ||
-      query.data?.cityAddress?.city != null
-    ) {
-      setCheckboarding(true);
+    if (isAnyFieldFilled) {
+      checkData();
     }
-  }, [query.data, reset]);
-
-  // const snap = useSnapshot(sidebarState);
-  // const isOpen = snap.isOpen;
-  const [checkboarding, setCheckboarding] = useState<boolean>(false);
-  const [maritalStatus, setMaritalStatus] = useState("");
-  // const selectedProgram = watch("program");
-  const middleName = watch("middleName") || "";
-  const lastName = watch("surname") || "";
-  const firstName = watch("firstName") || "";
-  const schoolYear = watch("schoolYear") || "";
-  const username = watch("username") || "";
-  const email = watch("email") || "";
-  const phone = watch("phone") || "";
-  const spouseLastName = watch("spouse.lastName") || "";
-  const spouseFirstName = watch("spouse.firstName") || "";
-  const spouseMiddleName = watch("spouse.middleName") || "";
-  const spouseChildren = watch("spouse.children");
-  const birthDate = watch("birth.birthDate") || " ";
-  const citizenship = watch("birth.citizenship") || "";
-  const religion = watch("birth.religion") || "";
-  const homeCity = watch("homeAddress.city") || "";
-  const homeHouse = watch("homeAddress.houseNum") || "";
-  const homeProvince = watch("homeAddress.province") || "";
-  const homeStreet = watch("homeAddress.streetBrgy") || "";
-  const homeDistrict = watch("homeAddress.district") || "";
-  const cityHouse = watch("cityAddress.houseNum") || "";
-  const cityCity = watch("cityAddress.city") || "";
-  const cityProvince = watch("cityAddress.province") || "";
-  const cityStreet = watch("cityAddress.streetBrgy") || "";
-  const cityDistrict = watch("cityAddress.district") || "";
-  const guardianLastName = watch("guardian.lastName") || "";
-  const guardianFirstName = watch("guardian.firstName") || "";
-  const guardianMiddle = watch("guardian.middleName") || "";
-  const guardianEmail = watch("guardian.email") || "";
-  const guardianPhone = watch("guardian.phone") || "";
-  const guardianCompany = watch("guardian.companyName") || "";
-  const guardianCompanyAddress = watch("guardian.companyAddress") || "";
-  const guardianOccupation = watch("guardian.occupation") || "";
-  const guardianRelationship = watch("guardian.relationship") || "";
+  }, [query.data, reset, isAnyFieldFilled]);
 
   return (
     <div className="flex">
@@ -443,10 +451,11 @@ const StudentsInfo = () => {
                 }
                 onClick={() => {
                   if (
-                    !query.data?.cityAddress?.streetBrgy ||
-                    !query.data?.cityAddress?.province ||
-                    !query.data?.cityAddress?.district ||
-                    query.data?.cityAddress.city
+                    !cityCity ||
+                    !cityDistrict ||
+                    !cityHouse ||
+                    !cityProvince ||
+                    !cityStreet
                   ) {
                     setCheckboarding(!checkboarding);
                   }

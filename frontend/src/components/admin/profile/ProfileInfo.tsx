@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getEmployeeById } from "../../../api/employee";
+import Input from "../../props/Input";
 // import { useState } from "react";
 // import { IEmployeeGet } from "../../../interface/IEmployee";
 
@@ -21,103 +22,67 @@ const ProfileInfo = () => {
   // TEST ID: 67838a242a0c891e5b2c0de0
 
   return (
-    <div className="w-[280px] xl:w-full">
+    <div className="">
       <div className="flex flex-col gap-3 pt-3">
         <section className="flex flex-col">
-          <div className="gap-3 grid xl:grid-cols-3">
-            <span className="relative">
-              <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Last Name
-              </p>
-              <input
-                className="border border-slate-500 h-[42px] w-full py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                readOnly
-                value={query?.data?.surname}
-              />
-            </span>
-            <span className="relative">
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                First Name
-              </p>
-              <input
-                className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                readOnly
-                value={query?.data?.firstName}
-              />
-            </span>
-            <span className="relative">
-              <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-                Middle Name
-              </p>
-              <input
-                className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-                type="text"
-                readOnly
-                value={query?.data?.middleName}
-              />
-            </span>
+          <div className="gap-3 grid xl:grid-cols-4">
+            <Input
+              label="Last Name"
+              value={query.data?.surname}
+              readOnly={true}
+            />
+            <Input
+              label="First Name"
+              value={query.data?.firstName}
+              readOnly={true}
+            />
+            <Input
+              label="Middle Name"
+              value={query.data?.middleName}
+              readOnly={true}
+            />
+            <Input
+              label="Username"
+              value={query.data?.username}
+              readOnly={true}
+            />
           </div>
         </section>
-        <div className="grid xl:grid-cols-4 gap-5 ">
-          <span className="relative">
-            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-              Phone No.
-            </p>
-            <input
-              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-              type="text"
-              readOnly
-              value={query?.data?.phone}
-            />
-          </span>
-          <span className="relative">
-            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-              Marital Status
-            </p>
-            <input
-              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-              type="text"
-              readOnly
-              value={query?.data?.maritalStatus}
-            />
-          </span>
-          <span className="relative">
-            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-              Username
-            </p>
-            <input
-              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-              type="text"
-              readOnly
-              value={query?.data?.username}
-            />
-          </span>
-          <span className="relative">
-            <p className="absolute  left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-              Employment
-            </p>
-            <input
-              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-              type="text"
-              readOnly
-              value={query?.data?.employmentType}
-            />
-          </span>
+        <div className="grid xl:grid-cols-[1fr_1fr_1fr_2fr] gap-5 ">
+          <Input
+            label="Birthdate"
+            value={query.data?.birth?.birthDate.toString().split("T")[0]}
+            readOnly={true}
+          />
+          <Input
+            label="Marital Status"
+            value={query.data?.maritalStatus}
+            readOnly={true}
+          />
+          <Input label="Phone No." value={query.data?.phone} readOnly={true} />
+          <Input label="Email" value={query.data?.email} readOnly={true} />
         </div>
-        <section className="grid gap-3">
-          <span className="relative">
-            <p className="absolute left-1/2 transform -translate-x-1/2 font-bold text-slate-600 bg-white top-0 -translate-y-1/2 : duration-200 text-xs">
-              Roles
-            </p>
-            <input
-              className="border border-slate-500 h-[42px] w-[100%] py-1 rounded-md font-bold text-center overflow-hidden text-sm"
-              type="text"
-              readOnly
-              value={query?.data?.roles}
-            />
-          </span>
+        <section className="grid xl:grid-cols-[1fr_1fr_1fr_2fr] gap-5">
+          <Input
+            label="Position"
+            value={query.data?.position?.jobTitle}
+            readOnly={true}
+          />
+          <Input
+            label="Department"
+            value={query.data?.department.departmentName}
+            readOnly={true}
+          />
+          <Input
+            label="Employment"
+            value={query.data?.employmentType}
+            readOnly={true}
+          />
+          <Input
+            label="Roles"
+            value={query.data?.roles.join(", ")}
+            readOnly={true}
+          />
         </section>
       </div>
     </div>

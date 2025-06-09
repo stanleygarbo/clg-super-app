@@ -66,43 +66,31 @@ export interface IEmployeeGet {
 // }
 
 export const customStyles = {
-  control: (base: any, state: any) => ({
+  control: (base: any, state: { isFocused: any }) => ({
     ...base,
-    // height: "50px",
-    padding: "6px",
-    width: "100%",
-    borderRadius: "6px", // rounded-md
-    // borderColor: "#64748b", // border-slate-500
-    fontWeight: "700", // font-bold
-    fontSize: "0.875rem", // text-sm
+    borderRadius: "0.5rem", // rounded-lg
+    padding: "0.375rem 0.75rem", // py-3 px-3
+    backgroundColor: "inherit", // bg-inherit
+    borderBottom: "2px solid #2563EB", // border-b-2 border-b-blue-600
+    borderTop: "none",
+    borderLeft: "none",
+    borderRight: "none",
+    boxShadow: "none", // remove default box shadow
     textAlign: "center",
-    borderColor: state.isFocused ? "#1D4ED8" : "#1D4ED8;", // border-blue-600 when focused, border-slate-500 when not focused
-    // overflow: "hidden",
-    transition: "border-color 0.3s",
-    // borderColor: state.isFocused ? "#1D4ED8" : provided.borderColor,
-    // "&:hover": {
-    //   borderColor: "#B91C1C",
-    // },
-    boxShadow: "none",
-    "&:hover": {
-      borderColor: state.isFocused ? "#B91C1C" : "#B91C1C", // no change on hover
-    },
-  }),
-  singleValue: (base: any) => ({
-    ...base,
-    textAlign: "center", // center the selected value text
-  }),
-  option: (base: any) => ({
-    ...base,
-    textAlign: "center", // center the option text
-  }),
-  menu: (base: any) => ({
-    ...base,
-    textAlign: "center", // center the dropdown menu
+    outline: state.isFocused ? "none" : undefined,
   }),
   placeholder: (base: any) => ({
     ...base,
-    textAlign: "center", // center the placeholder
+    textAlign: "center",
+  }),
+  singleValue: (base: any) => ({
+    ...base,
+    textAlign: "center",
+    width: "100%",
+  }),
+  menu: (base: any) => ({
+    ...base,
+    zIndex: 20,
   }),
 };
 

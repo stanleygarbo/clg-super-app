@@ -147,7 +147,9 @@ const Employees = () => {
                 </h1>
                 <h1 className="w-[200px] flex gap-2 items-center justify-center opacity-50 group-hover:opacity-100 whitespace-nowrap">
                   <button
-                    onClick={() => navigate("/" + employee._id + "/profile")}
+                    onClick={() =>
+                      navigate("/" + employee._id + "/employee-info")
+                    }
                     type="button"
                     className="bg-blue-600 text-xl py-2 px-3 rounded-lg font-semibold text-white hover:bg-blue-800 active:scale-95 duration-200"
                   >
@@ -220,10 +222,11 @@ const Employees = () => {
                     Roles: {employee.roles.join(", ")}
                   </span>
                 </div>
-
                 <div className="grid grid-cols-3 gap-3 justify-center items-center mt-2">
                   <button
-                    onClick={() => navigate("/" + employee._id + "/profile")}
+                    onClick={() =>
+                      navigate("/" + employee._id + "/employee-info")
+                    }
                     type="button"
                     className="bg-blue-600 text-2xl mx-1 py-2 flex justify-center rounded-lg font-semibold text-white hover:bg-blue-800 active:scale-90 duration-200"
                   >
@@ -231,7 +234,7 @@ const Employees = () => {
                   </button>
                   <button
                     onClick={() =>
-                      navigate("/admin/update-employee/" + employee._id)
+                      navigate("/admin/update-employee/" + employee?._id)
                     }
                     type="button"
                     className="bg-blue-600 text-2xl mx-1 py-2 flex justify-center rounded-lg font-semibold text-white hover:bg-blue-800 active:scale-90 duration-200"
