@@ -29,6 +29,6 @@ const sectionSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Section = mongoose.model("Seat", sectionSchema);
+const Section = mongoose.model("Section", sectionSchema);
 
 module.exports = { Section };
