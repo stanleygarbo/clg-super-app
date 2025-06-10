@@ -10,7 +10,7 @@ const addSection = async (req, res) => {
 
     const section = await sectionService.addSection(req.body);
     res.status(201).json({
-      message: "Room added successfully",
+      message: "Section added successfully",
       section: { section },
     });
   } catch (error) {
