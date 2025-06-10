@@ -10,10 +10,10 @@ const sectionController = require("../controllers/sectionController");
  * /api/sections:
  *   post:
  *     summary: Add a new section
- *     security:
- *       - BearerAuth: []
  *     tags:
  *       - Sections
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -26,21 +26,21 @@ const sectionController = require("../controllers/sectionController");
  *               - semester
  *               - course
  *             properties:
- *               courseName:
+ *               sectionName:
  *                 type: string
- *                 description: The name of the section.
+ *                 description: The name of the section
  *                 example: BSCS-1
  *               academicYear:
  *                 type: string
- *                 description: The school year.
+ *                 description: The school year
  *                 example: 2025-2026
- *               semester
+ *               semester:
  *                 type: string
- *                 description: The semester.
+ *                 description: The semester
  *                 example: 1st | 2nd | summer
  *               course:
  *                 type: string
- *                 description: The course id.
+ *                 description: The course id
  *                 example: _id
  *     responses:
  *       201:
@@ -91,50 +91,49 @@ router.post(
 
 /**
  * @swagger
- * /api/sections/{id}:
- *   patch:
- *     summary: Update a section
+ * /api/sections:
+ *   post:
+ *     summary: Add a new section
  *     tags:
  *       - Sections
  *     security:
  *       - BearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The unique ID of the Section.
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - sectionName
+ *               - academicYear
+ *               - semester
+ *               - course
  *             properties:
- *               courseName:
+ *               sectionName:
  *                 type: string
- *                 description: The name of the section.
+ *                 description: The name of the section
  *                 example: BSCS-1
  *               academicYear:
  *                 type: string
- *                 description: The school year.
+ *                 description: The school year
  *                 example: 2025-2026
- *               semester
+ *               semester:
  *                 type: string
- *                 description: The semester.
+ *                 description: The semester
  *                 example: 1st | 2nd | summer
  *               course:
  *                 type: string
- *                 description: The course id.
+ *                 description: The course id
  *                 example: _id
  *     responses:
- *       200:
- *         description: Section updated successfully.
+ *       201:
+ *         description: section added successfully.
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Section'
+ *               type: object
+ *               $ref: '#/components/schemas/Course'
  *       400:
  *         description: Validation error.
  *         content:
