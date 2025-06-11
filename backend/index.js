@@ -26,6 +26,9 @@ const { User } = require("./models/userModel");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 
+// const { Seat } = require("./models/seatModel.js");
+// const { Grade } = require("./models/gradeModel.js");
+
 const swaggerDefinition = {
   openapi: "3.0.0",
   info: {
@@ -83,4 +86,5 @@ app.get("/", (req, res) => {
 
 app.listen(port, () => {
   console.log("App listening on port: ", port);
+  // console.log("Seat model:", Seat);
 });

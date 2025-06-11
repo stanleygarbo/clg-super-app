@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const sectionSchema = mongoose.Schema(
+const sectionSchema = new mongoose.Schema(
   {
     sectionName: {
       type: String,
@@ -21,9 +21,9 @@ const sectionSchema = mongoose.Schema(
         ref: "Seat",
       },
     ],
-    course: {
+    program: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Course",
+      ref: "Program",
     },
   },
   { timestamps: true }

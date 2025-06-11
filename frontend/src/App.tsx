@@ -34,6 +34,10 @@ import UserProfie from "./components/admin/profile/UserProfie";
 import StudentList from "./components/registrar/grade/StudentList";
 import StudentGrades from "./components/registrar/grade/StudentGrades";
 import Grade from "./components/student/Grade";
+import Section from "./components/registrar/section/Section";
+import AddSection from "./components/registrar/section/AddSection";
+import AddSeat from "./components/registrar/seat/AddSeat";
+import AddGrade from "./components/registrar/grade/AddGrade";
 
 const router = createBrowserRouter([
   {
@@ -186,6 +190,22 @@ const router = createBrowserRouter([
     path: "/registrar",
     element: <AdminLayout />,
     children: [
+      {
+        path: "section",
+        element: <Section />,
+      },
+      {
+        path: "add-section",
+        element: <AddSection />,
+      },
+      {
+        path: "add-seat",
+        element: <AddSeat />,
+      },
+      {
+        path: "add-grade",
+        element: <AddGrade />,
+      },
       {
         path: "schedule",
         element: <Schedule />,

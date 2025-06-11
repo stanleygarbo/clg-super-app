@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 
-const gradeSchema = mongoose.Schema(
+const gradeSchema = new mongoose.Schema(
   {
-    Seat: {
+    seat: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Seat",
-      required: true,
+    },
+    student: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
     },
     course: {
       type: mongoose.Schema.Types.ObjectId,
@@ -13,7 +16,7 @@ const gradeSchema = mongoose.Schema(
       required: true,
     },
     finalGrade: {
-      type: Number,
+      type: String,
     },
   },
   { timestamps: true }

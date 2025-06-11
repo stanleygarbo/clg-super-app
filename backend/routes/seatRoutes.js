@@ -8,7 +8,7 @@ const seatController = require("../controllers/seatController");
 router.post(
   "/",
   [
-    body("section").notEmpty().trim(),
+    // body("section").notEmpty().trim(),
     body("student").notEmpty().trim(),
     body("grades").isArray().notEmpty().trim(),
   ],
@@ -20,7 +20,7 @@ router.post(
 router.patch(
   "/:id",
   [
-    body("section").optional().trim(),
+    // body("section").optional().trim(),
     body("student").optional().trim(),
     body("grades").isArray().optional().trim(),
   ],

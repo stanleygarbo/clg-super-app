@@ -20,6 +20,17 @@ const addGrade = async (req, res) => {
   }
 };
 
+const getGradesByStudent = async (req, res) => {
+  try {
+    const grades = await gradeService.getGradesByStud({ id: req.params.id });
+    res.status(200).json(grades);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
 const getGrades = async (req, res) => {
   try {
     const grades = await gradeService.getGrades();
@@ -33,7 +44,7 @@ const getGrades = async (req, res) => {
 
 const getGrade = async (req, res) => {
   try {
-    const grade = await gradeService.getGrade();
+    const grade = await gradeService.getGrade({ id: req.params.id });
     res.status(200).json(grade);
   } catch (error) {
     res.status(400).json({
@@ -88,4 +99,5 @@ module.exports = {
   getGrades,
   updateGrade,
   deleteGrade,
+  getGradesByStudent,
 };

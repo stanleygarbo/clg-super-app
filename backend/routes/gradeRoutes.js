@@ -8,7 +8,8 @@ const gradeController = require("../controllers/gradeController");
 router.post(
   "/",
   [
-    body("seat").notEmpty().trim(),
+    body("seat").optional().trim(),
+    body("student").optional().trim(),
     body("course").notEmpty().trim(),
     body("finalGrade").notEmpty().trim(),
   ],
@@ -21,12 +22,20 @@ router.patch(
   "/:id",
   [
     body("seat").optional().trim(),
+    body("student").optional().trim(),
     body("course").optional().trim(),
     body("finalGrade").optional().trim(),
   ],
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super", "registrar", "addmission"]),
   gradeController.updateGrade
+);
+
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  roleMiddleware(["admin", "super", "admission", "registrar"]),
+  gradeController.getGradesByStudent
 );
 
 router.get(

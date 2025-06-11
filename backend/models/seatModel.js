@@ -1,28 +1,19 @@
 const mongoose = require("mongoose");
 
-const seatSchema = mongoose.Schema(
-  {
-    section: {
+const seatSchema = new mongoose.Schema({
+  grades: [
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "section",
+      ref: "Grade",
       required: true,
     },
-    student: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Student",
-      required: true,
-    },
-    grades: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Grade",
-        required: true,
-      },
-    ],
+  ],
+  student: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Student",
+    required: true,
   },
-  { timestamps: true }
-);
+});
 
-const Seat = mongoose.models.Seat || mongoose.model("Seat", seatSchema);
-
+const Seat = mongoose.model("Seat", seatSchema);
 module.exports = { Seat };

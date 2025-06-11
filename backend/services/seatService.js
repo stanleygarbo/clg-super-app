@@ -1,4 +1,4 @@
-const Seat = require("../models/seatModel");
+const { Seat } = require("../models/seatModel");
 const studentService = require("./studentService");
 
 const getSeats = async () => {

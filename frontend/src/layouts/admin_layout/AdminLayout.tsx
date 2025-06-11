@@ -56,6 +56,10 @@ const registrar: ISidebarItem = {
       name: "Students",
       path: "/registrar/students",
     },
+    {
+      name: "Sections",
+      path: "/registrar/section",
+    },
   ],
 };
 

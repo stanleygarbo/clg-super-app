@@ -79,7 +79,7 @@ router.post(
     body("academicYear").notEmpty().trim(),
     body("course").notEmpty().trim(),
     body("semester")
-      .isArray() // Check that roles is an array
+      .isArray()
       .withMessage("Semester must 1st, 2nd or summer")
       .notEmpty()
       .matches(/\b(?:1st|2nd|summer)\b/),
@@ -164,7 +164,7 @@ router.patch(
     body("academicYear").optional().trim(),
     body("course").optional().trim(),
     body("semester")
-      .isArray() // Check that roles is an array
+      .isArray()
       .withMessage("Semester must 1st, 2nd or summer")
       .optional()
       .matches(/\b(?:1st|2nd|summer)\b/),

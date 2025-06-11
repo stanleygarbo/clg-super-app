@@ -68,9 +68,9 @@ export interface IEmployeeGet {
 export const customStyles = {
   control: (base: any, state: { isFocused: any }) => ({
     ...base,
-    borderRadius: "0.5rem", // rounded-lg
+    // borderRadius: "0.5rem", // rounded-lg
     padding: "0.375rem 0.75rem", // py-3 px-3
-    backgroundColor: "inherit", // bg-inherit
+    backgroundColor: "#f1f5f9", // bg-slate-100
     borderBottom: "2px solid #2563EB", // border-b-2 border-b-blue-600
     borderTop: "none",
     borderLeft: "none",

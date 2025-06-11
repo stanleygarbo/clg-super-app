@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { getStudentById } from "../../../api/student";
 import { IStudentsGet } from "../../../interface/IStudents";
 import { useState } from "react";
+import { getGrades } from "../../../api/grade";
+import { IGradesGet } from "../../../interface/IGrades";
 
 const StudentGrades = () => {
   const { id } = useParams();
@@ -12,6 +14,13 @@ const StudentGrades = () => {
     queryKey: ["student", id],
     queryFn: () => getStudentById({ id }),
   });
+
+  const grades = useQuery<IGradesGet>({
+    queryKey: ["grades"],
+    queryFn: getGrades,
+  });
+
+  console.log(grades?.data || "No data");
 
   return (
     <div className="my-10 w-[1100px]">
