@@ -9,9 +9,8 @@ router.post(
   "/",
   [
     body("seat").optional().trim(),
-    body("student").optional().trim(),
     body("course").notEmpty().trim(),
-    body("finalGrade").notEmpty().trim(),
+    body("finalGrade").optional().trim(),
   ],
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super", "registrar", "addmission"]),
@@ -22,7 +21,6 @@ router.patch(
   "/:id",
   [
     body("seat").optional().trim(),
-    body("student").optional().trim(),
     body("course").optional().trim(),
     body("finalGrade").optional().trim(),
   ],
@@ -31,12 +29,12 @@ router.patch(
   gradeController.updateGrade
 );
 
-router.get(
-  "/:id",
-  passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super", "admission", "registrar"]),
-  gradeController.getGradesByStudent
-);
+// router.get(
+//   "/:id",
+//   passport.authenticate("jwt", { session: false }),
+//   roleMiddleware(["admin", "super", "admission", "registrar"]),
+//   gradeController.getGradesByStudent
+// );
 
 router.get(
   "/:id",

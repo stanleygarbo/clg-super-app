@@ -24,7 +24,7 @@ const sectionController = require("../controllers/sectionController");
  *               - sectionName
  *               - academicYear
  *               - semester
- *               - course
+ *               - program
  *             properties:
  *               sectionName:
  *                 type: string
@@ -38,9 +38,9 @@ const sectionController = require("../controllers/sectionController");
  *                 type: string
  *                 description: The semester
  *                 example: 1st | 2nd | summer
- *               course:
+ *               program:
  *                 type: string
- *                 description: The course id
+ *                 description: The program id
  *                 example: _id
  *     responses:
  *       201:
@@ -49,7 +49,7 @@ const sectionController = require("../controllers/sectionController");
  *           application/json:
  *             schema:
  *               type: object
- *               $ref: '#/components/schemas/Course'
+ *               $ref: '#/components/schemas/program'
  *       400:
  *         description: Validation error.
  *         content:
@@ -77,12 +77,12 @@ router.post(
   [
     body("sectionName").notEmpty().trim(),
     body("academicYear").notEmpty().trim(),
-    body("course").notEmpty().trim(),
+    body("program").notEmpty().trim(),
     body("semester")
-      .isArray()
-      .withMessage("Semester must 1st, 2nd or summer")
-      .notEmpty()
-      .matches(/\b(?:1st|2nd|summer)\b/),
+      // .isArray()
+      // .withMessage("Semester must 1st, 2nd or summer")
+      .notEmpty(),
+    // .matches(/\b(?:1st|2nd|summer)\b/),
   ],
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
@@ -108,7 +108,7 @@ router.post(
  *               - sectionName
  *               - academicYear
  *               - semester
- *               - course
+ *               - program
  *             properties:
  *               sectionName:
  *                 type: string
@@ -122,9 +122,9 @@ router.post(
  *                 type: string
  *                 description: The semester
  *                 example: 1st | 2nd | summer
- *               course:
+ *               program:
  *                 type: string
- *                 description: The course id
+ *                 description: The program id
  *                 example: _id
  *     responses:
  *       201:
@@ -133,7 +133,7 @@ router.post(
  *           application/json:
  *             schema:
  *               type: object
- *               $ref: '#/components/schemas/Course'
+ *               $ref: '#/components/schemas/program'
  *       400:
  *         description: Validation error.
  *         content:
@@ -161,12 +161,12 @@ router.patch(
   [
     body("sectionName").optional().trim(),
     body("academicYear").optional().trim(),
-    body("course").optional().trim(),
+    body("program").optional().trim(),
     body("semester")
-      .isArray()
-      .withMessage("Semester must 1st, 2nd or summer")
-      .optional()
-      .matches(/\b(?:1st|2nd|summer)\b/),
+      // .isArray()
+      // .withMessage("Semester must 1st, 2nd or summer")
+      .optional(),
+    // .matches(/\b(?:1st|2nd|summer)\b/),
   ],
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),

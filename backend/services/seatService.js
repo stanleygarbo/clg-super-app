@@ -4,7 +4,8 @@ const studentService = require("./studentService");
 const getSeats = async () => {
   const seats = await Seat.find().populate([
     { path: "section" },
-    { path: "grade" },
+    { path: "schedule" },
+    { path: "grades" },
     { path: "student" },
   ]);
 
@@ -14,7 +15,8 @@ const getSeats = async () => {
 const getSeat = async (id) => {
   const seat = await Seat.findById(id).populate([
     { path: "section" },
-    { path: "grade" },
+    { path: "schedule" },
+    { path: "grades" },
     { path: "student" },
   ]);
 

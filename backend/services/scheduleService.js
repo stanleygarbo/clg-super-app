@@ -1,12 +1,20 @@
 const { Schedule } = require("../models/scheduleModel");
 
 const getSchedule = async (id) => {
-  const schedule = await Schedule.findById(id);
+  const schedule = await Schedule.findById(id).populate([
+    {
+      path: "program",
+    },
+  ]);
   return schedule;
 };
 
 const getSchedules = async () => {
-  const schedule = await Schedule.find({ isDeleted: { $ne: true } });
+  const schedule = await Schedule.find().populate([
+    {
+      path: "program",
+    },
+  ]);
   return schedule;
 };
 

@@ -73,4 +73,4 @@ const SubjectSchedule = mongoose.model(
   subjectScheduleSchema
 );
 
-module.exports = { Schedule, SubjectSchedule, scheduleSchema };
+module.exports = { Schedule, SubjectSchedule };

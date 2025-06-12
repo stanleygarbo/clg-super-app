@@ -1,18 +1,18 @@
 const { Grade } = require("../models/gradeModel");
 const courseService = require("../services/courseService");
 
-const getGradesByStud = async (id) => {
-  const grades = await Grade.find({ student: id }).populate([
-    // { path: "seat" },
-    { path: "course" },
-  ]);
+// const getGradesByStud = async (id) => {
+//   const grades = await Grade.find({ student: id }).populate([
+//     { path: "seat" },
+//     { path: "course" },
+//   ]);
 
-  return grades;
-};
+//   return grades;
+// };
 
 const getGrades = async () => {
   const grades = await Grade.find().populate([
-    // { path: "seat" },
+    { path: "seat" },
     { path: "course" },
   ]);
 
@@ -21,7 +21,7 @@ const getGrades = async () => {
 
 const getGrade = async (id) => {
   const grade = await Grade.findById(id).populate([
-    // { path: "seat" },
+    { path: "seat" },
     { path: "course" },
   ]);
 
@@ -71,7 +71,6 @@ const gradeService = {
   addGrade,
   updateGrade,
   deleteGrade,
-  getGradesByStud,
 };
 
 module.exports = gradeService;

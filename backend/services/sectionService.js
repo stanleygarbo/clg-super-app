@@ -1,21 +1,28 @@
-const Section = require("../models/sectionModel");
+const { Section } = require("../models/sectionModel");
 const courseService = require("./courseService");
+const programService = require("./programService");
 
 const getSection = async (id) => {
-  const section = await Section.findById(id).populate([{ path: "program" }]);
+  const section = await Section.findById(id).populate([
+    { path: "program" },
+    { path: "seats" },
+  ]);
 
   return section;
 };
 
 const getSections = async () => {
-  const section = await Section.find().populate([{ path: "program" }]);
+  const section = await Section.find().populate([
+    { path: "program" },
+    { path: "seats" },
+  ]);
 
   return section;
 };
 
 const addSection = async (data) => {
-  const course = courseService.getCourse(data.course);
-  if (!course) {
+  const program = programService.getProgram(data.program);
+  if (!program) {
     throw new Error("Course does not exist.");
   }
 

@@ -5,10 +5,7 @@ const gradeSchema = new mongoose.Schema(
     seat: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Seat",
-    },
-    student: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Student",
+      required: true,
     },
     course: {
       type: mongoose.Schema.Types.ObjectId,
@@ -17,6 +14,7 @@ const gradeSchema = new mongoose.Schema(
     },
     finalGrade: {
       type: String,
+      default: "0",
     },
   },
   { timestamps: true }
