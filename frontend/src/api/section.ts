@@ -14,7 +14,7 @@ export const getSection = async (id: string) => {
 };
 
 export const getSections = async () => {
-  const response = await apiClient.get("/");
+  const response = await apiClient.get("/sections");
 
   return response.data;
 };

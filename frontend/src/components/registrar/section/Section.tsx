@@ -1,9 +1,25 @@
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { getSections } from "../../../api/section";
+import { ISectionGet } from "../../../interface/ISection";
+import { useEffect } from "react";
+import { MdDelete, MdEditSquare } from "react-icons/md";
 
 const Section = () => {
   const navigate = useNavigate();
+
+  const sections = useQuery({
+    queryKey: ["sections"],
+    queryFn: getSections,
+  });
+
+  useEffect(() => {
+    sections.refetch();
+  }, [sections.data]);
+
+  // console.log(sections.data);
   return (
-    <div className="w-full max-w-[1200px]">
+    <div className="w-full max-w-[1270px]">
       <div className="flex flex-col gap-3 mt-10">
         <section className="flex justify-end my-2 gap-3">
           <button
@@ -38,16 +54,31 @@ const Section = () => {
           Section List
         </h1>
         <section className="flex flex-wrap gap-5">
-          <span className="flex flex-col bg-blue-600 text-white p-5 gap-3 rounded-lg hover:bg-blue-700 active:scale-90 duration-200">
-            <section className="flex gap-3 text-sm justify-end">
-              <h1 className="">2025-2026</h1>
-            </section>
-            <section className="flex gap-3">
-              <h1 className="text-base font-bold">BSCS-1</h1>
-              <h1>1st Semester</h1>
-            </section>
-            <h1>Program : BSCS</h1>
-          </span>
+          {sections?.data?.map((section: ISectionGet) => (
+            <span
+              key={section?._id}
+              className="flex flex-col bg-slate-200 text-black p-5 gap-3 rounded-lg relative"
+            >
+              <section className="absolute right-2 top-2 flex gap-3 items-center">
+                <button
+                  onClick={() => {
+                    navigate(`/registrar/update-section/${section._id}`);
+                  }}
+                  className="hover:text-green-700 active:scale-75 duration-200"
+                >
+                  <MdEditSquare size={20} />
+                </button>
+                <button className="hover:text-red-600 active:scale-75 duration-200">
+                  <MdDelete size={20} />
+                </button>
+              </section>
+              <h1 className="text-base font-bold">{section?.sectionName}</h1>
+              <section className="flex">
+                <h1>{section?.semester}Sem.</h1>
+                <h1 className="">S.Y.{section?.academicYear}</h1>
+              </section>
+            </span>
+          ))}
         </section>
       </div>
     </div>

@@ -37,6 +37,8 @@ import Grade from "./components/student/Grade";
 import Section from "./components/registrar/section/Section";
 import AddSection from "./components/registrar/section/AddSection";
 import AddSeat from "./components/registrar/seat/AddSeat";
+import UpdateSection from "./components/registrar/section/UpdateSection";
+import SeatInfo from "./components/registrar/seat/SeatInfo";
 import AddGrade from "./components/registrar/grade/AddGrade";
 
 const router = createBrowserRouter([
@@ -199,11 +201,19 @@ const router = createBrowserRouter([
         element: <AddSection />,
       },
       {
+        path: "update-section/:id",
+        element: <UpdateSection />,
+      },
+      {
         path: "add-seat",
         element: <AddSeat />,
       },
       {
-        path: "add-grade",
+        path: "seat-info/:id",
+        element: <SeatInfo />,
+      },
+      {
+        path: "add-grade/:id",
         element: <AddGrade />,
       },
       {

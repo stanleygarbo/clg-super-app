@@ -75,16 +75,12 @@ const Login = () => {
           />
           Welcome back! 🤗
         </h1>
-        <Input
-          label="Username"
-          // value={userUsn}
-          onChange={setUserUsn}
-        />
+        <Input label="Username" value={userUsn} onChange={setUserUsn} />
         <section className="relative group">
           <Input
             label="Password"
             type={showPass ? "text" : "password"}
-            // value={userPass}
+            value={userPass}
             onChange={setUserPass}
           />
           <button

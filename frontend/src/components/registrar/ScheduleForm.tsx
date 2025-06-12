@@ -196,7 +196,8 @@ function ScheduleForm() {
                   (value >= 1980 && value <= date.getFullYear()) ||
                   "Enter a valid year",
               })}
-              type="number"
+              type="text"
+              readOnly
               className="px-2 border border-gray-300 rounded-md"
               placeholder="School Year"
               defaultValue={date.getFullYear()}

@@ -1,5 +1,6 @@
 import { ICourseGet } from "./ICourse";
 import { ISeatsGet } from "./ISeats";
+import { IStudentsGet } from "./IStudents";
 
 export interface IGradesPost {
   seat: string;
@@ -10,8 +11,8 @@ export interface IGradesPost {
 
 export interface IGradesGet {
   _id: string;
-  seat: string;
-  student: string;
+  seat: ISeatsGet;
+  student: IStudentsGet;
   course: ICourseGet;
   finalGrade: string;
 }
