@@ -34,22 +34,22 @@ router.patch(
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super", "admission", "registrar"]),
+  // roleMiddleware(["admin", "super", "admission", "registrar"]),
   seatController.getSeat
 );
 
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
+  // roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
   seatController.getSeats
 );
 
 router.delete(
-  "/",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
   roleMiddleware(["admin", "super", "admission", "registrar"]),
-  seatController.deleteSeat
+  seatController.deleteSeatControl
 );
 
 module.exports = router;

@@ -210,7 +210,7 @@ router.patch(
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
+  // roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
   sectionController.getSection
 );
 
@@ -246,7 +246,7 @@ router.get(
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
+  // roleMiddleware(["admin", "super", "admission", "registrar", "faculty"]),
   sectionController.getSections
 );
 

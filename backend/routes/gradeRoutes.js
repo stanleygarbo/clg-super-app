@@ -39,14 +39,14 @@ router.patch(
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super", "admission", "registrar"]),
+  // roleMiddleware(["admin", "super", "admission", "registrar"]),
   gradeController.getGrade
 );
 
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super", "admission", "registrar"]),
+  // roleMiddleware(["admin", "super", "admission", "registrar"]),
   gradeController.getGrades
 );
 

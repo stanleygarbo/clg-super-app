@@ -49,7 +49,7 @@ const updateGrade = async ({ id, data }) => {
     throw new Error("Course does not exist.");
   }
 
-  const grade = await Grade.update({ _id: id }, data);
+  const grade = await Grade.updateOne({ _id: id }, data);
 
   return grade;
 };

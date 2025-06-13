@@ -69,12 +69,12 @@ const updateSeat = async (req, res) => {
   }
 };
 
-const deleteSeat = async (req, res) => {
+const deleteSeatControl = async (req, res) => {
   try {
     const seat = await seatService.deleteSeat(req.params.id);
 
     if (!seat) {
-      return res.status(404).json({ message: "Not Found" });
+      return res.status(404).json({ message: "Seat Not Found" });
     }
 
     res.status(200).json(seat);
@@ -90,5 +90,5 @@ module.exports = {
   getSeats,
   getSeat,
   updateSeat,
-  deleteSeat,
+  deleteSeatControl,
 };

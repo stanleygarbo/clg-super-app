@@ -197,7 +197,7 @@ router.patch(
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
+  // roleMiddleware(["admin", "super"]),
   positionController.getPosition
 );
 
@@ -233,7 +233,7 @@ router.get(
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  roleMiddleware(["admin", "super"]),
+  // roleMiddleware(["admin", "super"]),
   positionController.getPositions
 );
 

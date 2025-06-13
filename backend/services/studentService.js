@@ -26,11 +26,11 @@ const addStudent = async (data) => {
 
   if (!data.password) {
     const salt = await bcrypt.genSalt(10);
-    data.password = await bcrypt.hash(crypto.randomUUID(), salt);
+    data.password = await bcrypt.hash("12345678", salt);
   }
 
   if (!data.roles || data.roles?.length === 0) {
-    data.roles = ["student"];
+    data.roles = ["student", "user"];
   }
 
   const student = new Student(data);

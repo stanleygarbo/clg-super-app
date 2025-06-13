@@ -44,7 +44,7 @@ const getGrades = async (req, res) => {
 
 const getGrade = async (req, res) => {
   try {
-    const grade = await gradeService.getGrade({ id: req.params.id });
+    const grade = await gradeService.getGrade(req.params.id);
     res.status(200).json(grade);
   } catch (error) {
     res.status(400).json({
@@ -77,7 +77,8 @@ const updateGrade = async (req, res) => {
 
 const deleteGrade = async (req, res) => {
   try {
-    const grade = await gradeService.deleteGrade(req.params.id);
+    const { id } = req.params;
+    const grade = await gradeService.deleteGrade(id);
 
     if (!grade) {
       return res.status(404).json({
