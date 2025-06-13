@@ -13,7 +13,7 @@ export const getGradesByStud = async (id: string) => {
   return response.data;
 };
 
-export const getGrade = async ({ id }: { id?: string }) => {
+export const getGrade = async ({ id }: { id: string }) => {
   const response = await apiClient.get(`/grades/${id}`);
 
   return response.data;

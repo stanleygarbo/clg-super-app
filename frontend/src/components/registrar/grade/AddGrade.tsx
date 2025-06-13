@@ -95,6 +95,7 @@ const AddGrade = () => {
     mutationFn: addGrade,
     onSuccess: () => {
       toast.success("Added Successfully");
+      grades.refetch();
     },
     onError: (error: any) => {
       toast.error(error.message || "Something went wrong");
@@ -117,7 +118,7 @@ const AddGrade = () => {
       seat: id,
     };
     addMutation.mutate(newData);
-    grades.refetch();
+    // grades.refetch();
   };
 
   const onUpdate = (data: ISeatsPost) => {
@@ -146,7 +147,7 @@ const AddGrade = () => {
   }, [seatUpdate.reset, seat.data, grades.data]);
 
   return (
-    <div>
+    <div className="w-full max-w-[1100px]">
       <div className="flex flex-col gap-10">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
           <h1>Add Grade</h1>

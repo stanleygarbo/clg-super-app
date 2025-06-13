@@ -31,24 +31,6 @@ const Section = () => {
           >
             Add Section
           </button>
-          <button
-            type="button"
-            onClick={() => {
-              navigate("/registrar/add-seat");
-            }}
-            className="text-end bg-blue-700 rounded-lg px-3 py-2 font-semibold text-white hover:bg-blue-800 active:scale-90 duration-200"
-          >
-            Add Seat
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              navigate("/registrar/add-grade");
-            }}
-            className="text-end bg-blue-700 rounded-lg px-3 py-2 font-semibold text-white hover:bg-blue-800 active:scale-90 duration-200"
-          >
-            Add Grade
-          </button>
         </section>
         <h1 className="text-xl font-bold bg-blue-800 text-white px-5 py-4 rounded-lg">
           Section List

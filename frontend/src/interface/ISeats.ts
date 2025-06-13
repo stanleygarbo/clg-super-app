@@ -19,6 +19,14 @@ export interface ISeatsGet {
   grades: IGradesGet[];
 }
 
+export interface ISeatsUpdate {
+  _id: string;
+  section: ISectionGet;
+  schedule: ISchedule;
+  student: string;
+  grades: IGradesGet[];
+}
+
 export interface ISeatsSub {
   section: string;
   schedule: string;

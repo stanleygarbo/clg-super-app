@@ -40,6 +40,7 @@ import AddSeat from "./components/registrar/seat/AddSeat";
 import UpdateSection from "./components/registrar/section/UpdateSection";
 import SeatInfo from "./components/registrar/seat/SeatInfo";
 import AddGrade from "./components/registrar/grade/AddGrade";
+import UpdateGrade from "./components/registrar/grade/UpdateGrade";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,16 @@ const router = createBrowserRouter([
       {
         path: "/grade",
         element: <Grade />,
+      },
+    ],
+  },
+  {
+    path: "/subject-load",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/subject-load",
+        element: <SubjectLoad />,
       },
     ],
   },
@@ -205,7 +216,7 @@ const router = createBrowserRouter([
         element: <UpdateSection />,
       },
       {
-        path: "add-seat",
+        path: "add-seat/:id",
         element: <AddSeat />,
       },
       {
@@ -215,6 +226,10 @@ const router = createBrowserRouter([
       {
         path: "add-grade/:id",
         element: <AddGrade />,
+      },
+      {
+        path: "update-grade/:id",
+        element: <UpdateGrade />,
       },
       {
         path: "schedule",

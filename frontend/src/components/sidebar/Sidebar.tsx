@@ -31,7 +31,7 @@ const Sidebar = ({ sidebarItems }: { sidebarItems: ISidebarItem[] }) => {
   const loginUser = useQuery({
     queryKey: ["user", user.id],
     queryFn: async () => {
-      if (user.role.includes("students")) {
+      if (user.role.includes("student")) {
         return await getStudentById({ id: user.id });
       } else return getEmployeeById({ id: user.id });
     },

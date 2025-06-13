@@ -25,7 +25,7 @@ const ButtonComponent = ({
           : color === "green"
           ? "bg-green-700 hover:bg-green-800"
           : ""
-      } ${style} px-3 py-1 font-semibold rounded-lg active:scale-90 duration-200`}
+      } ${style} px-2 py-1 font-semibold rounded-lg active:scale-90 duration-200`}
     >
       {label}
     </button>

@@ -2,25 +2,109 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getStudentById } from "../../../api/student";
 import { IStudentsGet } from "../../../interface/IStudents";
-import { useState } from "react";
-import { getGrades } from "../../../api/grade";
+import { useEffect, useState } from "react";
+import { getSeats } from "../../../api/seat";
+import { ISeatsGet } from "../../../interface/ISeats";
+import { ISubjectSchedule } from "../../../interface/ISchedule";
+import { getCourse } from "../../../api/course";
+import { ICourseGet } from "../../../interface/ICourse";
+import { getEmployeeById } from "../../../api/employee";
+import { IEmployeeGet } from "../../../interface/IEmployee";
 import { IGradesGet } from "../../../interface/IGrades";
+import { getGrades } from "../../../api/grade";
 
 const StudentGrades = () => {
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  if (!id) return;
 
   const query = useQuery<IStudentsGet>({
     queryKey: ["student", id],
     queryFn: () => getStudentById({ id }),
   });
 
-  const grades = useQuery<IGradesGet>({
+  const grades = useQuery({
     queryKey: ["grades"],
     queryFn: getGrades,
   });
 
-  console.log(grades?.data || "No data");
+  const seats = useQuery({
+    queryKey: ["seats"],
+    queryFn: getSeats,
+  });
+
+  const getSeat: ISeatsGet = seats.data
+    ?.filter((s: ISeatsGet) => s.student) // Only include seats with student
+    .find((seat: ISeatsGet) => seat.student._id === id);
+
+  const getGrade = grades.data?.filter(
+    (grade: IGradesGet) => grade.seat?._id === getSeat?._id
+  );
+
+  // console.log(getGrade);
+
+  // console.log(grades?.data || "No data");
+
+  const CourseCode = ({ id }: { id: string }) => {
+    const query = useQuery<ICourseGet>({
+      queryKey: ["course", id],
+      queryFn: () => getCourse({ id }),
+    });
+
+    return <h1>{query.data?.courseCode}</h1>;
+  };
+
+  const CourseName = ({ id }: { id: string }) => {
+    const query = useQuery<ICourseGet>({
+      queryKey: ["course", id],
+      queryFn: () => getCourse({ id }),
+    });
+
+    return <h1>{query.data?.courseName}</h1>;
+  };
+
+  const CourseUnits = ({ id }: { id: string }) => {
+    const query = useQuery<ICourseGet>({
+      queryKey: ["course", id],
+      queryFn: () => getCourse({ id }),
+    });
+
+    return <h1>{query.data?.units}</h1>;
+  };
+
+  const Intructor = ({ id }: { id: string }) => {
+    const query = useQuery<IEmployeeGet>({
+      queryKey: ["employee", id],
+      queryFn: () => getEmployeeById({ id }),
+    });
+
+    return <h1>{query?.data?.surname}</h1>;
+  };
+
+  const Grades = ({ id }: { id: string }) => {
+    const data: IGradesGet = getGrade.find(
+      (gra: IGradesGet) => gra.course?._id === id
+    );
+
+    return <h1>{data?.finalGrade}</h1>;
+  };
+
+  const GradesValue = ({ id }: { id: string }) => {
+    const data: IGradesGet = getGrade.find(
+      (gra: IGradesGet) => gra.course?._id === id
+    );
+
+    return data?.finalGrade;
+  };
+
+  // console.log(Number(GradesValue({ id: "678625a887792f18812e1372" })) <= 4);
+
+  useEffect(() => {
+    if (id) {
+      query.refetch();
+    }
+  }, [id, query.data]);
 
   return (
     <div className="my-10 w-[1100px]">
@@ -103,32 +187,25 @@ const StudentGrades = () => {
               <h1 className="text-center">Instructor</h1>
             </span>
             <section className="flex flex-col gap-2">
-              <span className="grid grid-cols-[1fr_3fr_1fr_1fr_1fr_2fr] items-center bg-slate-100 rounded-lg">
-                <h1 className="text-center">ITE6202</h1>
-                <h1 className="text-center">Social and Professional Issues</h1>
-                <h1 className="text-center">3</h1>
-                <input
-                  type="number"
-                  value={1.75}
-                  className="w-full bg-inherit text-center outline-none py-2"
-                />
-                {/* <h1 className="text-center">1.75</h1> */}
-                <h1 className="text-center">PASSED</h1>
-                <h1 className="text-center">Dela Cruz</h1>
-              </span>
-              <span className="grid grid-cols-[1fr_3fr_1fr_1fr_1fr_2fr] items-center bg-slate-100 rounded-lg">
-                <h1 className="text-center">ITE6202</h1>
-                <h1 className="text-center">Social and Professional Issues</h1>
-                <h1 className="text-center">3</h1>
-                <input
-                  type="number"
-                  value={1.75}
-                  className="w-full bg-inherit text-center outline-none py-2"
-                />
-                {/* <h1 className="text-center">1.75</h1> */}
-                <h1 className="text-center">PASSED</h1>
-                <h1 className="text-center">Dela Cruz</h1>
-              </span>
+              {getSeat?.schedule?.subjectSchedules?.map(
+                (sched: ISubjectSchedule, index: number) => (
+                  <span
+                    key={index}
+                    className="grid grid-cols-[1fr_3fr_1fr_1fr_1fr_2fr] text-center items-center bg-slate-100 rounded-lg"
+                  >
+                    <CourseCode id={sched?.courseID} />
+                    <CourseName id={sched?.courseID} />
+                    <CourseUnits id={sched?.courseID} />
+                    <Grades id={sched?.courseID} />
+                    <h1>
+                      {Number(GradesValue({ id: sched?.courseID })) <= 4
+                        ? "PASSED"
+                        : "FAIL"}
+                    </h1>
+                    <Intructor id={sched?.instructorID} />
+                  </span>
+                )
+              )}
             </section>
           </section>
         </form>

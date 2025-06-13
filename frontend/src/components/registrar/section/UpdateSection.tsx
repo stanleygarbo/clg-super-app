@@ -2,7 +2,6 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { ISectionGet, ISectionSub } from "../../../interface/ISection";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { HiViewGrid } from "react-icons/hi";
 import { getPrograms } from "../../../api/programs";
 import { IOption } from "../../../interface/IOption";
 import { IProgramGet } from "../../../interface/IProgram";
@@ -11,12 +10,11 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ISeatsGet } from "../../../interface/ISeats";
-import { getSeats } from "../../../api/seat";
+import { deleteSeat, getSeats } from "../../../api/seat";
 import ButtonComponent from "../../props/ButtonComponent";
 import { getStudentById } from "../../../api/student";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 import { customStyles } from "../../../interface/IEmployee";
-import { IoCloseSharp } from "react-icons/io5";
 
 const UpdateSection = () => {
   const { register, reset } = useForm();
@@ -24,13 +22,10 @@ const UpdateSection = () => {
   const navigate = useNavigate();
   const [isAdd, setIsAdd] = useState<boolean>(false);
   const { id } = useParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12; // Change as needed
 
   if (!id) return;
-
-  // const year = new Date().getFullYear();
-
-  // const sectionName = watch("sectionName") || "";
-  // const schoolYear = watch("academicYear") || `${year - 1}-${year}`;
 
   const query = useQuery<ISectionGet>({
     queryKey: ["section", id],
@@ -48,23 +43,34 @@ const UpdateSection = () => {
     queryFn: getSeats,
   });
 
-  // const programOptions: IOption[] = programs.data?.results.map(
-  //   (prog: IProgramGet) => {
-  //     return { value: prog._id, label: prog.programAcronym };
-  //   }
-  // );
-
   const seatOption: IOption[] = seats.data?.map((set: ISeatsGet) => {
     return {
       value: set._id,
-      label: `${set.student.surname}-${set.section.sectionName}`,
+      label: `${set.student.surname}-${set.section?.sectionName}`,
     };
   });
 
+  const paginatedSeats = query.data?.seats?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  // Mutations
   const updateMutation = useMutation({
     mutationFn: updateSection,
     onSuccess: () => {
       toast.success("Added successfully");
+    },
+    onError: (errors) => {
+      toast.error(errors.message);
+    },
+  });
+
+  const deleteSeatMutation = useMutation({
+    mutationFn: deleteSeat,
+    onSuccess: () => {
+      toast.success("Deleted successfully");
+      query.refetch();
     },
     onError: (errors) => {
       toast.error(errors.message);
@@ -76,22 +82,6 @@ const UpdateSection = () => {
       String(seat.value)
     )
   );
-
-  // const onSubmit = (data: ISectionSub) => {
-  //   if (!id) {
-  //     toast.error("No section ID found!");
-  //     return;
-  //   }
-  //   const formattedData = {
-  //     ...data,
-  //     seats: Array.isArray(data?.seats)
-  //       ? data?.seats?.map((seat) => seat?.value)
-  //       : [],
-  //   };
-
-  //   updateMutation.mutate({ id, data: { ...formattedData } });
-  //   navigate("/registrar/section");
-  // };
 
   const onUpdate = (data: ISectionSub) => {
     const formattedData = {
@@ -145,26 +135,6 @@ const UpdateSection = () => {
           isAdd ? "left-80" : "left-[-1000px]"
         } flex flex-col gap-3 w-[500px] absolute top-40 p-5 bg-slate-100 rounded-lg duration-200`}
       >
-        <section className="flex justify-between">
-          <h1>Add Seat</h1>
-          <ButtonComponent
-            label={<IoCloseSharp />}
-            color="none"
-            style="text-red-600 hover:text-red-800"
-            onClick={() => {
-              setIsAdd(false);
-            }}
-          />
-          {/* <button
-            onClick={() => {
-              setIsAdd(false);
-            }}
-            type="button"
-            className="font-bold text-red-600 hover:text-red-800 active:scale-75 duration-200"
-          >
-            X
-          </button> */}
-        </section>
         <span className="flex flex-col gap-3 relative w-full pt-5 rounded-lg bg-slate-100">
           <p className="absolute px-1 rounded-lg duration-200 font-semibold pointer-events-none top-1 left-3 text-blue-800 text-sm">
             Seats
@@ -172,7 +142,7 @@ const UpdateSection = () => {
           <Controller
             name="seats"
             control={update.control}
-            defaultValue={[]} // Default value must be an array for isMulti
+            defaultValue={[]}
             render={({ field }) => (
               <Select
                 {...field}
@@ -279,48 +249,67 @@ const UpdateSection = () => {
               style="text-white"
               type="button"
               onClick={() => {
-                setIsAdd(true);
+                navigate(`/registrar/add-seat/${id}`);
               }}
             />
           </section>
           <div className="flex flex-wrap gap-5">
-            {query.data?.seats?.map((seat: any, index: number) => (
+            {paginatedSeats?.map((seat: any, index: number) => (
               <section
                 key={seat._id}
-                className="w-40 flex flex-col gap-2 bg-slate-200 pb-2 pl-3 pr-2 pt-2 text-black rounded-lg"
+                className="w-[239px] flex flex-col gap-2 bg-slate-200 pb-2 pl-3 pr-2 pt-2 text-black rounded-lg"
               >
                 <section className="flex gap-3 justify-between">
                   <span className="flex flex-col gap-3">
                     <h1 className="font-semibold">Seat # {index}</h1>
                     <StudentSurname studentId={seat.student} />
+                    <h1>Grades: {seat.grades?.length}</h1>
                   </span>
-                  <span className="flex flex-col gap-2">
-                    <button
-                      type="button"
-                      className="text-red-600 hover:text-red-800 active:scale-75 duration-200"
-                    >
-                      <MdDelete size={18} />
-                    </button>
-                    <button
-                      type="button"
-                      className="text-green-600 hover:text-green-800 active:scale-75 duration-200"
-                    >
-                      <MdEditSquare size={18} />
-                    </button>
-                    <button
+                  <span className="flex flex-col gap-1">
+                    <ButtonComponent
+                      label={<MdDelete size={18} />}
+                      color="none"
+                      style="text-red-600 hover:text-red-800"
+                      onClick={() => {
+                        // console.log(seat?._id);
+                        deleteSeatMutation.mutate(seat?._id);
+                      }}
+                    />
+                    <ButtonComponent
+                      label={<MdEditSquare size={18} />}
+                      color="none"
+                      style="text-green-600 hover:text-green-800"
                       onClick={() => {
                         navigate(`/registrar/seat-info/${seat._id}`);
                       }}
-                      type="button"
-                      className="text-blue-600 hover:text-blue-800 active:scale-75 duration-200"
-                    >
-                      <HiViewGrid size={18} />
-                    </button>
+                    />
                   </span>
                 </section>
               </section>
             ))}
           </div>
+          {(query.data?.seats?.length || 0) > itemsPerPage && (
+            <div className="flex justify-center gap-2 mt-4">
+              <button
+                className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((prev) => prev - 1)}
+              >
+                Prev
+              </button>
+              <span className="px-2 font-semibold">{currentPage}</span>
+              <button
+                className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
+                disabled={
+                  query.data?.seats &&
+                  currentPage * itemsPerPage >= query.data?.seats.length
+                }
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </section>
       </form>
     </div>

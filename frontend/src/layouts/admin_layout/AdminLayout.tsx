@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { LuClipboard, LuDoorOpen, LuSchool } from "react-icons/lu";
 import { ISidebarItem } from "../../components/sidebar/SidebarItems";
-import { MdOutlineDashboard, MdSchedule } from "react-icons/md";
+import { MdOutlineDashboard } from "react-icons/md";
 import { BiClinic } from "react-icons/bi";
 import { RiAdminFill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
@@ -97,10 +97,6 @@ const admin: ISidebarItem = {
     {
       name: "Employees",
       path: "/admin/employees",
-    },
-    {
-      name: "Subject Load",
-      path: "/admin/subject-load",
     },
   ],
 };
@@ -197,12 +193,12 @@ const sidebarItemsConditional: ISidebarItem[] = [
     path: "/subject-load",
     allowedRoles: studentRole,
   },
-  {
-    name: "Schedule",
-    icon: MdSchedule,
-    path: "/schedule",
-    allowedRoles: studentRole,
-  },
+  // {
+  //   name: "Schedule",
+  //   icon: MdSchedule,
+  //   path: "/schedule",
+  //   allowedRoles: studentRole,
+  // },
   admin,
   admission,
   registrar,

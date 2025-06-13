@@ -1,10 +1,10 @@
 import { ICourseGet } from "./ICourse";
 import { ISeatsGet } from "./ISeats";
-import { IStudentsGet } from "./IStudents";
+// import { IStudentsGet } from "./IStudents";
 
 export interface IGradesPost {
   seat: string;
-  student: string;
+  // student: string;
   course: string;
   finalGrade: string;
 }
@@ -12,7 +12,7 @@ export interface IGradesPost {
 export interface IGradesGet {
   _id: string;
   seat: ISeatsGet;
-  student: IStudentsGet;
+  // student: IStudentsGet;
   course: ICourseGet;
   finalGrade: string;
 }
